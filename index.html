@@ -692,8 +692,7 @@
     </div>
     <div class="admin-actions">
       <button class="btn-adm-action" onclick="abrirModalImportar()">📥 Acrescentar Grupos</button>
-      <button class="btn-adm-action save" onclick="publicarAlteracoesNoSite()">🚀 Publicar no Site Inteiro</button>
-      <button class="btn-adm-action" onclick="sairAdm()" style="color:#ef4444;">Sair</button>
+      <button class="btn-adm-action" onclick="sairAdm()" style="color:#ef4444;">Sair do ADM</button>
     </div>
   </div>
 
@@ -808,8 +807,11 @@
           <div id="import-status-msg" style="font-weight:700;"></div>
         </div>
 
-        <button class="modal-btn" id="btn-iniciar-import" onclick="processarImportacao()">
-          🚀 Filtrar e Acrescentar ao Site
+        <button class="modal-btn" id="btn-iniciar-import" onclick="processarImportacao()" style="background:linear-gradient(135deg, #10b981 0%, #059669 100%);color:#fff;font-weight:800;font-size:0.95rem;padding:13px 20px;border-radius:12px;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;box-shadow:0 4px 18px rgba(16,185,129,0.4);width:100%;transition:all 0.2s;">
+          🚀 Filtrar e Publicar no Site Inteiro
+        </button>
+        <button type="button" id="btn-publicar-direto-modal" onclick="publicarAlteracoesNoSite()" style="margin-top:10px;width:100%;background:rgba(59,130,246,0.12);border:1px solid rgba(59,130,246,0.3);color:#93c5fd;font-weight:700;font-size:0.85rem;padding:10px;border-radius:10px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;transition:all 0.2s;">
+          ☁️ Apenas Sincronizar Alterações Atuais com a Vercel
         </button>
       </div>
     </div>
@@ -1004,13 +1006,21 @@
       atualizarMetricas();
       renderizarGrupos();
       sMsg.innerHTML = `✔ ${novos.length} novos grupos adicionados ao site!`;
-      alerta(`${novos.length} novos grupos adicionados! Clique em 'Publicar no Site' para salvar.`);
+      sMsg.innerHTML = `✔ ${novos.length} novo(s) grupo(s) aprovado(s)! Publicando no site inteiro (GitHub / Vercel)...`;
+      alerta(`${novos.length} novos grupos aprovados! Publicando no site inteiro...`, "info");
+      
+      // Publica automaticamente para a Vercel
+      await publicarAlteracoesNoSite();
+      
+      sMsg.innerHTML = `🎉 SUCESSO! ${novos.length} grupo(s) adicionados e publicados no site inteiro!`;
+      document.getElementById("import-textarea").value = "";
     } else {
-      sMsg.innerHTML = `Nenhum link inédito. Todos os links informados já estavam no site.`;
+      sMsg.innerHTML = `Nenhum link inédito. Todos os links informados já constam no site.`;
+      alerta("Nenhum link inédito informado.", "info");
     }
 
     btn.disabled = false;
-    btn.textContent = "🚀 Filtrar Mais Grupos";
+    btn.textContent = "🚀 Filtrar e Publicar no Site Inteiro";
   }
 
   /* ── SALVAR E PUBLICAR NO SITE INTEIRO (VERCEL / GITHUB) ── */
