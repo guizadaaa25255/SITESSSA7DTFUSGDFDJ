@@ -1508,17 +1508,20 @@
         </div>
       </div>
 
-      <div style="border-top:1px solid rgba(255,255,255,0.1);margin-bottom:12px;"></div>
+      <!-- SEÇÃO ADM NO MODAL (OCULTA AUTOMATICAMENTE AO ABRIR NOVA CONTA) -->
+      <div id="box-secao-adm">
+        <div style="border-top:1px solid rgba(255,255,255,0.1);margin-bottom:12px;"></div>
 
-      <div>
-        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
-          <span style="font-size:10px;font-weight:800;letter-spacing:0.5px;color:#f87171;text-transform:uppercase;">ADMINISTRAÇÃO</span>
-          <span style="font-size:10px;color:#94a3b8;" id="txt-status-adm">Acesso Restrito</span>
+        <div>
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
+            <span style="font-size:10px;font-weight:800;letter-spacing:0.5px;color:#f87171;text-transform:uppercase;">ADMINISTRAÇÃO</span>
+            <span style="font-size:10px;color:#94a3b8;" id="txt-status-adm">Acesso Restrito</span>
+          </div>
+
+          <button id="btn-adm-modal-trigger" onclick="fecharModalMenuContas();toggleAdmModal();" style="width:100%;box-sizing:border-box;background:linear-gradient(135deg,rgba(239,68,68,0.2),rgba(59,130,246,0.2));border:1px solid rgba(239,68,68,0.4);color:#fff;padding:12px;border-radius:10px;font-size:13px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;">
+            🔒 Abrir Painel ADM
+          </button>
         </div>
-
-        <button id="btn-adm-modal-trigger" onclick="fecharModalMenuContas();toggleAdmModal();" style="width:100%;box-sizing:border-box;background:linear-gradient(135deg,rgba(239,68,68,0.2),rgba(59,130,246,0.2));border:1px solid rgba(239,68,68,0.4);color:#fff;padding:12px;border-radius:10px;font-size:13px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;">
-          🔒 Abrir Painel ADM
-        </button>
       </div>
     </div>
   </div>
@@ -1765,15 +1768,17 @@
   function fecharModalMenuContas() {
     const m = document.getElementById("modal-menu-contas");
     if (m) m.classList.remove("open");
+    toggleFormNovaConta(false);
   }
 
   function toggleFormNovaConta(forcar) {
     const box = document.getElementById("form-nova-conta-box");
+    const admBox = document.getElementById("box-secao-adm");
     if (!box) return;
-    if (forcar !== undefined) {
-      box.style.display = forcar ? "block" : "none";
-    } else {
-      box.style.display = box.style.display === "none" ? "block" : "none";
+    const abrindo = (forcar !== undefined) ? forcar : (box.style.display === "none");
+    box.style.display = abrindo ? "block" : "none";
+    if (admBox) {
+      admBox.style.display = abrindo ? "none" : "block";
     }
   }
 
