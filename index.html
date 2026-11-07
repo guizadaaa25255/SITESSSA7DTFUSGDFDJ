@@ -1034,8 +1034,8 @@
           🔍 Filtrar os Grupos
         </button>
 
-        <!-- BOTAO AZUL DE BAIXO: MANDAR PRO SITE INTEIRO -->
-        <button type="button" class="btn-modal-blue" id="btn-publicar-site" onclick="publicarAlteracoesNoSite()">
+        <!-- BOTAO AZUL DE BAIXO: MANDAR PRO SITE INTEIRO (EXCLUSIVO MODO ADM) -->
+        <button type="button" class="btn-modal-blue" id="btn-publicar-site" onclick="publicarAlteracoesNoSite()" style="display:none;">
           🚀 Mandar pro Site Inteiro
         </button>
       </div>
@@ -1099,10 +1099,20 @@
   let isAdmLogado = sessionStorage.getItem("adm_logado") === "true";
   const SENHA_MESTRA = "guigui99";
 
-  document.addEventListener("DOMContentLoaded", () => {
-    if (isAdmLogado) {
-      document.getElementById("admin-bar").classList.add("open");
+  function atualizarVisibilidadeAdm() {
+    const adminBar = document.getElementById("admin-bar");
+    const btnPub = document.getElementById("btn-publicar-site");
+    if (adminBar) {
+      if (isAdmLogado) adminBar.classList.add("open");
+      else adminBar.classList.remove("open");
     }
+    if (btnPub) {
+      btnPub.style.display = isAdmLogado ? "flex" : "none";
+    }
+  }
+
+  document.addEventListener("DOMContentLoaded", () => {
+    atualizarVisibilidadeAdm();
     renderizarGrupos();
   });
 
@@ -1127,7 +1137,7 @@
     if (pass === SENHA_MESTRA) {
       isAdmLogado = true;
       sessionStorage.setItem("adm_logado", "true");
-      document.getElementById("admin-bar").classList.add("open");
+      atualizarVisibilidadeAdm();
       toggleAdmModal();
       alerta("Modo Administrador ativado!", "success");
       renderizarGrupos();
@@ -1139,7 +1149,7 @@
   function sairAdm() {
     isAdmLogado = false;
     sessionStorage.removeItem("adm_logado");
-    document.getElementById("admin-bar").classList.remove("open");
+    atualizarVisibilidadeAdm();
     alerta("Sessão administrativa encerrada.", "info");
     renderizarGrupos();
   }
@@ -1176,6 +1186,7 @@
   }
 
   function abrirModalImportar() {
+    atualizarVisibilidadeAdm();
     document.getElementById("modal-importar").classList.add("open");
   }
   function fecharModalImportar() {
