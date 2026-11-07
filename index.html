@@ -618,11 +618,234 @@
     margin-top: auto;
   }
 
-  @media (max-width: 640px) {
-    header { padding: 12px 16px; }
-    .metrics-container, main { padding: 0 14px; }
-    .grid-cards { grid-template-columns: 1fr; }
-    .admin-bar { flex-direction: column; align-items: flex-start; }
+
+  /* ══════════════════════════════════════════════════════════
+     📱 RESPONSIVIDADE COMPLETA E ULTRA-POLIDA PARA CELULAR
+     ══════════════════════════════════════════════════════════ */
+  @media (max-width: 768px) {
+    body {
+      padding-bottom: 24px;
+    }
+
+    /* Cabeçalho no Celular: 2 linhas organizadas sem transbordar */
+    .header-container {
+      display: flex !important;
+      flex-direction: column !important;
+      gap: 10px !important;
+      padding: 10px 14px !important;
+      width: 100% !important;
+    }
+    .header-top-row {
+      display: flex !important;
+      align-items: center !important;
+      justify-content: space-between !important;
+      width: 100% !important;
+    }
+    .brand {
+      gap: 8px !important;
+    }
+    .brand-badge {
+      width: 34px !important;
+      height: 34px !important;
+      font-size: 16px !important;
+      border-radius: 9px !important;
+    }
+    .brand-info h1 {
+      font-size: 1.0rem !important;
+      gap: 5px !important;
+    }
+    .brand-tag {
+      font-size: 0.6rem !important;
+      padding: 1px 5px !important;
+    }
+    .brand-info p {
+      display: none !important; /* Esconde subtítulo no celular para não poluir */
+    }
+
+    /* Pílula de conta compacta no celular */
+    #account-pill-btn {
+      padding: 3px 8px 3px 4px !important;
+      gap: 6px !important;
+      max-width: 155px !important;
+    }
+    #acc-avatar {
+      width: 26px !important;
+      height: 26px !important;
+      font-size: 10px !important;
+    }
+    #acc-name {
+      font-size: 11px !important;
+      max-width: 95px !important;
+      white-space: nowrap !important;
+      overflow: hidden !important;
+      text-overflow: ellipsis !important;
+    }
+    #acc-phone {
+      display: none !important;
+    }
+    #acc-badge {
+      display: none !important;
+    }
+    #acc-caret {
+      font-size: 7px !important;
+      margin-left: 2px !important;
+    }
+
+    /* Botão Filtrar e Adicionar no celular ocupa 100% da largura */
+    .header-actions-row {
+      width: 100% !important;
+    }
+    #btn-import-modal {
+      width: 100% !important;
+      justify-content: center !important;
+      padding: 10px 14px !important;
+      font-size: 0.88rem !important;
+      border-radius: 10px !important;
+      box-shadow: 0 2px 10px rgba(16,185,129,0.3) !important;
+    }
+
+    /* Menu Dropdown de Contas em tela cheia suave */
+    #account-dropdown-menu {
+      left: 10px !important;
+      right: 10px !important;
+      width: auto !important;
+      max-width: none !important;
+    }
+
+    /* Barra ADM no celular */
+    .admin-bar {
+      padding: 8px 14px !important;
+      flex-direction: column !important;
+      gap: 6px !important;
+      align-items: stretch !important;
+    }
+    .admin-actions {
+      display: flex !important;
+      gap: 8px !important;
+      width: 100% !important;
+    }
+    .btn-adm-action {
+      flex: 1 !important;
+      text-align: center !important;
+      justify-content: center !important;
+      padding: 7px 10px !important;
+      font-size: 0.78rem !important;
+    }
+
+    /* Grid de Métricas: 2 colunas compactas (elimina o visual gigante) */
+    .metrics-container {
+      padding: 0 12px !important;
+      margin-top: 10px !important;
+    }
+    .metrics-grid {
+      display: grid !important;
+      grid-template-columns: 1fr 1fr !important;
+      gap: 8px !important;
+    }
+    .metric-card {
+      padding: 10px 12px !important;
+      border-radius: 12px !important;
+    }
+    .metric-header {
+      margin-bottom: 2px !important;
+    }
+    .metric-title {
+      font-size: 0.65rem !important;
+      white-space: nowrap !important;
+      overflow: hidden !important;
+      text-overflow: ellipsis !important;
+    }
+    .metric-icon {
+      font-size: 0.95rem !important;
+    }
+    .metric-value {
+      font-size: 1.25rem !important;
+      margin-bottom: 2px !important;
+    }
+    .metric-sub {
+      font-size: 0.62rem !important;
+      white-space: nowrap !important;
+      overflow: hidden !important;
+      text-overflow: ellipsis !important;
+      line-height: 1.2 !important;
+    }
+
+    /* Barra de Busca e Filtros */
+    main {
+      padding: 0 12px !important;
+      margin-top: 10px !important;
+    }
+    .toolbar {
+      padding: 12px !important;
+      margin-bottom: 12px !important;
+      border-radius: 12px !important;
+      gap: 8px !important;
+    }
+    .search-row {
+      display: flex !important;
+      flex-direction: column !important;
+      gap: 8px !important;
+      width: 100% !important;
+    }
+    .search-wrapper {
+      width: 100% !important;
+      min-width: 100% !important;
+    }
+    .search-wrapper input {
+      height: 42px !important;
+      font-size: 0.85rem !important;
+      padding: 10px 14px 10px 38px !important;
+    }
+    .select-modern {
+      width: 100% !important;
+      height: 38px !important;
+      font-size: 0.8rem !important;
+      padding: 6px 10px !important;
+    }
+
+    /* Cards de Grupos */
+    .grid-cards {
+      grid-template-columns: 1fr !important;
+      gap: 12px !important;
+    }
+    .card {
+      padding: 14px !important;
+      border-radius: 14px !important;
+    }
+
+    /* Modais */
+    .modal-container, .modal-card {
+      width: 95% !important;
+      max-width: 95% !important;
+      padding: 16px !important;
+      margin: auto !important;
+      border-radius: 14px !important;
+    }
+    .modal-textarea {
+      font-size: 16px !important; /* Evita auto-zoom do teclado iOS/Android */
+    }
+  }
+
+  /* Desktop Header Layout */
+  @media (min-width: 769px) {
+    .header-container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 14px 28px;
+    }
+    .header-top-row {
+      display: flex;
+      align-items: center;
+    }
+    .header-actions-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
   }
   </style>
 </head>
