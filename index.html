@@ -531,50 +531,62 @@
     border-top: 1px solid var(--border-subtle);
   }
 
+  .card-bottom-info {
+    display: flex;
+    align-items: center;
+  }
+
   .members-pill {
     font-size: 0.78rem;
     font-weight: 700;
     color: #cbd5e1;
     font-family: 'JetBrains Mono', monospace;
+    white-space: nowrap;
   }
 
   .card-actions {
     display: flex;
     align-items: center;
     gap: 6px;
+    flex-shrink: 0;
   }
 
   .btn-enter-instant {
     background: #10b981;
-    color: #fff;
+    color: #fff !important;
     border: none;
     border-radius: var(--radius-sm);
-    padding: 6px 14px;
-    font-size: 0.8rem;
+    padding: 7px 16px;
+    font-size: 0.82rem;
     font-weight: 700;
     text-decoration: none;
     display: inline-flex;
     align-items: center;
-    gap: 5px;
+    justify-content: center;
+    gap: 6px;
     cursor: pointer;
     transition: all 0.15s;
+    white-space: nowrap;
+    box-shadow: 0 2px 8px rgba(16, 185, 129, 0.25);
   }
   .btn-enter-instant:hover {
     background: #059669;
+    color: #fff !important;
   }
 
   .btn-copy-link {
     background: var(--bg-input);
     border: 1px solid var(--border-subtle);
     color: var(--text-muted);
-    width: 30px;
-    height: 30px;
+    width: 32px;
+    height: 32px;
     border-radius: var(--radius-sm);
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
     font-size: 13px;
+    flex-shrink: 0;
   }
 
   /* ── ABA 2: AUTO-JOIN ── */
@@ -974,6 +986,53 @@
     .grid-cards {
       grid-template-columns: 1fr !important;
       gap: 12px !important;
+    }
+
+    /* ── CORREÇÃO TOTAL DO CARD NO CELULAR ── */
+    .group-card {
+      padding: 14px !important;
+      gap: 10px !important;
+      overflow: visible !important;
+    }
+    .card-bottom {
+      flex-direction: column !important;
+      align-items: stretch !important;
+      gap: 10px !important;
+      padding-top: 10px !important;
+    }
+    .card-bottom-info {
+      display: flex !important;
+      align-items: center !important;
+      justify-content: flex-start !important;
+      width: 100% !important;
+    }
+    .members-pill {
+      font-size: 0.85rem !important;
+      font-weight: 700 !important;
+    }
+    .card-actions {
+      display: flex !important;
+      width: 100% !important;
+      gap: 8px !important;
+    }
+    .btn-enter-instant {
+      flex: 1 !important;
+      padding: 13px 18px !important;
+      font-size: 0.95rem !important;
+      font-weight: 800 !important;
+      justify-content: center !important;
+      text-align: center !important;
+      border-radius: 10px !important;
+      box-shadow: 0 4px 12px rgba(16, 185, 129, 0.35) !important;
+      background: #10b981 !important;
+      color: #ffffff !important;
+    }
+    .btn-copy-link {
+      width: 46px !important;
+      height: 46px !important;
+      border-radius: 10px !important;
+      font-size: 16px !important;
+      flex-shrink: 0 !important;
     }
   }
   </style>
@@ -1726,8 +1785,9 @@
       let badgeText = `${m.toLocaleString("pt-BR")} membros`;
       if (m >= 10000) { badgeColor = "#f59e0b"; badgeText = `🔥 ${m.toLocaleString("pt-BR")} membros`; }
 
+      const deepLink = converterParaDeepLink(g.url);
       const botaoExcluir = isAdmLogado
-        ? `<button class="btn-copy-link" title="Excluir do site" onclick="excluirGrupo('${esc(g.url)}')" style="color:#f87171;">🗑️</button>`
+        ? `<button type="button" class="btn-copy-link" title="Excluir do site" onclick="excluirGrupo('${esc(g.url)}')" style="color:#f87171;">🗑️</button>`
         : "";
 
       return `
@@ -1735,8 +1795,8 @@
           <div class="card-top">
             <div class="avatar-frame">${avatarHtml}</div>
             <div class="group-header-info">
-              <div class="group-name" title="${esc(g.titulo)}">${esc(g.titulo) || "Grupo Telegram"}</div>
-              <a href="${esc(g.url)}" target="_blank" rel="noopener" class="group-link-url">${esc(g.url)}</a>
+              <div class="group-name" title="${esc(g.titulo)}" onclick="abrirGrupoDireto('${esc(g.url)}', event)" style="cursor:pointer;">${esc(g.titulo) || "Grupo Telegram"}</div>
+              <a href="${esc(deepLink)}" class="group-link-url" onclick="abrirGrupoDireto('${esc(g.url)}', event)">${esc(g.url)}</a>
               <div class="card-tags-row">
                 ${tagAmizade}
                 ${tagTipo}
@@ -1747,12 +1807,14 @@
             <p class="group-description">${esc(g.desc) || "Comunidade brasileira aberta para conversa e interação."}</p>
           </div>
           <div class="card-bottom">
-            <span class="members-pill" style="color:${badgeColor};">⚡ ${badgeText}</span>
+            <div class="card-bottom-info">
+              <span class="members-pill" style="color:${badgeColor};">⚡ ${badgeText}</span>
+            </div>
             <div class="card-actions">
-              <a href="${esc(converterParaDeepLink(g.url))}" class="btn-enter-instant" onclick="abrirGrupoDireto('${esc(g.url)}', event)">
+              <a href="${esc(deepLink)}" class="btn-enter-instant" onclick="abrirGrupoDireto('${esc(g.url)}', event)">
                 ⚡ Entrar
               </a>
-              <button class="btn-copy-link" title="Copiar link" onclick="copiarLink('${esc(g.url)}')">📋</button>
+              <button type="button" class="btn-copy-link" title="Copiar link" onclick="copiarLink('${esc(g.url)}')">📋</button>
               ${botaoExcluir}
             </div>
           </div>
@@ -1804,19 +1866,12 @@
   }
 
   function abrirGrupoDireto(url, e) {
-    if (e) e.preventDefault();
     marcarEntrado(url);
     const deepLink = converterParaDeepLink(url);
-
-    // Abre diretamente o aplicativo nativo do Telegram sem passar por página web
-    window.location.href = deepLink;
-
-    // Fallback: se em 2s o app não tiver respondido (ex: dispositivo sem o app instalado), abre o link web
-    setTimeout(() => {
-      if (document.hasFocus()) {
-        window.open(url, "_blank");
-      }
-    }, 2000);
+    if (deepLink) {
+      // Disparo instantâneo do Telegram nativo sem recarregar na web nem exibir perguntas intermediárias
+      window.location.href = deepLink;
+    }
   }
 
   function marcarEntrado(url) {
