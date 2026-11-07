@@ -1051,12 +1051,12 @@
           <div id="import-status-msg" style="font-weight:600;"></div>
         </div>
 
-        <button class="btn-add-primary" id="btn-iniciar-import" onclick="processarImportacao()" style="width:100%;justify-content:center;padding:12px;font-size:0.92rem;">
-          🚀 Filtrar e Publicar no Site Inteiro
+        <button class="btn-add-primary" id="btn-iniciar-import" onclick="processarImportacao()" style="width:100%;justify-content:center;padding:13px;font-size:0.95rem;font-weight:700;">
+          🔍 Filtrar os Grupos
         </button>
 
-        <button type="button" onclick="publicarAlteracoesNoSite()" style="margin-top:10px;width:100%;background:transparent;border:1px solid var(--border-subtle);color:var(--text-secondary);padding:9px;border-radius:var(--radius-sm);font-size:0.82rem;cursor:pointer;font-weight:600;">
-          ☁️ Apenas Sincronizar Alterações Atuais com Vercel / GitHub
+        <button type="button" id="btn-publicar-site" onclick="publicarAlteracoesNoSite()" style="margin-top:10px;width:100%;background:rgba(36,161,222,0.18);border:1px solid var(--tg-blue);color:#ffffff;padding:13px;border-radius:var(--radius-sm);font-size:0.95rem;cursor:pointer;font-weight:700;display:flex;align-items:center;justify-content:center;gap:8px;transition:all 0.2s;">
+          🚀 Mandar pro Site Inteiro
         </button>
       </div>
     </div>
@@ -1448,8 +1448,8 @@
       atualizarMetricasVisual();
       renderizarGrupos();
 
-      sMsg.innerHTML = `✔ ${novos.length} novo(s) grupo(s) adicionados! Publicando no site inteiro (GitHub / Vercel)...`;
-      await publicarAlteracoesNoSite();
+      sMsg.innerHTML = `✔ ${novos.length} novo(s) grupo(s) filtrado(s) e adicionado(s)! Para salvar no ar, clique no botão azul abaixo 'Mandar pro Site Inteiro'.`;
+      alerta(`${novos.length} grupos filtrados com sucesso!`, "success");
       document.getElementById("import-textarea").value = "";
     } else {
       sMsg.innerHTML = `Nenhum link inédito. Todos os links informados já constam no site.`;
@@ -1457,18 +1457,24 @@
     }
 
     btn.disabled = false;
-    btn.textContent = "🚀 Filtrar e Publicar no Site Inteiro";
+    btn.textContent = "🔍 Filtrar os Grupos";
   }
 
   async function publicarAlteracoesNoSite() {
     const totalAtivo = catalogoGrupos.length;
-    alerta("Sincronizando com o GitHub & Vercel...", "info");
+    const btnPub = document.getElementById("btn-publicar-site");
+    if (btnPub) {
+      btnPub.disabled = true;
+      btnPub.textContent = "⏳ Enviando pro site inteiro...";
+    }
+    alerta("Publicando alterações no site inteiro...", "info");
 
     let GITHUB_TOKEN = localStorage.getItem("tg_gh_token") || "";
     if (!GITHUB_TOKEN) {
-      GITHUB_TOKEN = prompt("Insira seu GitHub Token para publicar direto na Vercel (salvo no navegador):");
+      GITHUB_TOKEN = prompt("Insira seu Token do GitHub para publicar no site inteiro (salvo no navegador):");
       if (!GITHUB_TOKEN) {
         alerta("Token não informado. Operação cancelada.", "error");
+        if (btnPub) { btnPub.disabled = false; btnPub.textContent = "🚀 Mandar pro Site Inteiro"; }
         return;
       }
       localStorage.setItem("tg_gh_token", GITHUB_TOKEN.trim());
@@ -1514,14 +1520,21 @@
       });
 
       if (resPut.ok) {
-        alerta(`🚀 Publicado com sucesso! ${totalAtivo} grupos atualizados no mundo todo!`, "success");
+        alerta(`🚀 Sucesso! ${totalAtivo} grupos salvos e publicados no site inteiro!`, "success");
+        const sMsg = document.getElementById("import-status-msg");
+        if (sMsg) sMsg.innerHTML = `🎉 SUCESSO! ${totalAtivo} grupos salvos no site inteiro!`;
       } else {
         const err = await resPut.json();
         throw new Error(err.message || "Erro API GitHub");
       }
     } catch (e) {
       console.error(e);
-      alerta("Erro na sincronização: " + e.message, "error");
+      alerta("Erro ao salvar: " + e.message, "error");
+    } finally {
+      if (btnPub) {
+        btnPub.disabled = false;
+        btnPub.textContent = "🚀 Mandar pro Site Inteiro";
+      }
     }
   }
   </script>
