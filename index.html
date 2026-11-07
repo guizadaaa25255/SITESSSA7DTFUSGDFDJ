@@ -901,6 +901,12 @@
   }
 
   /* ── ABA 3: DISPARADOR EM MASSA ── */
+  .broadcast-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    min-width: 0;
+  }
   .broadcast-layout {
     display: grid;
     grid-template-columns: 460px 1fr;
@@ -1411,7 +1417,7 @@
     }
 
     /* ── ABA DISPARADOR & AUTO-JOIN 100% ENQUADRADAS NO CELULAR ── */
-    .broadcast-layout, .autojoin-layout {
+    .broadcast-layout, .autojoin-layout, .broadcast-sidebar {
       display: flex !important;
       flex-direction: column !important;
       width: 100% !important;
@@ -1419,6 +1425,7 @@
       box-sizing: border-box !important;
       gap: 14px !important;
       overflow: hidden !important;
+      min-width: 0 !important;
     }
     .composer-card, .control-card, .group-picker-box, .activity-monitor-card {
       width: 100% !important;
@@ -1550,42 +1557,116 @@
       max-width: 100% !important;
       box-sizing: border-box !important;
     }
-    .groups-scroll-list {
-      max-height: 200px !important;
-      box-sizing: border-box !important;
-      width: 100% !important;
-    }
-    .monitor-header {
+    .picker-header-row {
+      display: flex !important;
       flex-direction: column !important;
       align-items: flex-start !important;
       gap: 8px !important;
-    }
-    .monitor-header > div:last-child {
       width: 100% !important;
+      box-sizing: border-box !important;
+    }
+    .picker-actions-row {
       display: flex !important;
-      justify-content: space-between !important;
+      width: 100% !important;
+      gap: 4px !important;
+      box-sizing: border-box !important;
+    }
+    .picker-actions-row button {
+      flex: 1 !important;
+      padding: 6px 4px !important;
+      font-size: 0.72rem !important;
+      text-align: center !important;
+      white-space: nowrap !important;
+      box-sizing: border-box !important;
+    }
+    .groups-scroll-list {
+      max-height: 220px !important;
+      box-sizing: border-box !important;
+      width: 100% !important;
+      max-width: 100% !important;
+      overflow-x: hidden !important;
+      overflow-y: auto !important;
+      min-width: 0 !important;
+      padding: 6px !important;
+    }
+    .groups-scroll-list label {
+      display: flex !important;
       align-items: center !important;
+      gap: 8px !important;
+      width: 100% !important;
+      max-width: 100% !important;
+      box-sizing: border-box !important;
+      min-width: 0 !important;
+      overflow: hidden !important;
+    }
+    .groups-scroll-list label span:first-of-type {
+      flex: 1 !important;
+      min-width: 0 !important;
+      white-space: nowrap !important;
+      overflow: hidden !important;
+      text-overflow: ellipsis !important;
+    }
+    .groups-scroll-list label span:last-of-type {
+      flex-shrink: 0 !important;
+    }
+    .monitor-header {
+      display: flex !important;
+      flex-direction: column !important;
+      align-items: flex-start !important;
+      gap: 8px !important;
+      width: 100% !important;
+      box-sizing: border-box !important;
+    }
+    .monitor-header-actions {
+      display: flex !important;
+      align-items: center !important;
+      justify-content: space-between !important;
+      width: 100% !important;
+      box-sizing: border-box !important;
     }
     .monitor-kpi-grid {
-      grid-template-columns: repeat(3, 1fr) !important;
+      display: grid !important;
+      grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
       gap: 6px !important;
+      width: 100% !important;
+      max-width: 100% !important;
+      box-sizing: border-box !important;
+      min-width: 0 !important;
+      overflow: hidden !important;
     }
     .kpi-mini-card {
-      padding: 6px 4px !important;
+      padding: 8px 4px !important;
       text-align: center !important;
+      min-width: 0 !important;
+      max-width: 100% !important;
+      box-sizing: border-box !important;
+      overflow: hidden !important;
+      align-items: center !important;
     }
     .kpi-mini-label {
-      font-size: 0.62rem !important;
+      font-size: 0.58rem !important;
       line-height: 1.2 !important;
+      letter-spacing: 0 !important;
+      white-space: nowrap !important;
+      overflow: hidden !important;
+      text-overflow: ellipsis !important;
+      width: 100% !important;
+      display: block !important;
     }
     .kpi-mini-val {
       font-size: 0.95rem !important;
+      font-weight: 800 !important;
+      white-space: nowrap !important;
     }
     .activity-feed-container {
       padding: 8px 10px !important;
       max-height: 200px !important;
       box-sizing: border-box !important;
       width: 100% !important;
+      max-width: 100% !important;
+      min-width: 0 !important;
+      overflow-x: hidden !important;
+      overflow-y: auto !important;
     }
     .activity-feed-item {
       padding: 6px 8px !important;
@@ -1593,6 +1674,15 @@
       gap: 6px !important;
       box-sizing: border-box !important;
       width: 100% !important;
+      max-width: 100% !important;
+      min-width: 0 !important;
+      overflow: hidden !important;
+    }
+    .activity-text {
+      flex: 1 !important;
+      min-width: 0 !important;
+      word-break: break-word !important;
+      overflow-wrap: anywhere !important;
     }
   }
   </style>
@@ -1827,7 +1917,7 @@
                 <p class="monitor-subtitle">Acompanhe o ingresso automático com proteção anti-flood</p>
               </div>
             </div>
-            <div style="display:flex;align-items:center;gap:8px;">
+            <div class="monitor-header-actions" style="display:flex;align-items:center;gap:8px;">
               <span class="badge-status-online" id="status-autojoin-badge">🟢 Sistema Pronto</span>
               <button type="button" class="btn-clear-activity" onclick="limparConsole()">Limpar</button>
             </div>
@@ -1928,14 +2018,14 @@
           </div>
         </div>
 
-        <div style="display:flex;flex-direction:column;gap:14px;">
+        <div class="broadcast-sidebar">
           <div class="group-picker-box">
-            <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;">
+            <div class="picker-header-row" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;">
               <div>
                 <h3 style="font-size:0.98rem;font-weight:700;">Selecione os Grupos da Conta</h3>
                 <p style="font-size:0.75rem;color:var(--text-muted);" id="lbl-selecao-count">0 grupos selecionados</p>
               </div>
-              <div style="display:flex;gap:6px;">
+              <div class="picker-actions-row" style="display:flex;gap:6px;">
                 <button class="btn-adm-action" style="padding:4px 8px;font-size:0.75rem;" onclick="carregarMeusGrupos()">🔄 Atualizar</button>
                 <button class="btn-adm-action" style="padding:4px 8px;font-size:0.75rem;" onclick="selecionarTodosGrupos(true)">Marcar Todos</button>
                 <button class="btn-adm-action" style="padding:4px 8px;font-size:0.75rem;" onclick="selecionarTodosGrupos(false)">Desmarcar</button>
@@ -1961,7 +2051,7 @@
                   <p class="monitor-subtitle">Envio rotativo inteligente com saudação automática</p>
                 </div>
               </div>
-              <div style="display:flex;align-items:center;gap:8px;">
+              <div class="monitor-header-actions" style="display:flex;align-items:center;gap:8px;">
                 <span class="badge-status-online purple" id="status-broadcast-badge">🟣 Pronto para Disparo</span>
                 <button type="button" class="btn-clear-activity" onclick="limparConsoleBroadcast()">Limpar</button>
               </div>
@@ -2710,10 +2800,10 @@
     // Mostra grupos aprovados para disparo
     const gruposParaDisparo = catalogoGrupos.slice(0, 30);
     container.innerHTML = gruposParaDisparo.map((g, i) => `
-      <label style="display:flex;align-items:center;gap:10px;padding:6px 8px;border-radius:6px;cursor:pointer;font-size:0.83rem;color:#e2e8f0;background:rgba(255,255,255,0.02);margin-bottom:4px;">
-        <input type="checkbox" class="chk-grupo" value="${esc(g.url)}" data-name="${esc(g.titulo)}" checked onchange="atualizarContagemSelecao()" style="accent-color:#10b981;width:15px;height:15px;">
-        <span style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis;flex:1;">${esc(g.titulo)}</span>
-        <span style="font-size:0.7rem;color:#94a3b8;font-family:'JetBrains Mono';">${g.membros || 0} mem</span>
+      <label style="display:flex;align-items:center;gap:8px;padding:6px 8px;border-radius:6px;cursor:pointer;font-size:0.83rem;color:#e2e8f0;background:rgba(255,255,255,0.02);margin-bottom:4px;width:100%;box-sizing:border-box;min-width:0;overflow:hidden;">
+        <input type="checkbox" class="chk-grupo" value="${esc(g.url)}" data-name="${esc(g.titulo)}" checked onchange="atualizarContagemSelecao()" style="accent-color:#10b981;width:15px;height:15px;flex-shrink:0;">
+        <span style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis;flex:1;min-width:0;">${esc(g.titulo)}</span>
+        <span style="font-size:0.7rem;color:#94a3b8;font-family:'JetBrains Mono';flex-shrink:0;">${g.membros || 0} mem</span>
       </label>
     `).join("");
 
