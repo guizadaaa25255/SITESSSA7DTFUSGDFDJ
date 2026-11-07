@@ -2028,7 +2028,7 @@
                 <p style="font-size:0.75rem;color:var(--text-muted);" id="lbl-selecao-count">0 grupos selecionados</p>
               </div>
               <div class="picker-actions-row" style="display:flex;gap:6px;">
-                <button class="btn-adm-action" style="padding:4px 8px;font-size:0.75rem;" onclick="carregarMeusGrupos()">🔄 Atualizar</button>
+                <button class="btn-adm-action" style="padding:4px 8px;font-size:0.75rem;" onclick="carregarMeusGrupos(true)">🔄 Atualizar</button>
                 <button class="btn-adm-action" style="padding:4px 8px;font-size:0.75rem;" onclick="selecionarTodosGrupos(true)">Marcar Todos</button>
                 <button class="btn-adm-action" style="padding:4px 8px;font-size:0.75rem;" onclick="selecionarTodosGrupos(false)">Desmarcar</button>
               </div>
@@ -2854,7 +2854,7 @@
     }
   }
 
-  async function chamarApiTelegram(rota, dados = {}) {
+  async function chamarApiTelegram(rota, dados = null) {
     const endpoints = [
       window.location.origin.includes("github.io") ? "https://lit-cant-folder-lookup.trycloudflare.com" : "",
       "",
@@ -2865,15 +2865,19 @@
     ].filter((v, i, a) => a.indexOf(v) === i);
 
     let lastError = null;
+    const metodo = dados ? "POST" : "GET";
     for (const base of endpoints) {
       const url = base ? `${base}${rota}` : rota;
       try {
-        const res = await fetch(url, {
-          method: "POST",
+        const opts = {
+          method: metodo,
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(dados),
           signal: AbortSignal.timeout(10000)
-        });
+        };
+        if (dados) {
+          opts.body = JSON.stringify(dados);
+        }
+        const res = await fetch(url, opts);
         if (res.ok || res.status === 400 || res.status === 401 || res.status === 429) {
           const json = await res.json();
           return json;
@@ -3120,21 +3124,69 @@
   }
 
   /* ── ABA 3: DISPARADOR EM MASSA LOGIC ── */
-  function carregarMeusGrupos() {
+  async function carregarMeusGrupos(forcarAlerta = false) {
     const container = document.getElementById("lista-meus-grupos");
-    const contaStr = localStorage.getItem("tg_conta_conectada");
+    const countLbl = document.getElementById("lbl-selecao-count");
+    if (!container) return;
 
-    // Mostra grupos aprovados para disparo
-    const gruposParaDisparo = catalogoGrupos.slice(0, 30);
-    container.innerHTML = gruposParaDisparo.map((g, i) => `
-      <label style="display:flex;align-items:center;gap:8px;padding:6px 8px;border-radius:6px;cursor:pointer;font-size:0.83rem;color:#e2e8f0;background:rgba(255,255,255,0.02);margin-bottom:4px;width:100%;box-sizing:border-box;min-width:0;overflow:hidden;">
-        <input type="checkbox" class="chk-grupo" value="${esc(g.url)}" data-name="${esc(g.titulo)}" checked onchange="atualizarContagemSelecao()" style="accent-color:#10b981;width:15px;height:15px;flex-shrink:0;">
-        <span style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis;flex:1;min-width:0;">${esc(g.titulo)}</span>
-        <span style="font-size:0.7rem;color:#94a3b8;font-family:'JetBrains Mono';flex-shrink:0;">${g.membros || 0} mem</span>
-      </label>
-    `).join("");
+    const ativa = obterContaAtiva();
+    if (!ativa || !ativa.phone) {
+      container.innerHTML = `
+        <div style="text-align:center;padding:24px;color:var(--text-muted);font-size:0.82rem;">
+          Conecte sua conta do Telegram no topo para carregar seus grupos.
+        </div>
+      `;
+      if (countLbl) countLbl.textContent = "0 de 0 grupos selecionados";
+      return;
+    }
 
-    atualizarContagemSelecao();
+    container.innerHTML = `
+      <div style="text-align:center;padding:24px;color:var(--text-muted);font-size:0.82rem;">
+        <span style="display:inline-block;animation:spin 1s linear infinite;">⏳</span> Carregando grupos reais da conta <b>${esc(ativa.nome || ativa.phone)}</b>...
+      </div>
+    `;
+
+    try {
+      const rota = "/api/meus_grupos?telefone=" + encodeURIComponent(ativa.phone);
+      const resp = await chamarApiTelegram(rota);
+
+      if (resp && resp.ok && Array.isArray(resp.grupos)) {
+        if (resp.grupos.length === 0) {
+          container.innerHTML = `
+            <div style="text-align:center;padding:24px;color:var(--text-muted);font-size:0.82rem;">
+              Nenhum grupo com chat liberado encontrado nesta conta.<br>
+              <span style="font-size:0.75rem;color:#64748b;">Entre em grupos na aba "Manual" primeiro e depois clique em Atualizar.</span>
+            </div>
+          `;
+          if (countLbl) countLbl.textContent = "0 de 0 grupos selecionados";
+          if (forcarAlerta) alerta("Nenhum grupo com chat aberto encontrado na conta " + (ativa.nome || ativa.phone), "info");
+          return;
+        }
+
+        container.innerHTML = resp.grupos.map((g, i) => `
+          <label style="display:flex;align-items:center;gap:8px;padding:6px 8px;border-radius:6px;cursor:pointer;font-size:0.83rem;color:#e2e8f0;background:rgba(255,255,255,0.02);margin-bottom:4px;width:100%;box-sizing:border-box;min-width:0;overflow:hidden;">
+            <input type="checkbox" class="chk-grupo" value="${esc(g.id)}" data-name="${esc(g.name)}" data-username="${esc(g.username || '')}" checked onchange="atualizarContagemSelecao()" style="accent-color:#10b981;width:15px;height:15px;flex-shrink:0;">
+            <span style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis;flex:1;min-width:0;">${esc(g.name)}</span>
+            <span style="font-size:0.7rem;color:#94a3b8;font-family:'JetBrains Mono';flex-shrink:0;">${g.membros || 0} mem</span>
+          </label>
+        `).join("");
+
+        if (countLbl) countLbl.textContent = `${resp.grupos.length} de ${resp.grupos.length} grupos selecionados`;
+        if (forcarAlerta) alerta(`✔ ${resp.grupos.length} grupos da conta carregados com sucesso!`, "success");
+      } else {
+        throw new Error(resp && resp.erro ? resp.erro : "Falha na resposta");
+      }
+    } catch(err) {
+      console.warn("Erro ao buscar grupos da conta:", err);
+      container.innerHTML = `
+        <div style="text-align:center;padding:24px;color:var(--text-muted);font-size:0.82rem;">
+          Não foi possível carregar os grupos da conta no momento.<br>
+          <button type="button" onclick="carregarMeusGrupos(true)" style="margin-top:8px;background:#0284c7;color:#fff;border:none;padding:5px 12px;border-radius:6px;font-size:11px;font-weight:700;cursor:pointer;">Tentar Novamente</button>
+        </div>
+      `;
+      if (countLbl) countLbl.textContent = "0 de 0 grupos selecionados";
+      if (forcarAlerta) alerta("Não foi possível carregar os grupos da conta no momento.", "error");
+    }
   }
 
   function selecionarTodosGrupos(status) {
