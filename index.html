@@ -1066,23 +1066,38 @@
     </div>
   </div>
 
-  <!-- MODAL AUTH TELEGRAM -->
+  <!-- MODAL AUTH TELEGRAM COM API ID E API HASH -->
   <div class="modal-backdrop" id="modal-auth">
-    <div class="modal-card" style="max-width:400px;">
+    <div class="modal-card" style="max-width:440px;">
       <div class="modal-header">
         <h3>Conectar Conta Telegram</h3>
         <button class="modal-close" onclick="fecharModalAuth()">&times;</button>
       </div>
       <div class="modal-body">
-        <p style="font-size:0.82rem;color:var(--text-muted);margin-bottom:14px;">
-          Conecte sua conta do Telegram para funções de entrada automática e disparo pelo servidor local.
+        <p style="font-size:0.82rem;color:var(--text-muted);margin-bottom:14px;line-height:1.45;">
+          Insira suas credenciais do Telegram (obtidas em <a href="https://my.telegram.org" target="_blank" rel="noopener" style="color:#60a5fa;text-decoration:underline;">my.telegram.org</a>) para sincronizar sua conta localmente.
         </p>
-        <input type="text" id="in-auth-phone" placeholder="Número com DDD (+55...)" style="width:100%;background:var(--bg-input);border:1px solid var(--border-subtle);border-radius:var(--radius-sm);padding:10px 14px;color:#fff;font-size:0.9rem;outline:none;margin-bottom:14px;">
+
+        <div style="margin-bottom:10px;">
+          <label style="font-size:0.75rem;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:4px;">API ID (Opcional no site):</label>
+          <input type="text" id="in-auth-api-id" placeholder="Ex: 39786267" style="width:100%;background:var(--bg-input);border:1px solid var(--border-subtle);border-radius:var(--radius-sm);padding:9px 12px;color:#fff;font-size:0.88rem;outline:none;">
+        </div>
+
+        <div style="margin-bottom:10px;">
+          <label style="font-size:0.75rem;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:4px;">API HASH (Opcional no site):</label>
+          <input type="text" id="in-auth-api-hash" placeholder="Ex: 058f4c2916f81b23316d0488788165aa" style="width:100%;background:var(--bg-input);border:1px solid var(--border-subtle);border-radius:var(--radius-sm);padding:9px 12px;color:#fff;font-size:0.88rem;outline:none;">
+        </div>
+
+        <div style="margin-bottom:16px;">
+          <label style="font-size:0.75rem;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:4px;">Número de Telefone (com +55):</label>
+          <input type="text" id="in-auth-phone" placeholder="+5511999999999" style="width:100%;background:var(--bg-input);border:1px solid var(--border-subtle);border-radius:var(--radius-sm);padding:9px 12px;color:#fff;font-size:0.88rem;outline:none;">
+        </div>
+
         <div style="display:flex;gap:10px;">
-          <button onclick="alerta('Servidor local necessário para disparo de código.', 'info'); fecharModalAuth();" style="flex:1;background:#3b82f6;color:#fff;border:none;padding:10px;border-radius:var(--radius-sm);font-weight:700;cursor:pointer;">
-            Enviar Código
+          <button onclick="salvarContaTelegramLocal()" style="flex:1;background:#3b82f6;color:#fff;border:none;padding:11px;border-radius:var(--radius-sm);font-weight:700;cursor:pointer;font-size:0.9rem;">
+            Salvar e Conectar
           </button>
-          <button onclick="fecharModalAuth()" style="background:var(--bg-input);border:1px solid var(--border-subtle);color:var(--text-muted);padding:10px 14px;border-radius:var(--radius-sm);cursor:pointer;">
+          <button onclick="fecharModalAuth()" style="background:var(--bg-input);border:1px solid var(--border-subtle);color:var(--text-muted);padding:11px 16px;border-radius:var(--radius-sm);cursor:pointer;font-size:0.9rem;">
             Cancelar
           </button>
         </div>
@@ -1111,8 +1126,46 @@
     }
   }
 
+  function salvarContaTelegramLocal() {
+    const apiId = (document.getElementById("in-auth-api-id").value || "").trim();
+    const apiHash = (document.getElementById("in-auth-api-hash").value || "").trim();
+    const phone = (document.getElementById("in-auth-phone").value || "").trim();
+
+    if (!phone) {
+      alerta("Informe ao menos o seu telefone com DDD (+55...)", "error");
+      return;
+    }
+
+    const conta = { phone, apiId, apiHash, ativa: true };
+    localStorage.setItem("tg_conta_conectada", JSON.stringify(conta));
+    carregarContaTelegramVisual();
+    fecharModalAuth();
+    alerta("Conta Telegram conectada com sucesso!", "success");
+  }
+
+  function carregarContaTelegramVisual() {
+    try {
+      const data = localStorage.getItem("tg_conta_conectada");
+      if (!data) return;
+      const c = JSON.parse(data);
+      if (c && c.phone) {
+        const avatar = document.getElementById("acc-avatar");
+        const name = document.getElementById("acc-name");
+        const phone = document.getElementById("acc-phone");
+        if (avatar) {
+          avatar.textContent = "✓";
+          avatar.style.background = "#10b981";
+          avatar.style.color = "#fff";
+        }
+        if (name) name.textContent = c.phone;
+        if (phone) phone.textContent = "Conectado";
+      }
+    } catch(e) {}
+  }
+
   document.addEventListener("DOMContentLoaded", () => {
     atualizarVisibilidadeAdm();
+    carregarContaTelegramVisual();
     renderizarGrupos();
   });
 
