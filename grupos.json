@@ -234,6 +234,19 @@
     "chat_score": 100
   },
   {
+    "url": "https://t.me/pythonbr",
+    "titulo": "Python Brasil",
+    "desc": "0. Grupo de conversa sobre a ling de prog Python1. Sem pirataria2. respeite o coleguinha3. respeita as minas4. no seja babaca 5. Sem links de grupos do WhatsApp6. Se alguém daqui te importunar no privado avise um admin",
+    "membros": 5412,
+    "imagem": "https://cdn1.telesco.pe/file/PoGybuV4LKMxIsPSbriwPzJl6KVcmAQPAvEtt-ycripPri3IcdwkUiMG-QVqz37PXmavCRaZoFyVMotsi9UUR8fgRhASE_ZcliIa2QFUR5miDxCwCvKNjAUwfzAE0z8RmQubkWh7VdbQU2hXdVjrV4GhKDHXjs9B2jvwZ3s0UNw1xQIuNrhmJdj1i_QOcu-PfKD58IozfgQNDW3-RXyQ_SgGkvSbBrtNriRX6yRN6NC_5Y3UFsz_1rmT4wF8hjetkXBVVTXhz5HzflcMIdrRRMLooBC5AHrZkuM3waFuum8iDwunKVqIsYlY9MQz2x6RD0jS3WoYy2xjIRXto6L7RA.jpg",
+    "categoria": "tecnologia_programacao",
+    "tipo": "group",
+    "requer_captcha": false,
+    "is_chat_amizade": true,
+    "badge_tipo": "💬 Grupo Bate-Papo",
+    "chat_score": 100
+  },
+  {
     "url": "https://t.me/corinthianschat",
     "titulo": "𝗩𝗔𝗜 𝗖𝗢𝗥𝗜𝗡𝗧𝗛𝗜𝗔𝗡𝗦!! 🦅 🏴🏳️",
     "desc": "Fórum dedicado aos corintianos apaixonados! Espaço para debates, notícias, interação durante os jogos, e tudo que envolve o Timão.🏴🏳️🏴🏳️🏴🏳️🏴🏳️🏳️🏴🏳️🏴🏳️🏴🏳️🏴Nossos canais:⚽️ ➣ @CorinthiansBolao📰 ➣ @timedopovonews",
@@ -546,6 +559,19 @@
     "chat_score": 100
   },
   {
+    "url": "https://t.me/debianbr",
+    "titulo": "Debian Brasil",
+    "desc": "Grupo criado para conversarmos sobre Debian.   Links e divulgações solicite ao administrador.",
+    "membros": 1281,
+    "imagem": "https://cdn1.telesco.pe/file/e8BDOHvlr4Pk5mG3UMT-_VvfVuTjPkotIq2ys0EmdFIbYFGLPo3dnuhCWbRWrA5R_92dAvJbCr2CXdG-DRAVvZo-f0DR1geirdCZ2XyeD7W9Jo4fVJAamAECeCXD4lKfx2L2kFNSvFPTJ06-7HCw-y5SNXU5xm-7iIhqbVFKlyB1zF4rgNJ6ufcG49q0SAX4QLq8fjFmoFxS7aMZYm-KxwcJyctty6fCSIoNQgd-FuqQ9gGoMnAa-YaQulp_VdyvJMaDNFILAldK43-meca1Of4g9t8XUC3m0QqT_VeqXdZtkkLfbnc3vca_XXCUDGFfKWajZL1w4fCSdk2se2teiQ.jpg",
+    "categoria": "geral",
+    "tipo": "group",
+    "requer_captcha": false,
+    "is_chat_amizade": true,
+    "badge_tipo": "💬 Grupo Bate-Papo",
+    "chat_score": 100
+  },
+  {
     "url": "https://t.me/mercadorecifepe",
     "titulo": "Compra & Venda RECIFE (PE)",
     "desc": "Compra & Venda RECIFE (PE) & Região",
@@ -800,6 +826,19 @@
     "imagem": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIwIiBoZWlnaHQ9IjMyMCIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSIgdmlld0JveD0iMCAwIDEwMCAxMDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI%2BPGRlZnM%2BPGxpbmVhckdyYWRpZW50IGlkPSJnIiB4MT0iMCUiIHgyPSIwJSIgeTE9IjAlIiB5Mj0iMTAwJSI%2BPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2EwZGU3ZSIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzU0Y2I2OCIvPjwvbGluZWFyR3JhZGllbnQ%2BPC9kZWZzPjxzdHlsZT50ZXh0e2ZvbnQ6NjAwIDQ0cHggLWFwcGxlLXN5c3RlbSxCbGlua01hY1N5c3RlbUZvbnQsJ1NlZ29lIFVJJyxSb2JvdG8sSGVsdmV0aWNhLEFyaWFsLHNhbnMtc2VyaWYsJ0FwcGxlIENvbG9yIEVtb2ppJywnU2Vnb2UgVUkgRW1vamknLCdTZWdvZSBVSSBTeW1ib2wnOy13ZWJraXQtdXNlci1zZWxlY3Q6bm9uZTt1c2VyLXNlbGVjdDpub25lfTwvc3R5bGU%2BPHJlY3Qgd2lkdGg9IjEwMCIgaGVpZ2h0PSIxMDAiIGZpbGw9InVybCgjZykiLz48dGV4dCB0ZXh0LWFuY2hvcj0ibWlkZGxlIiB4PSI1MCIgeT0iNjYiIGZpbGw9IiNmZmYiPkFSPC90ZXh0Pjwvc3ZnPg%3D%3D",
     "categoria": "Bate-Papo & Amizade",
     "tipo": "livre",
+    "requer_captcha": false,
+    "is_chat_amizade": true,
+    "badge_tipo": "💬 Grupo Bate-Papo",
+    "chat_score": 100
+  },
+  {
+    "url": "https://t.me/latexbr",
+    "titulo": "LaTeX BR",
+    "desc": "Discussão sobre LaTeX e variantes.Quer conversar sobre assuntos aleatórios? @offLaTeXGrupo internacional: @texusers",
+    "membros": 814,
+    "imagem": "https://cdn1.telesco.pe/file/OG0439Iw_WzP3AYPaBMXI4iVQS046w9LFyQMzmoGkn8dEmIffvfEUR5wU1gcQ9NFSHBIoZLDa1y1drwHF1n8A-HxdicYVMkBKsRLtBegJ3klZMKquX3z6UGfLLYEhdMSdAayywChAZ86kbOXE3GTJlj-jDUiSg6im-aF9Ia_AlL8uqmX8oBQi2mar26yg8CZZsTUaIlndY4fFbP0dlE78c8WLhXi8NhVF0DXl9CDFiCOaVzz9czq_vcvmASlCz2nykVpLtu7JoVsohcObEKhXqS7mi6TArkREkOqZNJqD_XaXH6PnbOvQj0aZVeFjjVk2CybxLkNMHt8s6P7DBmbFA.jpg",
+    "categoria": "amizade_conversa",
+    "tipo": "group",
     "requer_captcha": false,
     "is_chat_amizade": true,
     "badge_tipo": "💬 Grupo Bate-Papo",
@@ -1729,6 +1768,19 @@
     "chat_score": 100
   },
   {
+    "url": "https://t.me/webdevbrasil",
+    "titulo": "Desenvolvimento web Brasil",
+    "desc": "Grupo criado para conversar sobre desenvolvimento web e tirar dúvidasyoutube.com/joaoartur - Tutoriais e dicas sobre programação",
+    "membros": 277,
+    "imagem": "https://cdn1.telesco.pe/file/dQlalisrJ1UEYGW4Q0kaOpDe8U-HZn9wUgDl-0GppF6tjP7mDxE3Ck2hocGlPeHFNnrFn_UZAMb3-3QknOZVMqxKnVVs2VZ18QGSJThrrAsUQWJAQVMazFe9WaBdi-w984Evwlq2GsLZwaS-m5_gbrAYkev3p7sktv44HDMV09U9cmi-dVhEzsLZ4kGY0eb3TVhMSCOT8_7QuHPpnJxsYB-0MVMDpm06T_vTPL8csKSoyxvq9XyrMEvIBLZ518Zb7CUw6YqZw0xdNLuQEyT7Q7R3Rk4Kpo0c-GqC6PyvTSvyHhA6Eg5iLvE6m1rQ5boz-DI2VdHnzHsXYsIxtJdACw.jpg",
+    "categoria": "tecnologia_programacao",
+    "tipo": "group",
+    "requer_captcha": false,
+    "is_chat_amizade": true,
+    "badge_tipo": "💬 Grupo Bate-Papo",
+    "chat_score": 100
+  },
+  {
     "url": "https://t.me/desirechat69",
     "titulo": "Desire Chat - Bate-papo do Desejo",
     "desc": "",
@@ -1870,6 +1922,32 @@
     "is_chat_amizade": true,
     "badge_tipo": "💬 Grupo Bate-Papo",
     "chat_score": 90
+  },
+  {
+    "url": "https://t.me/angularjsbrasil",
+    "titulo": "@angularJSBrasil",
+    "desc": "Fala galera vamos passar de fase, estou mudando o username do grupo de @angularJSBrasil para @AngularBrasil",
+    "membros": 215,
+    "imagem": "https://cdn1.telesco.pe/file/UUGAFFHxW3qw9UoSyZn2BnNkYEmMiOp-DXQpyFySvZrmwmIyv-1RI7gdGhaav58lB2S9U8M9IBWVhovkxtUayXlLGSH17kxCV4AZbvM2H-u4gIUyYz7ham7EHGolnfoBwiIbGOBfeiIeryBp4D8P_pgSCeRLTYU6s8vAQrP1DSn5BB1lja3SgK1SUANRahRIzz8A4bUi0_QeLDGPghJSlNCtnzT1E-e64z3h4yrx04gVcFpzjjJR1pROqsJJyeO6URjgrgaVVzRx85ebfSYcBue4BrugktCkbBl2tzVFlh67TVoXZkNpskE62GVI2FGaL-aeoe6dAYvTXNrFR0ncJg.jpg",
+    "categoria": "amizade_conversa",
+    "tipo": "channel",
+    "requer_captcha": false,
+    "is_chat_amizade": true,
+    "badge_tipo": "💬 Grupo Bate-Papo",
+    "chat_score": 100
+  },
+  {
+    "url": "https://t.me/MalwareReverseBR",
+    "titulo": "Malware Reverse",
+    "desc": "Grupo Oficial de discussões e eventos sobre Análise de Malwares e Engenharia Reversa. Não deixe de participar dos nossos eventos ao vivo. Toda semana um bate-papo ao vivo abordando os principais assuntos e análise de malwares e incidentes de segurança.",
+    "membros": 212,
+    "imagem": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIwIiBoZWlnaHQ9IjMyMCIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSIgdmlld0JveD0iMCAwIDEwMCAxMDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI%2BPGRlZnM%2BPGxpbmVhckdyYWRpZW50IGlkPSJnIiB4MT0iMCUiIHgyPSIwJSIgeTE9IjAlIiB5Mj0iMTAwJSI%2BPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzgyYjFmZiIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzY2NWZmZiIvPjwvbGluZWFyR3JhZGllbnQ%2BPC9kZWZzPjxzdHlsZT50ZXh0e2ZvbnQ6NjAwIDQ0cHggLWFwcGxlLXN5c3RlbSxCbGlua01hY1N5c3RlbUZvbnQsJ1NlZ29lIFVJJyxSb2JvdG8sSGVsdmV0aWNhLEFyaWFsLHNhbnMtc2VyaWYsJ0FwcGxlIENvbG9yIEVtb2ppJywnU2Vnb2UgVUkgRW1vamknLCdTZWdvZSBVSSBTeW1ib2wnOy13ZWJraXQtdXNlci1zZWxlY3Q6bm9uZTt1c2VyLXNlbGVjdDpub25lfTwvc3R5bGU%2BPHJlY3Qgd2lkdGg9IjEwMCIgaGVpZ2h0PSIxMDAiIGZpbGw9InVybCgjZykiLz48dGV4dCB0ZXh0LWFuY2hvcj0ibWlkZGxlIiB4PSI1MCIgeT0iNjYiIGZpbGw9IiNmZmYiPk1SPC90ZXh0Pjwvc3ZnPg%3D%3D",
+    "categoria": "amizade_conversa",
+    "tipo": "group",
+    "requer_captcha": false,
+    "is_chat_amizade": true,
+    "badge_tipo": "💬 Grupo Bate-Papo",
+    "chat_score": 100
   },
   {
     "url": "https://t.me/divulgueseuprodutotaboao",
@@ -3172,6 +3250,19 @@
     "chat_score": 10
   },
   {
+    "url": "https://t.me/pythonbrasil",
+    "titulo": "Python Brasil",
+    "desc": "Canal para compartilhamento de links, cursos vagas e eventos sobre Python. @laenderoliveira",
+    "membros": 24119,
+    "imagem": "https://cdn1.telesco.pe/file/DgsZ2-vCMrgoy2YN-hnnHK0ck92mehCFdoY1FPvI19NcW0RT4Tupq5JLw_KN01w1mE0-ZDdSirqqpczJrM8t1twfwB6XXjWXJnw1isUAEnyzanY6YfyrY9uDMTib7RigIqK9MZGaGdt3CwDXs9fGLhPQwcoZWelRoKeRqhJ3cCKVXdTlgVOYtsXjIn9VVbXNlWtTmrbB1OPA6mAqXQ9q190RhULps80OZYz2EEm8StuXJYPo0roMqUyXoN9iP8jN8O-cT-n9QpsiuWA5Pon4otLxCF-3-EZ3Ay_q7Dwaie8V8vU5_AqjYpCDep4FuxZ3WvPylV2sBGiUe2FhMyLUyg.jpg",
+    "categoria": "tecnologia_programacao",
+    "tipo": "channel",
+    "requer_captcha": false,
+    "is_chat_amizade": false,
+    "badge_tipo": "👥 Grupo Real",
+    "chat_score": 50
+  },
+  {
     "url": "https://t.me/+50bUhmyC5GBiNjE5",
     "titulo": "Rodadas Grátis do Guga - Não chamamos ninguém no privado!",
     "desc": "🚫 Não chamamos ninguém no privado!🔑 Nunca forneça sua senha ou realize PIX para terceiros!📊 Porcentagens de RTP👉 www.sinaisdoguga.com🎰Plataforma Indicada: https://go.aff.vaidebet.bet.br/o5h6forv?afp=gugajr&utm_campaign=TelegramGirosGratisGuga",
@@ -3341,6 +3432,19 @@
     "chat_score": 10
   },
   {
+    "url": "https://t.me/promopassagens",
+    "titulo": "PromoPassagens",
+    "desc": "As melhores promoções de passagens aéreasContato: https://chat.grf.xyz/PromoPassagens",
+    "membros": 8451,
+    "imagem": "https://cdn1.telesco.pe/file/soK0IDldsjgkbUg-19rSx0KuCE2LhksD9HsAyvqi81wBq-JMf2-so2dhjuuKQq3iaUUHnnGS5SN-o04aZYM_K0IjfqT-25wNrM39e00KW9zFypEv7B1gIShUl9UJozbyyxf57UNdHGZLSTrLTeAgqz9iK3h3CMVQPN70qQnRl7q5Lr1TaGgGHL89FmUTkjWsO3Urm2w66ARGV-yi20NJ5npk5EiSbCv9RLDMbzy27t0bc0UYLbnMk4iAliMURZa6zCR2q5c6tBtM4H48eGUO-Bnzs1-0cXpX2eoETcz-g32n-_xuSZudDF-MfgkEy4HC4a_BAiowvjZDLRA89hYZQw.jpg",
+    "categoria": "geral",
+    "tipo": "channel",
+    "requer_captcha": false,
+    "is_chat_amizade": false,
+    "badge_tipo": "👥 Grupo Real",
+    "chat_score": 50
+  },
+  {
     "url": "https://t.me/cursosja",
     "titulo": "Cursos Renda Extra",
     "desc": "====================================================================",
@@ -3393,6 +3497,19 @@
     "chat_score": 50
   },
   {
+    "url": "https://t.me/ProgramadoresBrasil",
+    "titulo": "Linguagens de Programação",
+    "desc": "Grupo para compartilhar conhecimento e tirar dúvidas sobre diversas linguagens de programação, frameworks, DevOpsEnvio de:- Código ou texto? onlinegdb.com, repl.it ou glot.io- Imagem ou vídeo? @moe_catbot , https://catbox.moe ou postimages.org",
+    "membros": 7614,
+    "imagem": "https://cdn1.telesco.pe/file/veQ37IDaKvjWcMBwFkuuIKODPvpcfA3Aa-9mR8l_EHQ6gNPw3AusEpzKsKda8BEC409VE-G_I1Kd7-G1WwjyviXqn5bTAF53NB1moQnvZ3ZG0kbaD_eBAJv8Qii9ZXwKzoF6-Js26i6CIj5vXTH4n7VephDg_UzF5tcG_grxG_CcON8wY6zT3N_d57HVMEP_KZYsijTZ5-HGasUyCHCDmvbPXHoGT3YcwaPZSkrE2Jd9J4vH0P-y_hAW9URBsDWm3zuqe1dV9u3aZZLonNwoC7FiaAAgbSLkQNhh9PIl00Ip63ItdH26a3igRZXuRv7YsFpmrj7fkVb5cLRI6RJEiw.jpg",
+    "categoria": "tecnologia_programacao",
+    "tipo": "group",
+    "requer_captcha": false,
+    "is_chat_amizade": false,
+    "badge_tipo": "👥 Grupo Real",
+    "chat_score": 50
+  },
+  {
     "url": "https://t.me/eletronica_em_foco",
     "titulo": "Eletrônica e Automação BR",
     "desc": "Grupo focado em arduino, automação, reparos em eletrônicos, destinado a iniciantes, hobbystas, técnicos e amantes da eletrônica.Parceiros:@materiasexatas@mecanica_automotiva@twdbrazil",
@@ -3432,6 +3549,19 @@
     "chat_score": 10
   },
   {
+    "url": "https://t.me/GuiaDev",
+    "titulo": "Guia Dev",
+    "desc": "@FrontEndBR e @BackendBrasil. - - >✔️ Dicas✔️ Downloads✔️ Tutoriais✔️ Vagas e muito mais.Parceiros:👉🏻  https://telegra.ph/Parceiros-Guia-Dev-02-04PARCERIA:@roberth_p",
+    "membros": 6930,
+    "imagem": "https://cdn1.telesco.pe/file/Ar4CN_PXropCJ0xVR4x6N8nXb1sGBeTKhPcOiPixeJ0l3iGLgDSCkC5oGTqbi3aby2Mssjn6lwY3-RmVv8WgS-Ri6lDPTi49jbgkrLKVfgOgXXw1hKMaJohpdYV56nCjf5KNUKE9cdViiWDz-6dwca30-IgarftFA4yjb10EcfLunGYlPJmxuekG276D3244oN4b2tpbF7oXF-6MYLiI3nTYcId2XXihtRF5y8417abcZx3gSJW_eb7eICzK2N1TjvtS6FHv12_l8kxr41adrL9u_RLpiDvqg9GqUY3Dd9XI3S4f05efwImPzePEucR8okSGoSr1qQT1XT2kpRrGCQ.jpg",
+    "categoria": "tecnologia_programacao",
+    "tipo": "channel",
+    "requer_captcha": false,
+    "is_chat_amizade": false,
+    "badge_tipo": "👥 Grupo Real",
+    "chat_score": 50
+  },
+  {
     "url": "https://t.me/+DsiWYd-EELRjMDg0",
     "titulo": "Filipassantoss",
     "desc": "ALERTAEste grupo é impróprio para cardíacos😈😈😈😈Mensagem @filipassantoss",
@@ -3445,6 +3575,19 @@
     "chat_score": 10
   },
   {
+    "url": "https://t.me/ZabbixBrasil",
+    "titulo": "Zabbix Brasil",
+    "desc": "O primeiro e maior grupo de usuários Brasileiros de Zabbix no Telegram. Parceiros 💤🇧🇷:Brasil Linuxhttps://t.me/+CbZZ91d13_c3NmY5",
+    "membros": 6720,
+    "imagem": "https://cdn1.telesco.pe/file/UpF8wHLv9dja12xq9RocHMZx9z3HWqv5L1Kairy4Ntqj0_eSlDi-NVMKyukNV4yyhkxbkkJqZNuOCIwrjIyPxLFbN8FE7rWb2boLfIftBEwzl496iwXYSooLiTqBHMAP7C8lbc9N4UlYzgFsvXmSf1kjJD0lixQ1a4TOG0w6i57TKDAE9MtKID5S5yRhue_FQUDmxUKKW-8V_7y76ipEQcQQ9y2-33HZlfwH2U48dLvQttc-gUBNjJPeN05UhHilueAe6rUUheuPFfbGff1bZ2nRxZ8WSHYXMkmrzPx-azj6WrcwwXJNvOlDIj2c2WfQu7BRf21iyT4GfaSZXvOEuQ.jpg",
+    "categoria": "geral",
+    "tipo": "group",
+    "requer_captcha": false,
+    "is_chat_amizade": false,
+    "badge_tipo": "👥 Grupo Real",
+    "chat_score": 50
+  },
+  {
     "url": "https://t.me/+w7aI3-zINXA3ZGJh",
     "titulo": "Casa do Kame",
     "desc": "Use o comando (/me) para ver suas informações e o link do grupo.👮 Proibido 👮‍♀️▫️Foto de sua Pica▫️Preconceito▫️Homofobia▫️Racismo▫️Gore▫️Crueldade▫️Vender sem autorização▫️Divulgação de grupo/canal",
@@ -3456,6 +3599,19 @@
     "is_chat_amizade": false,
     "badge_tipo": "👥 Grupo Real",
     "chat_score": 10
+  },
+  {
+    "url": "https://t.me/dockerbr",
+    "titulo": "dockerbr🇧🇷",
+    "desc": "Grupo brasileiro sobre DockerCódigo de conduta: http://bit.ly/codigo-de-conduta-do-grupo",
+    "membros": 5984,
+    "imagem": "https://cdn1.telesco.pe/file/lHocdT-FiGn018NCxR9uKXhRzmRpj9FC-28bltIXRrNOpZ_pi6BL5J2QcZhvv3d_arvu74nOxg6QB_bjIF-VnT95Z8KfmFBcsa5pKTdBT_6444tpzKg-s443J6Cg3VltYV5IIbLFy4WbPu86lz3t6P7V7vh5oqgyGvIqtwCvRG6Cbo0kqqFYQ1qY8XEEONUWjKjPcpOwYxlZrukGxH_YwwukK_z8XG1s-KkhcZqo8jNHVY04kZdQLriMZgwtxL9avq4joP2DundTbU-QlmrRJ-yazo-XTD92NT05V_3lA4xSa8d32i3MyGC3a_EpD5hL2Dwxq4QTLu4U-EO20hAM0Q.jpg",
+    "categoria": "geral",
+    "tipo": "group",
+    "requer_captcha": false,
+    "is_chat_amizade": false,
+    "badge_tipo": "👥 Grupo Real",
+    "chat_score": 50
   },
   {
     "url": "https://t.me/javascriptbr",
@@ -3497,6 +3653,19 @@
     "chat_score": 10
   },
   {
+    "url": "https://t.me/FrontEndBR",
+    "titulo": "Front-End BR",
+    "desc": "O maior grupo brasileiro de desenvolvimento Front-End  do Telegram criado em parceria com o canal @GuiaDevVocê é dev Back-End?@BackEndBrasil Vagas: @DevsVagas/commands para listar os comandos",
+    "membros": 5778,
+    "imagem": "https://cdn1.telesco.pe/file/QlzN_JcKytqB8cBN8nqIEQu3lMZWCaVs_pbc9Qzn1xkHZMQfwymapl8AJNHYNfuRRHiGVDaDdibvKLkPKQ-wY_M3rz32qbOLYPTUGXoJHkYv641XCLO_g5frB7V4UEwyhCfLICuPFm6AX-n29zoWScumyAzjIfBV2tjwWN0RAUZ1qUe00Ncck291Aeteb7MrBsVSbxrEWhfzbh1Lh5UJq5tRnWuWjKcxNwYgjgQlfCFgHLa6d4F_VAOqtVKu3azl3lT-d8vFa6hJ1_-FP1PwidOSJzZkiOB1MZUr6t_NEV6_tYS6eWCsK4teRG79HVr2sy7ImrmU8jzQKIitP6jBHQ.jpg",
+    "categoria": "vagas_emprego",
+    "tipo": "group",
+    "requer_captcha": false,
+    "is_chat_amizade": false,
+    "badge_tipo": "👥 Grupo Real",
+    "chat_score": 50
+  },
+  {
     "url": "https://t.me/winxsgrupo",
     "titulo": "𝚆𝚒𝚗𝚡 𝙲𝚕𝚞𝚋 𝟸.𝟶",
     "desc": "Regras do Grupo ⚠️Regras do Grupo ⚠️✨ Não nos responsabilizamos por nada que aconteça fora do grupo, seja no privado ou em outros grupos. ✨🚨 Evitem polêmicas ou assuntos delicados🚨🚫 Proibido 🚫- Menor de 18;-  P3dóf1la e Z00",
@@ -3521,6 +3690,32 @@
     "is_chat_amizade": false,
     "badge_tipo": "👥 Grupo Real",
     "chat_score": 10
+  },
+  {
+    "url": "https://t.me/reactjs_br",
+    "titulo": "React.Js Brasil🇧🇷",
+    "desc": "Comunidade brasileira de ReactJS. Regras: https://t.me/reactjs_br/90287- Leia as regras antes de postar, principalmente VAGAS!- Para reportar spam, responda o post marcando @admin",
+    "membros": 5323,
+    "imagem": "https://cdn1.telesco.pe/file/R_vOR4mMdjZG2zZleG2xAcE_f2TEFycql1edNo7XVbeecgs1HTlqSuehN9EP3ens27x_rZ3yH6M9MVvbgHINbhG_iLvDE4RRNftQRJoAgd5VhqwzaLVLIvj4ZqvTHO31CmgkerX4sEZfixvYOOAyoG9zO4Nox9RwvGMPDMHcls9XycGWSmaSAQWMzxxg7J5a4qFu2XppcldB8cRSN7Hmy34LSlvffTsJdl8Ap-TYQgclLyNPp0YeK9tCarE2QH6bCpdK9ZwZgpL8StIoOtmSMSh-L4rf_J2ATEVcI-BIZQboa8f0MdxzKpG4qg7x5IHpxeiTW-TJBrx1YNURNEIEMA.jpg",
+    "categoria": "vagas_emprego",
+    "tipo": "group",
+    "requer_captcha": false,
+    "is_chat_amizade": false,
+    "badge_tipo": "👥 Grupo Real",
+    "chat_score": 50
+  },
+  {
+    "url": "https://t.me/livepython",
+    "titulo": "Live de Python",
+    "desc": "Grupo do canal no youtube da live de pythonLives no youtube: Segundas às 21:00 hrshttps://www.youtube.com/dunossauroFAQ: https://wiki.dunossauro.comRegra única: Qualquer coisa que torne o grupo um ambiente não seguro, resultará em banimento.",
+    "membros": 5211,
+    "imagem": "https://cdn1.telesco.pe/file/bMncYA-AUv6xz33r9VTdDj_tj3jHhh7uohAgUiLpuW_U4uSnyfVpOeRIhJjjW2nWDDkftnNa6H3oAyH7oMjDzqbrcagrrm3yc6qGTFvu6cvTirsiT5E83OjZA5e2eMMXGlTIrN_-goBhWez3IvyGQMHPnnZ-JuXbDttBEe1DBmAqlOZyrll_7_3s_A0I054hA7l2XH15UOUYe69t9DJxUiX0m5j1oSbzFXNFBYiL8ARul2oUuexgyCYgBDZhOqvOKp4zcbgYZyck3WAmT1_qwWGVKD7g07XEfD34H4-thPIZ1eg0pWRi_VJsWAF1eztVD209kETtfHHFNW7rjp1s4w.jpg",
+    "categoria": "tecnologia_programacao",
+    "tipo": "group",
+    "requer_captcha": false,
+    "is_chat_amizade": false,
+    "badge_tipo": "👥 Grupo Real",
+    "chat_score": 50
   },
   {
     "url": "https://t.me/pcruim",
@@ -3562,6 +3757,32 @@
     "chat_score": 10
   },
   {
+    "url": "https://t.me/tecnologiadainfo",
+    "titulo": "Tecnologia da Informação & CyberSec",
+    "desc": "Grupo focado em assuntos de Tecnologia da informação, programação e correlatos.",
+    "membros": 4608,
+    "imagem": "https://cdn1.telesco.pe/file/aXgF8noZujzeJth0E5iHAMdp7OB3rBPEHSnINL3d4DCkW5yvoZdsUibm8k3fKyZSMlH26vOI0A3GYbgW9AqPKF8eG-57cKBKCtlvrmnINGeQNiIM6J-_rxcso9q-pMkF5fNew98sxRvhdGFKDbKfsMvILusVTzocAvsIhkFoCOjBcNhvGhdfgS1A2rOf3wzPy-WuEDRpxv9CuL1vtnv-2hwW0xwFgYkOLOXiaRfQcvj75PYZfSn9fizSdnYSiDvR_RJadCWLaxYODGURM2NSOIeffKYc8DKcUfv1gKD0nk_ogcqrVqVvTdcTFCLlEa5Ksq8YscuNmjSMfuL_xidLsA.jpg",
+    "categoria": "tecnologia_programacao",
+    "tipo": "group",
+    "requer_captcha": false,
+    "is_chat_amizade": false,
+    "badge_tipo": "👥 Grupo Real",
+    "chat_score": 50
+  },
+  {
+    "url": "https://t.me/mikrotikbr",
+    "titulo": "MikroTik Brasil",
+    "desc": "PT-BRGrupo NÃO OFICIAL de usuários de produtos MikroTik, para assuntos relacionados exclusivamente aos produtos e serviços MikroTik.⚠️ Publicações de caráter comercial serão apagadas e o usuário infrator banido permanentemente. LEIA MENSAGENS FIXADAS!",
+    "membros": 4388,
+    "imagem": "https://cdn1.telesco.pe/file/TVsehsAPMOh7bM9bVU4jLuc32pDdGSHa2snsQ3DGgMpkeQDp53BjSYtWattZzl_pck0k__16ISMgmvu5q7TvR9CPk0XQOxOxqDEKAMdAYhkN5fDf8Emmbg9liyG5xHjrZMHfsVxd2QQGZqI64UanFVfKTpUMdIsXjDCv42eUJjyEvodwf8j3TGHtX_TRUVKxIPs4GAlClGZLZ6BMFrtZG3-EmxwV78EnBpMRfuVT2ZLElXcP9inik6LWblZpFpAFjF1de_MJQR3EygrU4xBeL7JHDYigq9wgKoIQPLpYNEp4peVKsBJ0bX9lEZ-vqz_v4bP-SFsTxlywh9L3hMrGdQ.jpg",
+    "categoria": "vendas_comercio",
+    "tipo": "group",
+    "requer_captcha": false,
+    "is_chat_amizade": false,
+    "badge_tipo": "👥 Grupo Real",
+    "chat_score": 50
+  },
+  {
     "url": "https://t.me/corinthians_12",
     "titulo": "CORINTHIANS 1910",
     "desc": "⚫️⚪️ Grupo destinado a torcedores Corinthianos, para troca de informações e discussões! 🦅🏁Criado em: 07/04/2023",
@@ -3588,6 +3809,19 @@
     "chat_score": 10
   },
   {
+    "url": "https://t.me/channelitjobspe",
+    "titulo": "IT JOBS PE",
+    "desc": "Divulgar vagas de emprego na área de Tecnologia da Informação e Telecomunicações em Pernambuco e demais estados do Nordeste.Facebook -> https://facebook.com.br/itjobspeESTE CANAL VINCULA ANÚNCIOS DE SEUS PARCEIROS E APOIADORES",
+    "membros": 4080,
+    "imagem": "https://cdn1.telesco.pe/file/nUUTbP0Cy1r77Y5-_IcjCsTQ-t-nvSaqP_jAXnECz1qv-U2H2yi4k70VcpAAWknYpvVsb9Nh3QjZi1bPuVUyxE72clC0d2k3xJ27_nQhdnbsSn_2ogV9yV3RzYcW3psC48bRY76h39YZo6B47HeySzEfbOGOoyqr6DQ-81cYFr4jfQuuaRiI9An7QtmfzcbWT8FsvBwuOPwJnJtnIgp2WbsUwcQDa6YTo3mV8-sELZvSNKeEj_3zfvwA3d9nsJmZ7qVTcdIZrdjyiQvL-AReZFS9DQHxlnyvP6BGvI6X3WGMYwyojaQklM2uAJfjtdBT3-Bfv1ofWNEGln7jKvbYmA.jpg",
+    "categoria": "vagas_emprego",
+    "tipo": "channel",
+    "requer_captcha": false,
+    "is_chat_amizade": false,
+    "badge_tipo": "👥 Grupo Real",
+    "chat_score": 50
+  },
+  {
     "url": "https://t.me/desenvolvedoresbrasil",
     "titulo": "Devs Brasil | Casa do Dev 🇧🇷",
     "desc": "Grupo para compartilhamento de conhecimentos, ajuda e união entre os desenvolvedores back, front, full-stack, devops, ux, big data e tecnologias disruptivas (termo da moda). Este não é um grupo de vagas😁 Grupo de vagas https://t.me/VagasParaTecnologia",
@@ -3599,6 +3833,19 @@
     "is_chat_amizade": false,
     "badge_tipo": "👥 Grupo Real",
     "chat_score": 10
+  },
+  {
+    "url": "https://t.me/NodejsBR",
+    "titulo": "Node.js Brasil",
+    "desc": "Chat Oficial do Grupo Node.js Brasil",
+    "membros": 4034,
+    "imagem": "https://cdn1.telesco.pe/file/Ehtiv6xNl_tzSnZCjPQVQtxfmnxl-W8afYKlfgic6GcdOg5Vr3qR-8Fc8hgkrIfme0B0ccbMVIIYn2UPpXQGXgpWo972pR229a1vv8q29KfM1YloiyGZ697so_AhMpFtsvDc_GQygAqjdPNOgeMv-qFU3Z_i92FQD5MGeuHnjnoJLu2KfHO2k7WT4d_vQjhGrn_LiAK9Gp-N-imCfTYabLpI8N0h6jBS_TjiSR__ZWHToWNesI-LKjw_Ag8XU-4SfqspsFTOIPJ_jo5u9V4pp6XDCj13G_LTb_nj5z4QrHXVVMtV6XTUUd63N-GwW9C6vLZLH5dpVGsTzwr6Vto-HQ.jpg",
+    "categoria": "geral",
+    "tipo": "group",
+    "requer_captcha": false,
+    "is_chat_amizade": false,
+    "badge_tipo": "👥 Grupo Real",
+    "chat_score": 50
   },
   {
     "url": "https://t.me/iPhoneBR",
@@ -3625,6 +3872,19 @@
     "is_chat_amizade": false,
     "badge_tipo": "👥 Grupo Real",
     "chat_score": 10
+  },
+  {
+    "url": "https://t.me/postgresqlbr",
+    "titulo": "PostgreSQL BR",
+    "desc": "Grupo destinado para discussões relacionadas ao PostgreSQL. Que é um poderoso gerenciador de bancos de dados, livre e de código aberto.",
+    "membros": 3663,
+    "imagem": "https://cdn1.telesco.pe/file/qq4KKtAFYth6xQIMkgMI64VAnRc7woXLEDH0qDQ7wn-QYwTK398MRFS-cNZBNRf4aeQyFakGWdxOoXY8fw2k4fnlpAvg8iqi6iv3tuF0G-_Wh9OGXObv6fZdr8uV4z80v5I57LksP2HN0YTK0EPXvmHQaCITO8eEvYu2XidweF2D9M_ANc0D2TgrQvdABCe5Duy8FXUiNT-pbPvbxZiagF1J8uO-xkak1L3on0wh_bqR-PIviF2oq-CPK_SWJp2HlPSH1n9mGosfT25EblF1jDbNDCviEa1y-qBmv4ebErnFmpNlsF2Zsm-KWUhjEJAmEKhbWBhJzAioKnEdOevbKg.jpg",
+    "categoria": "tecnologia_programacao",
+    "tipo": "group",
+    "requer_captcha": false,
+    "is_chat_amizade": false,
+    "badge_tipo": "👥 Grupo Real",
+    "chat_score": 50
   },
   {
     "url": "https://t.me/planilheiros",
@@ -3664,6 +3924,19 @@
     "is_chat_amizade": false,
     "badge_tipo": "👥 Grupo Real",
     "chat_score": 10
+  },
+  {
+    "url": "https://t.me/SaoPauloFC",
+    "titulo": "São Paulo FC - SPFC",
+    "desc": "Canal do São Paulo Futebol Clube. Jogos e todas as informações você encontra aqui em tempo real.🔴️⚪️                 🔴⚪️⚫️⚫➡️Parceiros⏬@KingsOfTheMadness@the_android_bay@DIVASEMANOS  🔰🎈🍃🔴⚪️⚫️https://telegram.me/SaoPauloFC/1717",
+    "membros": 3542,
+    "imagem": "https://cdn1.telesco.pe/file/Dp1bFUVOu-OsK8qJXx57dcM7Gf6-SUlffR51bFbMoyUI7TklR2RaxQLJewY67L2MDqUzqvZHw-Uos0u2xNGdFJbe6CoYpX7SExVtiwA2i5FiIa1_R149Ytr30N5rQ6rQJ99c7QNuT4bzJhNpX_1N42uSjBUXIS1i7KZJCxqlT_U--fjjbq9Nm2IKvyNdvuWnUQtDLVCvS17gXohhhms2qIiYoVRiSMXNwclgpJ4vU_Hs87QOdwooBCv91KnPWquNsYBu1CS1FqBw1ly7XoyqVLqEZoLyMj5apmKOzNz4QU3_Nevm7aCx-KM2BSo9zglCsIt-oZe5ApC97_p63ZiFvg.jpg",
+    "categoria": "jogos_games",
+    "tipo": "channel",
+    "requer_captcha": false,
+    "is_chat_amizade": false,
+    "badge_tipo": "👥 Grupo Real",
+    "chat_score": 50
   },
   {
     "url": "https://t.me/+zwYvOwva9hNhZTNh",
@@ -3744,6 +4017,19 @@
     "chat_score": 10
   },
   {
+    "url": "https://t.me/dotnetbr",
+    "titulo": ".NET BR 🇧🇷",
+    "desc": "🔥Desde 2016! 💥O maior e mais ativo grupo de .NET do Telegram há 9 anos.🎯Grupo sobre .NET, ASP.NET, Mono, .NET Core, Xamarin, C# etc.Use /info para as regras e informações adicionais.👉Regras: https://go.gaGO.io/dotnetbr-rules",
+    "membros": 3322,
+    "imagem": "https://cdn1.telesco.pe/file/BglEiUksAnEKPanC4cRQ5WsIHPMK4RQuGzhaSClHMpjbjq3FCbHXc0o63kj9wQVhuVIkfZOfyWC0FafC-GKi94Ui6Q5plr4vWTAumT27wS7k4bw96UcwSvFvR4UEg5p6FePwIumcx43QyUtiQkQ1FSs0VHZP574dduCkY8_ui1ZiAzAlHJwSgqHqoXMjoUoSmnuayV9tfaMjXRBYHfNmcj-K-6JRXvWp9Y7HZaOhbnireXIj6FMaOBW79uUIpTPU9e2xWH2dLQJ-0JObe3yjbglOzuCv1J1bj-CXhOe4G3hOFKg_l3k5j6kThUk1k87mp05W6TIK9Kga_x-Aqlwvtg.jpg",
+    "categoria": "geral",
+    "tipo": "group",
+    "requer_captcha": false,
+    "is_chat_amizade": false,
+    "badge_tipo": "👥 Grupo Real",
+    "chat_score": 50
+  },
+  {
     "url": "https://t.me/pfsensebr",
     "titulo": "pfSense Brasil - (pt-br)",
     "desc": "Grupo pfSense BrasilGrupo brasileiro dedicado à discussão sobre o assuntos relacionados diretamente ao firewall pfsense.",
@@ -3757,6 +4043,19 @@
     "chat_score": 10
   },
   {
+    "url": "https://t.me/LinuxParaTodos",
+    "titulo": "Linux",
+    "desc": "Grupo focado para compartilhar conhecimentos e tirar dúvidas sobre Linux + LPIC.Proibido a divulgação de materiais copyright e pirataria.Bot: @GrupoLinuxbot . Link: https://goo.gl/KQYqhN Steam: https://goo.gl/KgQ0yH Estatísticas: https://goo.gl/Ld1BKM",
+    "membros": 3312,
+    "imagem": "https://cdn1.telesco.pe/file/Ax3-34ZMgvGb9Ajjouk0flEg_W_o0pX7Dqz14eEF0M15DUtb949Df6HNit4r7ZwZaVRFjn7VNNpbGizNI_8Yh_iVNp5nvfBegXb0fsG0L2gpetbWkyZvIIuttwINkAv_N8bWbWlHzNFCWCbnt5h2H3VMVlsBN20QkOOzZvuok5nDTEoshz3CIW3V0Ljrg0F9M6wg7YwL0S5duE5tCxbrVXmzN64Aok4lYr_wKEKdpLivnViGEdKfKL0AcmIDdT-yxw_ntIcrjz3vJpL_SvrtDcSUFV7pra3Xbs9uwIwnCLlNee4iYqezp2HxokGMsDHSCZECc5c44v6wvXNcIhMvuA.jpg",
+    "categoria": "tecnologia_programacao",
+    "tipo": "group",
+    "requer_captcha": false,
+    "is_chat_amizade": false,
+    "badge_tipo": "👥 Grupo Real",
+    "chat_score": 50
+  },
+  {
     "url": "https://t.me/energiasolarbr2",
     "titulo": "Energia Solar BR",
     "desc": "Finalidade: Discussão sobre Energia Solar Ongrid e Offgrid e Tecnologias Relacionadas, Projetos, Ajuda, Novidades, Etc... Vendas com moderação!Proibido: Religião, Pornografia, Política, Assuntos Fora do Tópico, Spam, Links de outros grupos, Pirataria.",
@@ -3768,6 +4067,32 @@
     "is_chat_amizade": false,
     "badge_tipo": "👥 Grupo Real",
     "chat_score": 10
+  },
+  {
+    "url": "https://t.me/awsbrasil",
+    "titulo": "AWS Brasil 🇧🇷",
+    "desc": "Grupo para compartilhar conhecimentos e tirar dúvidas a respeito de  produtos AWS (Amazon Web Services). Assuntos de arquitetura, computação em nuvem e relacionados são aceitos.",
+    "membros": 3255,
+    "imagem": "https://cdn1.telesco.pe/file/EUVJe5GGt_T0CvQcsWxJzQQ2jRo0Qtt-B1JhusTOTrsFdtlfE4rxTrpEmIdtNW9qQ-TtG-ri66ji8B1wJMlrtr8JaYZlMWkOUJ4f-PshvhAYTERKlXeHrYThJFqwzrz_U_Jc0CMIE05SzgUgt6Znw0mWalqE9KYrUxdwz8gxhfgK41g3tuAucJFzzR-fu0W7BgCf8BEhAAB7wXljlMocnLDP2x9m3P2vIhYPWp_KbakqdyUnLhJ0EeYGU-bNgoIETzXiAloBYp5c6XJfDBlQIe10CG15yKBGxlXw-j73MEdsCLWB-aWl1s3bnuDCKHFzpKN64S7UQvw_ul9IMfBiUw.jpg",
+    "categoria": "tecnologia_programacao",
+    "tipo": "group",
+    "requer_captcha": false,
+    "is_chat_amizade": false,
+    "badge_tipo": "👥 Grupo Real",
+    "chat_score": 50
+  },
+  {
+    "url": "https://t.me/proxmoxbrasil",
+    "titulo": "Proxmox VE Brasil",
+    "desc": "Comunidade Brasileira para assuntos relacionados a LXC, KVM, QEMU, Proxmox VE e afins.",
+    "membros": 3204,
+    "imagem": "https://cdn1.telesco.pe/file/fnoSh0VFFoJXyxKAJOhHLiCAkb-RCKHljc-xE6_8hWQlIylwSbO7zTNbip52U_gjAVoXH1H5bK_kAHNRRWR0Rz-PzlDOWc1rX6jB0IRrrLF0jenU0Tu_vM0NBYAYPATTCwjLns6N1dT_JR0ucFHQJIR3S1M02mXB1aqA3U2_R5dym3nQq_x18TCeoMM1E9qDslh8_4HVklM26Y1iyTKU3wWV_VGQ07awqCwL1esvJmWw-GMhMTGfq1AlVAJUoE8eX_cVcLELbuVqk93QE2lQITDMCK34hRV04zxWGE5DoZQnJFN_UlWatjfIKEk6xHBKXmvDWueAeGI0rbmav7rjIQ.jpg",
+    "categoria": "geral",
+    "tipo": "group",
+    "requer_captcha": false,
+    "is_chat_amizade": false,
+    "badge_tipo": "👥 Grupo Real",
+    "chat_score": 50
   },
   {
     "url": "https://t.me/angularBrasil",
@@ -3815,6 +4140,19 @@
     "membros": 3013,
     "imagem": "https://cdn1.telesco.pe/file/vxttU3YwbGC3qvgEYtpXMnvV7wUA6KPgniSsmwDd1-MJ55ELgy1zWalJY6TG9hdv8_M0JWo4ymB0Wtstvyh7x2sXtBH4YTCJGtoEPKB3S7q5ApI3MCgshbEHT3h_yVcKjZ_oWIh0wZeQBs0M0AR4-PqRoww-N1ZLYnJP-_Kiyg9Pc5M4sWMBZa2BR8AkxChev2vOjmVPuteJQVH2SeC_fTdPdRUM81Jd9J_TR-IKrC92fA1dzP3nOmf6hZZqFRomAJyFLK9SWymfoU8SAX3RxiehR7gXcdNe0sMXOlB5L7ojduPEWf2x-zVi9YEiJI9V-nruNDmmrlGz7AC7vbYCPw.jpg",
     "categoria": "geral",
+    "tipo": "group",
+    "requer_captcha": false,
+    "is_chat_amizade": false,
+    "badge_tipo": "👥 Grupo Real",
+    "chat_score": 50
+  },
+  {
+    "url": "https://t.me/mysqlbr",
+    "titulo": "MySQL BR",
+    "desc": "Grupo destinado para discussões relacionadas ao MySQL. Que é um poderoso gerenciador de bancos de dados.",
+    "membros": 2911,
+    "imagem": "https://cdn1.telesco.pe/file/BSwjAZ7uGZYPRKBCJ-o29nRRUyGiQj3zkNaT33SOMxTYZXYPfosTyX_1hZWff4jTuBGApYZEiIXopZiAB2mUdS6ne8MKE2ebFjTH11CVFp7oGA2ng98s-OEl3wj-D86WldNd_AtUcySdVWvX1DRqiwXK_rDx-jppEuP_bEi7CY9Hm-RIiYzX0f83_ePS_oHX0qzi6QDbIJoyotf8FkMnDM4SCxLBUtVoMLjlg3eRjFZE597HJflER5NYPTeyV9Eiqet9SIATLVgN3eKLkKF5SuyKmm_EVwec-Pbp6xQCm_yXXtqIT_PEYZWRk0Y59LUZuxT2aCjNs3DR83UKghqikA.jpg",
+    "categoria": "tecnologia_programacao",
     "tipo": "group",
     "requer_captcha": false,
     "is_chat_amizade": false,
@@ -3872,6 +4210,19 @@
     "is_chat_amizade": false,
     "badge_tipo": "👥 Grupo Real",
     "chat_score": 10
+  },
+  {
+    "url": "https://t.me/devwebfrontend",
+    "titulo": "Desenvolvedores Brasil",
+    "desc": "👨‍💻 Comunidade brasileira para desenvolvedores💬 Discussões técnicas, carreira, IA e mercado💼 Vagas de tecnologia selecionadas🤝 Networking entre devs de todos os níveis🚫 Sem spam, cursos milagrosos ou autopromoção sem autorização",
+    "membros": 2712,
+    "imagem": "https://cdn1.telesco.pe/file/rtTLht_VUJ6VpXGzOR3_rj4w6hxeHk0k_L6KSxDGJZ34oVx2lS0WoiWAJITsGwBfukq4sgPXGa48j3aSwBewELCcKz3YfW5akSN6D8TwIjiBFHy1E37eIC0PeSsOxluIrS-pymEVMPHN1eysrT4tzc0XXy64fls4czFR3PS3DiSF7PH7ZRIm5kxpYjmQKD8EmEKR_1GdCXYsyVbrJTvi_D69KEMGFCyoJKcjgsHBSRG2XkPEZFgrQ-Nk7RSBT1IWQ6k7ALfwuXBn2LKlyFNuwMdTf1x8gnAG3YLVqV5iYLmdahqGYk4HXYeFgfp-6LLhXxVmT6U71m_AYSONioJ_hg.jpg",
+    "categoria": "vagas_emprego",
+    "tipo": "group",
+    "requer_captcha": false,
+    "is_chat_amizade": false,
+    "badge_tipo": "👥 Grupo Real",
+    "chat_score": 50
   },
   {
     "url": "https://t.me/goldtechoficial",
@@ -3965,6 +4316,19 @@
     "chat_score": 10
   },
   {
+    "url": "https://t.me/sqlmssql",
+    "titulo": "SQL Server - Brasil (e lusófonos)",
+    "desc": "Grupo destinado a discussões sobre SQL Server, SSIS, SSAS, SSRS, além  dos respectivos serviços no Azure: Azure SQL, Azure Data Factory, Azure Synapse.Idioma básico: português",
+    "membros": 2564,
+    "imagem": "https://cdn1.telesco.pe/file/mcqKNHtVUR-bzVtk0boGlPDw7XGwyRnUqVBexG8ahAK4JAZCSnJBGyI84qYJUdDFo-aKE5kXUaPor7dgA-0KMwj9EFKBVm1w_72h4lOsYfe9HmyBOXmRsiSRk9fU1h30-cQmGcw57zVon25A8OS3zJWXfzG5_l-XIKA0_OXwk5-FXJVoHmozcejeU2MOw7Pei6qRH15BsXASJb8Zgej22QRxareDb20ux4XXUcPNL4hN5UM8E4Y6NKj94cxX_O4uqJZcbK--xIt3IsUUGNTkSrMRGxlKdRN7bU75mx09FuplWwJKDY06yjCtnzKx_EKQ1ECo_FSRDGEzgR_O5zenLg.jpg",
+    "categoria": "geral",
+    "tipo": "group",
+    "requer_captcha": false,
+    "is_chat_amizade": false,
+    "badge_tipo": "👥 Grupo Real",
+    "chat_score": 50
+  },
+  {
     "url": "https://t.me/+MknzgaTMLCs5ZjEx",
     "titulo": "⚡️ DIVULGAÇÃO LIVRE 24H",
     "desc": "📌 REGRAS DO GRUPOhttps://t.me/equipe777cooperarhttps://t.me/grupoabertodivulghttps://t.me/COOPERACAO6✅ Divulgação liberada para todos.❌ Proibido:• Spam/Flood.• Golpes ou links maliciosos.• Conteúdo +18.• Ofensas, preconceito ou ameaças.",
@@ -3976,6 +4340,32 @@
     "is_chat_amizade": false,
     "badge_tipo": "👥 Grupo Real",
     "chat_score": 10
+  },
+  {
+    "url": "https://t.me/vuejsbrasil",
+    "titulo": "VueJS Brasil 🇧🇷",
+    "desc": "Grupo de discussão e aprendizado da ferramenta VueJS.Trilha de estudos: https://bit.ly/32hjSDBUsuários novos são aprovados manualmente pelos ADM.Contas sem avatar e nome de usuários não serão aceitos.",
+    "membros": 2531,
+    "imagem": "https://cdn1.telesco.pe/file/sGuyamOWyS4nyom_4QtovMdnmodVJiXzMdlLf3BSInSjHBe0cC0v5WXCzAjLrVjq9RyDmJNTWTsyylXwNMVMgJC0oOQJtvTxhnpVnixXQwQLdU0EGNsClsLVJxXWQjlJukKIfX7DS6d-xobaLRte4JTw2qZLmvPR3n3qfZDw81QFufZSQW5GzccnfUd2XxUhERvFcYZYPgpNMpov76LQ5M9vJwNW_m-ZvLi8GGcVIEasS9WYE65cNALDuE0T5DCQHNbTDCNJNHnNIEPNvKD-w19_NacQS6XwA-Te0PcXckLv-jf4C7-SbxPJWhCTMaWmHB_9iFcJy_hNjtknYlly2Q.jpg",
+    "categoria": "concursos_estudo",
+    "tipo": "group",
+    "requer_captcha": false,
+    "is_chat_amizade": false,
+    "badge_tipo": "👥 Grupo Real",
+    "chat_score": 50
+  },
+  {
+    "url": "https://t.me/rubybrasil",
+    "titulo": "Ruby Brasil",
+    "desc": "Nosso Código de Conduta: https://github.com/guru-br/code-of-conduct",
+    "membros": 2520,
+    "imagem": "https://cdn1.telesco.pe/file/roPzD0UtUTH5zvbhOwowg10icPMtixno8LioDFMIGMwcQ3FJ6YE4s1KbsNIxHFZkkQjej-OjzMu1OjC8F9AoQ9f8ce-wI49RzIqTYywR4Sw-Bn_QcO53pdJz7arRgOoAs7hPiEllWSHRFhnEfzuM2dReYQ7LJwtaZmvnfJXkFAm9u1THozzYqRtuPYhE7jJp_4j-iDnG-e60UKcGUOvTYqerEHSGtFdzo89tDVESopg2aSqt2ZzXgPhWDRyyeLFJvrEbZV-mmjtYOrTpUW5HnFaFqtU_INSD9mZYtz7VFPFCkatfewJ4R1jgh4njLF_FLZ1xaPyJAVj-UfVtEA7Y8A.jpg",
+    "categoria": "geral",
+    "tipo": "group",
+    "requer_captcha": false,
+    "is_chat_amizade": false,
+    "badge_tipo": "👥 Grupo Real",
+    "chat_score": 50
   },
   {
     "url": "https://t.me/infratibrasil",
@@ -3997,6 +4387,19 @@
     "membros": 2440,
     "imagem": "https://cdn1.telesco.pe/file/Tgr6sXEfKYz_llehx9JpzzgG_lwmGOwCP8TQVKkIIuikFa4A0Fi_qGklI2AQNdp0c4KdsmqHNy_0Y2axN_hWJtrj0dywLYaEnyd0JMlfoatEFkSackXFbzp1GG2c2s2R1sq9iz3gp9GXIBWs2l-IfMvGXRL-BXKXQzDQjvlKDTsotNO-R5Mu-JnchwU-SQCyUQFavmz72E0JOFiMf_EblZeSwpFMUGqnTCXihPjILtkzMMp0dlHEJ5voGz8kgLB9kio61Y87fGrVt0qNZ-4ZdnQ_gGh0FJnhM2bNS4Or40fHoNqKI-UvVMyQZNsaFKymRZyzKGWycmCN2BO-0O4mBQ.jpg",
     "categoria": "concursos_estudo",
+    "tipo": "group",
+    "requer_captcha": false,
+    "is_chat_amizade": false,
+    "badge_tipo": "👥 Grupo Real",
+    "chat_score": 50
+  },
+  {
+    "url": "https://t.me/archlinuxbr",
+    "titulo": "Arch Linux Brasil",
+    "desc": "🔺 Arch Linux Brasil 🔺 - O melhor grupo de Arch Linux do Telegram, destinado aos usuários iniciantes e avançados de Arch.🐧 https://archlinux.org🐧 Guia: https://wiki.archlinux.org/index.php/Guia_de_instalação- @ArchLinuxBROfftopic",
+    "membros": 2397,
+    "imagem": "https://cdn1.telesco.pe/file/rdt5m5g0oc4_bdp-8ivc8RBdo__Rbj9otxqfPdD_M_r_hoFjkHZWaRjr9HONCcriZUdvlyXgdRXl4mViKYAyQ-PPcjLHV2a83fmrGtNJBkFa8CHPk1DDoY0JeNcqcBMgOFsyufwJFsGDTjZbWJKNLXLrvSUykydXwDSOwbcz0Pe2m8mRxVJ84TfxyGJxE7hJx0El87U7YjMxw-BYA5Oop2_wr-F-_CgjIuv4TqxxS6HIh_-_zs2M0mscb9ylzh8ukjbQhQB9Pl4qR5LYbEjS6lyy2-Zn97ZdN_EG95BX4ZAYUGueK0WfiNYJbGxqL8Y8UqX8yAGPmkUuRiXwLb5dYg.jpg",
+    "categoria": "tecnologia_programacao",
     "tipo": "group",
     "requer_captcha": false,
     "is_chat_amizade": false,
@@ -4095,6 +4498,19 @@
     "chat_score": 10
   },
   {
+    "url": "https://t.me/kubernetesbr",
+    "titulo": "Kubernetes BR 🇧🇷",
+    "desc": "Grupo de KUBERNETES! Aqui falamos pt_BR e en_BR ;) kubernetes.io/docs é seu amigo. Leia antes de perguntar! Evite offtopics. SPAM, Ofensas, Pirataria = BAN. Pergunte a algum admin antes de enviar algum link não",
+    "membros": 2241,
+    "imagem": "https://cdn1.telesco.pe/file/krTodVgEkuygahjvXPZymoChMKp315jYinNe7NWbn4eLx4TKo2C4sMyweqBtIjsuk1YqAkcd7WuK9TxmMLeuoz77lBuAN0Oj4D4_gR2b9tpGdlnGfdh5yfAKJHVuxtjOrH-y1rfTv1NeAqX5pqSUWLZNOxEQ2AsxuQLrVl0gHtV8P7Oubz2hhscWzsIiBMCGC3tEKD3q0M0BlzZ89g70f_fho8ncPFZzCfzse8SKJkffh_yGvnrDV1-lxu6TmNSK0BhDGWvsiHzrNgJqoxmUJrqscTnLnEdt1oKOt_7zPT5r7P6HiVZ0I-HmojTLcmRUZJyME7ZEqSTYV_OJaStw4Q.jpg",
+    "categoria": "geral",
+    "tipo": "group",
+    "requer_captcha": false,
+    "is_chat_amizade": false,
+    "badge_tipo": "👥 Grupo Real",
+    "chat_score": 50
+  },
+  {
     "url": "https://t.me/excelbr",
     "titulo": "Excel Brasil",
     "desc": "Grupo para troca de conhecimentos do Microsoft Excel, VBA, Power Query. Sinta-se a vontade para perguntar e responder.",
@@ -4147,6 +4563,19 @@
     "chat_score": 10
   },
   {
+    "url": "https://t.me/winsrvgpos",
+    "titulo": "Windows Server e Active Directory - Dicas e Dúvidas e Certificações",
+    "desc": "Grupo para troca de informações e dicas sobre Windos Server e Active Directory",
+    "membros": 2049,
+    "imagem": "https://cdn1.telesco.pe/file/CNAAaa2cGlte5YOGNFId36NsLMGzXUlRwx7cijPKQJFSEvkMmCKZVh1rPKlhs7Pqk4X25a31rGVOCiXx87Gj9MzTxR3z7CN6L6iRLho4j8_CLmnqKhcdAofVupQqq12faLSSk2K0DEnrgN-UkjfHeF3yMgrLf3Iz4dTnui2DVBCllLsopkhhjvdd05tSCpoYuJWYzQh4A23TQYxQzE3VCEyT9MLcn3FGn8ic_M-FmuBDx-i_Idc6RCoc4BrWTnaJ4GII37IT9V31m2FY3bGoTiQ3DERix9NQy-yHGfSzLtnsPLW_NPdXprvkiNLvDpNcSBBwYCCyBIsZA7CnxjQOpA.jpg",
+    "categoria": "geral",
+    "tipo": "group",
+    "requer_captcha": false,
+    "is_chat_amizade": false,
+    "badge_tipo": "👥 Grupo Real",
+    "chat_score": 50
+  },
+  {
     "url": "https://t.me/coronarendererbr",
     "titulo": "Chat - Corona Renderer [PT/BR]",
     "desc": "Grupo não oficial do Corona Renderer, destinado a troca de conhecimentos sobre o programa, bem como o seu uso dentro do 3DS Max!PROIBIDO PIRATARIA DE QUALQUER ESPÉCIE.",
@@ -4186,6 +4615,45 @@
     "chat_score": 10
   },
   {
+    "url": "https://t.me/go_br",
+    "titulo": "Go Brasil",
+    "desc": "Vamos falar de Go (linguagem)Código Conduta: https://golang.org/conductGrupos Regionais Go- @go_bh- @golangcwb",
+    "membros": 1979,
+    "imagem": "https://cdn1.telesco.pe/file/fN2FPzgtYKyqP54kn615IMmsReK-Hrrj4T4r7S_i8P3rRJ5jTBIa6-qkXmjol2PjNZ6obIpOY1fndSNgJjo7eAsHv4iPqb4wEqIb4VYKDfRqjZZ15nPzp64tJFG1ZAn5jREFECSBxLrhhoqXqcrcfy-jGyTuk3KlTecRviu0fCJm4bhQVtvbzsJv91u2uhU6vf5LZDrY1qE16Zx1uN772VNhdt9Ii-RHM6wp6JU2Vu2DGxw2yOT55frGRHT9vONMeIHq7exDUD4keJv6O6dissvzzWkhBnUACTBjQKgkfatqNj4_1DDEFtnvIg9W6wFS-N5WrI1clRLpK8759-eLVw.jpg",
+    "categoria": "geral",
+    "tipo": "group",
+    "requer_captcha": false,
+    "is_chat_amizade": false,
+    "badge_tipo": "👥 Grupo Real",
+    "chat_score": 50
+  },
+  {
+    "url": "https://t.me/fullstackdevelopers",
+    "titulo": "Fullstack Developers Brasil",
+    "desc": "Grupo de discussão sobre desenvolvimento web",
+    "membros": 1964,
+    "imagem": "https://cdn1.telesco.pe/file/FYFr0-rS6psh70COHswYmoHy7y0hgfsEdNlqffgf0Tg7YErNz3NxomGiHA9PnNjQ_ExeRMRXWyP3o3MEVMK23H_u8Hj09xWIhtbBiEhySD_9NzxqzTmm00-ndSiwW7ONEtEG9v9ZF6wD0zY1eiHv9TFQNHUdWXmvMoGEXVOPaOB6Y5dcuoD1aMAU59RDHM1gIyaXrmzSmgXbK73hXgHKbl0eHWZxEZNTc_zaQIDF5QmHYZ1Tp9vYIZ7V835Y4gcqnTnO1pmCIFy7aQsTGsBMNvFfFA6VjzhrlxfZQ9s-6HaLuJLYDybhZkCbSz4QnHjnlAH2CobmivUKqERhECCx_A.jpg",
+    "categoria": "geral",
+    "tipo": "group",
+    "requer_captcha": false,
+    "is_chat_amizade": false,
+    "badge_tipo": "👥 Grupo Real",
+    "chat_score": 50
+  },
+  {
+    "url": "https://t.me/elixirbr",
+    "titulo": "Elixir Brasil",
+    "desc": "Grupo de pessoas interessadas na linguagem de programação Elixir.Seguimos um código de conduta:https://www.contributor-covenant.org/pt-br/version/1/4/code-of-conduct.htmlThis is a Brazilian group for people interested in https://elixir-lang.org/",
+    "membros": 1945,
+    "imagem": "https://cdn1.telesco.pe/file/K1aR6u0kYWx8zNvi99bI4UY9ORS_tvacWAcKaslNH8UMRkKNMdWMiS-6SLJSRJ5RxAkdUumBw4f-bKUhj93LyuU7Lo2pc-piZxM1Kcq9-Ym2ggD0yuhr9btY_FmEZ3LVHg0pK6nV4rbgYwg8PfMoIFEhV7wpPtjbsK4LBd_iI0Zql4C1HptB-6k_VKLbpoND8JbSSk1fA2sGSGYN-kgraJNg2opRAwlmZrvvAT5uL17wudgnPztcnlNibwiBPElHKuMBMF9D24GUToO6vyxXwlwqueJm7g_e2YfD4qsCfJXIkGdezk4Qf__0pasoXHFHS9a1KLOzni3MFIuc-KVg0Q.jpg",
+    "categoria": "tecnologia_programacao",
+    "tipo": "group",
+    "requer_captcha": false,
+    "is_chat_amizade": false,
+    "badge_tipo": "👥 Grupo Real",
+    "chat_score": 50
+  },
+  {
     "url": "https://t.me/+F5Z9-85bqHdhMzcx",
     "titulo": "MR. OLYMPIA 25 - Últimas vagas",
     "desc": "⚠️ Últimas vagas!🔴 A transmissão vai acontecer no grupo pago.💰 19,90 - Transmissão completa em Full HDQualquer dúvida, chamar no privado!",
@@ -4210,6 +4678,19 @@
     "is_chat_amizade": false,
     "badge_tipo": "👥 Grupo Real",
     "chat_score": 10
+  },
+  {
+    "url": "https://t.me/cssbr",
+    "titulo": "CSS Brasil",
+    "desc": "Grupo técnico sobre CSS.⚠️ ATENÇÃO:- Para evitar advertências não esqueça de ler as regras com o comando /rules.- Para reportar alguma mensagem utilize o comando /report.",
+    "membros": 1897,
+    "imagem": "https://cdn1.telesco.pe/file/oqysC6Nz7ZAW-BuEyLhMo1mQlaHvE5QbqKtFNU0BFM9oneof5fTqbGxIeHOUdeWj5g5BC_2CW-zXanmgp9ehEgl2Fmk6OYrGjNHz6WDtomN19P81_bsiZ8wN1i6et3YFcQvDQcsnkFFg-IXMOdM55zMLeo0DtWnpnxygGkxmehNN-IeUFGI_-Qu5-ZRUbI6Iz6Dh94vgNdryKtVzvq9ROdf0XcepKJEoGKZndEsK4mWeZMlmbHSzcwjx5Ox1BfMkrjiwVgmVwLVOj0Ig0J2IsNC6Lrv28BZDA0uAazKerqjjaiOtdGaG1IZAJ9Tqn0GY5Qw9xuO-tZ7CpJ4ZkILPWw.jpg",
+    "categoria": "geral",
+    "tipo": "group",
+    "requer_captcha": false,
+    "is_chat_amizade": false,
+    "badge_tipo": "👥 Grupo Real",
+    "chat_score": 50
   },
   {
     "url": "https://t.me/cetobr",
@@ -4264,6 +4745,19 @@
     "chat_score": 10
   },
   {
+    "url": "https://t.me/ciscoredes",
+    "titulo": "Cisco Redes",
+    "desc": "Canal para divulgação de informações voltados para área de tecnologia em redes.",
+    "membros": 1828,
+    "imagem": "https://cdn1.telesco.pe/file/l_p4qIFHo4sew31oCb0Dm0hNLiHM1ZxXnQj9torzj3FGU0qSB0IvpHkAChih804MTqrzsauIb0DZMXB_IpQ03GfluCwy9BtRHJjRkMRoah1kor5030aBWxNy0PbQQuOBYakUfgvlPBFE6DLc-T8tToJlKkE3O1DjNh3PeCgYRID5sg8T_XSXtgXXqdwg66wkqShKb6HDhsZdbPUZLDHB6RgfQfy93h3USZ7h7b4urrz9_KlcwkBMQoV8pDDB0nTwVzOta6LBAPn4YjRVmyPCa30eQjN2_cdjGLhE1pez3KltDQFWjfnaf33UigCUiB7jXxcERT0xrpQWLruBU-kBoQ.jpg",
+    "categoria": "geral",
+    "tipo": "channel",
+    "requer_captcha": false,
+    "is_chat_amizade": false,
+    "badge_tipo": "👥 Grupo Real",
+    "chat_score": 50
+  },
+  {
     "url": "https://t.me/htmlbr",
     "titulo": "HTML Brasil",
     "desc": "Grupo técnico sobre HTML.⚠️ ATENÇÃO:- Para evitar advertências não esqueça de ler as regras com o comando /rules- Para reportar alguma mensagem utilize o comando /report.Parceiros: @GuiaDev / @FrontEndBR / @BackEndBrasil / @DevsVagas / @JavascriptBR",
@@ -4301,6 +4795,19 @@
     "is_chat_amizade": false,
     "badge_tipo": "👥 Grupo Real",
     "chat_score": 10
+  },
+  {
+    "url": "https://t.me/clubedosprogramadores",
+    "titulo": "Clube dos Programadores",
+    "desc": "Comunidade brasileira de desenvolvimento de software",
+    "membros": 1768,
+    "imagem": "https://cdn1.telesco.pe/file/AmgS9V6Mqf--RlV1c3xxLrn6WJEzk8-ZySK9qzanZOrDD0iG6A3H6gKO_HBfnOJOpcW2ST3jlDxSMceXHcR8uShc1Sgwn14MUjs1SAR41A0VLuutgB3Dee2mboMNS7twdI_wJAlFmiMAMeJNJ3NQ-Tz5qSQZoC_2VA7y4gopYKjpZmyFGGsGhnqrZEkdLZG_kh3YQ-HbSmESFLqiJ0c1DeSho9MDhcrXQUfz8AKOOLSMgZ8aAH-c074XOV0l2beIIZi0HOfER0MYGWfO1si9N7-xdm7pTqOKMA8wUVTAYYUZjmgEGK3jzmnznqT_YgONBJ5lo3C1ZFCu_wvISOk_qw.jpg",
+    "categoria": "tecnologia_programacao",
+    "tipo": "group",
+    "requer_captcha": false,
+    "is_chat_amizade": false,
+    "badge_tipo": "👥 Grupo Real",
+    "chat_score": 50
   },
   {
     "url": "https://t.me/concursos_pubiicos",
@@ -4407,6 +4914,19 @@
     "chat_score": 10
   },
   {
+    "url": "https://t.me/rustlangbr",
+    "titulo": "Rust Brasil 🦀",
+    "desc": "Grupo de usuários de Rust-Lang no Brasil.Off-topic em: @rustjerkbrCódigo de conduta: tinyurl.com/y2jq462dVeja mais na mensagem pinada: https://t.me/rustlangbr/276031.",
+    "membros": 1662,
+    "imagem": "https://cdn1.telesco.pe/file/jcqJblABU6xG9_KPGmH9PxFbtUPX2IPo130VH0nb92VOqHC_fb3CdO4cE-rcR7DZ8cn9w8szFTe8SbcUsJXcjP1bJbUK3cUApmKbm-KZe5HNJesGos6qYzBWJUYLsplbO-Uftb5APlDsqKMv0innwr5H7VhOe6fOchlZjvwLudaBSdFYMZdjx12XqxqC4Fqj3NYaHF0zw31dC2UtlGI04bay8Kq67uxDElFXj3g6Dwsx6Q2NANDsGVxyt7XvJMFo9WMqelarLgYejKzwnyO3tfNw8zOiu7B5nSWse5qlJw2fh1FgxHPhQmuIwRHUCBH6T0lYi3pVSimYo01aYYjsrg.jpg",
+    "categoria": "geral",
+    "tipo": "group",
+    "requer_captcha": false,
+    "is_chat_amizade": false,
+    "badge_tipo": "👥 Grupo Real",
+    "chat_score": 50
+  },
+  {
     "url": "https://t.me/+pRfOkEtJFE84NWU5",
     "titulo": "Adult Collection",
     "desc": "Coleção em tópicos, pesquisar para encontrar. Para pedidos entre no grupo https://t.me/+2K2k3-eORaZjMzFh",
@@ -4418,6 +4938,19 @@
     "is_chat_amizade": false,
     "badge_tipo": "👥 Grupo Real",
     "chat_score": 10
+  },
+  {
+    "url": "https://t.me/vagaumdev",
+    "titulo": "Vagaum - Vagas de TI",
+    "desc": "Siga o canal e receba muitas vagas de trabalho na área de TI.Para receber as vagas: https://t.me/joinchat/AAAAAEA8PE1sfDdH1WymdQPara divulgar uma vaga, use o formulário:https://goo.gl/BPU1KdAdministrador: @josenaves",
+    "membros": 1614,
+    "imagem": "https://cdn1.telesco.pe/file/C27NTnTTrI09UhIWa6dOq6_Ola3jhi6bOSlw_nqfKEdVma27pTKs-GNIqYPaEz8Y-d3ZQqio46hWeYWPS410SWzoTbCNSCQRHSAwUW4dt1hYElLJ1EIF-HKhfBncqV3vH35MSzENaulv63oiJD9VjOxLCOAqKJv7lPBg4ah4hiBzysi9iNshe55MwkypR2gMhsmZ5hpOib-Puu7msKUMrTfsdLmlIMB6YtvpukMi182BLGxU_j1TrjElPdpLm6AdZqCd___XAQWPaqGXNj20snONqBbZCkeGN3vaMtKTEeisAgsg7WJhEk7nHgbVSYa2grv_gWtq2mwSRExrZ17uwQ.jpg",
+    "categoria": "vagas_emprego",
+    "tipo": "channel",
+    "requer_captcha": false,
+    "is_chat_amizade": false,
+    "badge_tipo": "👥 Grupo Real",
+    "chat_score": 50
   },
   {
     "url": "https://t.me/BNBChainPT",
@@ -4589,6 +5122,19 @@
     "chat_score": 10
   },
   {
+    "url": "https://t.me/Pentaho",
+    "titulo": "Pentaho",
+    "desc": "Grupo de Discussão de Pentaho - Brasil",
+    "membros": 1351,
+    "imagem": "https://cdn1.telesco.pe/file/QFoM_erixpYSBS3Yqi7kf_YrGJZ9-dWUx67lW0URVXSnLQs48oaA0fiXXWxsykQirfOKaPIXQWTsll7OouOig1neTEbniiZO1e-U7PQvElWraRC56qzJQNEK-dZxCWTLC0PzQfXgCP-y9S4BrIzY2DQtNYZtG24G_U9TaAPjrq-75Yw9CfFD1kFuxbxjBgQm8ATH6S_cPmGpo4DfwLwSAs9DbTIRQ814lSEPT0y3AXmCGJnNEmjF4z61kskJbsyXirERbpcPwVWDUsaUE3CsiCY8c-hMY7LrteUAgtIGXuEnAM8B1uobyzeWxYffCN72epNcnlIuiOLvkX5jMfaNjw.jpg",
+    "categoria": "geral",
+    "tipo": "group",
+    "requer_captcha": false,
+    "is_chat_amizade": false,
+    "badge_tipo": "👥 Grupo Real",
+    "chat_score": 50
+  },
+  {
     "url": "https://t.me/JobsDevOps",
     "titulo": "JobsDevOps",
     "desc": "JobsDevOps o melhor telegram de vagas Cloud & DevOps do Brasil, crescendo cada vez mais! encontre aqui a vaga que você precisa, todos os recrutadores estão aqui, anuncie #jobsdevops acompanhe nosso IG @JobsDevOps",
@@ -4626,6 +5172,19 @@
     "is_chat_amizade": false,
     "badge_tipo": "👥 Grupo Real",
     "chat_score": 10
+  },
+  {
+    "url": "https://t.me/tudosobreti",
+    "titulo": "💻▶️TUDO SOBRE T.I ◀️💻😎",
+    "desc": "O Melhor Canal de Informações sobre o assunto mais falado ▶️T.I◀️, dicas e downloads, divulgações e muito mais.◀️💻🔝🔐😎👏Grupo TUDO SOBRE TI 🖥✅⏬https://telegram.me/joinchat/CXHl-z4LYSudnpayRkC5tADestinado a parceirias com o canal, dúvidas e avalia",
+    "membros": 1292,
+    "imagem": "https://cdn1.telesco.pe/file/umYP7WzZHHYJUqUuzsOFFXG-TXPGakIpiHBsCaIjGHcTXS2FgwitOgpbmOHmFraMXGfAcwfGzJphWwFD8ccQfJV4MfYuXyvS9g5OgaHXL0YPDdGGb1tQEtPDMwWenWCS4a-OqKxEN0HnTf4uX2DsgTahrFvNXsYdvcsOhHYoEyImCk49tf3VkOuIFe5n2DYdFv51SJwQ5d2WQqQ4oNamViNulCDNnUS4ScqKv9AJuzKKqo_dF2jMbh8nHId5O0_74TXDdF9xiZ1ZcrxHfnRExvfGwaVKjQ5ZzHhlRAm6UZA2LpWFXRiU71efGyUOfU5t69nwZIjmHWF7Ga3CE7bCEg.jpg",
+    "categoria": "tecnologia_programacao",
+    "tipo": "channel",
+    "requer_captcha": false,
+    "is_chat_amizade": false,
+    "badge_tipo": "👥 Grupo Real",
+    "chat_score": 50
   },
   {
     "url": "https://t.me/bkexportuguese",
@@ -4771,6 +5330,19 @@
     "chat_score": 10
   },
   {
+    "url": "https://t.me/GrupyRN",
+    "titulo": "Grupy RN",
+    "desc": "O GruPy - RN é a comunidade Python do Rio Grande do Norte que tem como objetivo promover um ambiente inclusivo a todos que desejam aprender Python.http://meetup.grupyrn.org",
+    "membros": 1206,
+    "imagem": "https://cdn1.telesco.pe/file/cypmOrmcJLsjDuJCC2MGonXLq3tEF_7_yHYVNLch16WxjdSpg60F8lrW9JwWNeXkKNTkIlPsZ0sl4Y79AEyWzK5Rydm_uZa6mnvpVhj4tLNNnIt25pZi41Ma8GjtgtuVQLWKfy4i6mWztID8IHbZERMMFwTrDV4n0JBzIFNFhjcNxpMXjIL3dfr-KjJxxUmH04nPl5Qu3WGuskW5JxayFeW9LJMNAE43EyqI50VxTL0pIIDhIDuryPF9o6lJPTee-HtnC61DwQXezrsQULwz7OZjzt85nRM46k7ND97QT7B9zWmvkiq4ymJFOcf33ZaJL8v2BlxakDBK5HwYqMfF4Q.jpg",
+    "categoria": "tecnologia_programacao",
+    "tipo": "group",
+    "requer_captcha": false,
+    "is_chat_amizade": false,
+    "badge_tipo": "👥 Grupo Real",
+    "chat_score": 50
+  },
+  {
     "url": "https://t.me/betaos",
     "titulo": " betaOS™ 🇧🇷",
     "desc": "Grupo focado em informações sobre os sistemas operacionais da Apple (iOS, iPadOS, macOS, watchOS e tvOS) em versões beta e oficiais.Aqui você acompanha novidades, atualizações, mudanças, dicas e discussões sobre as versões de testes da Apple.",
@@ -4784,6 +5356,19 @@
     "chat_score": 10
   },
   {
+    "url": "https://t.me/kotlin_br_pt",
+    "titulo": "Kotlin em Português (BR, PT, Angola, etc)",
+    "desc": "Grupo sobre a linguagem de programação Kotlin para falantes de Português (Brasil, Portugal, Angola, Moçambique, Cabo Verde, Guiné-Bissau, Timor Leste, etc).",
+    "membros": 1189,
+    "imagem": "https://cdn1.telesco.pe/file/L90RUqIyxY0I-z9OIRxGj9KXP04X2dqsaNSx235aVzxutWIavzBiq80QUUzKRfnetQz6PUibW_gxnGFLhr15MmtL_vHQ6ppJB71uSdFGfYcqSeq-1h4itjb-BCFlPqSexAzr70bXh-1MMnZUOoZwBtMG0iL5VRQBfe3Lgcks126lX1SdgBz1JkM1cQZsKA5UFgv_bTKD9ePeFjRQHGCBAHjycOhGlKlI2uQAaJGy_Eq9glF8IAV8uDo-nIO99N_V8O-Pz-7A-q4kMLvqlJM1s8va0bp9rVz3NECFO_eBQBp1JxzZjTg4kKEEw9tcnTttqdmYHRI16XfjZNawV7ViSA.jpg",
+    "categoria": "tecnologia_programacao",
+    "tipo": "group",
+    "requer_captcha": false,
+    "is_chat_amizade": false,
+    "badge_tipo": "👥 Grupo Real",
+    "chat_score": 50
+  },
+  {
     "url": "https://t.me/+tswrzGP-MCUyZDdh",
     "titulo": "🐍𝙎𝙉𝘼𝙆𝙀𝙍𝙎🐍",
     "desc": "@snakers_ofc🔴 Regras do Grupo 🔴❌ Menores de 18❌ Zoo, Necro, Pedo e Gore❌ Sem foto do p4u❌ Link sem autorizaçãoGrupo fecha todos os dias das 00:00 Até no máximo as 10:00 , para evitar que pessoa de má fé, envie coisa proibida durante a madrugada",
@@ -4795,6 +5380,19 @@
     "is_chat_amizade": false,
     "badge_tipo": "👥 Grupo Real",
     "chat_score": 10
+  },
+  {
+    "url": "https://t.me/frontendbrasil",
+    "titulo": "Front-end Brasil (Desenvolvimento de Software)",
+    "desc": "Grupo sobre Frontend do BrasilJavaScript, HTML, CSS, PWA, Navegadores...Tecnologias relacionadas a camada front-end da web.",
+    "membros": 1148,
+    "imagem": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIwIiBoZWlnaHQ9IjMyMCIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSIgdmlld0JveD0iMCAwIDEwMCAxMDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI%2BPGRlZnM%2BPGxpbmVhckdyYWRpZW50IGlkPSJnIiB4MT0iMCUiIHgyPSIwJSIgeTE9IjAlIiB5Mj0iMTAwJSI%2BPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2EwZGU3ZSIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzU0Y2I2OCIvPjwvbGluZWFyR3JhZGllbnQ%2BPC9kZWZzPjxzdHlsZT50ZXh0e2ZvbnQ6NjAwIDQ0cHggLWFwcGxlLXN5c3RlbSxCbGlua01hY1N5c3RlbUZvbnQsJ1NlZ29lIFVJJyxSb2JvdG8sSGVsdmV0aWNhLEFyaWFsLHNhbnMtc2VyaWYsJ0FwcGxlIENvbG9yIEVtb2ppJywnU2Vnb2UgVUkgRW1vamknLCdTZWdvZSBVSSBTeW1ib2wnOy13ZWJraXQtdXNlci1zZWxlY3Q6bm9uZTt1c2VyLXNlbGVjdDpub25lfTwvc3R5bGU%2BPHJlY3Qgd2lkdGg9IjEwMCIgaGVpZ2h0PSIxMDAiIGZpbGw9InVybCgjZykiLz48dGV4dCB0ZXh0LWFuY2hvcj0ibWlkZGxlIiB4PSI1MCIgeT0iNjYiIGZpbGw9IiNmZmYiPkZTPC90ZXh0Pjwvc3ZnPg%3D%3D",
+    "categoria": "tecnologia_programacao",
+    "tipo": "group",
+    "requer_captcha": false,
+    "is_chat_amizade": false,
+    "badge_tipo": "👥 Grupo Real",
+    "chat_score": 50
   },
   {
     "url": "https://t.me/astronomiaBrasil",
@@ -4821,6 +5419,19 @@
     "is_chat_amizade": false,
     "badge_tipo": "👥 Grupo Real",
     "chat_score": 10
+  },
+  {
+    "url": "https://t.me/grupysaopaulo",
+    "titulo": "Grupy-SP",
+    "desc": "Grupo de usuários de Python do Estado de São Paulo (Seja legal com todos! Sem pirataria!)",
+    "membros": 1146,
+    "imagem": "https://cdn1.telesco.pe/file/JUX1ZG4lXo-K6w_kx0CMXLPij-9De-nVOBd5QKHGwFqPwqCNUxkbGsQiRQHRnAn0CDUJHXL0N0HUXA_l8_V-qOXaDHj917VPIIOZrut4OV8W0xbN_1p6dqEpVkg86kcaYSg3bOovUgkZ620tGJnhHsQLJZ6IGvx8wbd8zF6AqiaUBNNLIX-1CGCgL7NRPqH8Jb3zD85OPXQNvIxEQJynBPapBElhmVqOrr_OBl3NU3n-Wg_JJ3y4vOYOXVSQ8veaXYvEeyECjFAr-JIAs7ao8wFGUYmLDBttsgM5xNMfKUj7RlrzN0hVFo759SxFASqe00_gNt4XD17GWy-ZRVCdsA.jpg",
+    "categoria": "tecnologia_programacao",
+    "tipo": "group",
+    "requer_captcha": false,
+    "is_chat_amizade": false,
+    "badge_tipo": "👥 Grupo Real",
+    "chat_score": 50
   },
   {
     "url": "https://t.me/dowlodtiktokyotube",
@@ -5083,6 +5694,19 @@
     "chat_score": 10
   },
   {
+    "url": "https://t.me/simuladores",
+    "titulo": "Simuladores e Emuladores de Redes",
+    "desc": "Este grupo é destinado ao compartilhamento de informações sobre Simuladores e Emuladores de Redes, embora o foco seja no EVE, temos diversos profissionais aqui que podem auxiliar nos demais, exemplo: GNS3, eNSP, WANemu, Packet tracer, etc...",
+    "membros": 985,
+    "imagem": "https://cdn1.telesco.pe/file/kvrU3rNFsQ1a_iFc7sp1q5ZCCCpnopshWzcvbJ0AN3Nr8ntNJdq_mJy5K6YtwWAK4UuQPYrLWme7bQFBqdGHCyrjT-uUctEbWm5Jqm2LmysQp1MSPLhxhxGdS5d7llvPkoGgrmyQAoI4wqNMs90xNX5X63eng01TrB4F-JnD-Q8GZZL1GjwNOEblr_Xjt9CNm59e2U4xyl8idH2Ya5v_ART6D7VflYrcpRJ1uGVgjeHhVbMfFfC9PeDA8SlsdOsB6cLpEMFPq3lPbpXYR91UYESJ1L0Y7WypTlaC_XEeYRMstPJ1ClukH5DaZn0PUEL6t1eQ7EoXXpe5cXWfV5VXMw.jpg",
+    "categoria": "geral",
+    "tipo": "group",
+    "requer_captcha": false,
+    "is_chat_amizade": false,
+    "badge_tipo": "👥 Grupo Real",
+    "chat_score": 50
+  },
+  {
     "url": "https://t.me/+IqpVZjOQ3eo2MjZh",
     "titulo": "📚 PROMOÇÕES DE LIVROS",
     "desc": "Aguardando verificação automática",
@@ -5094,6 +5718,32 @@
     "is_chat_amizade": false,
     "badge_tipo": "👥 Grupo Real",
     "chat_score": 10
+  },
+  {
+    "url": "https://t.me/DevCaminhante",
+    "titulo": "DevCaminhante - Programador em Movimento",
+    "desc": "Projeto criado para os aventureiros no mundo da programação. Seja feliz sendo um eterno aprendiz! :)Para mais informações, visite DevCaminhante.t.me",
+    "membros": 912,
+    "imagem": "https://cdn1.telesco.pe/file/u_FbQEZDq1U4k7xELHrx09V8Nafd93tqaVSFoktjCv4ZdOZXly_SN1nhEyJ1sbWwMC6FjQlS5aqnBoxnxEKC-PJUeNFIMAKAmKmMPIt2McLRyxZAJc-U8RorsIFVGS7PhAfSUatqTP9qVpBZ77sInX0LEkWhGgcVzKbk4Bc90MBRQjndWk0VbAYD2VvLtlotIfaGjErg6mQ2HqyjNRjGk_dd6tBXYUy7Q_JfAVo-l28DFSOtfTdENxbkZ0QZD73RiH_WcusgCLrJsbPbhOeJCvoPbjS9mLfioZE-BhHAO6YQybTlpucpQUyh_pOzBwXMFl50rvxQwVnkE2VMm1gOLQ.jpg",
+    "categoria": "tecnologia_programacao",
+    "tipo": "group",
+    "requer_captcha": false,
+    "is_chat_amizade": false,
+    "badge_tipo": "👥 Grupo Real",
+    "chat_score": 50
+  },
+  {
+    "url": "https://t.me/ccppbrasil",
+    "titulo": "C/C++/42 Império do Brasil",
+    "desc": "1) Não pode mandar Bom dia/tarde/noite.2) Stickers e off-topics são permitidos com parcimônia.3) Adhominem são proibidos.Quem abusar dessas regras, toma um delete.  Se abusar demais, toma um delete de todo o histórico do usuário.De resto, vale tudo.",
+    "membros": 910,
+    "imagem": "https://cdn1.telesco.pe/file/klgPbZ5zwqr8WG7fQbPmrdEfLcTY_URTbb-Ia2GJG07TJrYeZg_DJieA06uigzmx9H2U4c6gcFhF0xWPDLYBtJCMPYtBuPLa3wggX1MNJAwI5twsJXtIR45-Fh5m9PyOLPnqqC0XueD0VReIyeNbhk2-lIIFflK3VWJ-W1IEXhjuMX0W5jhaNfTSmvWSFScjh8W8spjqpui-EHD_ScLYaJH86hV3OEKjyqsWLD9dZGJZIuAn0SibzAvP6ECzHX2JZsQeMM3D6_d1ukeTNYut7Jpt61BC7AT1A2FKS8PFA_kdV3u4PU-QMXfItZAfIiBBhm4FC_yHfzP5guO3Ir7IZw.jpg",
+    "categoria": "geral",
+    "tipo": "group",
+    "requer_captcha": false,
+    "is_chat_amizade": false,
+    "badge_tipo": "👥 Grupo Real",
+    "chat_score": 50
   },
   {
     "url": "https://t.me/tvskplayinternet",
@@ -5122,6 +5772,19 @@
     "chat_score": 10
   },
   {
+    "url": "https://t.me/openstackbr",
+    "titulo": "OpenStack-BRASIL",
+    "desc": "OpenStack BrasilCanal brasileiro de discussão sobre a plataforma de nuvens OpenStack",
+    "membros": 875,
+    "imagem": "https://cdn1.telesco.pe/file/ey2UQ9ynxWf7t-YERpKgTnQCt-mqqK7KqXkgvRm7_HrheB-UzPSqnRU2jH_qK5eEvSqB69W8EnbxXfWpkm61AKThkWQ7k0Jx8Fo22BcmyNNcRK6uO2YzDirZXCLb_epw7nP92pmuPJenYoeQANNVoQhRl8wQcgvSIT_wrEA2HBw2E3nilV3Zj0F5YLNk4AEYgoYT1L3pd7vcqRG9u-F5jUbcvUfAipBYz064pOxjSY2zXOfvpbfBZZGRlBHVCOETYaELoFxQiIgyqx7TYhsBS5RyE1EqrXsYO9VTN1gDlsLRRczUmIYqNVoZF_nmQ1wwJ8BNeSNFItzB6GfN_wrIwQ.jpg",
+    "categoria": "geral",
+    "tipo": "group",
+    "requer_captcha": false,
+    "is_chat_amizade": false,
+    "badge_tipo": "👥 Grupo Real",
+    "chat_score": 50
+  },
+  {
     "url": "https://t.me/+cTHnfWtdVfw4MDRh",
     "titulo": "🛍COMPRA E VENDA BRASIL",
     "desc": "🤖Vendo 2.980 Grupos de Vendas🪀🍁🌀 210 Grupos no Telegram.🍁🌀 770 Grupos no Whatsapp.🍁🌀 2.000 Grupos no Facebook.✅ 3 ROBÔS DE VENDAS 100% GRÁTIS.👇https://melhoresgruposdevendas.orbitpages.online/melhores-grupos-de-vendas",
@@ -5135,6 +5798,19 @@
     "chat_score": 10
   },
   {
+    "url": "https://t.me/flaskbrasil",
+    "titulo": "Flask Brasil Oficial",
+    "desc": "Grupo da comunidade Flask brasileira",
+    "membros": 868,
+    "imagem": "https://cdn1.telesco.pe/file/n6eou8HnxpwHeTiLCJ3hVBuMdugJ5MODWH23NyNfk7Z90lYB-K30T06uwGSPN8STVBPCRcrs5jD8ttgG0L6hZBOnqaPBi9Z91ulX4FFgAoLct-XAlNGnf7NowWMicqEpVL-ouYz_uVIVACNFDt_3SjoOejJCUDnbzEdkU7l3HOeISwkuempXHfkB67cJuMyQsIsuQL44lTzEosSad8xcuBOfssWHbE5k9eB6-o84iDqotPeengoXrzgvmDLJ0nx9QAUPk_yZWbPjZkFONnvGhTwNbmwYwhNRqT30C5Sl9A_TU9mg4K6vRXM3w9RH59MyyvR1E_YkaLfbMVKoTjXUdA.jpg",
+    "categoria": "geral",
+    "tipo": "group",
+    "requer_captcha": false,
+    "is_chat_amizade": false,
+    "badge_tipo": "👥 Grupo Real",
+    "chat_score": 50
+  },
+  {
     "url": "https://t.me/videos_pour_adultes_schaerbeck",
     "titulo": "femmes matures en quête de vidéos pour adultes Schaerbeck Belgique",
     "desc": "Réel/virtuel ♥️ Respect demandé. Ceux qui abusent = ban direct.",
@@ -5146,6 +5822,19 @@
     "is_chat_amizade": false,
     "badge_tipo": "👥 Grupo Real",
     "chat_score": 10
+  },
+  {
+    "url": "https://t.me/phpcomrapadura",
+    "titulo": "PHP com Rapadura",
+    "desc": "Comunidade de Desenvolvedores, Estudantes, e Amantes da linguagem de programação PHP do Estado do Ceará. Unidos através de uma doce ligação, a Rapadura.Discord: https://discord.gg/ud2djQCJkm",
+    "membros": 852,
+    "imagem": "https://cdn1.telesco.pe/file/AA-J1SPnek-WBUlwnJbt0TORAAekWT1Eab2Y0RY-AFBMtf4BojJA2flMKUM8IX8otwP5yJb3WiKPs_66p4H6xg3eqhB-ccYcnO5a_pTlMv471hntX1NYohegIEvse6T0a1MqTcscLpUX_6qc3O1YiolAxEl6Pm4_KfQ4JQz3MsONGfyFhip38NcjNxbZwLUOPYimIZaRhTLcR5UuWWvlQJKy3F08tz8gLyCPtBH4bJpzcIEK4dz9_3ZkiZlbPKZa1TQhvkddQzYUe6WtTGJ99zkfUP1dW-y6TFNBs_2rc1d32Vzjmc88CSfyRy1XJeEfltDbjlR4nL_lFTAIUoG4xQ.jpg",
+    "categoria": "tecnologia_programacao",
+    "tipo": "group",
+    "requer_captcha": false,
+    "is_chat_amizade": false,
+    "badge_tipo": "👥 Grupo Real",
+    "chat_score": 50
   },
   {
     "url": "https://t.me/libreofficebr",
@@ -5198,6 +5887,19 @@
     "is_chat_amizade": false,
     "badge_tipo": "👥 Grupo Real",
     "chat_score": 10
+  },
+  {
+    "url": "https://t.me/DesenvolvimentoDeBots",
+    "titulo": "[Atalho para o Grupo] Desenvolvimento De Bots",
+    "desc": "Grupo sobre desenvolvimento de robôs para o Telegram.https://t.me/joinchat/BVEOJz9wDGqRbe4X-YOofw",
+    "membros": 827,
+    "imagem": "https://cdn1.telesco.pe/file/cbzDFnRTd4ifaN_723xR2XduV2n5J-LVDw-oLmmnWx4qgoJYZtHIGl5R7Z4WxWJV4ROx2HZbSIpIPA2ApGNEdzIBosYKuk1rxqVP4Id2KlpDbceYVDxVjtGyXhB1o3xpoRD3atFNwBl8p2LEsfcs0he4ejeIM9srICVjOSWW7fO1hgf5QwHqhLwUfz2vfWp8J0h3h61VjHCcvS9KZwxyU28BSsb-e-yRX608cpw_FuyrHdBC9qJBFud0EfookkQRNayOZ7ElUIM5O09ISw5bUHh7shJsQQl7T9WHQsVKNfmQA6shCtvE2HWmoRLEhoKeNsJmAGzQ1XJneYzWqEIlKw.jpg",
+    "categoria": "geral",
+    "tipo": "channel",
+    "requer_captcha": false,
+    "is_chat_amizade": false,
+    "badge_tipo": "👥 Grupo Real",
+    "chat_score": 50
   },
   {
     "url": "https://t.me/caxiasdadepressao",
@@ -5265,6 +5967,19 @@
     "chat_score": 10
   },
   {
+    "url": "https://t.me/lpicsg",
+    "titulo": "LPIC Study Group BR",
+    "desc": "Grupo de estudos voltado para ajudar àqueles que estão se preparando para prestar os exames da LPIC - Linux Professional Institute Certificatíon.",
+    "membros": 779,
+    "imagem": "https://cdn1.telesco.pe/file/a53K-83T9nBoPA6I0j1CbtMrMuMyByP6Wk526rGQs8Ge0DyAIeor2GxHudKdFLsIl19zAe8FrOiE3lfxHhBe0ipISUsYLL1veNuD1AGA8ncUXPO2FsxLEOXFIC8BAbqC9Aygi08v4oX9UdKd02iP8hE5t1CSaJtG3NaN_CKd9V1MspzJbRr1Awi7Mc_8nqv-_sdC5dn_qB8bv2V-Iye4QDDzaRvktY9PDUA-mtqF9o89C1iT9LevL0TNgcav-X2XBLtWix3aqNYxotuHkVNeb2nNGp8J7gspRtj_YOhghDlrxqnIIdztoH85OxWtEX0Tg7l8TJjeCMclWlUCPmRGFw.jpg",
+    "categoria": "concursos_estudo",
+    "tipo": "group",
+    "requer_captcha": false,
+    "is_chat_amizade": false,
+    "badge_tipo": "👥 Grupo Real",
+    "chat_score": 50
+  },
+  {
     "url": "https://t.me/thedudebrazil",
     "titulo": "The Dude by Mikrotik (Brasil)",
     "desc": "Grupo voltado ao uso da ferramenta The Dude. Temas como política de convivência, anúncios de vendas e/ou serviços apenas autorizados pelos ADMs. Religião e outras coisas pessoais que fujam do tema estão proibidas.Use /notes para consultar as notas.",
@@ -5276,6 +5991,19 @@
     "is_chat_amizade": false,
     "badge_tipo": "👥 Grupo Real",
     "chat_score": 10
+  },
+  {
+    "url": "https://t.me/gitlabbr",
+    "titulo": "Gitlab BR",
+    "desc": "Grupo de discussão sobre Gitlab. Apenas em português BR (only in portuguese language BR)",
+    "membros": 762,
+    "imagem": "https://cdn1.telesco.pe/file/qGxYCnYiaBWMW1ZmFsPoXURU383xFFJjWf12qZv6tkmgP7YzrUyywA77w06XGFUGSJzkS0k3Qrn7jJ6xdTojEEAR03k0zGM0te-ni5NeiLMwrWzfLqusPDYQnqInpKj0Y6cFLOwEATjrR6w0LExS7p_f6xhXgR1JXNpCgxkRxPgEW4aAVt0PPm7JjRZECwW_Vxd5eTK9WIHbL413gdR5xSh1FCVk5_wWlYFWUdIfwZFYCMrDQptlR1fZZ__bBI5-QWSUal1cUd1-oa-dfTwkxFQf5qMH2jqC9X6chlLVVScW0gQmC5qrLW1D--itLBg1YRHtXZoW0EDGO_bUdRcDxw.jpg",
+    "categoria": "geral",
+    "tipo": "group",
+    "requer_captcha": false,
+    "is_chat_amizade": false,
+    "badge_tipo": "👥 Grupo Real",
+    "chat_score": 50
   },
   {
     "url": "https://t.me/poposbrasil",
@@ -5382,6 +6110,19 @@
     "chat_score": 10
   },
   {
+    "url": "https://t.me/GNOMEBrasil",
+    "titulo": "GNOME Brasil",
+    "desc": "Os colaboradores brasileiros que participam e contribuem de alguma forma com esse projeto se reúnem por meio da comunidade GNOME Brasil.Site Oficial: https://br.gnome.org/Ajude na Tradução: @GNOMEBrasil_L10nDesde 14/04/2017",
+    "membros": 695,
+    "imagem": "https://cdn1.telesco.pe/file/h_7n90ow9Tp9yvFJmRB6iy1rEQf3zfgeTqYl8FIhtxbovS-UYHsVE8pInKh5v9GlOcDXfOkZfK_cZ18qaNon5drvh4UkIHJV_7ZmMEefXbXrnZqRRK0C37MWnHidecUhtunCZxFnCPDbROiaOJ4zbyI1eTlTpQ9s0-coi3a41jfigmLroc_OHnYAZ2aHP-aCNnMutPoTRWJmIafXqPXhDUGqXV6Ut4lgcMNqYz4_v54RaGJhoyQM-B72E7Gn-D44VdJoU7SQfPKe3GTQeoE24-Go5RAvrc8OokCXT0l8yJkJ4mRPaJwqrslJw0uluudnnRUJNEizMxS0eF-jnjQ_Vw.jpg",
+    "categoria": "geral",
+    "tipo": "group",
+    "requer_captcha": false,
+    "is_chat_amizade": false,
+    "badge_tipo": "👥 Grupo Real",
+    "chat_score": 50
+  },
+  {
     "url": "https://t.me/+_dFO29XBqe84MmU5",
     "titulo": "Pet Anjos",
     "desc": "Olá, seja bem vindo(a) ao grupo. É uma alegria ter você aqui conosco. Somos os Pet Anjos e divulgamos notícias, informações e curiosidades sobre pets e outros animais. Acesse também os canais parceiros @PORTALCULTURA e @NOSSOPORTALCULTURA.",
@@ -5445,6 +6186,19 @@
     "is_chat_amizade": false,
     "badge_tipo": "👥 Grupo Real",
     "chat_score": 10
+  },
+  {
+    "url": "https://t.me/pythonfloripa",
+    "titulo": "Python Floripa",
+    "desc": "Comunidade Python de Florianópolis, Santa Catarina, BrasilPara conhecer o código de conduta do grupo, segue o mesmo da Python Software Foundation e da Comunidade Python brasileira.https://www.python.org/psf/conduct/https://www.python.org.br/cdc",
+    "membros": 657,
+    "imagem": "https://cdn1.telesco.pe/file/I0d_E7FKSBNQl-jKTgv1bRmMwD_t1Ifp-JWDjTcKt8j9jv32hALwCGOFOFeCm7-B9tpcqUXRsSHa8C3dwtyewGlDiDOqrQOm2gEPRzZV13LvUalHkNGzLtb0FGpBe3Uiz9FDjESk_ic-kOJzZ_5LslAYvcAVcr6NgAK_bxg1NmcoCQWmqTEFsUympwmV87bAXBhs2h_s5SqnhrSbhafrqA543BO12e4K78fbltlL4v85j0p_GxOI8WQHE5jachCqaTzsOtLDoqCydHn2_3oVAO1wuW50cpi1P-ZByQIxpTpt89IN5ReUh9NUBDFQgU_LiumCTzhkNKliqKZoyAa_IA.jpg",
+    "categoria": "tecnologia_programacao",
+    "tipo": "group",
+    "requer_captcha": false,
+    "is_chat_amizade": false,
+    "badge_tipo": "👥 Grupo Real",
+    "chat_score": 50
   },
   {
     "url": "https://t.me/+dTYNqZdvlHI4OGJh",
@@ -5523,6 +6277,19 @@
     "is_chat_amizade": false,
     "badge_tipo": "👥 Grupo Real",
     "chat_score": 10
+  },
+  {
+    "url": "https://t.me/quasarframeworkbrasil",
+    "titulo": "Quasar Framework Brasil 🇧🇷",
+    "desc": "Construa, usando o mesmo código, websites responsivos e mobile apps híbridos com o poderoso VueJS 3. Doc: http://quasar.dev https://medium.com/quasar-framework https://dev.to/quasar Discord: https://discord.gg/Dxm5qzQ",
+    "membros": 643,
+    "imagem": "https://cdn1.telesco.pe/file/tAho2xNE1469n9aR46InOIjPQwAS7BfuTQtt2hDNIvYaBAROHkJRyhosk-z3zjHUAISUAaiBZtWLaicQurAcWlwmJQlBetDklBSlxRqrpdojiIi1BqnjtzrS3rG7Ia2a60BeGj5DO9opucqLM-zHFbHAvrQGIKV7KSYdglPS-4ZkJZ7y3Y7Wqur6ZGkmazCqfNRieBwkJa8QHy_qcf_VH6DvHAldt4-VylQX_8CxtOr0gk9mc40x6x9s0X33-_fKa0N1jIMXkJoz3T7aLw52FvKYULgkz0Fg5j1siVl1RSbm7dDwozOklaV6CCCL0NAdpfvBlherzaVBm8yeiiluVw.jpg",
+    "categoria": "tecnologia_programacao",
+    "tipo": "group",
+    "requer_captcha": false,
+    "is_chat_amizade": false,
+    "badge_tipo": "👥 Grupo Real",
+    "chat_score": 50
   },
   {
     "url": "https://t.me/grupodinastia",
@@ -5616,6 +6383,32 @@
     "chat_score": 10
   },
   {
+    "url": "https://t.me/estudantelinux",
+    "titulo": "Estudante Linux",
+    "desc": "Grupo destinado aos iniciantes no mundo Linux. Entre e fique a vontade para perguntar, aprender e compartilhar conhecimentos. Entre também em nosso canal: https://telegram.me/canalEstudanteLinux",
+    "membros": 600,
+    "imagem": "https://cdn1.telesco.pe/file/Ni47WoYGTD7IjfRDXJf7MYTjFnM0VcMubTAlHfFpwCUbTdJfncqk4OD8-x1-RNpOaSlx7uueYkq2JmGqKdWyA5jkFtUyAuPEo_FsDOFBI4yiZxissKHatW0TwxpqnOcWw-UQgiOVz4F6iyJEBOEtu5GxB0JCM-xTdEqfWBvGzC9bstLtSp_s--dS13ono9tplOFK5WErxzuToQDw60uwYCduteeOox_0KSHuT86qOdZTLofYhKQ8lKXYNbxDLiL-j_--8aPnckaniQ3vA6Rj3IxCiQE27huY8XhcNHRYagtZiEQehOknhNmnycCxeA6rCGhH6ssmUYZUGrlnF022IA.jpg",
+    "categoria": "tecnologia_programacao",
+    "tipo": "group",
+    "requer_captcha": false,
+    "is_chat_amizade": false,
+    "badge_tipo": "👥 Grupo Real",
+    "chat_score": 50
+  },
+  {
+    "url": "https://t.me/terminalgnulinux",
+    "titulo": "terminal@gnulinux:~#",
+    "desc": "⚫️🐧 Em nosso terminal você pode debater assuntos relacionados a qualquer distro GNU-Linux. Sinta-se livre, aqui você é usuário \"ROOT\". 🐧⚫️🐧 Participe também.👥 @LinuxMintBrasil👥 @UbuntuBrasilOficial👥 @shellscript_x",
+    "membros": 586,
+    "imagem": "https://cdn1.telesco.pe/file/Th0qnQfAU6K3L9ke4l2olqw3BqiXLNVGi0hU_T-L9J1-FOd0eKjRkF21gIzn8mJhG9LOgoCHJ6WXmbJEE59OiNOKAYOntUkViIvaQB209BewUFBzcChP7tRT9deKgcgKO1Q64ZUhk1DWfrAF44Kxpv6UVVKg_s2Wd0vZsMnsj1oeTlx1qwX9TaPBm6hDuU8WZa-sJuvpHiVOqHKBsjZSdXYdbO4eXPngW7xokN1I0ZYHfbAG3BCWC3DTH6JQXv4lkG9WHzE0ZU8m3FbKZtczCGXm1OhjXoD9Z-zfjRcWnVafNbzBA8r-wO3D8oC517KpnXQtEDrHnXGAVJKaoI4t8A.jpg",
+    "categoria": "tecnologia_programacao",
+    "tipo": "group",
+    "requer_captcha": false,
+    "is_chat_amizade": false,
+    "badge_tipo": "👥 Grupo Real",
+    "chat_score": 50
+  },
+  {
     "url": "https://t.me/xboxbr",
     "titulo": "Xbox BR",
     "desc": "Super grupo brasileiro para console Xbox!",
@@ -5629,6 +6422,19 @@
     "chat_score": 10
   },
   {
+    "url": "https://t.me/pynorte",
+    "titulo": "PyNorte",
+    "desc": "Grupo regional de usuários de Python do Norte do Brasil",
+    "membros": 568,
+    "imagem": "https://cdn1.telesco.pe/file/J397jISJP7v5R9NvkxHZiRHlIh7fFCSvd1uM9OiDUyemuCR5F2WG7kWpjXz9C6w4eBWo8jSQkhkVEqbdBCt9yJNxgoYNNf-NDiVe0_d39suJQA8-TT3Szm6Rl6EQfB0l-aTbOzL2pb9LwUmuxSaeizjuAapRsQWit-1TxgTSUNZumBee5GHgEWAVKyvdDRSpnDBRApzA0a2gM422Kol0RpVgzGF_AKYqcXJFFqLeJbGz8nAHhLNp18fqdSZ3aqDe7QTUhOtr613Vok2ZYtfMzDMDHecU7qNnBMXfWFXTdV9w86Rxh-FZZfaLCa39tf0MD8sHGkyZqBzXnpksraEPAw.jpg",
+    "categoria": "tecnologia_programacao",
+    "tipo": "group",
+    "requer_captcha": false,
+    "is_chat_amizade": false,
+    "badge_tipo": "👥 Grupo Real",
+    "chat_score": 50
+  },
+  {
     "url": "https://t.me/apwars_portugues",
     "titulo": "APWars_Portugues",
     "desc": "⚔️ Bem vindos. Por favor, ao entrar, leiam a msg de boas vindas e as msgs fixadas. Go to the war! 🛡Link para grupo oficial em Inglês: https://t.me/apwars",
@@ -5640,6 +6446,19 @@
     "is_chat_amizade": false,
     "badge_tipo": "👥 Grupo Real",
     "chat_score": 10
+  },
+  {
+    "url": "https://t.me/freebsdbr",
+    "titulo": "FreeBSD pt_BR",
+    "desc": "Grupo focado para compartilhar conhecimentos e tirar dúvidas sobre FreeBSD e PfSense. Link do grupo: https://goo.gl/mzp7XT BOT do grupo: @GrupoFreeBSDbot",
+    "membros": 559,
+    "imagem": "https://cdn1.telesco.pe/file/fDgsW5ma4EqY58RwXF8c_LqIslhlT1T5bo-Sr0LDei2y_6x5F_grsE9alPRMA3c2MLXtrT6UNdmO0rMH8Gq3iyjAltnsyOvYp1SFnlK_MlvK7ogvK7e99AtBfO4XzjEgnoMeNJwTYz16n7nP7R0ck-z-1Yfm3kjzpcQlcaTYwzx3wNsakV8VUY4TCIRz5P4Rz9TUtzU0QqYn4FwuM7mFzdA9JtrZUWQMy1BXkx8NmYjKDNiOzPcNRhZGwBd0RMNJc8DAT0nJfuxX5joU8lRG8BvEgLkAyCagx4SDbI-7Tb1l9dCaDiDdh78FEvnVsim2wIQBr-fu52HJ9JHiqR8y6Q.jpg",
+    "categoria": "geral",
+    "tipo": "group",
+    "requer_captcha": false,
+    "is_chat_amizade": false,
+    "badge_tipo": "👥 Grupo Real",
+    "chat_score": 50
   },
   {
     "url": "https://t.me/resistenciapetista",
@@ -5666,6 +6485,32 @@
     "is_chat_amizade": false,
     "badge_tipo": "👥 Grupo Real",
     "chat_score": 10
+  },
+  {
+    "url": "https://t.me/dartbrasil",
+    "titulo": "Dart Brasil",
+    "desc": "Grupo brasileiro de programadores e entusiastas da linguagem de programação Dart e seus Frameworks (Flutter, AngularDart, Aqueduct, etc).https://github.com/brazil-it-groups/code-of-conduct",
+    "membros": 550,
+    "imagem": "https://cdn1.telesco.pe/file/JiY8ewurRafFxLBSdP4laEFtMpNKRKhCO5ctaCVhvpxoI4au3JqTuUrS5eJsCDzYRNJsUuveVEy5ojk9tpoEyGaACkIDWbvQVM_SE-mMOIyuzauyq6HwXdc-doaMg_acsT00e0s3UzwpM_uJn08KG2n0gIsID4WVWvF3GyphkL-MbKiCbd-zJ7ojTy-_3_SEw1Pd2WRahOI44EWFOftFcoSjeNBfsEFd14u9EBG_tGN2l1AWHh5BZCsFjOg90-xhF5LtR0ubOayIivCD1CUMUYCQH_RS6D6CqGMc4vRrYv2Yk9OmuA9_-ICK4u9XFoYb0YBqhHJEIl3iFeXLouMcPA.jpg",
+    "categoria": "tecnologia_programacao",
+    "tipo": "group",
+    "requer_captcha": false,
+    "is_chat_amizade": false,
+    "badge_tipo": "👥 Grupo Real",
+    "chat_score": 50
+  },
+  {
+    "url": "https://t.me/kdebrasil",
+    "titulo": "KDE-Brasil",
+    "desc": "Comunidade KDE no Brasil!Regras básicas: Somente damos suporte ao KDE e Qt, não toleramos machismo, racismo, homofobia e xenofobia. Evitem usar gifs!Código de conduta do KDE:https://br.kde.org/codigo-de-conduta-da-comunidade-kde/",
+    "membros": 549,
+    "imagem": "https://cdn1.telesco.pe/file/EkLftafQzYhRKHWLMeUdoW8LOdzXo1Y4h8TR-vDwiNzhs8GYkwMVW08G85kQlv_Bevif4Hn32o4YsAn4AlgVhMtL78nFxrqf44hMthEcIMBUlCCq1h-vwSKcCRexOdnQv9kT7uJxqCLja7WJFDTq0jEcBVc3Jvg10J_hVJci0TqC_UhzPPD1Tm0dccBKXR0BfetLJdINhUCxay5lSDwyHAn4v4DjIDG3ro0bqs59XFg5ENZWEguXWux4hk2_Z314Lm8g0CQgEipzVq6t1sjRcbzRtO010RJK8pSJHIoZpiVYkZExDpTgktWiz3TKfOuMK6pjUTXqFBYlS7WI0F2d2Q.jpg",
+    "categoria": "geral",
+    "tipo": "group",
+    "requer_captcha": false,
+    "is_chat_amizade": false,
+    "badge_tipo": "👥 Grupo Real",
+    "chat_score": 50
   },
   {
     "url": "https://t.me/voguesohbetmizah",
@@ -5772,6 +6617,19 @@
     "chat_score": 50
   },
   {
+    "url": "https://t.me/phpmaranhao",
+    "titulo": "PHP Maranhão",
+    "desc": "Grupo de profissionais no Desenvolvimento Web com PHP e outras tecnologias do Estado do Maranhão.—Somente serão permitidas veiculações de anúncios que sejam compatíveis com a finalidade do grupo.—www.phpmaranhao.com.brredes: @phpmaranhao",
+    "membros": 506,
+    "imagem": "https://cdn1.telesco.pe/file/mONt6VDPlU-jtMGS9xJKmtP-dm_Ro8ldKoLZIFZ4yTuCAZ4oqNreDBDmDofQo8rujbZRQW-R4cXp1djpZHWUz0us9OJ-hG1Si7niecbwYAzpO2GidXet4P0t2AotGsGkTHf1kxxZB_UYx7rhpTMUHWq37E2dEYU2yW-hSXgJbzVyjNw8D6ls36139lQty0bFMVTYNqpFiHCaV1DzUtnxMIfqiibKjtRFlOsUUDACDualPncm1TKNMUlfb2QY4g_bhJVhPVrnlwFH0nFEZsa1baODCJON7397KHvjTzXQ9okiJ9amrZSHgo-6djg_eMBjbv-UbcWGZDYj2fMqL1tmNQ.jpg",
+    "categoria": "geral",
+    "tipo": "group",
+    "requer_captcha": false,
+    "is_chat_amizade": false,
+    "badge_tipo": "👥 Grupo Real",
+    "chat_score": 50
+  },
+  {
     "url": "https://t.me/sejahomem",
     "titulo": "[GRUPO] - Seja Homem",
     "desc": "📢 Grupo oficial da página do Facebook Seja Homem📌 Siga também: instagram.com/condutavaliosa📌 Canal: t.me/RafaelAires",
@@ -5783,6 +6641,45 @@
     "is_chat_amizade": false,
     "badge_tipo": "👥 Grupo Real",
     "chat_score": 10
+  },
+  {
+    "url": "https://t.me/developersRJ",
+    "titulo": "developersRJ ⛱ 🍳",
+    "desc": "Seja educado e promova o diálogo.A divulgação de vagas é liberada, porém pedimos que a faixa salarial seja adicionada ao corpo do texto.Para convidar alguém http://t.me/developersRJ",
+    "membros": 493,
+    "imagem": "https://cdn1.telesco.pe/file/MKwk7SxzepIOgbAuiUyaXRuZF5FmRdX6Y0ajBEmuk37BoAt0iXpuEs5kA9YMV4CY6lhqo-WVameb0MjCiXWgoimTznL22LnNkMnNwa5qVKRKcrYJzl6-DzcOG7xrnn2aJz1oWzqr_3l2fI8N5a9GXNgO9ZViVylyveHow7ySrsQ0xsTWNLGcuXThirZwRGEf5TI5mQz7KZGqHxFjt1OSYY6N7sxwDstUST73ksEvF7GtKUBXAx8ZXoNys1269gd_JiGv8s819i05R9vBd5Y-DgtNPE1utanDrnGns54R-wTShFhEGwnNNMscIXfBt3WnAjRCF9jt4j7s4NrE-y4O7w.jpg",
+    "categoria": "vagas_emprego",
+    "tipo": "group",
+    "requer_captcha": false,
+    "is_chat_amizade": false,
+    "badge_tipo": "👥 Grupo Real",
+    "chat_score": 50
+  },
+  {
+    "url": "https://t.me/openshiftbr",
+    "titulo": "openshift-br",
+    "desc": "Grupo de Usuários OpenShift (OKD/OCP)",
+    "membros": 491,
+    "imagem": "https://cdn1.telesco.pe/file/BwTckm-BVVd4k8i-8jHS5N-brcBoYoXmR8VVXGG3sNtm4eHMyyXH1l9oq1wYZUuUQBsmOa6M5qfvo2RzMYcyGQLv0ZNXNro6497fj6psRCCtdVPRKNqSTBXlhSaDz8cq9ri8sl46x6DLFZZChG61Ir47Fwvh9M8KtDBLF1-mLO54dSI14vWKMPvLMk_-fwn9wpH1w3EbnEqkr5Q4zbtpm85czl8E6MkMJb9FGFcf8jl7LLuwr_hF5hDJ18VPg9mmWqUDrAsY5QUDo2W7TLC_87iVN73B91OUCz1jUYCd9OHQxfV9W4SgOqIukGzZDEp8p8rZOq02-qkUot_WM0Eq_g.jpg",
+    "categoria": "geral",
+    "tipo": "group",
+    "requer_captcha": false,
+    "is_chat_amizade": false,
+    "badge_tipo": "👥 Grupo Real",
+    "chat_score": 50
+  },
+  {
+    "url": "https://t.me/centosbrasil",
+    "titulo": "CentOS Brasil",
+    "desc": "O CentOS, abreviação de Community ENTerprise Operating System, é uma distribuição Linux de classe corporativa derivada de códigos fonte gratuitamente distribuídos pela Red Hat Enterprise Linux e mantida pelo CentOS Project",
+    "membros": 481,
+    "imagem": "https://cdn1.telesco.pe/file/jv7IKznHqtlzLUXdN8qcdRezZhEeYsHHE57OfJsXTgHMQa09piizZ39vYgCw-6Uzyc-hfREDks9ZYnQiwSH8bdAtmOScZjmF8UlAE0VGvkwvRIaAi4j31vhArtKhit-u41BP1WVRr7WOaIC6Pc_TLenTJjkFwyr3LqPtzxt3XFWkR0nFTRjnH-2rH4UGMsGpyKzCoiJ2rsFtvDUOA0z6I7JfvOMgTN8xFnlbqIlE6TM_CDWnh-QEMBjX8H4OZBchy4Wf4zRr4gdwJE2YHq5Uph1DFv3dMxc-rTkYXSvMkab0qRxJF7MiEQxsDGN1RJoN8zZrQ3lVhiFVFeJ95AWLew.jpg",
+    "categoria": "tecnologia_programacao",
+    "tipo": "group",
+    "requer_captcha": false,
+    "is_chat_amizade": false,
+    "badge_tipo": "👥 Grupo Real",
+    "chat_score": 50
   },
   {
     "url": "https://t.me/+Z369yCa-rf03Mjdh",
@@ -5824,6 +6721,19 @@
     "chat_score": 10
   },
   {
+    "url": "https://t.me/pythonsulbr",
+    "titulo": "Python Sul",
+    "desc": "Comunidade Python do sul do BrasilEste ano a Python Sul irá ocorrer em Porto Alegre, mais detalhes em nosso site: https://sul.python.org.brEsse grupo segue o CDC da APyB: https://sul.python.org.br/codigo-de-conduta/",
+    "membros": 474,
+    "imagem": "https://cdn1.telesco.pe/file/RB2xpHjZXnNRdVKh7KbC5MNwPtfwJGicyC8j3A1AxNoupllaOByDrSYK8tGqgSqA3U-N5OtPIkshGtk7aAB7BXWM2raacgTvSnYX52ZVrj5Ex4SQCWtRODrjCUxOdFD29WVM-VkE9eF0wFDFTgDKaVBCAzOalaeDEAkXAjhItJDk2r2DS2i8It6-ypf34Bs6qCa1zg9IgBg3kMz1sxPJki1sVUH1Qd7u2vUCz1WxzUEw8ZSeoLdVR_xSjWeaAY3Ol1bID-X0UEXS083LOUFFb4Vxnq6i0jR5BiGOMhBK0cnv0Eg7-eKejyPbbgn1GMqDQp8oO1aSkKPWTAOgWk3C5w.jpg",
+    "categoria": "tecnologia_programacao",
+    "tipo": "group",
+    "requer_captcha": false,
+    "is_chat_amizade": false,
+    "badge_tipo": "👥 Grupo Real",
+    "chat_score": 50
+  },
+  {
     "url": "https://t.me/+G33xcydL1KtiMjZh",
     "titulo": "Central de Empregos Caxias do Sul Serra Gaúcha👩‍🔧🧑‍🔧👨‍🔧👩‍💻🧑‍💻👩‍🔬🧑‍🔬 do Camel Virtual🐫🐪",
     "desc": "",
@@ -5848,6 +6758,19 @@
     "is_chat_amizade": false,
     "badge_tipo": "👥 Grupo Real",
     "chat_score": 10
+  },
+  {
+    "url": "https://t.me/brbotdevs",
+    "titulo": "BR Bot Developers",
+    "desc": "Grupo com o objetivo de reunir vários desenvolvedores brasileiros de chatbots pra trocar informações e, por que não, desenvolver projetos em conjunto :) Sobre divulgação: https://t.me/brbotdevs/11097A Bíblia desse grupo: https://core.telegram.org/bots",
+    "membros": 471,
+    "imagem": "https://cdn1.telesco.pe/file/Qb_h6tcoQKL7_xZ3AbACOjL5JFwiVsRsYq0hUnMB8xQjByGS8ol8w__UwUjRpCOaCcHwFIrq3DLvUBtltxxC-1lxZvXUKBv64IZ6tfiAni1A-tLhq-k15UD_yjVnA-O5zpkFuBxFQCC_0ZZD6mIxoGFSMWHulSM19TaHazc6h8kyZ554Mrn-HY3vM17zdf8M-8CqCfBZNn4u_r8fXjVKHQmmsuA9N3EHV7u4474qUQX_jGxkEBn-7WBYTD6CayzM7iXncb6wlPCKiZ5nlXrIEO6vEfoZEvEQvIc4uQgLe9L8z2qxl0XtkBiwP5z9XRwognprlhhGAsqr23l1HzfD1A.jpg",
+    "categoria": "geral",
+    "tipo": "group",
+    "requer_captcha": false,
+    "is_chat_amizade": false,
+    "badge_tipo": "👥 Grupo Real",
+    "chat_score": 50
   },
   {
     "url": "https://t.me/certificacao",
@@ -5902,6 +6825,45 @@
     "chat_score": 10
   },
   {
+    "url": "https://t.me/C_user",
+    "titulo": "C_user",
+    "desc": "Grupo destinado a assuntos relacionado a Linguagem \"C\" e às vezes(quase sempre) off-topics.Regras:1- É proibido: Racismo, xenofobia, homofobia, qualquer tipo de preconceito contra membros.2- Divulgação sem permissão.",
+    "membros": 390,
+    "imagem": "https://cdn1.telesco.pe/file/McA3IETILG2lxMGfqgDwM82S-Wowslk5JDEy5-u1lEzU_fJCnJIBjQqhBXkXRRmrrF9sWQfH2wtURcHmdZG6mAJDnrdtyR82wbBlq1uaxRNYl6pIYCFeuNZbRCuAE3lAj9WPsSL0hPgHV_J1kGeqGowyP3mIPRiXx5o4faG5Lcxzo6LNSicuztBsYw7fLdj7t2RU8or4r-5xGj0ZaOb9GaVfLaBpYFkJUuKSgzfiPFSwIdBvEBniMJ6txhtKrlsIqvxzSAJ7qW7JwRSe5q9lNnYlqBtl_5my6DQ53-9R_5sVVCg_mb9cF5TbJNJGLLz9awdHIWFMz4fcKgdHtADqxg.jpg",
+    "categoria": "geral",
+    "tipo": "group",
+    "requer_captcha": false,
+    "is_chat_amizade": false,
+    "badge_tipo": "👥 Grupo Real",
+    "chat_score": 50
+  },
+  {
+    "url": "https://t.me/phpdf",
+    "titulo": "",
+    "desc": "Grupo da comunidade PHP do DF📌 Regras: https://t.me/phpdf/8726📌 Grupo: @phpdf📌 Canal de vagas: @VagasBRTI📌 Discord: https://discord.gg/Jk7rYnaad7📌 WhatsApp: https://chat.whatsapp.com/K0kKh2GQWApAzfBcaG1rRr",
+    "membros": 376,
+    "imagem": "https://cdn1.telesco.pe/file/qOCAi4wAK52SQTPZXXtfJWfy2AN6tgj8LvEVgtyB9bPEmD7kZ82XG9gUGH6-ldMX5SiSlRyKbRH0hu03tdYiikqiJ37QdLKWsnG6eQd7H5KkWJoyHPFWT1zF3WpJ4tKwmyf8lwTa4_ri9Lky-5r4YueFD5HPEavPDiVpSPxgn1KkWmD5iD_qSSK3nqmRmcaxJnxCJ4z25PCF19zE-aD1kQv3UV1u1kHHLyJlaz_QDq7VK-SzuyhdhStdlPnjdhcHaRqe7l0j5k-XHOc3Wdgr-O7xPKtlDyu_tDPJIZdCdBm15hr0hYKlNIjGRr0U8R4-01T6hr0cuxuCgbk9Zmgxjg.jpg",
+    "categoria": "vagas_emprego",
+    "tipo": "group",
+    "requer_captcha": false,
+    "is_chat_amizade": false,
+    "badge_tipo": "👥 Grupo Real",
+    "chat_score": 50
+  },
+  {
+    "url": "https://t.me/archlinuxbrasil",
+    "titulo": "ArchLinuxBrasil forum.archlinux-br.org",
+    "desc": "Grupo da distro ArchLinux e suas derivadas.Fórum oficial:https://forum.archlinux-br.orgWiki:https://archlinux-br.org/wikiRegras:-quantidade +qualidadeBom senso nas postagens, assuntos que fogem ao tema do grupo serão deletados.",
+    "membros": 376,
+    "imagem": "https://cdn1.telesco.pe/file/vkqy0X43ehWpTf_WNNe8y_y1QA3Rb6CDEW1BSSdxOq4CBsUrJOr3Da1HPnrngjXJAr_U9uq5i3Xt9Ox9J3NnZE6eymrCZbHxCt7PBqRquRnj5ZKPTMDAJojYdhYyzfhnS29eujNsEESul2QzFh0OstWT6pED7u_5b1z3wTindD47I41qFlD5M-LW-fI-InankRgtLSEDbW2VIMWpEY6yVAn2OyrHZ2zcBCm7Dvllz5lfadNV5EgJGjzfVgCIXM_NLRwjiDZ2LyyZqaTne9OJHegV9REAkmW1feZsRzwbhtKGu69NN3YJ-gdzA8SxUB2nOhP_2oPpY4sts6LglOAWGA.jpg",
+    "categoria": "geral",
+    "tipo": "group",
+    "requer_captcha": false,
+    "is_chat_amizade": false,
+    "badge_tipo": "👥 Grupo Real",
+    "chat_score": 50
+  },
+  {
     "url": "https://t.me/+Rlmxb9c9lEVjNDNh",
     "titulo": "Malhação 2006",
     "desc": "Cauã e Manuela tem em comum a paixão pelo mesmo esporte: o skate. Os dois se conhecem durante um campeonato e se apaixonam. Ao longo da trama, o casal sofre com as armadilhas de Eduardo e também com as intrigas de Priscila, uma patricinha rica e mimada.",
@@ -5926,6 +6888,19 @@
     "is_chat_amizade": false,
     "badge_tipo": "👥 Grupo Real",
     "chat_score": 10
+  },
+  {
+    "url": "https://t.me/grupyabc",
+    "titulo": "GrupyABC",
+    "desc": "Comunidade Python do Grande ABC Paulista, São Paulo, Brasil",
+    "membros": 351,
+    "imagem": "https://cdn1.telesco.pe/file/Su-2ijhjKwCrWhJPY1q_I0frn06P12qLP3j15jKHj2qNjpDBWKw3yhDkkhD1C2HwDf0Nr8pnoUWJFBxV_DMuLeQdx6kfYGp_-dVUBZr5KIlMM--9wCRSydyPqGtrxkyKFSGWtNcbhE1FNHP1nSvpsG4ZOu8pJREL48Tk9f4Tagyhnl8wNdpQoW_nbmDsnaBkjja5SdihXDoTBVT8OSUO81iwSPXlg1MoWD-5tf-zV5Ht6AW16PLtNXfkw7Tokin24tJDt9NA8NoX9QqHJQa4nTzM7v_AWx_hkbxbZsenqsqmn533OuLWJKbJSD0HgpXEiNILJ9JuKuy8kSsUDd557w.jpg",
+    "categoria": "tecnologia_programacao",
+    "tipo": "group",
+    "requer_captcha": false,
+    "is_chat_amizade": false,
+    "badge_tipo": "👥 Grupo Real",
+    "chat_score": 50
   },
   {
     "url": "https://t.me/grupygo",
@@ -5993,6 +6968,32 @@
     "chat_score": 10
   },
   {
+    "url": "https://t.me/libreofficebrasil",
+    "titulo": "LibreOffice Português",
+    "desc": "Comunidade LibreOffice em Português - Grupo destinado a tratar assuntos que exclusivamente sobre o software LibreOffice",
+    "membros": 324,
+    "imagem": "https://cdn1.telesco.pe/file/m33MIhSfdu0zBCc3nXKOaivDal5tkEv3UhLntkwBMB7ycr7fGC3eSmGx_UUANoN2HLVbXQwlvTHY2EFlUjnWgDEB63Gpl6fdc0cFbcCuWmwGNrKqCOmGVFRWVVRPaBBbLkCCNSheqH_so7FUKxvkzaZKbObaQzf-4H3YP0gohjWLJEqWpG0DTq_MR679Xv2PRetdHKLB_xgdN9C76CAGffNDvINii3Hq4RnYy9qN0WbUUeyDmuVr-YbrNHeash-08CsdYInIrM4Z_gRbLiW4j52Shuo_Up7TTWzL7eAxlIP6K0beYUKMNfQeCRxjZsvDtYQY8yYPo7KDinq65iFbtA.jpg",
+    "categoria": "tecnologia_programacao",
+    "tipo": "group",
+    "requer_captcha": false,
+    "is_chat_amizade": false,
+    "badge_tipo": "👥 Grupo Real",
+    "chat_score": 50
+  },
+  {
+    "url": "https://t.me/fullstack_desenvolvedores_br",
+    "titulo": "Fullstack e Design Brasil",
+    "desc": "Grupo Para interação entre iniciantes e Profissionais ou semi-Deuses. Indicação de vagas e trabalho em equipe. #frontend #backend #webdesign #design",
+    "membros": 323,
+    "imagem": "https://cdn1.telesco.pe/file/Mo8ubmho4wg-sNeZAvZ-s3kLXieUQP8R8u7CLJlFQk3Ho8iPvTRuDu8T5W31kDaGvF4bJafOWyl9_JYCZgkDoFk3We36LoeXnSOcRZLpa2II-_W-cQACRF34XsydT1HcZlzDnaJAhwg80lJX6eUmZZB2aDUqdZUwTQ0PMj3B0iluTWSEwmQ4KEL-PPjR5SUdu3fiRH6Wsai-1M2z2peSN0JvNbeGoMOdAhFRJB4HklehlbrONLx00jOEVoQKKQxC1AnJGvXQl9gHRWSFp8WD_e-NOyCOx6FXhKpBP0cIeoGoqSHV-1XA-SOMWSyLiGMdOvL0ppdHDh164LKH2UAURg.jpg",
+    "categoria": "vagas_emprego",
+    "tipo": "group",
+    "requer_captcha": false,
+    "is_chat_amizade": false,
+    "badge_tipo": "👥 Grupo Real",
+    "chat_score": 50
+  },
+  {
     "url": "https://t.me/grupoarts",
     "titulo": "Grupo de Arte •🖌️🎨",
     "desc": "💜 Bem vindo(a), ArtistaDivulgue aqui seus trabalhos e comissões, leia as regrasOff topic permitido",
@@ -6043,6 +7044,45 @@
     "is_chat_amizade": false,
     "badge_tipo": "👥 Grupo Real",
     "chat_score": 10
+  },
+  {
+    "url": "https://t.me/progclucb",
+    "titulo": "Programming Beginners Club C/C++/Python/Ruby/C#/Go/ASM/Java",
+    "desc": "Sejam educados e pacientes e não trollem novatos. Não poste imagens, prefira texto ou código (ex: pastebin.com). Estamos aqui para ajudar e sermos ajudados, mas Stack Overflow te ajuda mais rápido =)Quer ser escritor? https://t.me/writeclubc",
+    "membros": 308,
+    "imagem": "https://cdn1.telesco.pe/file/fwlTuu61vL3tAnYfC0IiQ7LwexAT_5HrhrsuwQnxdWN-l4QwMbA7vjM6anF7CsNobVfsx50hD4im7ePZV363jhgqHz4TpNxf_-IRCybBfZBRVeVPAh53kDeHYgoY_oqFbSqAzWZ11DZ7WN2SnBiPD9RuoICcAMJhT--jrUog4i1B8HCBDn8LTwGv2L1LN4Y26YFWf2GrVmCDoHQmL2DxGVT2Y3zZ7bxDE1ondBm_S3FVhlWMa4uj52f2RunBQpSxOVmQfhs2f8kDuaiSWQ2FbmPJJTELRmKm-EIh_XVlsqd-fXdVqqJtJef4rKMtdo5BsvYu_mg0rz4ZzPW2mTR7bw.jpg",
+    "categoria": "tecnologia_programacao",
+    "tipo": "group",
+    "requer_captcha": false,
+    "is_chat_amizade": false,
+    "badge_tipo": "👥 Grupo Real",
+    "chat_score": 50
+  },
+  {
+    "url": "https://t.me/grupoGNUGRAF",
+    "titulo": "GNUGRAF",
+    "desc": "Grupo de discussão focado na Computação Gráfica com Software Livre. Sua origem vem do primeiro evento de computação gráfica com software livre do Brasil o GNUGRAF - http://gnugraf.org Canal da página do Telegram - @gnugraf",
+    "membros": 295,
+    "imagem": "https://cdn1.telesco.pe/file/SQO75dbA0uky9ZJu7cydx97XLbsjXbRTb6v3GyCYPecdyRJiO7XyusYKAoBC8bKoL-JkDjtESBFPhge1GpT6YJ88zT9wvuMUql9gmDY3oreynxi98UhejN3kVvbEZXfEMMJc94rh9F_HFo_sv7lnpYsarBzn7slV2Atymbn4Z7NOar3c93iYA2S0AWFuTO5nMnszQdeWFr_2Y3ya2QXpzd1HPZG59OGyutt366PLpZM_awRGJI0wdVjwt4EG5aHnHHXgwPPBxhvn8UrakWCzdc5Tb4T3031gVg5rH2MKwBOKFSRWpI6Z867KeBaJ9dSiPcYuze_TTqwjEI7cTGuxgg.jpg",
+    "categoria": "tecnologia_programacao",
+    "tipo": "group",
+    "requer_captcha": false,
+    "is_chat_amizade": false,
+    "badge_tipo": "👥 Grupo Real",
+    "chat_score": 50
+  },
+  {
+    "url": "https://t.me/pugma",
+    "titulo": "PUG-MA",
+    "desc": "Python User Group-MA é um grupo para a galera de Python do Maranhão(ou não) que queira interagir e ficar por dentro do que está rolando na cena de Python aqui.* REGRAS DO GRUPO:https://github.com/pug-ma/PUGMA-bot/blob/master/REGRAS.md",
+    "membros": 293,
+    "imagem": "https://cdn1.telesco.pe/file/RsHvAOG9e9zsO0VZSXC72yt9Tu3dLWSnljOVTL2ztPw_uMiRRYJG9rUX5Pg15Y6sBrBv4O9nDHsGIq4Ib0WH1gF9AJIeIWME10GW6qmFN-IFO5Uy-2tnzcq-zX5RC49PDnMWMKolBI6-RgQR1M4ZV4aDPz8bHYctNjTZJGC0hQdYXTfLCLiLPsDWhSBgBjiYP6H8rH1-4gX70yHBL3xujKb_4kDfjc407Bq2mCZ0ycmHdv6k1mHhtMq4WqjGK0Vgamj-yX9Zq4G44gk3GneuiNvMKuxhI1VLi3MH0lL_U4FIadsOlS5ScfHLHspUGjTBH6nood6D5BBwgSAWE4eRtw.jpg",
+    "categoria": "tecnologia_programacao",
+    "tipo": "group",
+    "requer_captcha": false,
+    "is_chat_amizade": false,
+    "badge_tipo": "👥 Grupo Real",
+    "chat_score": 50
   },
   {
     "url": "https://t.me/uxbrasil",
@@ -6097,6 +7137,19 @@
     "chat_score": 10
   },
   {
+    "url": "https://t.me/gpdibr",
+    "titulo": "GPDI-BR",
+    "desc": "GPDI – Grupo de Profissionais de Dados e Inteligência",
+    "membros": 271,
+    "imagem": "https://cdn1.telesco.pe/file/UhZE6c6Z-S35gFRHQ-hs_xQiYPW9-KmeieLRwcDeOHZemuYjzWnU3LG5fErOKFQg9lziFeTKqLjAY7YbKzWnzMaWTXHW42gFTG3Sbs90tGxm3l7gi5LgkuM0iBjASknbwHOLxqgx3OJyzfgo_bniE1jrdtl9CSdq7_Rxli1rwFWIbJCX_lWNMNuICypOQOMKmFuUen0A0WX-GzpWdWMH06DXv4ORWTxgMaOH5E9dFl7R5VjmpFIKWd2UUuue-LAfwGrOuyLWGVrCpLrzLUkbCnj8RFq5wE7qgIb0EVA5MwtEiUE2PwU2FJRF8neWMBq2t15XbSUJp3xlvwn8U0oFzA.jpg",
+    "categoria": "tecnologia_programacao",
+    "tipo": "group",
+    "requer_captcha": false,
+    "is_chat_amizade": false,
+    "badge_tipo": "👥 Grupo Real",
+    "chat_score": 50
+  },
+  {
     "url": "https://t.me/+b252DjEOdItiM2Yx",
     "titulo": "Estudantes Caixa 2024🤓🙏",
     "desc": "Bem-vindos ao grupo oficial de estudo para o Concurso CAIXA 2024! Este é o lugar onde você pode se conectar com outros estudantes dedicados que estão se preparando para conquistar uma vaga na CAIXA Econômica federal",
@@ -6147,6 +7200,19 @@
     "is_chat_amizade": false,
     "badge_tipo": "👥 Grupo Real",
     "chat_score": 10
+  },
+  {
+    "url": "https://t.me/phpba",
+    "titulo": "PHPBA",
+    "desc": "Grupo de Discussões sobre a Linguagem PHP do estado da Bahia",
+    "membros": 255,
+    "imagem": "https://cdn1.telesco.pe/file/VSfKv3w0Wic_faRAKxlJEo_qOrmgQ0FSF1ojO8RRMXuELx4H6TxndOfVMYFNZ0UYemQlU8XdKLUVy1Q3knD4tYwV5kLM7BjNpKKj9wmbNdWRZHuzeWFhjIYTNoJxc4KNDPzWrMmBBMcHfPtc3CbuPuLNDtEm0NatZPYmN3DQcNkz5GumaqZmXNletYuro9eyGN-5vylgMmd5vQFZv-5hPvvOndtoyGhcLvVrbnOhcMtamNE8Q9_V2ZVuzIva_1Tw-xdU4BnBrzR50dlYOZw-7It3d6FoLvSEeXlLDQN-Vsm0Gn2n548IZ3LzPYysphREpa4hvkY-NUiAEiY93AG2Xg.jpg",
+    "categoria": "geral",
+    "tipo": "group",
+    "requer_captcha": false,
+    "is_chat_amizade": false,
+    "badge_tipo": "👥 Grupo Real",
+    "chat_score": 50
   },
   {
     "url": "https://t.me/CodeIgniterBrasil",
@@ -6201,6 +7267,19 @@
     "chat_score": 50
   },
   {
+    "url": "https://t.me/frontend_br",
+    "titulo": "Front-End Brasil 🇧🇷",
+    "desc": "Grupo brasileiro dedicado ao desenvolvimento Front-End da comunidade TI Brasil.@backend_br@bun_br@vscode_br@botdevsbr@tecnologiadainfo@cybersec_br@vagasremotas_br",
+    "membros": 232,
+    "imagem": "https://cdn1.telesco.pe/file/jyhLPwgXa_HniUFXoFXvHRTMPZvByJPXV1lvKoJ_dETIRrH_S0xUA9ZKRs8224I-BDz6ibkDMHL2Vk3lpqGqoUdwIUP1qLZOwrIMBqIpG7jlJHtI_hGsd9HRsQohGZZxf4cmWNQkwzryWXgFQJU8Ckju_dMkvs1X-XKyaKZUaVOImv1-34Afcf3kMnDcVYLIn-nYJ_AOUOI0PlHnH5gTDbVe5UGjSt190Cp9ZeQYeLPmtpqbh7OpBBK3LPQd4hO2J_QBvDHtn9NhG8dmGcHuZxIwWNnAmft0zWif1J-zKTgWS7be_M0GNhBuWGx2Fq4_Bgb-OeKcnalvsMGaOLklLw.jpg",
+    "categoria": "tecnologia_programacao",
+    "tipo": "group",
+    "requer_captcha": false,
+    "is_chat_amizade": false,
+    "badge_tipo": "👥 Grupo Real",
+    "chat_score": 50
+  },
+  {
     "url": "https://t.me/diabeteregulada",
     "titulo": "DR RECEITAS ( GRUPO DIABETE REGULADA)",
     "desc": "Seja bem - vindo ao Telegram Receitas do grupo DR. Receitas low carb e da dieta cetogênica. Lembrando que as receitas que usem farinhas low carb devem ser consumidas  com moderação.Atencao: antes de iniciar qualquer dieta , o médico deve ser consultado.",
@@ -6227,6 +7306,19 @@
     "chat_score": 10
   },
   {
+    "url": "https://t.me/vagrantbr",
+    "titulo": "vagrant-br",
+    "desc": "Esse grupo é destinado a discussões, em português, sobre o Vagrant e afins.",
+    "membros": 219,
+    "imagem": "https://cdn1.telesco.pe/file/CT_C9N8osFH3jq-PX9T_d6sBPc4On4Sm0O5nvWTuaVlyXEq3RsWj7yzvJL3lcVksiCAFr4TAL9km7abpBmf32XM9h1kuocPPvfOsRKYtJae4MYlcU8Wm7w620jubPWyQAV_r6pgdpwL68uCk8RPbM_ACIw_V2Ra6Bdx5ZGNWdly-YL_blwjiBxhOY3LZF1Cml3Fjx3SM1JvEZJOk_X0nt5t9WujTAWUFYUVn_tB5AtE8VsoVQuYi5lAUDSgmRoDv5Q5a4tuiWNAgPC-FdWfi-Hnz-k1IJlH_mvkh9pIJODkK7QYFJPX9EY7paemrExiMPK5aRU-mz_Gl8LeVKBn13g.jpg",
+    "categoria": "geral",
+    "tipo": "group",
+    "requer_captcha": false,
+    "is_chat_amizade": false,
+    "badge_tipo": "👥 Grupo Real",
+    "chat_score": 50
+  },
+  {
     "url": "https://t.me/+UA9GFMG2fbk4ZDcx",
     "titulo": "RENDA EXTRA ONLINE 💰🚀",
     "desc": "SAMBAEX – Plataforma de Investimentos ✅🚀🔗https://sam.sambaex.com/h5/regDownload?proCode=gt_m7yts1yf9a🔹 Bônus inicial: você ganha 3 dólares ao ativar a conta🔹 Ative a máquina de 1 dia⏱️ Em 24h o saldo vira 3,9 dólares⚠️ Todos os planos começam",
@@ -6240,12 +7332,38 @@
     "chat_score": 10
   },
   {
+    "url": "https://t.me/joomlabrasil",
+    "titulo": "Joomla Brasil",
+    "desc": "Grupo dos usuários Joomla no Brasil. Visite joomla.com.br",
+    "membros": 216,
+    "imagem": "https://cdn1.telesco.pe/file/hEuRRQ-q6DEwRxzGRdw2VCfJi8hmduLm87Nf0NfrVknpyMiXPU-Qmh54gB1EW_FW_1bHiGAVhz-5JHyquIwuQXNikY4LjmfSULS7lxv4SGtX6rbZGo3U73VVogVPaUSVpnZaDvhUGQ77qVDZfi5HkHbRMEQP0zW0GTUIN1b_3h0jD9Yjax4ylfv5tHEyPwclJsWZGABIzvTPvlz_RomqzwTA3-3CRBNucpGSrNpJ79h217K_HU8dBFMhj4EI5FrunNm6cen0PhESQyPKdYBmV4m_AFBmUT5lIyjU25RU838qCcc0BTOSCnd_MSvoqosbDF-WMMopCc7VUAcrX7G_uA.jpg",
+    "categoria": "geral",
+    "tipo": "group",
+    "requer_captcha": false,
+    "is_chat_amizade": false,
+    "badge_tipo": "👥 Grupo Real",
+    "chat_score": 50
+  },
+  {
     "url": "https://t.me/estudoconcursossalvador",
     "titulo": "Grupo de Estudos Concursos📌 Salvador",
     "desc": "Grupo destinado a pessoas que tenham interesse em estudar presencialmente (e excepcionalmente online) para concursos. Localidade: SalvadorNão é permitido rateio nem propaganda.",
     "membros": 208,
     "imagem": "https://cdn1.telesco.pe/file/MookKOJv31t2CH5aHe1_Iajcqb9oI8V9rzetMNY3WqUaqK2Oy0SPtOPQAdfCO-zkS8LM8JS9z84Bg9UnvHz5nLK3hnFPHfv35Ntbl4rB6AYPcFlsux1X3NIbmMmi-Cf0M03L7oecR4pOOu9HmdPt95rIuabuMmyAMrAHbJLEfkjJTX_tW0AIotFoZqPTwwDlDVDmVQBlROQwSehExj9rfhHpU-ONUO-pKWdJQ-ZWNa6s9kWrfqQpDLOrSojJ6BEVpn9Rf8V17_SWoiH7OXDGm49jWDOA5rS2ysazqLuSMXQc2L_0NbZDFToWy1_0ZstzTr1hGgxWDzMNViYqJjQxQQ.jpg",
     "categoria": "concursos_estudo",
+    "tipo": "group",
+    "requer_captcha": false,
+    "is_chat_amizade": false,
+    "badge_tipo": "👥 Grupo Real",
+    "chat_score": 50
+  },
+  {
+    "url": "https://t.me/cakephpbr",
+    "titulo": "CakePHP Brasil",
+    "desc": "Calma, estamos dispostos a ajudar, evite dms, interação é sempre bom, vagas são bem vindas, até não sendo cakephp, todo mundo anda bem ocupado, veja o pin.",
+    "membros": 207,
+    "imagem": "https://cdn1.telesco.pe/file/rehpjQCo2cB7WMdid_EE9a-JWdtPxEVdueCK1rpwEjUfAeON7Mkr_DbvDROAdaC6318XvPtX7jVpJDb2wOD3yqVhjYsp7hjm-MQqCEuUDWj-n7W0WvBhh5aA7RauTaj5IYYqMXj7-TvmhgbmCnIptBOlzcnXL7qUPne8Z7W3lGBqrcneuq-qtME1u0BJLXSQByZZ4mkf3ab_q1_rBiD4VTRcbgl76PY14ojTg6U5DUunX_3InevVn4Cxn1t-3gfhQOKITQA2VURZgWXXtu4J6xjGeo2e4206cJR8DpJg2iHVH9YmhzmeR3Kganqvrg8yfEz4YOC4kznHeWmZ1kB-9A.jpg",
+    "categoria": "vagas_emprego",
     "tipo": "group",
     "requer_captcha": false,
     "is_chat_amizade": false,
@@ -6264,6 +7382,32 @@
     "is_chat_amizade": false,
     "badge_tipo": "👥 Grupo Real",
     "chat_score": 10
+  },
+  {
+    "url": "https://t.me/elementarybr",
+    "titulo": "elementary Brasil",
+    "desc": "Grupo oficial da comunidade brasileira do elementary OS. - https://www.elementarybr.org",
+    "membros": 203,
+    "imagem": "https://cdn1.telesco.pe/file/ppo6VS8qtjG2AcC-bYqFqKSLphllIQUNatgod4rpth-alT_nL5OHuHbuTgiLzH2GDwmjDIZpt4M_pc2YG3QqVj9PLyUTIR_x9sLSdF9fNg5APbdPgTOFcA_BlbnWC-QrzSczqocAHEYVfxvHGuIFee0TLHTeyqV47IgmhqSqGz6eTYaSsWh8Yzfvefh1WHExovm6Y_Ls7AWzrJjzVwoUzgFuV9-nP4NUliyHNuF4k_p4bHxHYa65VIr31mRioNDDOyeN7qwbC592s5yc1G_uW-KQOYNJzkSFCwbzdDkFxH9NBClqfyhw_YSnjp9Ppv3b0uES61qgRTs54kehVLOtcg.jpg",
+    "categoria": "geral",
+    "tipo": "group",
+    "requer_captcha": false,
+    "is_chat_amizade": false,
+    "badge_tipo": "👥 Grupo Real",
+    "chat_score": 50
+  },
+  {
+    "url": "https://t.me/vuetifybr",
+    "titulo": "Vuetify Framework Brasil🇧🇷",
+    "desc": "Documentação Oficial:https://vuetifyjs.com/pt-BR/",
+    "membros": 203,
+    "imagem": "https://cdn1.telesco.pe/file/mS8_JpDAN5GVMn8_iwezB2GKmg1qRBN1XibNQr49dEKxpilA-5cCa7nvLKKb6LTeTJnDFCHgmfzrEAuWZ6rFJV69dcFBvRqfcvIIh4N9rptkzCiayxw4-UpToYig2yFE3Y3hopkGZ6-yThCv0jCP8UEFOHoFNwxALe3OoMLILLAzgIn5QkDE2X1J0OB46tQKHGAwKuHs5AZhT0dmoUggRc1xFRpGabuePev1_kWUb-Oz_wRWy-iE6sJ4wpkXQfr29FUoGUO7ohkUv2nXxqKZO91SLJF9AqicpIWLRPONGLcyQ0a_WoHtqYQikmNMQC6tFyT05XNXpXUU7TAUQ-bLHQ.jpg",
+    "categoria": "geral",
+    "tipo": "group",
+    "requer_captcha": false,
+    "is_chat_amizade": false,
+    "badge_tipo": "👥 Grupo Real",
+    "chat_score": 50
   },
   {
     "url": "https://t.me/+LewxJys6WQs5ZmZh",
@@ -6316,6 +7460,19 @@
     "is_chat_amizade": false,
     "badge_tipo": "👥 Grupo Real",
     "chat_score": 10
+  },
+  {
+    "url": "https://t.me/linuxlivre",
+    "titulo": "Linux com Liberdade de Expressão",
+    "desc": "Grupo de Linux SEM expulsões arbitrárias ou permanentes, pra discutir sem medo. Liberdade de expressão legítima. Bots, comportamento de bot (userscripts por exemplo) e ataques claros e explícitos ao grupo (como flood e gifs ilegais) podem receber expulsão",
+    "membros": 179,
+    "imagem": "https://cdn1.telesco.pe/file/KDuplQrYX8ShopAnLQEwwfvuuC4I0jKEa0Nfw37sKS2HoLV06RWplfHUenBR7kuRowYVdSz5rAPerQN-_YaQob_SJ1N8vgoPZsHwbTn5diq31SOwkphfNlQ4xZLMFY9N8Cr0xQ4ThWo9t-TeeA-7GOdXihscn5t5rksICfN2HdS5qb_Y3yPSdJeR9QEOQkM1cjf3NL-4CkaT_80R3PbW_GtGVCq9iD-zuMusgrz4vVA9atx1AX6ESKU3EXVIZg2a_8k1xuFbSSgzrTGAjvOnMT1Z0P0DTX90ww5aFrNy67XoiOrUt880c-DLlWwk2L21VullHFGE7XDJSaaTIpg7pw.jpg",
+    "categoria": "tecnologia_programacao",
+    "tipo": "group",
+    "requer_captcha": false,
+    "is_chat_amizade": false,
+    "badge_tipo": "👥 Grupo Real",
+    "chat_score": 50
   },
   {
     "url": "https://t.me/bethdourado_terapiadiaria",
@@ -6409,6 +7566,19 @@
     "chat_score": 10
   },
   {
+    "url": "https://t.me/linux_se",
+    "titulo": "Linux-SE",
+    "desc": "Grupo de usuários e administradores Linux de Sergipe",
+    "membros": 153,
+    "imagem": "https://cdn1.telesco.pe/file/Twt-Y9-kkru8G9sf_CvfoAmn3ijNJxlZlDWj4ir6wizjyY2ExtP3c9M6tqN6taavXIPhQzu64B2C-VfL2pgzwd8h2FjHWSSUhJPBt5oMam0UUA5tCYK4auDKy4uIj3q6p3X6I3EZ7bZhD8W5bwOVTLEDN5tC4haEtBbh-xR769z4XSOLBmmt4jBv1ks5Ycz19HpU1UnHHnuS933e09D8h23htg6FYnLOM-tsXyo_h2dlgo81-NsfcrUaxc1E8_4uWZ_iCsFrLtnXX2d7AA2qZQSvibmO2comjNw6d-DBK01m3bgavdYDXD_fudeLvDsCDCbvrz8Fi7uWbT6twAJMww.jpg",
+    "categoria": "tecnologia_programacao",
+    "tipo": "group",
+    "requer_captcha": false,
+    "is_chat_amizade": false,
+    "badge_tipo": "👥 Grupo Real",
+    "chat_score": 50
+  },
+  {
     "url": "https://t.me/+QhMa0ieEwLE5YmZh",
     "titulo": "Concursos Públicos - Estudos⏳",
     "desc": "Seja bem-vindo(a) ao nosso grupo dedicado à preparação para concursos públicos! Aqui, compartilhamos materiais, dicas, resumos e rodadas de questões para nos ajudar a alcançar a nossa tão sonhada aprovação.",
@@ -6461,6 +7631,19 @@
     "chat_score": 10
   },
   {
+    "url": "https://t.me/perlbrasil",
+    "titulo": "Perl Brasil",
+    "desc": "Bem-vindos ao primeiro grupo brasileiro do Telegram sobre Perl!",
+    "membros": 136,
+    "imagem": "https://cdn1.telesco.pe/file/dtYisuUlfK7K4jht8SDdv186d_UTa7YLQxKJ6-71uD9nmBw8BXHD8Kn1C6OXILDS_clOCrpyrEFX9zqhvyPrG_jTc2QgS4us55hvX8jy9NdSydxyy7qNVNH9KSB-ZtnD11KhfgpH6VAI27lrj1w1NAEsj-iwAY0A_Rjh_Cw28qln5VAmCjWjG-_PihYeouCB56Y473P-oMxQtljWumULbI7qL112vQJCm9J7VfKDO8U7Maq4swzkbfs-leKn1tC5G2mRXlbe5QxC6zHWdJQ1-ErCJyzOxGH4IqgnMWFsKDQ-0CUzl13TXSrfZzBvdX1MKiO7a54K-2ilEk9oAnBNnQ.jpg",
+    "categoria": "geral",
+    "tipo": "group",
+    "requer_captcha": false,
+    "is_chat_amizade": false,
+    "badge_tipo": "👥 Grupo Real",
+    "chat_score": 50
+  },
+  {
     "url": "https://t.me/+AC62dOKVCdE3NjYx",
     "titulo": "Febre Otaku!",
     "desc": "Nossa comunidade é voltada para recomendações, memes e comentários sobre animes e mangás. Aqui você pode ficar por dentro das novidades sobre o mundo dos animes, além de encontrar outras pessoas com gostos parecidos com o seu.  • Comandos: /rules /ajuda",
@@ -6474,6 +7657,19 @@
     "chat_score": 10
   },
   {
+    "url": "https://t.me/devs_brasil",
+    "titulo": "🇩 🇪 🇻 🇸",
+    "desc": "👨‍💻Grupo para trocar conhecimento em TI, compartilhar conteúdos, projetos e oportunidades de carreira.",
+    "membros": 131,
+    "imagem": "https://cdn1.telesco.pe/file/uL88tiH7OstGEynXU5raaUwDTjHZIaI3-jdXZ1uZeFfX8d2brjJ3qWK83sFemw0L3IH2FjIZL6QuR0TJ9uK1Lez60MXSTuVI9OFNB--pY6TN2JBAweDX2RW3ELttJaQ06F4Mp-_t6kGyHL9EwVEPChMty6urTw7XvxkcROBGMK2eKVTpAb0Lch0lKjv_skLPBfP8Hj_OhpnCnCXgJ5i1varthtqoQrC6D5uIAt9XuuaDA4xWQS_jCx-85olXR9yII0WFKz92YpQxrYymriALRKhoSJNncLZRdUF04LViMH1cO7LjYyQGjc26FJLjABZ80-MGyOZIe2FWDnq0Vm9gfw.jpg",
+    "categoria": "tecnologia_programacao",
+    "tipo": "group",
+    "requer_captcha": false,
+    "is_chat_amizade": false,
+    "badge_tipo": "👥 Grupo Real",
+    "chat_score": 50
+  },
+  {
     "url": "https://t.me/+ZLHZkb-RJAU5YmIx",
     "titulo": "Supernatural Brasil 1.0",
     "desc": "Grupo oficila do canal \"Supernatural/The Winchester 1.1\"Aqui vc vai encontrar o fãs/caçadores da melhor série do mundo.Link para o canal abaixo 👇🏽https://t.me/+s8M2hSueClszNDBh",
@@ -6485,6 +7681,19 @@
     "is_chat_amizade": false,
     "badge_tipo": "👥 Grupo Real",
     "chat_score": 10
+  },
+  {
+    "url": "https://t.me/opencartbrasil",
+    "titulo": "Opencart Brasil",
+    "desc": "Grupo de discussão sobre opencart 🛍 ATENÇÃO!!! ESSE GRUPO NÃO TEM RELAÇÃO NENHUMA COM OPENCART++ OU OPENCART99, QUALQUER UM DESSES SISTEMA DE PIRÂMIDE/SCAM",
+    "membros": 128,
+    "imagem": "https://cdn1.telesco.pe/file/ZE8_DtJCU6jFVBHGYi1OmSZ7boEV4xttrwIrRACsD0620n7h5u4L6Dx6T8uAzKordsRxOU0i8lSKNdRt3byQI8wwXxG4KkU-fSlvMo6yTejqrn7pZyYVeocI-xD15Uah5MU8Tb_LShaNxrbnGirayxTDJBjX9kzZSm5ju3LyblMbgwsgyyXH2VGXvi5AobeVYQsy9m5VozBKtaUID_vtDjkcWRHCxkuAChG5uZT6kWpKG4O_fB1CBeuye6NTHfVYJb3Luj3J8NIYPEqeOZFGEpA_bkpOxkDg4-RqU19g-iQ_WXQs6D8CPiZJcWU1JM3P5CX9WGJRTfdSAK2Eretv8A.jpg",
+    "categoria": "geral",
+    "tipo": "group",
+    "requer_captcha": false,
+    "is_chat_amizade": false,
+    "badge_tipo": "👥 Grupo Real",
+    "chat_score": 50
   },
   {
     "url": "https://t.me/curitibanos",
@@ -6565,6 +7774,19 @@
     "chat_score": 10
   },
   {
+    "url": "https://t.me/phprs",
+    "titulo": "PHP RS",
+    "desc": "Grupo de desenvolvedor PHP do RS",
+    "membros": 110,
+    "imagem": "https://cdn1.telesco.pe/file/GgQtMCrrQZolhf-hqhdfrpPOTKw0DRC2pRhtVvZ1APJGN890shC2zjp1wRsUOmlHT_aEjwoDjkQ5JnzQ5-E1lZKXCvY74CrW-cVC6z1ZSvOCCN_pb_FU2jsu8kOeipRGQSmGRtHk1qwCuF_a9o4rw5ai7q8DLt1HIDQXG35AW8deuEXBd7juRI-Xk-KQCXEwIblZlBskQLlzb_IW1Z7bmWK5js7In62AtYroulz9GLJpF3ToX7083C9nLf9z8Ja808dD2xuL-ds5lEIJI_Xl4aG4ZnfkkBnyuIJDDkJv-9oBOqamEWxkTHk-_MzLkhCfaGBWpwBm8YrI5vsjooaC8A.jpg",
+    "categoria": "tecnologia_programacao",
+    "tipo": "group",
+    "requer_captcha": false,
+    "is_chat_amizade": false,
+    "badge_tipo": "👥 Grupo Real",
+    "chat_score": 50
+  },
+  {
     "url": "https://t.me/+Y6UcrVt37r01NzYx",
     "titulo": "📍sɪʟᴠᴀ ᴅɪᴠᴜʟɢᴀᴄ̧ᴏ̃ᴇs 02",
     "desc": "You are invited to a group chat on Telegram. Click to join:",
@@ -6602,6 +7824,19 @@
     "is_chat_amizade": false,
     "badge_tipo": "👥 Grupo Real",
     "chat_score": 10
+  },
+  {
+    "url": "https://t.me/pythonjoinville",
+    "titulo": "Python Joinville",
+    "desc": "Grupo de usuários Python de Joinville \\0/Todo mundo é bem vindo, independente se saiba Python ou não, ou de quanto sabe :)Para entrar, favor resolver o captcha que irá receber. Colocamos isso para barrar os bots",
+    "membros": 106,
+    "imagem": "https://cdn1.telesco.pe/file/QP7OkCnGIulBH-ZjTR7ZLraOEJaMlUHeePAkLqpe8TO3WjPyd3rtSD_283Spr1xl6M7ec0ay-uafqOIexrKqHli3Y5hivkaTCuenp85fVNx1AHU47Jf7SjDSWLYmsa2QbIYn7fF-ZDZJk9wHKcfoekVIRJ563ZXr54cvzBAph1fN3QOzpPgfNcO-1AtrJN6Tuyx_oGTCF20bAE9-m35Advw71akn8WXm6G-eUoWkpWedd9nasN6lBpcePouYSZQqRV2Rd3l86MaitymEtwuCpaTHy-tH2QfX5vMaONqSW4O2FsYsgefffa_6227-qaqW4843tecnxgOFkjls6L_RCQ.jpg",
+    "categoria": "tecnologia_programacao",
+    "tipo": "group",
+    "requer_captcha": false,
+    "is_chat_amizade": false,
+    "badge_tipo": "👥 Grupo Real",
+    "chat_score": 50
   },
   {
     "url": "https://t.me/+cwc9L07jU09mOWFh",
@@ -6669,6 +7904,45 @@
     "chat_score": 10
   },
   {
+    "url": "https://t.me/gentoobr",
+    "titulo": "Gentoo Brasil",
+    "desc": "Um grupo de usuários Brasileiros sobre Gentoo",
+    "membros": 89,
+    "imagem": "https://cdn1.telesco.pe/file/LYjuoTCbLr9KyDtgXps0nYSBSj8W_CWdIwDedHizFd6eXnlbGo5E8tRi6bDEqSB7odUV4rCpNe8Xk1WtJfn6ncvBLMnyKAWJK9bc6bZ55PWKAmJ3WZYYYOWhocwZsQD4Zdd3K3u7KG6efVyu7GgX9N91576q8FvuvXCbXJ6Ex25QG6IExnZTnVOx8mdD4ZYUwMrpoewWqNtLo4JeKL_zYbhs0J-hN2jBYiolPLqX40WTTaIFlK4OGuNfZs1DxmthBOr7NkrYBIAad_cX362xyftnCRX67zjaNoNEGvW_aAl718ZM9zLbiMlVan38NiEB0WTwt_Mjsi2htprPZxzT8w.jpg",
+    "categoria": "geral",
+    "tipo": "group",
+    "requer_captcha": false,
+    "is_chat_amizade": false,
+    "badge_tipo": "👥 Grupo Real",
+    "chat_score": 50
+  },
+  {
+    "url": "https://t.me/versaobeta",
+    "titulo": "Versão Beta 🇧🇷",
+    "desc": "Canal sobre desenvolvimento e programação. Front-end, Back-end, Data Bases, Big Data and freelas.Compartilhe seu conteúdo de tecnologia para a comunidade.",
+    "membros": 86,
+    "imagem": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIwIiBoZWlnaHQ9IjMyMCIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSIgdmlld0JveD0iMCAwIDEwMCAxMDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI%2BPGRlZnM%2BPGxpbmVhckdyYWRpZW50IGlkPSJnIiB4MT0iMCUiIHgyPSIwJSIgeTE9IjAlIiB5Mj0iMTAwJSI%2BPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2ZmODg1ZSIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iI2ZmNTE2YSIvPjwvbGluZWFyR3JhZGllbnQ%2BPC9kZWZzPjxzdHlsZT50ZXh0e2ZvbnQ6NjAwIDQ0cHggLWFwcGxlLXN5c3RlbSxCbGlua01hY1N5c3RlbUZvbnQsJ1NlZ29lIFVJJyxSb2JvdG8sSGVsdmV0aWNhLEFyaWFsLHNhbnMtc2VyaWYsJ0FwcGxlIENvbG9yIEVtb2ppJywnU2Vnb2UgVUkgRW1vamknLCdTZWdvZSBVSSBTeW1ib2wnOy13ZWJraXQtdXNlci1zZWxlY3Q6bm9uZTt1c2VyLXNlbGVjdDpub25lfTwvc3R5bGU%2BPHJlY3Qgd2lkdGg9IjEwMCIgaGVpZ2h0PSIxMDAiIGZpbGw9InVybCgjZykiLz48dGV4dCB0ZXh0LWFuY2hvcj0ibWlkZGxlIiB4PSI1MCIgeT0iNjYiIGZpbGw9IiNmZmYiPlZCPC90ZXh0Pjwvc3ZnPg%3D%3D",
+    "categoria": "tecnologia_programacao",
+    "tipo": "channel",
+    "requer_captcha": false,
+    "is_chat_amizade": false,
+    "badge_tipo": "👥 Grupo Real",
+    "chat_score": 50
+  },
+  {
+    "url": "https://t.me/emberbr",
+    "titulo": "EmberBR",
+    "desc": "Grupo de desenvolvedores EmberJS no Brasil",
+    "membros": 82,
+    "imagem": "https://cdn1.telesco.pe/file/MaDJh-0Hgw1Dypa7Tl1YTlbiOVr8DtTMsW6YkvSg43BvcRfK58ExMPGgZx2Vh7rhBHYcEPnmvWPB3cL69Eqmej1mC54OydWwa7aHZKccDFYqgcQRA38si_Zie5uy7UUZG37MEZYZ8DJS2HP1xV1MC8TYa2KXJbeZV4ixF3CuqB83R3ONg6wDHFOv_0pU5Vkf-byNBM-DhEDT36owENDLjdL-qMbqLVCsEW7zXdlBQqO5_9PlFxGmN3Z5BgAHlmMcgN8wzKNTRAzw37C3aiyPcx87R9Db2MtUgzD8tn71dZm_6ZwsIXKVmRhToQVKSMhquZAfL7T6VNq1-JvMhfRawA.jpg",
+    "categoria": "geral",
+    "tipo": "group",
+    "requer_captcha": false,
+    "is_chat_amizade": false,
+    "badge_tipo": "👥 Grupo Real",
+    "chat_score": 50
+  },
+  {
     "url": "https://t.me/+Bu5NAr8iwsM0ZTgx",
     "titulo": "AMOR 💘",
     "desc": "You are invited to a group chat on Telegram. Click to join:",
@@ -6721,6 +7995,19 @@
     "chat_score": 10
   },
   {
+    "url": "https://t.me/nativescriptvuebr",
+    "titulo": "NativescriptVue Brasil🇧🇷",
+    "desc": "Grupo para aprender e compartilhar informações interessante sobre NativescriptVue@NativescriptVueBRsite oficialhttps://nativescript-vue.org/githubhttps://github.com/nativescript-vue/nativescript-vue#app #mobile #javascript #vuejs #brasil",
+    "membros": 77,
+    "imagem": "https://cdn1.telesco.pe/file/BdB50clmYTo1ZL0ozoCnNeXoii3hf5q3WpAszoec2fiWQivpdLREPHyLsxaO51K1_JdAha27lOLoeOA9Sj_TlC5bqL_4xtbbiI9V4QXDbprNO3L2UlXLwKx05GC4OlgXKVEFDXrygoaWDbyJRYHbZOxuUN1QEi7Y7Nbqr0yPsjVqCsV8Gvi8d_VbKJFXCtEDKNBPxKu1kif0kJ4Lfw10B8WtJ_tX5YXmEgFn1p8uRHl4UzDDMSjWJtE20Db6CFAyDztxnejihhwg1CYrOnKKhrBA5sWbaohEjyWEzuuzw96cxUvOmB7WIQppig5FPJ1-2s4S5P_XhiUaZbwKzOzd1g.jpg",
+    "categoria": "tecnologia_programacao",
+    "tipo": "group",
+    "requer_captcha": false,
+    "is_chat_amizade": false,
+    "badge_tipo": "👥 Grupo Real",
+    "chat_score": 50
+  },
+  {
     "url": "https://t.me/+Q37cgh2GML-OFbN_OW-S-w",
     "titulo": "B3 Noticias Papo Sério",
     "desc": "✔️Postagem so com relação a investimentos e economia.✔️Aproveite o grupo para interagir e tirar dúvidas em relação ao mercado financeiro.",
@@ -6745,6 +8032,19 @@
     "is_chat_amizade": false,
     "badge_tipo": "👥 Grupo Real",
     "chat_score": 10
+  },
+  {
+    "url": "https://t.me/Vala_BR",
+    "titulo": "Vala Brasil",
+    "desc": "Grupo para aprendizagem, pratica e papo sobre a linguagem de programação Vala.",
+    "membros": 72,
+    "imagem": "https://cdn1.telesco.pe/file/o8Zgw2bmPC_axfSao5K-CiNlq1X3L0Zk7papyAjApjTtwy7fjIZhRmEpNlN9V3jl95hwEVA--THHLRunYvKfhGb68gdtYk0UEXzh7TSWPpk334R3z-k658iIMWHIwjgo_e4BY0YraQNiEUWZro9IbQO482B3Y2rWaDjyNOBFNGFWgUFY1axjhoWwXSWmJu-e3RIeqsQvKKqs59GTodEA5S3j1zQEhg2rOgK-pGhhB_OG6ePnmX_-sl6sVZr0pHWdvX-5Wr2i6kC6gEFNIsAx7IWrVHVjl7326F41Zqd2mFpldJ2Gqyp9UkpoAbFtgaMGkZ2VawF9LdEupF5kmb2BHQ.jpg",
+    "categoria": "tecnologia_programacao",
+    "tipo": "group",
+    "requer_captcha": false,
+    "is_chat_amizade": false,
+    "badge_tipo": "👥 Grupo Real",
+    "chat_score": 50
   },
   {
     "url": "https://t.me/+aooybX3aFXw3ZDEx",
@@ -6875,6 +8175,19 @@
     "is_chat_amizade": false,
     "badge_tipo": "👥 Grupo Real",
     "chat_score": 10
+  },
+  {
+    "url": "https://t.me/netbsdbr",
+    "titulo": "NetBSD Brasil",
+    "desc": "Grupo de usuários brasileiros do NetBSD",
+    "membros": 62,
+    "imagem": "https://cdn1.telesco.pe/file/hkfTzpElWMsJLbe1dA_UwHpWT-91pvKbpLiBVLTTrBFeQmzCsXghjxtFPVRVtwHryPro4Ja8dCwJWeYciYTgt0eBEzwG0092W6rl_bZt48xSyjDSWFoYNsKf4qy3E10v9ZFws3gvMy0pDeCPT64tFFCZPsewIvrbbGGhKguXq1IDunT9fur9pY7bjv2smBi827YHUZtlbADpbimMVvEvjEn4dK8Su8NGtVkNKpeDNE42u26d7azGXJAt0wTLjH62rPlbxBUL7RwwRCRl-5UpxIE1K6FtccB185k36EuBZPE01hBspp90jYgZJLpkzGthLuXs30nw_ChbRH1pQN2OwQ.jpg",
+    "categoria": "geral",
+    "tipo": "group",
+    "requer_captcha": false,
+    "is_chat_amizade": false,
+    "badge_tipo": "👥 Grupo Real",
+    "chat_score": 50
   },
   {
     "url": "https://t.me/+QWRdcEk_7yfR_2dGdq_0tw",
@@ -7046,6 +8359,19 @@
     "chat_score": 10
   },
   {
+    "url": "https://t.me/rubyonrailsbr",
+    "titulo": "[Descontinuado]",
+    "desc": "Este grupo será excluído em breve. ⚠️O Telegram exclui os grupos que estão sem o dono do grupo, o que é o caso deste. Estamos migrando para o @RubyBrasilNosso Código de Conduta: https://github.com/guru-br/code-of-conduct",
+    "membros": 50,
+    "imagem": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIwIiBoZWlnaHQ9IjMyMCIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSIgdmlld0JveD0iMCAwIDEwMCAxMDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI%2BPGRlZnM%2BPGxpbmVhckdyYWRpZW50IGlkPSJnIiB4MT0iMCUiIHgyPSIwJSIgeTE9IjAlIiB5Mj0iMTAwJSI%2BPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2UwYTJmMyIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iI2Q2NjllZCIvPjwvbGluZWFyR3JhZGllbnQ%2BPC9kZWZzPjxzdHlsZT50ZXh0e2ZvbnQ6NjAwIDQ0cHggLWFwcGxlLXN5c3RlbSxCbGlua01hY1N5c3RlbUZvbnQsJ1NlZ29lIFVJJyxSb2JvdG8sSGVsdmV0aWNhLEFyaWFsLHNhbnMtc2VyaWYsJ0FwcGxlIENvbG9yIEVtb2ppJywnU2Vnb2UgVUkgRW1vamknLCdTZWdvZSBVSSBTeW1ib2wnOy13ZWJraXQtdXNlci1zZWxlY3Q6bm9uZTt1c2VyLXNlbGVjdDpub25lfTwvc3R5bGU%2BPHJlY3Qgd2lkdGg9IjEwMCIgaGVpZ2h0PSIxMDAiIGZpbGw9InVybCgjZykiLz48dGV4dCB0ZXh0LWFuY2hvcj0ibWlkZGxlIiB4PSI1MCIgeT0iNjYiIGZpbGw9IiNmZmYiPkQ8L3RleHQ%2BPC9zdmc%2B",
+    "categoria": "geral",
+    "tipo": "group",
+    "requer_captcha": false,
+    "is_chat_amizade": false,
+    "badge_tipo": "👥 Grupo Real",
+    "chat_score": 50
+  },
+  {
     "url": "https://t.me/+9jPBCWSgbWdiMDgx",
     "titulo": "Notícias diretamente da IA",
     "desc": "You are invited to a group chat on Telegram. Click to join:",
@@ -7176,6 +8502,32 @@
     "chat_score": 10
   },
   {
+    "url": "https://t.me/arangodbbrasil",
+    "titulo": "ArangoDB Brasil",
+    "desc": "ArangoDB é um banco de dados de código aberto de multi-modelos com modelos de dados flexíveis, sendo possível trabalhar com orientação a documentos, chave-valor e grafos.",
+    "membros": 32,
+    "imagem": "https://cdn1.telesco.pe/file/FYr4pZ9FvnXy6zWVo4WRGduCLwDovKx9daKnP5_PchdSBmiDv7yFbgreGgTaGi5WjSD8YHtNeHljvfiFX-h6-AHK5Jf6RNZYDOR3ORaW03aRvR-teBQhqBV8c23iMT2bDbsw4w9tpgav6bfX1hu1RdaOJ1dCqDFf--GU774VmJE0-Fg6sTTwUyh6-_7aDWYrkeIbEKyWkaYLljhePuri_1oFcomOGo9y3IylR-pMmNBp_WlDlZpAuMK4mazaiqwNtTYvzNXxieeE8bSyLqPeq8gd9pYBf_x4KUdrUu6WC9dO6wM6SqIlP-EvliMPyzH_Qs2fkcJhLbRviBCBiItPXg.jpg",
+    "categoria": "tecnologia_programacao",
+    "tipo": "group",
+    "requer_captcha": false,
+    "is_chat_amizade": false,
+    "badge_tipo": "👥 Grupo Real",
+    "chat_score": 50
+  },
+  {
+    "url": "https://t.me/rxjsbrasil",
+    "titulo": "RxJs Brasil",
+    "desc": "Canal destinado ao aprendizado e dúvidas sobre programação reativa e RxJs",
+    "membros": 32,
+    "imagem": "https://cdn1.telesco.pe/file/Qg5HXhEtupi9cjMvFEkTrLjI_N_VAl6LbjMBj4UXsWpH-v5VXHX5mLFdt0XcRyZGsmAWWLPyTtLJFBBL0447bFon59Oaesae2-Ana4JjdKMMvoCn6sbS-Z6HlqxXZ5PInjJo_SJrjJgGUaMmFqPFpBkzMXLyzqHVNE-uqKL6ns9EME45JzUmLZ6POZo5A1tnVsw2kD-kii9hy9iARCtfRRdttcaKoOy8dYDgceHGi6LYCj9PD3pG-IDdxY_s1LbLMbfl0-WURVNlgwO-eXF-x_J5yrOGCJnRkInNk_Uwja0G0je4NoLjErclb2sWexiMhUYgibQdK2yqtntYRr5lnQ.jpg",
+    "categoria": "tecnologia_programacao",
+    "tipo": "group",
+    "requer_captcha": false,
+    "is_chat_amizade": false,
+    "badge_tipo": "👥 Grupo Real",
+    "chat_score": 50
+  },
+  {
     "url": "https://t.me/integrabemestar",
     "titulo": "Arthera Lingerie e sexshop",
     "desc": "Aqui você encontra as melhores e mais lindas lingeries, além de produtos de sexshop. Entrego na Freguesia do Ó -São PauloDemais localidades via correio- Frete por conta do contador.",
@@ -7254,6 +8606,19 @@
     "chat_score": 10
   },
   {
+    "url": "https://t.me/joomlariodejaneiro",
+    "titulo": "Joomla User Group Rio de Janeiro",
+    "desc": "Grupo de Usuários Joomla no Rio de Janeiro. Visite joomlariodejaneiro.com.br",
+    "membros": 27,
+    "imagem": "https://cdn1.telesco.pe/file/kxntczQABG2NJkGMLLpWjUwDHcp6NPXJaOapXeuNMsrfRcsRjikxidi6M-jcqNlB8p2jttVC5Eo6OSjFEE-mhn3I7qyUXaXtWqL_vb9QhS82D1LA_-Khp8Uo7PfuGn0mmqzh0KrT4h6aihvGDwOGI7YE60A1df6Y88g1EJrrfo6qXCY-4UvXYloQ1iEZuutlPwY56MZfvDjJBU0o9LayzrBh3MUmPFmk-cTxGLs4u-edOnixalRBhvyY6LB69k_qAh1XB7SfK47JtI2Sl9XyO3AVzpFVx10l1Vh45gxRh9Nh8aXIzW77DUTknL5hz2svBbRPttCcekgHeUUQDSGH8Q.jpg",
+    "categoria": "comunidades_locais",
+    "tipo": "group",
+    "requer_captcha": false,
+    "is_chat_amizade": false,
+    "badge_tipo": "👥 Grupo Real",
+    "chat_score": 50
+  },
+  {
     "url": "https://t.me/+_AFtaJCTxLE2YWIx",
     "titulo": "APPS QUE PAGAM",
     "desc": "You are invited to a group chat on Telegram. Click to join:",
@@ -7291,6 +8656,19 @@
     "is_chat_amizade": false,
     "badge_tipo": "👥 Grupo Real",
     "chat_score": 10
+  },
+  {
+    "url": "https://t.me/PhinxBrasil",
+    "titulo": "Phinx Brasil",
+    "desc": "Grupo destinado para tirar dúvidas e trocar conhecimentos sobre a biblioteca Phinx",
+    "membros": 25,
+    "imagem": "https://cdn1.telesco.pe/file/WmjG3T22o4Bcno_Q5h4JNZ8_NxjXWsKKjlUy5myyA-57aD57eDvck7LG7tMzaCTXt6-_lipA1swaX30nKzAsgVx441jMnVrP88dLsWMh7uQKa9Ae1BjfvbjeLNlKVUgoTzM5m1Cg1lzijd_UdUurSX_WC5Fw12reklrngCoxikmGu-CP8046H442ALO3r9eMbWpiCpNtMc197mTGXnpntu-l9khv00F2to9EPoxxW7WUQgWBOppw5P6lPRnmQXtJbO1-k2HAfJj-0iVdgKZqQ_n5ENSnSpFs3yt4Y7OUFTOhRirZs1zZV6PlVhrEM8VlX37tsRVc5jUE9A-GskS3Cg.jpg",
+    "categoria": "geral",
+    "tipo": "group",
+    "requer_captcha": false,
+    "is_chat_amizade": false,
+    "badge_tipo": "👥 Grupo Real",
+    "chat_score": 50
   },
   {
     "url": "https://t.me/+YPnjbQGeXmE4MGUx",
