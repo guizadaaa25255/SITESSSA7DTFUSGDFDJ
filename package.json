@@ -1,0 +1,8 @@
+{
+  "name": "grupos-telegram-brasil",
+  "version": "1.0.0",
+  "description": "Diret\u00f3rio Oficial de Grupos Brasileiros do Telegram com Foco em Bate-Papo e Comunidades Reais",
+  "scripts": {
+    "start": "serve ."
+  }
+}
