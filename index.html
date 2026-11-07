@@ -3253,9 +3253,13 @@
     if (badgeModal) badgeModal.textContent = `🕒 Agora: ${saudacao}`;
   }
 
-  function iniciarDisparoBroadcast() {
-    const contaStr = localStorage.getItem("tg_conta_conectada");
-    if (!contaStr) {
+  let broadcastEventSource = null;
+  let broadcastPollInterval = null;
+  let broadcastSucessoCount = 0;
+
+  async function iniciarDisparoBroadcast() {
+    const ativa = obterContaAtiva();
+    if (!ativa || !ativa.phone) {
       alerta("Conecte sua conta do Telegram no botão do topo primeiro!", "error");
       abrirModalMenuContas();
       return;
@@ -3263,11 +3267,20 @@
 
     const msg = document.getElementById("txt-broadcast-msg").value.trim();
     if (!msg) {
-      alerta("Digite uma mensagem antes de disparar!", "error");
+      alerta("Digite ou gere mensagens com IA antes de disparar!", "error");
       return;
     }
 
-    const marcados = Array.from(document.querySelectorAll(".chk-grupo:checked"));
+    const marcados = Array.from(document.querySelectorAll(".chk-grupo:checked")).map(chk => {
+      const val = chk.value;
+      const parsedId = (!isNaN(val) && val !== "") ? parseInt(val) : val;
+      return {
+        id: parsedId,
+        name: chk.getAttribute("data-name") || "Grupo",
+        username: chk.getAttribute("data-username") || ""
+      };
+    });
+
     if (!marcados.length) {
       alerta("Selecione pelo menos um grupo na lista ao lado!", "error");
       return;
@@ -3279,52 +3292,141 @@
     const ajustarHorario = document.getElementById("chk-broadcast-horario").checked;
     const linhas = msg.split("\n").map(l => l.trim()).filter(l => l.length > 0);
 
-    document.getElementById("btn-start-broadcast").disabled = true;
-    document.getElementById("btn-stop-broadcast").disabled = false;
-    alerta("Disparo iniciado com sucesso!", "success");
+    const btnStart = document.getElementById("btn-start-broadcast");
+    const btnStop = document.getElementById("btn-stop-broadcast");
+    if (btnStart) btnStart.disabled = true;
+    if (btnStop) btnStop.disabled = false;
 
-    adicionarLinhaLogBroadcast(`[INICIADO] Disparo ativo para ${marcados.length} grupos`, "l-success");
-    let i = 0;
+    broadcastSucessoCount = 0;
+    const kpiEnviadas = document.getElementById("kpi-bc-enviadas");
+    if (kpiEnviadas) kpiEnviadas.textContent = "0";
 
-    function cicloEnvio() {
-      if (i >= marcados.length) {
-        adicionarLinhaLogBroadcast(`[FINALIZADO] Todas as mensagens foram entregues!`, "l-success");
-        pararDisparoBroadcast();
-        return;
+    const badgeStatus = document.getElementById("badge-bc-status");
+    if (badgeStatus) badgeStatus.textContent = "Disparo Ativo (Ao Vivo)";
+
+    adicionarLinhaLogBroadcast(`[INICIADO] Conectando ao Telegram e iniciando disparo real para ${marcados.length} grupos...`, "l-success");
+
+    try {
+      const payload = {
+        telefone: ativa.phone,
+        mensagem: msg,
+        mensagens: linhas,
+        grupos: marcados,
+        delay_min: delayMin,
+        delay_max: delayMax,
+        rotacionar: rotacionar,
+        ajustar_horario: ajustarHorario
+      };
+
+      const resp = await chamarApiTelegram("/api/broadcast/start", payload);
+
+      if (resp && resp.ok) {
+        alerta(`🚀 Disparo real iniciado pelo Telegram de ${ativa.nome || ativa.phone}!`, "success");
+        conectarStreamBroadcast();
+      } else {
+        throw new Error(resp && resp.erro ? resp.erro : "Falha ao iniciar disparo no Telegram");
       }
+    } catch(err) {
+      console.error("Erro no broadcast:", err);
+      if (btnStart) btnStart.disabled = false;
+      if (btnStop) btnStop.disabled = true;
+      if (badgeStatus) badgeStatus.textContent = "Erro ao Iniciar";
+      alerta("Erro ao iniciar disparo: " + (err.message || "Verifique se a conta está conectada"), "error");
+      adicionarLinhaLogBroadcast(`[FALHA] Não foi possível iniciar o envio: ${err.message}`, "l-error");
+    }
+  }
 
-      const chk = marcados[i];
-      const nomeGrupo = chk.getAttribute("data-name") || "Grupo";
-      let msgEscolhida = rotacionar ? linhas[Math.floor(Math.random() * linhas.length)] : linhas[0];
-
-      if (ajustarHorario) {
-        const h = new Date().getHours();
-        let s = "Boa tarde";
-        if (h >= 5 && h < 12) s = "Bom dia";
-        else if (h >= 18 || h < 5) s = "Boa noite";
-        msgEscolhida = msgEscolhida.replace(/bom dia|boa tarde|boa noite/gi, s);
-      }
-
-      adicionarLinhaLogBroadcast(`📤 Enviando para "${nomeGrupo}": "${msgEscolhida}"`, "l-info");
-      adicionarLinhaLogBroadcast(`✔ Mensagem entregue em "${nomeGrupo}"!`, "l-success");
-
-      i++;
-      const delay = Math.floor(Math.random() * (delayMax - delayMin + 1)) + delayMin;
-      adicionarLinhaLogBroadcast(`⏳ Intervalo anti-spam: aguardando ${delay}s para o próximo grupo...`, "l-time");
-      broadcastTimer = setTimeout(cicloEnvio, delay * 1000);
+  function conectarStreamBroadcast() {
+    if (broadcastEventSource) {
+      try { broadcastEventSource.close(); } catch(e) {}
+      broadcastEventSource = null;
+    }
+    if (broadcastPollInterval) {
+      clearInterval(broadcastPollInterval);
+      broadcastPollInterval = null;
     }
 
-    cicloEnvio();
+    const endpoints = [
+      window.location.origin.includes("github.io") ? "https://lit-cant-folder-lookup.trycloudflare.com" : "",
+      "",
+      "https://lit-cant-folder-lookup.trycloudflare.com",
+      "http://localhost:5000"
+    ].filter((v, i, a) => a.indexOf(v) === i);
+
+    const base = endpoints[0] || "";
+    const sseUrl = (base ? base : "") + "/api/broadcast/stream";
+
+    try {
+      broadcastEventSource = new EventSource(sseUrl);
+
+      broadcastEventSource.onmessage = function(ev) {
+        try {
+          const d = JSON.parse(ev.data);
+          if (d.tipo === "ping" || d.tipo === "connected") return;
+
+          adicionarLinhaLogBroadcast(d.msg, d.tipo);
+
+          if (d.tipo === "success" || d.msg.includes("✅")) {
+            broadcastSucessoCount++;
+            const el = document.getElementById("kpi-bc-enviadas");
+            if (el) el.textContent = broadcastSucessoCount;
+          }
+
+          if (d.tipo === "done" || d.msg.includes("🏁") || d.msg.includes("interrompido")) {
+            finalizarDisparoVisual();
+          }
+        } catch(e) {}
+      };
+
+      broadcastEventSource.onerror = function() {
+        if (!broadcastPollInterval) {
+          iniciarPollingStatusBroadcast();
+        }
+      };
+    } catch(e) {
+      iniciarPollingStatusBroadcast();
+    }
   }
 
-  function pararDisparoBroadcast() {
-    if (broadcastTimer) clearTimeout(broadcastTimer);
-    broadcastTimer = null;
-    document.getElementById("btn-start-broadcast").disabled = false;
-    document.getElementById("btn-stop-broadcast").disabled = true;
-    adicionarLinhaLogBroadcast(`[INTERROMPIDO] Envio em massa pausado.`, "l-error");
-    alerta("Disparo interrompido.", "info");
+  function iniciarPollingStatusBroadcast() {
+    if (broadcastPollInterval) return;
+    broadcastPollInterval = setInterval(async () => {
+      try {
+        const st = await chamarApiTelegram("/api/broadcast/status");
+        if (st && st.rodando === false) {
+          finalizarDisparoVisual();
+        }
+      } catch(e) {}
+    }, 3000);
   }
+
+  async function pararDisparoBroadcast() {
+    try {
+      await chamarApiTelegram("/api/broadcast/stop");
+    } catch(e) {}
+    finalizarDisparoVisual();
+    alerta("Disparo interrompido.", "info");
+    adicionarLinhaLogBroadcast("[INTERROMPIDO] Disparo pausado a pedido do usuário.", "l-error");
+  }
+
+  function finalizarDisparoVisual() {
+    if (broadcastEventSource) {
+      try { broadcastEventSource.close(); } catch(e) {}
+      broadcastEventSource = null;
+    }
+    if (broadcastPollInterval) {
+      clearInterval(broadcastPollInterval);
+      broadcastPollInterval = null;
+    }
+    const btnStart = document.getElementById("btn-start-broadcast");
+    const btnStop = document.getElementById("btn-stop-broadcast");
+    if (btnStart) btnStart.disabled = false;
+    if (btnStop) btnStop.disabled = true;
+
+    const badgeStatus = document.getElementById("badge-bc-status");
+    if (badgeStatus) badgeStatus.textContent = "Finalizado / Pronto";
+  }
+
 
   function limparConsoleBroadcast() {
     const d = new Date().toTimeString().split(" ")[0];
