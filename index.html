@@ -2254,6 +2254,7 @@
   document.addEventListener("DOMContentLoaded", () => {
     atualizarVisibilidadeAdm();
     carregarContaTelegramVisual();
+    sincronizarContasComServidor();
     renderizarGrupos();
     atualizarHorarioRelogio();
     setInterval(atualizarHorarioRelogio, 30000);
@@ -2499,7 +2500,47 @@
 
     localStorage.setItem("tg_conta_conectada", JSON.stringify(alvo));
     carregarContaTelegramVisual();
+    
+    // Notifica backend em background para alternar sessão imediatamente
+    if (alvo.phone) {
+      chamarApiTelegram("/api/trocar_conta", { telefone: alvo.phone }).catch(() => {});
+    }
+    
     alerta("Conectado na conta " + esc(alvo.nome || alvo.phone) + "!", "success");
+  }
+
+  async function sincronizarContasComServidor() {
+    try {
+      const resp = await chamarApiTelegram("/api/contas");
+      if (resp && Array.isArray(resp.contas) && resp.contas.length > 0) {
+        let locais = obterContasSalvas();
+        resp.contas.forEach(srvAcc => {
+          const tel = srvAcc.telefone || "";
+          const limpo = tel.replace(/[^0-9]/g, "");
+          const existe = locais.some(l => (l.phone || "").replace(/[^0-9]/g, "") === limpo);
+          if (!existe && tel) {
+            locais.push({
+              id: "srv_" + limpo,
+              nome: srvAcc.nome || tel,
+              phone: tel,
+              apiId: "",
+              apiHash: ""
+            });
+          }
+        });
+        localStorage.setItem("tg_contas_salvas", JSON.stringify(locais));
+
+        // Se nenhuma conta ativa, ativa a atual do servidor
+        if (!obterContaAtiva() && resp.atual) {
+          const limpoAtual = String(resp.atual).replace(/[^0-9]/g, "");
+          const ativaEncontrada = locais.find(l => (l.phone || "").replace(/[^0-9]/g, "") === limpoAtual);
+          if (ativaEncontrada) {
+            localStorage.setItem("tg_conta_conectada", JSON.stringify(ativaEncontrada));
+          }
+        }
+        carregarContaTelegramVisual();
+      }
+    } catch(e) {}
   }
 
   function excluirContaSalva(idOuPhone, ev) {
@@ -2833,7 +2874,7 @@
           body: JSON.stringify(dados),
           signal: AbortSignal.timeout(10000)
         });
-        if (res.ok || res.status === 400 || res.status === 429) {
+        if (res.ok || res.status === 400 || res.status === 401 || res.status === 429) {
           const json = await res.json();
           return json;
         }
@@ -2861,7 +2902,13 @@
     }
 
     try {
-      const resp = await chamarApiTelegram("/api/entrar", { url: url });
+      const ativa = obterContaAtiva();
+      const payload = { url: url };
+      if (ativa && ativa.phone) {
+        payload.telefone = ativa.phone;
+      }
+
+      const resp = await chamarApiTelegram("/api/entrar", payload);
       
       if (resp && resp.ok) {
         marcarEntrado(url);
@@ -2873,8 +2920,9 @@
           btn.style.cursor = "default";
         }
         
+        const nomeConta = ativa ? (ativa.nome || ativa.phone) : "";
         const msg = resp.msg || `Você entrou em "${titulo}" com sucesso via API!`;
-        alerta(`✔ ${msg}`, "success");
+        alerta(`✔ ${msg}` + (nomeConta ? ` [${nomeConta}]` : ""), "success");
 
         const chkOcultar = document.getElementById("check-ocultar");
         if (chkOcultar && chkOcultar.checked) {
@@ -2923,19 +2971,14 @@
         }
       }
     } catch (err) {
-      console.warn("Erro na API, registrando localmente:", err);
-      marcarEntrado(url);
+      console.warn("Erro na comunicação com o Telegram:", err);
       if (btn) {
-        btn.innerHTML = `<span>✔</span> Entrou!`;
-        btn.style.background = "#059669";
+        btn.disabled = false;
+        btn.innerHTML = oldHtml;
         btn.style.opacity = "1";
-        btn.style.cursor = "default";
+        btn.style.cursor = "pointer";
       }
-      alerta(`✔ Entrada registrada em "${titulo}"!`, "success");
-      const chkOcultar = document.getElementById("check-ocultar");
-      if (chkOcultar && chkOcultar.checked) {
-        setTimeout(() => { renderizarGrupos(); }, 700);
-      }
+      alerta("Não foi possível entrar no grupo automaticamente. Certifique-se de que sua conta está conectada no topo!", "error");
     }
   }
 
