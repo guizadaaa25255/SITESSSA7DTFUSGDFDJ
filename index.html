@@ -1749,7 +1749,7 @@
           <div class="card-bottom">
             <span class="members-pill" style="color:${badgeColor};">⚡ ${badgeText}</span>
             <div class="card-actions">
-              <a href="${esc(g.url)}" target="_blank" rel="noopener" class="btn-enter-instant" onclick="marcarEntrado('${esc(g.url)}')">
+              <a href="${esc(converterParaDeepLink(g.url))}" class="btn-enter-instant" onclick="abrirGrupoDireto('${esc(g.url)}', event)">
                 ⚡ Entrar
               </a>
               <button class="btn-copy-link" title="Copiar link" onclick="copiarLink('${esc(g.url)}')">📋</button>
@@ -1786,6 +1786,37 @@
     paginaAtual = p;
     renderizarGrupos();
     window.scrollTo({ top: 380, behavior: "smooth" });
+  }
+
+  function converterParaDeepLink(url) {
+    if (!url) return "";
+    let clean = url.trim().replace(/^https?:\/\//i, "").replace(/^(?:www\.)?(?:t|telegram)\.me\//i, "");
+    if (clean.startsWith("+")) {
+      const invite = clean.substring(1).split("?")[0].split("/")[0];
+      return `tg://join?invite=${invite}`;
+    } else if (clean.toLowerCase().startsWith("joinchat/")) {
+      const invite = clean.substring(9).split("?")[0].split("/")[0];
+      return `tg://join?invite=${invite}`;
+    } else {
+      const domain = clean.split("?")[0].split("/")[0];
+      return `tg://resolve?domain=${domain}`;
+    }
+  }
+
+  function abrirGrupoDireto(url, e) {
+    if (e) e.preventDefault();
+    marcarEntrado(url);
+    const deepLink = converterParaDeepLink(url);
+
+    // Abre diretamente o aplicativo nativo do Telegram sem passar por página web
+    window.location.href = deepLink;
+
+    // Fallback: se em 2s o app não tiver respondido (ex: dispositivo sem o app instalado), abre o link web
+    setTimeout(() => {
+      if (document.hasFocus()) {
+        window.open(url, "_blank");
+      }
+    }, 2000);
   }
 
   function marcarEntrado(url) {
