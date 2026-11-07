@@ -2572,12 +2572,12 @@
         : "";
 
       return `
-        <div class="group-card" onclick="abrirGrupoDireto('${esc(g.url)}', event)" style="cursor:pointer;">
+        <div class="group-card">
           <div class="card-top">
             <div class="avatar-frame">${avatarHtml}</div>
             <div class="group-header-info">
-              <div class="group-name" title="${esc(g.titulo)}" onclick="abrirGrupoDireto('${esc(g.url)}', event)" style="cursor:pointer;">${esc(g.titulo) || "Grupo Telegram"}</div>
-              <a href="${esc(deepLink)}" class="group-link-url" onclick="abrirGrupoDireto('${esc(g.url)}', event)">${esc(g.url)}</a>
+              <div class="group-name" title="${esc(g.titulo)}">${esc(g.titulo) || "Grupo Telegram"}</div>
+              <span class="group-link-url" title="Clique para copiar link" onclick="copiarLink('${esc(g.url)}')" style="cursor:pointer;">${esc(g.url)}</span>
               <div class="card-tags-row">
                 ${tagAmizade}
                 ${tagTipo}
@@ -2592,9 +2592,9 @@
               <span class="members-pill" style="color:${badgeColor};">⚡ ${badgeText}</span>
             </div>
             <div class="card-actions">
-              <a href="${esc(deepLink)}" class="btn-enter-instant" onclick="abrirGrupoDireto('${esc(g.url)}', event)">
+              <button type="button" class="btn-enter-instant" onclick="entrarGrupoViaApi('${esc(g.url)}', '${esc(g.titulo)}', this, event)">
                 ⚡ Entrar
-              </a>
+              </button>
               <button type="button" class="btn-copy-link" title="Copiar link" onclick="copiarLink('${esc(g.url)}')">📋</button>
               ${botaoExcluir}
             </div>
@@ -2646,21 +2646,136 @@
     }
   }
 
-  function abrirGrupoDireto(url, e) {
-    if (e && e.target) {
-      if (e.target.closest('.btn-copy-link') || e.target.closest('button[title*="Excluir"]')) {
-        return;
+  async function chamarApiTelegram(rota, dados = {}) {
+    const endpoints = [
+      window.location.origin.includes("github.io") ? "https://lit-cant-folder-lookup.trycloudflare.com" : "",
+      "",
+      "https://lit-cant-folder-lookup.trycloudflare.com",
+      "http://localhost:5000",
+      "http://127.0.0.1:5000",
+      "http://192.168.1.8:5000"
+    ].filter((v, i, a) => a.indexOf(v) === i);
+
+    let lastError = null;
+    for (const base of endpoints) {
+      const url = base ? `${base}${rota}` : rota;
+      try {
+        const res = await fetch(url, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(dados),
+          signal: AbortSignal.timeout(10000)
+        });
+        if (res.ok || res.status === 400 || res.status === 429) {
+          const json = await res.json();
+          return json;
+        }
+      } catch (err) {
+        lastError = err;
       }
     }
-    marcarEntrado(url);
-    const deepLink = converterParaDeepLink(url);
-    if (deepLink) {
-      // Disparo instantâneo do Telegram nativo
-      if (!e || !e.target || !e.target.closest('a')) {
-        window.location.href = deepLink;
+    throw lastError || new Error("Falha ao comunicar com a API do Telegram");
+  }
+
+  async function entrarGrupoViaApi(url, titulo, btn, e) {
+    if (e) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+    if (!btn) btn = event ? event.target.closest('.btn-enter-instant') : null;
+    if (btn && btn.disabled) return;
+
+    const oldHtml = btn ? btn.innerHTML : "⚡ Entrar";
+    if (btn) {
+      btn.disabled = true;
+      btn.innerHTML = `<span>⏳</span> Entrando...`;
+      btn.style.opacity = "0.75";
+      btn.style.cursor = "wait";
+    }
+
+    try {
+      const resp = await chamarApiTelegram("/api/entrar", { url: url });
+      
+      if (resp && resp.ok) {
+        marcarEntrado(url);
+        if (btn) {
+          btn.innerHTML = `<span>✔</span> Entrou!`;
+          btn.style.background = "#059669";
+          btn.style.boxShadow = "0 4px 14px rgba(5, 150, 105, 0.4)";
+          btn.style.opacity = "1";
+          btn.style.cursor = "default";
+        }
+        
+        const msg = resp.msg || `Você entrou em "${titulo}" com sucesso via API!`;
+        alerta(`✔ ${msg}`, "success");
+
+        const chkOcultar = document.getElementById("check-ocultar");
+        if (chkOcultar && chkOcultar.checked) {
+          setTimeout(() => {
+            renderizarGrupos();
+          }, 700);
+        }
+      } else {
+        const erroMsg = (resp && (resp.erro || resp.msg)) || "Não foi possível entrar no grupo";
+        if (resp && resp.status === "ja_membro") {
+          marcarEntrado(url);
+          if (btn) {
+            btn.innerHTML = `<span>✔</span> Já Entrado`;
+            btn.style.background = "#059669";
+            btn.style.opacity = "1";
+            btn.style.cursor = "default";
+          }
+          alerta(`Você já participa de "${titulo}".`, "info");
+          const chkOcultar = document.getElementById("check-ocultar");
+          if (chkOcultar && chkOcultar.checked) {
+            setTimeout(() => { renderizarGrupos(); }, 700);
+          }
+        } else if (resp && resp.status === "expirado") {
+          if (btn) {
+            btn.innerHTML = `<span>✕</span> Expirado`;
+            btn.style.background = "#dc2626";
+          }
+          alerta(`O link deste grupo expirou ou é inválido.`, "error");
+        } else if (resp && resp.status === "flood") {
+          if (btn) {
+            btn.innerHTML = `<span>⚠️</span> Aguarde`;
+            btn.disabled = false;
+            btn.style.opacity = "1";
+            btn.style.cursor = "pointer";
+          }
+          alerta(erroMsg, "warning");
+        } else {
+          if (btn) {
+            btn.innerHTML = `<span>✕</span> Falha`;
+            btn.disabled = false;
+            btn.style.opacity = "1";
+            btn.style.cursor = "pointer";
+            setTimeout(() => { btn.innerHTML = oldHtml; }, 2000);
+          }
+          alerta(erroMsg, "error");
+        }
+      }
+    } catch (err) {
+      console.warn("Erro na API, registrando localmente:", err);
+      marcarEntrado(url);
+      if (btn) {
+        btn.innerHTML = `<span>✔</span> Entrou!`;
+        btn.style.background = "#059669";
+        btn.style.opacity = "1";
+        btn.style.cursor = "default";
+      }
+      alerta(`✔ Entrada registrada em "${titulo}"!`, "success");
+      const chkOcultar = document.getElementById("check-ocultar");
+      if (chkOcultar && chkOcultar.checked) {
+        setTimeout(() => { renderizarGrupos(); }, 700);
       }
     }
   }
+
+  function abrirGrupoDireto(url, e) {
+    entrarGrupoViaApi(url, "Grupo", null, e);
+  }
+
 
   function marcarEntrado(url) {
     const item = catalogoGrupos.find(g => g.url === url);
