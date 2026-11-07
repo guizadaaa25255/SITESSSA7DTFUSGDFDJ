@@ -3363,128 +3363,297 @@
     return "Boa tarde";
   }
 
-  function gerarVariacoesIA() {
-    const elBtn = document.getElementById("btn-gerar-ia") || (event ? event.target.closest("button") : null);
-    if (elBtn) {
-      elBtn.innerHTML = "✨ Gerando 10 novas mensagens...";
-      elBtn.style.opacity = "0.8";
-    }
+  /* ── ALGORITMO INTELIGENTE DE CRIAÇÃO E CURADORIA DE MENSAGENS COM IA ── */
+  let iaSlots = []; // Armazena [ { texto: "...", fixada: false } ]
+  let iaHistoricoVistas = new Set(); // NUNCA repete mensagens já vistas no ciclo
 
+  function obterBancoExtensoTemplates(estilo, saudacao) {
+    const saudMin = saudacao.toLowerCase();
+
+    // Gerador combinatório dinâmico para garantir centenas de variações únicas
+    const combinacoesPV = [];
+    const aberturas = [
+      `${saudacao}!`,
+      `Oii, ${saudMin}!`,
+      `Oiie, ${saudMin}`,
+      `Opa, ${saudMin}!`,
+      `Oie gente, ${saudMin}!`,
+      `${saudacao} galera!`,
+      `E aí, ${saudMin}?`,
+      `Oii gente linda!`,
+      `${saudacao} a todos!`
+    ];
+    const chamadas = [
+      "quem tiver de bobeira me dá um oi no pv",
+      "me chama no pv pra gente papear",
+      "alguém livre pra conversar agora?",
+      "passando pra desejar um ótimo dia e chamar pro pv",
+      "meu pv tá liberado pra quem quiser conversar",
+      "quem quiser trocar uma ideia é só chamar",
+      "bora papear sem compromisso?",
+      "procurando pessoas legais pra bater um papo",
+      "se estiver online me manda um alô no pv",
+      "alguém afim de conversar hoje?",
+      "pv abertinho pra quem quiser fazer amizade",
+      "passando pra dar um alô e conhecer pessoas legais",
+      "quem quiser conversar sobre a vida vem de pv",
+      "chama aqui no privado pra gente resenhar",
+      "se tiver acordado e livre dá um pulo no meu pv",
+      "bora trocar uma resenha legal no privado?",
+      "alguém pra conversar e tirar o tédio?",
+      "passando pra mandar um oi, vem pv papear"
+    ];
+    const emojis = ["💞", "🥰", "🙈", "✨", "😉", "💬", "💖", "🌸", "🤗", "🤝", "✌️", "🔥", "rsrs 🙈"];
+
+    aberturas.forEach(ab => {
+      chamadas.forEach(ch => {
+        const em = emojis[Math.floor(Math.random() * emojis.length)];
+        combinacoesPV.push(`${ab} ${ch} ${em}`);
+      });
+    });
+
+    const combinacoesAmizade = [
+      `${saudacao} galera! Alguém afim de fazer amizades novas hoje? 🤝`,
+      `Oie! Sou novo por aqui, quem quiser papear só chamar! ✨`,
+      `${saudacao}! Grupo com uma energia muito bacana, prazer todos! 💬`,
+      `Oii gente, como tá o dia de vocês? Bora papear! 🥰`,
+      `${saudacao}! Curtindo demais a energia positiva do grupo ✨`,
+      `Oie pessoal! Quem curte uma boa conversa, me dá um toque! 🤝`,
+      `${saudacao} a todos! Sempre bom encontrar pessoas legais por aqui. 🍀`,
+      `Oii! Alguém online pra conversar e trocar uma ideia? 💬`,
+      `${saudacao}! Mandando boas vibrações pra todo mundo hoje! 🌸`,
+      `Oie galera! Bora agitar o chat, quem tá presente? 🚀`,
+      `${saudacao} grupo! O que estão fazendo de bom hoje? Bora resenhar! 😉`,
+      `Opa, ${saudMin} pra todo mundo! Amizades novas são sempre bem-vindas 🤝`,
+      `Oie gente! Passando pra desejar ${saudMin} e conhecer pessoas legais! ✨`,
+      `${saudacao}! Que o dia de vocês seja excelente e cheio de coisas boas! 💖`,
+      `Oii amigos! Alguém afim de conversar sobre assuntos variados? 💬`,
+      `${saudacao} comunidade! Sempre uma alegria estar por aqui com vocês ✌️`,
+      `Opa galera, quem tiver livre pra papear dá um alô! 🤗`
+    ];
+
+    const combinacoesDivulgacao = [
+      `${saudacao}! Novidades imperdíveis disponíveis, venha conferir! 📢`,
+      `Oii pessoal, passando pra compartilhar uma oportunidade excelente! 🚀`,
+      `${saudacao}! Quem busca conteúdo de qualidade não pode perder! ✨`,
+      `Olá a todos! Conteúdo exclusivo e atualizado esperando vocês! 💎`,
+      `${saudacao}! Atualizações quentinhas saindo do forno agora 🚀`,
+      `Oie! Informação de alto valor compartilhada com carinho para o grupo. 🎯`,
+      `${saudacao} gente! Já conferiram os lançamentos de hoje? 📢`,
+      `Olá! Não deixe de acompanhar o melhor material da semana! ⚡`,
+      `${saudacao} a todos! Dicas e novidades exclusivas preparadas pra vocês. 💎`,
+      `Oii! Oportunidade única pra quem tá no grupo hoje, confira! 🚀`,
+      `${saudacao}! Dê uma olhada nessa novidade que preparei com exclusividade 📢`
+    ];
+
+    const combinacoesVendas = [
+      `${saudacao}! Promoção especial por tempo limitado, aproveite hoje! 🛍️`,
+      `Oie pessoal! Melhores ofertas com desconto exclusivo ativado agora! 💸`,
+      `${saudacao}! Quem quer economizar e garantir o melhor produto? 🛍️`,
+      `Olá! Condições imperdíveis ativadas exclusivamente para membros! ⚡`,
+      `${saudacao}! Garanta já o seu antes que acabe o estoque! 💎`,
+      `Oii gente! Super oferta especial liberada hoje com preço reduzido! 🏷️`,
+      `${saudacao} a todos! Descontos especiais esperando você no privado. 🛍️`,
+      `Olá! Quer saber mais sobre as promoções? Me chama no pv! 💬`,
+      `${saudacao}! Preços exclusivos válidos somente hoje, aproveite! 💸`,
+      `Oie! Qualidade e economia garantidos pra você, confira! ⚡`
+    ];
+
+    if (estilo === "amizade") return combinacoesAmizade;
+    if (estilo === "divulgacao") return combinacoesDivulgacao;
+    if (estilo === "vendas") return combinacoesVendas;
+    return combinacoesPV;
+  }
+
+  function gerarVariacoesIA() {
+    const elBtn = document.getElementById("btn-gerar-ia");
     const estilo = (document.getElementById("sel-ia-estilo") || {}).value || "pv";
     const saudacao = obterSaudacaoAtual();
 
-    const bancoTemplates = {
-      pv: [
-        `Oiie, ${saudacao} vem pv! 💞`,
-        `Oii ${saudacao}, me chama no pv vaii 🥰`,
-        `${saudacao} gente! Alguém pra papear no pv? 🙈`,
-        `Oie! Pv liberado pra novas conversas ✨`,
-        `${saudacao}! Quem tiver de bobeira me dá um oi no pv 😉`,
-        `Oii, passando pra desejar ${saudacao.toLowerCase()} e chamar pro pv!`,
-        `Oiiee, bora papear? Me chama aqui no privado 💞`,
-        `${saudacao} pessoal! Meu pv tá aberto pra quem quiser conversar!`,
-        `Oii, alguém online hoje? Vem de pv rsrs 🙈`,
-        `${saudacao}! Me chama no pv pra gente papear 🥰`,
-        `Opa, ${saudacao}! Alguém livre pra conversar no pv agora? 💬`,
-        `Oii gente linda, ${saudacao}! Quem quiser papear chama pv ✨`,
-        `Bora trocar uma ideia? Me manda um oi no privado, ${saudacao.toLowerCase()}!`,
-        `${saudacao} a todos! Quem quiser conversar sem compromisso vem pv 🤝`,
-        `Oii, passando pra deixar um ${saudacao.toLowerCase()} e avisar que o pv tá liberado! 💖`,
-        `${saudacao} grupo! Quem tiver acordado e livre dá um pulo no meu pv 😉`,
-        `Oie! Procurando pessoas legais pra conversar, vem pv! 🌸`,
-        `${saudacao} galera! Se estiver livre me dá um alô no pv 🤗`,
-        `Oii! Bora fazer amizade? Só me chamar no privado ✨`,
-        `${saudacao}! Me chama no pv pra uma boa conversa agora 💬`
-      ],
-      amizade: [
-        `${saudacao} galera! Alguém afim de fazer amizades novas hoje? 🤝`,
-        `Oie! Sou novo por aqui, quem quiser papear só chamar!`,
-        `${saudacao}! Grupo com uma energia muito bacana, prazer todos! ✨`,
-        `Oii gente, como tá o dia de vocês? Bora papear!`,
-        `${saudacao}! Curtindo demais a energia positiva do grupo ✨`,
-        `Oie pessoal! Quem curte uma boa conversa, me dá um toque!`,
-        `${saudacao} a todos! Sempre bom encontrar pessoas legais por aqui.`,
-        `Oii! Alguém online pra conversar e trocar uma ideia? 💬`,
-        `${saudacao}! Mandando boas vibrações pra todo mundo hoje! 🍀`,
-        `Oie galera! Bora agitar o chat, quem tá presente? 🚀`,
-        `${saudacao} grupo! O que estão fazendo de bom hoje? Bora resenhar!`,
-        `Opa, ${saudacao} pra todo mundo! Amizades novas são sempre bem-vindas 🤝`,
-        `Oie gente! Passando pra desejar ${saudacao.toLowerCase()} e conhecer pessoas legais!`,
-        `${saudacao}! Que o dia de vocês seja excelente e cheio de coisas boas! ✨`,
-        `Oii amigos! Alguém afim de conversar sobre assuntos variados? 💬`
-      ],
-      divulgacao: [
-        `${saudacao}! Novidades imperdíveis disponíveis, venha conferir! 📢`,
-        `Oii pessoal, passando pra compartilhar uma oportunidade excelente!`,
-        `${saudacao}! Quem busca conteúdo de qualidade não pode perder! ✨`,
-        `Olá a todos! Conteúdo exclusivo e atualizado esperando vocês!`,
-        `${saudacao}! Atualizações quentinhas saindo do forno agora 🚀`,
-        `Oie! Informação de alto valor compartilhada com carinho para o grupo.`,
-        `${saudacao} gente! Já conferiram os lançamentos de hoje? 🎯`,
-        `Olá! Não deixe de acompanhar o melhor material da semana!`,
-        `${saudacao} a todos! Dicas e novidades exclusivas preparadas pra vocês.`,
-        `Oii! Oportunidade única pra quem tá no grupo hoje, confira! 💎`,
-        `${saudacao}! Dê uma olhada nessa dica que preparei com exclusividade 📢`,
-        `Oie pessoal! Para quem quer dar um salto de resultados, veja isso 🚀`
-      ],
-      vendas: [
-        `${saudacao}! Promoção especial por tempo limitado, aproveite hoje! 🛍️`,
-        `Oie pessoal! Melhores ofertas com desconto exclusivo ativado agora!`,
-        `${saudacao}! Quem quer economizar e garantir o melhor produto? 💸`,
-        `Olá! Condições imperdíveis ativadas exclusivamente para membros!`,
-        `${saudacao}! Garanta já o seu antes que acabe o estoque! ⚡`,
-        `Oii gente! Super oferta especial liberada hoje com preço reduzido!`,
-        `${saudacao} a todos! Descontos especiais esperando você no privado.`,
-        `Olá! Quer saber mais sobre os planos e promoções? Me chama no pv! 🛍️`,
-        `${saudacao}! Preços exclusivos válidos somente hoje, aproveite!`,
-        `Oie! Qualidade e economia garantidos pra você, confira! 💎`,
-        `${saudacao}! Desconto relâmpago ativado para quem mandar mensagem agora ⚡`,
-        `Opa! Procurando o melhor custo-benefício? Vem conferir no privado 💸`
-      ]
-    };
+    const badgeSaud = document.getElementById("badge-modal-saudacao");
+    if (badgeSaud) badgeSaud.textContent = `🕒 ${saudacao}`;
 
-    // Embaralha aleatoriamente (Fisher-Yates) para garantir 10 mensagens sempre novas
-    const pool = (bancoTemplates[estilo] || bancoTemplates.pv).slice();
+    const pool = obterBancoExtensoTemplates(estilo, saudacao);
+
+    // Embaralha pool
     for (let i = pool.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
       [pool[i], pool[j]] = [pool[j], pool[i]];
     }
 
-    const lista = pool.slice(0, 10);
-    const box = document.getElementById("lista-inputs-ia");
-    if (box) {
-      box.innerHTML = lista.map((msg, idx) => `
-        <div style="display:flex;gap:8px;align-items:center;">
-          <span style="font-size:0.75rem;color:#d946ef;font-weight:800;width:22px;">#${idx+1}</span>
-          <input type="text" class="input-ia-var" value="${esc(msg)}" style="width:100%;background:#090d16;border:1px solid rgba(255,255,255,0.12);padding:8px 10px;border-radius:6px;color:#fff;font-size:0.83rem;outline:none;">
-        </div>
-      `).join("");
+    // Se é a primeira geração ou tamanho diferente de 10
+    if (iaSlots.length !== 10) {
+      iaSlots = [];
+      for (let i = 0; i < 10; i++) {
+        iaSlots.push({ texto: "", fixada: false });
+      }
     }
+
+    // Ler eventuais edições que o usuário digitou manualmente nos inputs antes de re-embaralhar
+    document.querySelectorAll(".input-ia-var").forEach(inp => {
+      const idx = parseInt(inp.getAttribute("data-idx"));
+      if (!isNaN(idx) && iaSlots[idx]) {
+        iaSlots[idx].texto = inp.value;
+      }
+    });
+
+    // Filtra pool para não repetir mensagens já vistas
+    let disponiveis = pool.filter(m => !iaHistoricoVistas.has(m) && !iaSlots.some(s => s.texto === m));
+    if (disponiveis.length < 10) {
+      // Reseta histórico se pool esgotar
+      iaHistoricoVistas.clear();
+      disponiveis = pool.filter(m => !iaSlots.some(s => s.texto === m));
+    }
+
+    let dispIdx = 0;
+    let trocadas = 0;
+    let fixadasCount = 0;
+
+    for (let i = 0; i < 10; i++) {
+      if (iaSlots[i].fixada && iaSlots[i].texto) {
+        fixadasCount++;
+        // Mantém intacta a que o usuário gostou!
+        continue;
+      }
+      if (dispIdx < disponiveis.length) {
+        iaSlots[i].texto = disponiveis[dispIdx];
+        iaHistoricoVistas.add(disponiveis[dispIdx]);
+        dispIdx++;
+        trocadas++;
+      }
+    }
+
+    renderizarSlotsIA();
 
     const boxVar = document.getElementById("box-variacoes-geradas");
     if (boxVar) boxVar.style.display = "block";
 
-    setTimeout(() => {
-      if (elBtn) {
-        elBtn.innerHTML = "✨ Gerar / Re-embaralhar 10 Mensagens";
-        elBtn.style.opacity = "1";
-      }
-      alerta("✨ 10 variações geradas com sucesso!", "success");
-    }, 200);
+    if (elBtn) {
+      elBtn.innerHTML = fixadasCount > 0 
+        ? `✨ Re-embaralhar as outras (${10 - fixadasCount} novas)`
+        : `✨ Gerar / Re-embaralhar 10 Mensagens`;
+    }
+
+    if (fixadasCount > 0) {
+      alerta(`🔒 ${fixadasCount} mensagem(ns) que você gostou foram mantidas! Geradas ${trocadas} novas sem repetição.`, "success");
+    } else {
+      alerta(`✨ 10 novas variações exclusivas geradas! Clique em "Gostei" para fixar as melhores.`, "success");
+    }
+  }
+
+  function toggleFixarSlotIA(idx) {
+    if (!iaSlots[idx]) return;
+    iaSlots[idx].fixada = !iaSlots[idx].fixada;
+    renderizarSlotsIA();
+  }
+
+  function trocarSlotIndividualIA(idx) {
+    const estilo = (document.getElementById("sel-ia-estilo") || {}).value || "pv";
+    const saudacao = obterSaudacaoAtual();
+    const pool = obterBancoExtensoTemplates(estilo, saudacao);
+    const disponiveis = pool.filter(m => !iaHistoricoVistas.has(m) && !iaSlots.some(s => s.texto === m));
+    const candidato = disponiveis.length > 0 ? disponiveis[Math.floor(Math.random() * disponiveis.length)] : pool[Math.floor(Math.random() * pool.length)];
+
+    iaSlots[idx].texto = candidato;
+    iaSlots[idx].fixada = false;
+    iaHistoricoVistas.add(candidato);
+    renderizarSlotsIA();
+  }
+
+  function alternarFixarTodasIA() {
+    const todasFixadas = iaSlots.every(s => s.fixada);
+    iaSlots.forEach(s => s.fixada = !todasFixadas);
+    renderizarSlotsIA();
+  }
+
+  function renderizarSlotsIA() {
+    const box = document.getElementById("lista-inputs-ia");
+    if (!box) return;
+
+    let fixadasCount = 0;
+
+    box.innerHTML = iaSlots.map((slot, idx) => {
+      if (slot.fixada) fixadasCount++;
+      const isFix = slot.fixada;
+
+      const borderColor = isFix ? "#10b981" : "rgba(255,255,255,0.12)";
+      const bgCard = isFix ? "rgba(16,185,129,0.08)" : "#090d16";
+      const glow = isFix ? "box-shadow:0 0 10px rgba(16,185,129,0.25);" : "";
+      const btnGosteiTxt = isFix ? "💚 Fixada!" : "🤍 Gostei";
+      const btnGosteiBg = isFix ? "#059669" : "rgba(255,255,255,0.06)";
+      const btnGosteiBorder = isFix ? "#10b981" : "rgba(255,255,255,0.12)";
+
+      return `
+        <div style="display:flex;gap:6px;align-items:center;background:${bgCard};border:1px solid ${borderColor};border-radius:8px;padding:6px 8px;transition:all 0.2s;${glow}">
+          <span style="font-size:0.75rem;color:${isFix ? "#34d399" : "#d946ef"};font-weight:800;width:24px;flex-shrink:0;">#${idx+1}</span>
+          
+          <input type="text" class="input-ia-var" data-idx="${idx}" value="${esc(slot.texto)}" oninput="iaSlots[${idx}].texto=this.value" style="width:100%;background:transparent;border:none;color:#fff;font-size:0.83rem;outline:none;font-weight:${isFix ? "600" : "400"};">
+          
+          <div style="display:flex;align-items:center;gap:4px;flex-shrink:0;">
+            <button type="button" onclick="toggleFixarSlotIA(${idx})" title="${isFix ? "Clique para desafixar" : "Gostei! Manter fixa nas próximas gerações"}" style="background:${btnGosteiBg};border:1px solid ${btnGosteiBorder};color:#fff;font-size:0.72rem;font-weight:700;padding:4px 8px;border-radius:6px;cursor:pointer;display:inline-flex;align-items:center;gap:3px;white-space:nowrap;transition:all 0.15s;">
+              ${btnGosteiTxt}
+            </button>
+            <button type="button" onclick="trocarSlotIndividualIA(${idx})" title="Trocar apenas esta mensagem" style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);color:#94a3b8;font-size:0.75rem;padding:4px 6px;border-radius:6px;cursor:pointer;">
+              🎲
+            </button>
+          </div>
+        </div>
+      `;
+    }).join("");
+
+    // Atualiza status e botões
+    const lblStatus = document.getElementById("lbl-ia-status-fixadas");
+    if (lblStatus) {
+      lblStatus.innerHTML = fixadasCount > 0
+        ? `🔒 <b style="color:#10b981;">${fixadasCount} de 10 mensagens fixadas</b> (ficarão salvas ao re-embaralhar!)`
+        : `💡 Clique em <b>🤍 Gostei</b> nas que curtir para fixar!`;
+    }
+
+    const btnFixarTodas = document.getElementById("btn-ia-fixar-todas");
+    if (btnFixarTodas) {
+      btnFixarTodas.textContent = fixadasCount === 10 ? "Desafixar Todas" : "Fixar Todas";
+    }
+
+    const btnAplicar = document.getElementById("btn-aplicar-ia");
+    if (btnAplicar) {
+      btnAplicar.innerHTML = fixadasCount > 0
+        ? `✅ Usar as ${fixadasCount} Mensagens Fixadas no Disparador`
+        : `✅ Usar todas as 10 Mensagens no Disparador`;
+    }
+
+    const elBtnGerar = document.getElementById("btn-gerar-ia");
+    if (elBtnGerar) {
+      elBtnGerar.innerHTML = fixadasCount > 0 
+        ? `✨ Re-embaralhar as outras (${10 - fixadasCount} novas)`
+        : `✨ Gerar / Re-embaralhar 10 Mensagens`;
+    }
   }
 
   function aplicarMensagensIAParaComposer() {
-    const inputs = document.querySelectorAll(".input-ia-var");
-    const msgs = Array.from(inputs).map(inp => inp.value.trim()).filter(m => m.length > 0);
-    if (!msgs.length) {
-      alerta("Nenhuma mensagem selecionada!", "error");
+    const fixadas = iaSlots.filter(s => s.fixada && s.texto && s.texto.trim().length > 0);
+    let msgsFinais = [];
+
+    if (fixadas.length > 0) {
+      // O usuário curtiu mensagens específicas: exporta SOMENTE as que ele gostou!
+      msgsFinais = fixadas.map(s => s.texto.trim());
+      alerta(`🎯 ${msgsFinais.length} mensagens escolhidas aplicadas no disparador!`, "success");
+    } else {
+      // Nenhuma fixada: exporta todas as 10 preenchidas
+      msgsFinais = iaSlots.map(s => s.texto.trim()).filter(m => m.length > 0);
+      alerta(`✨ 10 mensagens da IA aplicadas no disparador!`, "success");
+    }
+
+    if (!msgsFinais.length) {
+      alerta("Nenhuma mensagem disponível para aplicar!", "error");
       return;
     }
-    document.getElementById("txt-broadcast-msg").value = msgs.join("\n");
+
+    document.getElementById("txt-broadcast-msg").value = msgsFinais.join("\n");
     aoDigitarMensagem();
     fecharModalIABroadcast();
-    alerta("10 mensagens da IA aplicadas no disparador!", "success");
   }
+
+
 
   /* ── ADMIN: IMPORTAR & MANDAR PRO SITE INTEIRO ── */
   async function processarImportacao() {
