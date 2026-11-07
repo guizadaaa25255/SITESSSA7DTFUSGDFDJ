@@ -977,25 +977,96 @@
   }
 
   /* ── SALVAR E PUBLICAR NO SITE INTEIRO (VERCEL / GITHUB) ── */
-  function publicarAlteracoesNoSite() {
+  async function publicarAlteracoesNoSite() {
     const total = catalogoGrupos.length;
+    const btnSalvar = document.querySelector(".btn-adm-action.save");
+    if (btnSalvar) {
+      btnSalvar.disabled = true;
+      btnSalvar.textContent = "⏳ Enviando p/ Vercel...";
+    }
     
-    // Gera o arquivo index.html atualizado completo como Blob para download
-    const htmlAtual = "<!DOCTYPE html>\n" + document.documentElement.outerHTML;
-    
-    // Atualiza os dados de catalogoGrupos dentro do HTML baixado
-    const dadosNovosStr = JSON.stringify(catalogoGrupos);
-    const htmlPronto = htmlAtual.replace(/let catalogoGrupos = \[.*?\];/s, "let catalogoGrupos = " + dadosNovosStr + ";");
+    alerta("Enviando alterações diretamente para o GitHub & Vercel...", "info");
 
-    const blob = new Blob([htmlPronto], { type: "text/html;charset=utf-8" });
-    const a = document.createElement("a");
-    a.href = URL.createObjectURL(blob);
-    a.download = "index.html";
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
+    let GITHUB_TOKEN = localStorage.getItem("tg_gh_token") || "";
+    if (!GITHUB_TOKEN) {
+      GITHUB_TOKEN = prompt("Insira seu GitHub Token para publicar direto na Vercel (salvo no seu navegador):");
+      if (!GITHUB_TOKEN) {
+        alerta("Token não informado. Operação cancelada.", "error");
+        if (btnSalvar) { btnSalvar.disabled = false; btnSalvar.textContent = "🚀 Publicar no Site Inteiro"; }
+        return;
+      }
+      localStorage.setItem("tg_gh_token", GITHUB_TOKEN.trim());
+    }
+    const GITHUB_REPO = "guizadaaa25255/SITESSSA7DTFUSGDFDJ";
 
-    alerta("Arquivo 'index.html' com os " + total + " grupos gerado com sucesso! Arraste ele para o seu GitHub para publicar no mundo todo em 10 segundos!", "success");
+    try {
+      // 1. Gera o HTML completo com os dados atualizados
+      const dadosNovosStr = JSON.stringify(catalogoGrupos);
+      let htmlAtual = "<!DOCTYPE html>\n" + document.documentElement.outerHTML;
+      // Garante que o painel adm feche no HTML salvo para os visitantes normais não verem barra aberta
+      htmlAtual = htmlAtual.replace('class="admin-bar open"', 'class="admin-bar"');
+      const htmlPronto = htmlAtual.replace(/let catalogoGrupos = \[.*?\];/s, "let catalogoGrupos = " + dadosNovosStr + ";");
+
+      // 2. Converte para UTF-8 Base64
+      const utf8Bytes = new TextEncoder().encode(htmlPronto);
+      let binaryStr = "";
+      for (let i = 0; i < utf8Bytes.length; i++) {
+        binaryStr += String.fromCharCode(utf8Bytes[i]);
+      }
+      const contentB64 = btoa(binaryStr);
+
+      // 3. Pega o SHA atual de index.html no GitHub
+      const resGet = await fetch(`https://api.github.com/repos/${GITHUB_REPO}/contents/index.html`, {
+        headers: { "Authorization": `token ${GITHUB_TOKEN}`, "Accept": "application/vnd.github.v3+json" }
+      });
+      let sha = null;
+      if (resGet.ok) {
+        const dGet = await resGet.json();
+        sha = dGet.sha;
+      }
+
+      // 4. Envia o PUT com o novo conteúdo para o GitHub
+      const resPut = await fetch(`https://api.github.com/repos/${GITHUB_REPO}/contents/index.html`, {
+        method: "PUT",
+        headers: {
+          "Authorization": `token ${GITHUB_TOKEN}`,
+          "Accept": "application/vnd.github.v3+json",
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          message: `Atualização ADM: ${total} grupos ativos (via Painel Online)`,
+          content: contentB64,
+          sha: sha,
+          branch: "main"
+        })
+      });
+
+      if (resPut.ok) {
+        alerta(`🚀 SUCESSO! ${total} grupos salvos no GitHub! A Vercel está atualizando o site agora mesmo (cerca de 15 segundos)!`, "success");
+      } else {
+        const err = await resPut.json();
+        throw new Error(err.message || "Falha na API do GitHub");
+      }
+    } catch (e) {
+      console.error(e);
+      alerta("⚠️ Erro no envio direto (" + e.message + "). Baixando arquivo index.html de backup...", "warning");
+      
+      const dadosNovosStr = JSON.stringify(catalogoGrupos);
+      const htmlAtual = "<!DOCTYPE html>\n" + document.documentElement.outerHTML;
+      const htmlPronto = htmlAtual.replace(/let catalogoGrupos = \[.*?\];/s, "let catalogoGrupos = " + dadosNovosStr + ";");
+      const blob = new Blob([htmlPronto], { type: "text/html;charset=utf-8" });
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(blob);
+      a.download = "index.html";
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+    } finally {
+      if (btnSalvar) {
+        btnSalvar.disabled = false;
+        btnSalvar.textContent = "🚀 Publicar no Site Inteiro";
+      }
+    }
   }
 
   /* ── RENDERIZAÇÃO ── */
