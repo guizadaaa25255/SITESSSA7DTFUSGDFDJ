@@ -615,6 +615,10 @@
     flex-shrink: 0;
   }
 
+    .btn-lbl-pc { display: inline; }
+  .btn-lbl-mob { display: none; }
+  .icon-tg-mob { display: none; }
+  .tag-status-mob { display: none; }
   .btn-enter-instant {
     background: #10b981;
     color: #fff !important;
@@ -652,6 +656,12 @@
     font-size: 13px;
     flex-shrink: 0;
   }
+
+  /* ── RESPONSIVE LABELS & ICONS ── */
+  .btn-lbl-pc { display: inline; }
+  .btn-lbl-mob { display: none; }
+  .icon-tg-mob { display: none; }
+  .tag-status-mob { display: none; }
 
   /* ── ABA 2: AUTO-JOIN ── */
   .autojoin-layout {
@@ -1224,83 +1234,144 @@
       font-size: 0.8rem !important;
     }
 
-    /* CARDS DE GRUPOS PROFISSIONAIS E COMPACTOS NO CELULAR */
+    /* CARDS DE GRUPOS EM 2 COLUNAS NO CELULAR (EXATAMENTE COMO NA IMAGEM) */
     .grid-cards {
-      grid-template-columns: 1fr !important;
-      gap: 10px !important;
+      grid-template-columns: repeat(2, 1fr) !important;
+      gap: 8px !important;
     }
     .group-card {
-      padding: 12px 14px !important;
+      padding: 14px 10px 10px !important;
+      display: flex !important;
+      flex-direction: column !important;
+      align-items: center !important;
+      text-align: center !important;
+      justify-content: space-between !important;
+      border-radius: 14px !important;
       gap: 8px !important;
-      border-radius: 12px !important;
+      background: var(--bg-card) !important;
+      border: 1px solid var(--border-subtle) !important;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.3) !important;
     }
     .card-top {
-      gap: 10px !important;
+      display: flex !important;
+      flex-direction: column !important;
+      align-items: center !important;
+      width: 100% !important;
+      gap: 6px !important;
     }
     .avatar-frame {
-      width: 44px !important;
-      height: 44px !important;
-      border-radius: 10px !important;
+      width: 62px !important;
+      height: 62px !important;
+      border-radius: 50% !important;
+      background: #0284c7 !important;
+      color: #ffffff !important;
+      font-size: 1.6rem !important;
+      font-weight: 800 !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      margin: 2px auto !important;
+      box-shadow: 0 4px 14px rgba(2, 132, 199, 0.4) !important;
+    }
+    .avatar-frame img {
+      border-radius: 50% !important;
+      width: 100% !important;
+      height: 100% !important;
+      object-fit: cover !important;
+    }
+    .group-header-info {
+      display: flex !important;
+      flex-direction: column !important;
+      align-items: center !important;
+      width: 100% !important;
     }
     .group-name {
-      font-size: 0.92rem !important;
-    }
-    .group-link-url {
-      font-size: 0.72rem !important;
-    }
-    .group-description {
-      font-size: 0.78rem !important;
-      line-height: 1.4 !important;
-      margin-bottom: 2px !important;
-    }
-    .card-bottom {
-      display: flex !important;
-      flex-direction: row !important;
-      align-items: center !important;
-      justify-content: space-between !important;
-      gap: 8px !important;
-      padding-top: 8px !important;
-      border-top: 1px solid var(--border-subtle) !important;
-    }
-    .card-bottom-info {
-      flex: 1 !important;
-      min-width: 0 !important;
-      display: flex !important;
-      align-items: center !important;
-    }
-    .members-pill {
-      font-size: 0.78rem !important;
+      font-size: 0.88rem !important;
+      font-weight: 700 !important;
+      color: #ffffff !important;
+      text-align: center !important;
       white-space: nowrap !important;
       overflow: hidden !important;
       text-overflow: ellipsis !important;
+      width: 100% !important;
+      margin: 0 !important;
+    }
+    .group-link-url {
+      display: none !important;
+    }
+    .card-tags-row {
+      display: flex !important;
+      justify-content: center !important;
+      gap: 4px !important;
+      margin-top: 3px !important;
+      width: 100% !important;
+    }
+    .badge-tag {
+      font-size: 0.62rem !important;
+      padding: 2px 6px !important;
+      border-radius: 4px !important;
+    }
+
+    /* TIRE AS LEGENDAS NO CELULAR */
+    .card-middle, .group-description {
+      display: none !important;
+    }
+
+    /* PARTE INFERIOR DO CARD (BOTÃO TELEGRAM + LINHA DE MEMBROS) */
+    .card-bottom {
+      width: 100% !important;
+      display: flex !important;
+      flex-direction: column !important;
+      gap: 8px !important;
+      padding-top: 4px !important;
+      border-top: none !important;
     }
     .card-actions {
+      width: 100% !important;
       display: flex !important;
-      align-items: center !important;
-      gap: 6px !important;
-      flex-shrink: 0 !important;
-      width: auto !important;
+      gap: 4px !important;
     }
     .btn-enter-instant {
-      flex: none !important;
-      background: #10b981 !important;
-      color: #fff !important;
-      padding: 8px 16px !important;
-      font-size: 0.82rem !important;
-      font-weight: 700 !important;
+      width: 100% !important;
+      flex: 1 !important;
+      background: #0284c7 !important;
+      color: #ffffff !important;
       border-radius: 8px !important;
-      white-space: nowrap !important;
-      box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3) !important;
-      display: inline-flex !important;
+      padding: 8px 10px !important;
+      font-size: 0.84rem !important;
+      font-weight: 700 !important;
+      text-decoration: none !important;
+      display: flex !important;
       align-items: center !important;
       justify-content: center !important;
+      gap: 6px !important;
+      box-shadow: 0 3px 10px rgba(2, 132, 199, 0.4) !important;
     }
-    .btn-copy-link {
-      width: 34px !important;
-      height: 34px !important;
-      border-radius: 8px !important;
-      font-size: 13px !important;
-      flex-shrink: 0 !important;
+    .btn-lbl-pc { display: none !important; }
+    .btn-lbl-mob { display: inline !important; }
+    .icon-tg-mob { display: inline-block !important; }
+    .btn-copy-link { display: none !important; }
+
+    .card-bottom-info {
+      width: 100% !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: space-between !important;
+      padding: 0 2px !important;
+    }
+    .tag-status-mob {
+      display: inline !important;
+      font-size: 0.68rem !important;
+      font-weight: 700 !important;
+      color: #10b981 !important;
+    }
+    .members-pill {
+      font-size: 0.72rem !important;
+      font-family: 'JetBrains Mono', monospace !important;
+      color: #cbd5e1 !important;
+      display: inline-flex !important;
+      align-items: center !important;
+      gap: 3px !important;
     }
   }
   </style>
@@ -2172,7 +2243,7 @@
     }
 
     container.innerHTML = paginaItens.map(g => {
-      const iniciais = (g.titulo || "G").trim().substring(0, 2).toUpperCase();
+      const iniciais = (g.titulo || "G").trim().substring(0, 1).toUpperCase();
       const avatarHtml = g.imagem && g.imagem.startsWith("http")
         ? `<img src="${esc(g.imagem)}" alt="${esc(g.titulo)}" loading="lazy" onerror="this.onerror=null;this.parentElement.innerHTML='${iniciais}';">`
         : iniciais;
@@ -2209,15 +2280,18 @@
             <p class="group-description">${esc(g.desc) || "Comunidade brasileira aberta para conversa e interação."}</p>
           </div>
           <div class="card-bottom">
-            <div class="card-bottom-info">
-              <span class="members-pill" style="color:${badgeColor};">⚡ ${badgeText}</span>
-            </div>
             <div class="card-actions">
               <a href="${esc(deepLink)}" class="btn-enter-instant" onclick="abrirGrupoDireto('${esc(g.url)}', event)">
-                ⚡ Entrar
+                <svg class="icon-tg-mob" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" style="display:none;"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 00-.05-.18c-.06-.05-.14-.03-.21-.02-.09.02-1.49.95-4.22 2.79-.4.27-.76.41-1.08.4-.36-.01-1.04-.2-1.55-.37-.63-.2-1.12-.31-1.08-.66.02-.18.27-.36.75-.55 2.92-1.27 4.86-2.11 5.83-2.51 2.78-1.16 3.35-1.36 3.73-1.36.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06.01.24 0 .38z"/></svg>
+                <span class="btn-lbl-pc">⚡ Entrar</span>
+                <span class="btn-lbl-mob">Telegram</span>
               </a>
               <button type="button" class="btn-copy-link" title="Copiar link" onclick="copiarLink('${esc(g.url)}')">📋</button>
               ${botaoExcluir}
+            </div>
+            <div class="card-bottom-info">
+              <span class="tag-status-mob" style="display:none;">0%</span>
+              <span class="members-pill" style="color:${badgeColor};">⚡ ${badgeText}</span>
             </div>
           </div>
         </div>
