@@ -296,6 +296,8 @@
   }
 
   /* 1. SELETOR DE MODOS */
+  .lbl-pc { display: inline; }
+  .lbl-mob { display: none; }
   .modes-nav {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -992,123 +994,191 @@
   }
 
   @media (max-width: 768px) {
+    .lbl-pc { display: none !important; }
+    .lbl-mob { display: inline !important; }
+
     .header-wrap {
-      padding: 12px 14px !important;
+      padding: 10px 12px !important;
     }
     .brand-badge {
-      width: 34px !important;
-      height: 34px !important;
-      font-size: 17px !important;
+      width: 32px !important;
+      height: 32px !important;
+      font-size: 16px !important;
     }
     .brand-info h1 {
-      font-size: 1rem !important;
+      font-size: 0.95rem !important;
     }
     .brand-tag, .brand-info p {
       display: none !important;
     }
 
+    /* MÉTRICAS COMPACTAS NO CELULAR (NÃO OCUPAM A TELA TODA) */
     .metrics-container {
-      padding: 0 14px !important;
-      margin-top: 14px !important;
+      padding: 0 12px !important;
+      margin-top: 10px !important;
     }
     .metrics-grid {
       grid-template-columns: 1fr 1fr !important;
-      gap: 8px !important;
+      gap: 6px !important;
     }
     .metric-card {
-      padding: 10px 12px !important;
+      padding: 8px 10px !important;
+      border-radius: 10px !important;
+      gap: 2px !important;
+    }
+    .metric-label {
+      font-size: 0.68rem !important;
     }
     .metric-value {
-      font-size: 1.25rem !important;
+      font-size: 1.15rem !important;
+      font-weight: 800 !important;
+    }
+    .metric-sub {
+      display: none !important;
     }
 
     main {
-      padding: 14px 12px 60px !important;
+      padding: 12px 12px 60px !important;
     }
+
+    /* HUB CENTRAL PERFEITO NO CELULAR */
     .control-hub {
-      padding: 12px !important;
-      gap: 10px !important;
+      padding: 10px 12px !important;
+      gap: 8px !important;
+      border-radius: 12px !important;
+      margin-bottom: 14px !important;
     }
     .modes-nav {
       grid-template-columns: repeat(3, 1fr) !important;
       gap: 4px !important;
-      padding: 4px !important;
+      padding: 3px !important;
+      border-radius: 8px !important;
     }
     .mode-btn {
-      padding: 9px 4px !important;
+      padding: 8px 2px !important;
       font-size: 0.78rem !important;
+      font-weight: 700 !important;
+      border-radius: 6px !important;
+      white-space: nowrap !important;
+      justify-content: center !important;
       gap: 4px !important;
     }
     .hub-search-row {
-      flex-direction: row !important;
+      display: flex !important;
       align-items: center !important;
-      gap: 8px !important;
+      gap: 6px !important;
     }
     .search-input-wrap input {
-      font-size: 0.85rem !important;
-      padding: 10px 12px 10px 36px !important;
+      font-size: 0.82rem !important;
+      padding: 9px 10px 9px 34px !important;
+      border-radius: 8px !important;
+    }
+    .search-input-wrap svg {
+      left: 10px !important;
+      width: 15px !important;
+      height: 15px !important;
     }
     .btn-toggle-filters {
-      padding: 10px 12px !important;
+      padding: 9px 12px !important;
       font-size: 0.8rem !important;
+      border-radius: 8px !important;
+      gap: 4px !important;
     }
     .filters-grid {
       grid-template-columns: 1fr !important;
+      gap: 8px !important;
     }
     .hub-bottom-row {
+      padding-top: 6px !important;
+      font-size: 0.78rem !important;
+      display: flex !important;
       flex-direction: row !important;
       justify-content: space-between !important;
       align-items: center !important;
     }
-    .grid-cards {
-      grid-template-columns: 1fr !important;
-      gap: 12px !important;
+    .hub-count {
+      font-size: 0.8rem !important;
+    }
+    .check-ocultar-label {
+      font-size: 0.8rem !important;
     }
 
-    /* ── CORREÇÃO TOTAL DO CARD NO CELULAR ── */
-    .group-card {
-      padding: 14px !important;
+    /* CARDS DE GRUPOS PROFISSIONAIS E COMPACTOS NO CELULAR */
+    .grid-cards {
+      grid-template-columns: 1fr !important;
       gap: 10px !important;
-      overflow: visible !important;
+    }
+    .group-card {
+      padding: 12px 14px !important;
+      gap: 8px !important;
+      border-radius: 12px !important;
+    }
+    .card-top {
+      gap: 10px !important;
+    }
+    .avatar-frame {
+      width: 44px !important;
+      height: 44px !important;
+      border-radius: 10px !important;
+    }
+    .group-name {
+      font-size: 0.92rem !important;
+    }
+    .group-link-url {
+      font-size: 0.72rem !important;
+    }
+    .group-description {
+      font-size: 0.78rem !important;
+      line-height: 1.4 !important;
+      margin-bottom: 2px !important;
     }
     .card-bottom {
-      flex-direction: column !important;
-      align-items: stretch !important;
-      gap: 10px !important;
-      padding-top: 10px !important;
+      display: flex !important;
+      flex-direction: row !important;
+      align-items: center !important;
+      justify-content: space-between !important;
+      gap: 8px !important;
+      padding-top: 8px !important;
+      border-top: 1px solid var(--border-subtle) !important;
     }
     .card-bottom-info {
+      flex: 1 !important;
+      min-width: 0 !important;
       display: flex !important;
       align-items: center !important;
-      justify-content: flex-start !important;
-      width: 100% !important;
     }
     .members-pill {
-      font-size: 0.85rem !important;
-      font-weight: 700 !important;
+      font-size: 0.78rem !important;
+      white-space: nowrap !important;
+      overflow: hidden !important;
+      text-overflow: ellipsis !important;
     }
     .card-actions {
       display: flex !important;
-      width: 100% !important;
-      gap: 8px !important;
+      align-items: center !important;
+      gap: 6px !important;
+      flex-shrink: 0 !important;
+      width: auto !important;
     }
     .btn-enter-instant {
-      flex: 1 !important;
-      padding: 13px 18px !important;
-      font-size: 0.95rem !important;
-      font-weight: 800 !important;
-      justify-content: center !important;
-      text-align: center !important;
-      border-radius: 10px !important;
-      box-shadow: 0 4px 12px rgba(16, 185, 129, 0.35) !important;
+      flex: none !important;
       background: #10b981 !important;
-      color: #ffffff !important;
+      color: #fff !important;
+      padding: 8px 16px !important;
+      font-size: 0.82rem !important;
+      font-weight: 700 !important;
+      border-radius: 8px !important;
+      white-space: nowrap !important;
+      box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3) !important;
+      display: inline-flex !important;
+      align-items: center !important;
+      justify-content: center !important;
     }
     .btn-copy-link {
-      width: 46px !important;
-      height: 46px !important;
-      border-radius: 10px !important;
-      font-size: 16px !important;
+      width: 34px !important;
+      height: 34px !important;
+      border-radius: 8px !important;
+      font-size: 13px !important;
       flex-shrink: 0 !important;
     }
   }
@@ -1206,13 +1276,13 @@
         <!-- 1. OS 3 MODOS DE ENTRADA E DISPARO -->
         <div class="modes-nav">
           <button type="button" class="mode-btn active" data-tab="manual" onclick="alternarAba('manual', this)">
-            <span>🖐️</span> Modo Manual
+            <span>🖐️</span> <span class="lbl-pc">Modo Manual</span><span class="lbl-mob">Manual</span>
           </button>
           <button type="button" class="mode-btn" data-tab="auto" onclick="alternarAba('auto', this)">
-            <span>🤖</span> Modo Automático
+            <span>🤖</span> <span class="lbl-pc">Modo Automático</span><span class="lbl-mob">Auto-Join</span>
           </button>
           <button type="button" class="mode-btn" data-tab="broadcast" onclick="alternarAba('broadcast', this)">
-            <span>📢</span> Disparador de Mensagem
+            <span>📢</span> <span class="lbl-pc">Disparador de Mensagem</span><span class="lbl-mob">Disparador</span>
           </button>
         </div>
 
@@ -1296,13 +1366,13 @@
     <div id="pane-auto" class="tab-pane">
       <div class="modes-nav" style="margin-bottom:18px;">
         <button type="button" class="mode-btn" data-tab="manual" onclick="alternarAba('manual', this)">
-          <span>🖐️</span> Modo Manual
+          <span>🖐️</span> <span class="lbl-pc">Modo Manual</span><span class="lbl-mob">Manual</span>
         </button>
         <button type="button" class="mode-btn active" data-tab="auto" onclick="alternarAba('auto', this)">
-          <span>🤖</span> Modo Automático
+          <span>🤖</span> <span class="lbl-pc">Modo Automático</span><span class="lbl-mob">Auto-Join</span>
         </button>
         <button type="button" class="mode-btn" data-tab="broadcast" onclick="alternarAba('broadcast', this)">
-          <span>📢</span> Disparador de Mensagem
+          <span>📢</span> <span class="lbl-pc">Disparador de Mensagem</span><span class="lbl-mob">Disparador</span>
         </button>
       </div>
       <div class="autojoin-layout">
@@ -1363,13 +1433,13 @@
     <div id="pane-broadcast" class="tab-pane">
       <div class="modes-nav" style="margin-bottom:18px;">
         <button type="button" class="mode-btn" data-tab="manual" onclick="alternarAba('manual', this)">
-          <span>🖐️</span> Modo Manual
+          <span>🖐️</span> <span class="lbl-pc">Modo Manual</span><span class="lbl-mob">Manual</span>
         </button>
         <button type="button" class="mode-btn" data-tab="auto" onclick="alternarAba('auto', this)">
-          <span>🤖</span> Modo Automático
+          <span>🤖</span> <span class="lbl-pc">Modo Automático</span><span class="lbl-mob">Auto-Join</span>
         </button>
         <button type="button" class="mode-btn active" data-tab="broadcast" onclick="alternarAba('broadcast', this)">
-          <span>📢</span> Disparador de Mensagem
+          <span>📢</span> <span class="lbl-pc">Disparador de Mensagem</span><span class="lbl-mob">Disparador</span>
         </button>
       </div>
       <div class="broadcast-layout">
