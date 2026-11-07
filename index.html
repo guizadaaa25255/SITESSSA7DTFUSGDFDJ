@@ -1006,7 +1006,7 @@
       <div style="display:flex;align-items:center;justify-content:space-between;padding-top:6px;font-size:0.82rem;color:var(--text-muted);">
         <span id="texto-contagem" style="font-weight:700;color:var(--text-main);">Carregando catálogo...</span>
         <label style="display:flex;align-items:center;gap:6px;cursor:pointer;">
-          <input type="checkbox" id="check-ocultar" onchange="renderizarGrupos()" style="accent-color:#10b981;">
+          <input type="checkbox" id="check-ocultar" checked onchange="renderizarGrupos()" style="accent-color:#10b981;cursor:pointer;">
           Ocultar já entrados
         </label>
       </div>
@@ -1398,10 +1398,15 @@
     const tipoFiltro = document.getElementById("sel-tipo-antispam").value;
     const tamanho = document.getElementById("sel-tamanho").value;
     const ordem = document.getElementById("sel-ordem").value;
-    const ocultarEntrados = document.getElementById("check-ocultar").checked;
+    const chkEl = document.getElementById("check-ocultar");
+    const ocultarEntrados = chkEl ? chkEl.checked : true;
+
+    let entradosSalvos = [];
+    try { entradosSalvos = JSON.parse(localStorage.getItem("tg_grupos_entrados") || "[]"); } catch(e) {}
 
     let filtrados = catalogoGrupos.filter(g => {
-      if (ocultarEntrados && g.ja_entrou) return false;
+      const jaEntrou = g.ja_entrou || entradosSalvos.includes(g.url);
+      if (ocultarEntrados && jaEntrou) return false;
 
       if (catFiltro === "amizade" && !g.is_chat_amizade) return false;
       if (catFiltro === "outros" && g.is_chat_amizade) return false;
@@ -1542,6 +1547,12 @@
   function marcarEntrado(url) {
     const item = catalogoGrupos.find(g => g.url === url);
     if (item) item.ja_entrou = true;
+    try {
+      let entrados = JSON.parse(localStorage.getItem("tg_grupos_entrados") || "[]");
+      if (!entrados.includes(url)) entrados.push(url);
+      localStorage.setItem("tg_grupos_entrados", JSON.stringify(entrados));
+    } catch(e) {}
+    setTimeout(() => renderizarGrupos(), 300);
   }
 
   function copiarLink(url) {
