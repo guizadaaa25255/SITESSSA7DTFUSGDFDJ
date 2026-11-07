@@ -3,54 +3,48 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Telegram Pro | Grupos BR</title>
+  <title>Telegram Pro | Grupos BR & Automação</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
 
   <style>
   :root {
-    --bg-base: #080c14;
-    --bg-surface: #0f1624;
-    --bg-card: #141d2f;
-    --bg-card-hover: #1a253a;
-    --bg-input: #101827;
+    --bg-base: #090d16;
+    --bg-surface: #0f172a;
+    --bg-card: #131d35;
+    --bg-card-hover: #172342;
+    --bg-input: #0a0f1d;
     --border-subtle: rgba(255, 255, 255, 0.08);
-    --border-hover: rgba(59, 130, 246, 0.4);
-    
+    --border-hover: rgba(255, 255, 255, 0.16);
     --text-main: #f8fafc;
     --text-muted: #94a3b8;
     --text-dim: #64748b;
-    
+    --brand-blue: #0284c7;
     --brand-green: #10b981;
-    --brand-blue: #3b82f6;
-    --tg-blue: #24a1de;
-    --brand-amber: #f59e0b;
-    --brand-rose: #f43f5e;
-    
+    --brand-purple: #a855f7;
+    --brand-pink: #ec4899;
     --radius-sm: 8px;
     --radius-md: 12px;
     --radius-lg: 16px;
     --radius-xl: 20px;
-    
-    --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    --shadow-card: 0 4px 20px -2px rgba(0, 0, 0, 0.5);
   }
 
-  *, *::before, *::after {
+  * {
+    box-sizing: border-box;
     margin: 0;
     padding: 0;
-    box-sizing: border-box !important;
   }
 
-  html, body {
-    width: 100%;
-    max-width: 100vw;
-    overflow-x: hidden;
-    background-color: var(--bg-base);
+  body {
+    background: var(--bg-base);
     color: var(--text-main);
-    font-family: var(--font-sans);
-    -webkit-font-smoothing: antialiased;
-    line-height: 1.5;
+    font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
   }
 
   /* ── CABEÇALHO ── */
@@ -83,8 +77,8 @@
   }
 
   .brand-badge {
-    width: 42px;
-    height: 42px;
+    width: 40px;
+    height: 40px;
     background: linear-gradient(135deg, #10b981 0%, #0284c7 100%);
     border-radius: var(--radius-md);
     display: flex;
@@ -129,86 +123,59 @@
     display: flex;
     align-items: center;
     gap: 12px;
-    flex-shrink: 0;
-  }
-
-  .btn-header-add {
-    background: #10b981;
-    color: #fff;
-    border: none;
-    border-radius: 10px;
-    padding: 9px 18px;
-    font-size: 0.88rem;
-    font-weight: 700;
-    cursor: pointer;
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    box-shadow: 0 0 16px rgba(16, 185, 129, 0.35);
-    transition: all 0.2s ease;
-    white-space: nowrap;
-  }
-  .btn-header-add:hover {
-    background: #0ea372;
-    transform: translateY(-1px);
   }
 
   .account-pill {
     display: inline-flex;
     align-items: center;
-    gap: 10px;
-    background: #0d1527;
-    border: 1px solid rgba(255, 255, 255, 0.14);
+    gap: 8px;
+    background: var(--bg-input);
+    border: 1px solid var(--border-subtle);
     border-radius: 9999px;
-    padding: 4px 14px 4px 6px;
+    padding: 4px 12px 4px 6px;
     cursor: pointer;
     user-select: none;
-    transition: all 0.2s ease;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    transition: all 0.2s;
   }
   .account-pill:hover {
     border-color: rgba(255, 255, 255, 0.25);
+    background: rgba(255, 255, 255, 0.04);
   }
 
   .acc-avatar {
-    width: 34px;
-    height: 34px;
+    width: 28px;
+    height: 28px;
     border-radius: 50%;
-    background: linear-gradient(135deg, #3b82f6, #6366f1);
+    background: rgba(59, 130, 246, 0.2);
+    color: #60a5fa;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-weight: 700;
     font-size: 12px;
-    color: #fff;
-    box-shadow: 0 2px 6px rgba(59, 130, 246, 0.4);
-    flex-shrink: 0;
+    font-weight: 800;
   }
 
   .acc-details {
     display: flex;
     flex-direction: column;
+    line-height: 1.15;
     text-align: left;
-    line-height: 1.2;
   }
 
   .acc-name {
-    font-size: 13px;
+    font-size: 0.82rem;
     font-weight: 700;
     color: #fff;
   }
 
   .acc-phone {
-    font-size: 11px;
-    color: #94a3b8;
-    margin-top: 1px;
+    font-size: 0.7rem;
+    color: var(--text-muted);
   }
 
   .acc-caret {
-    color: #94a3b8;
-    font-size: 9px;
-    margin-left: 6px;
-    transition: transform 0.2s;
+    font-size: 11px;
+    color: var(--text-dim);
   }
 
   /* ── ADMIN BAR ── */
@@ -256,6 +223,7 @@
     max-width: 1440px;
     margin: 20px auto 0;
     padding: 0 28px;
+    width: 100%;
   }
 
   .metrics-grid {
@@ -267,159 +235,210 @@
   .metric-card {
     background: var(--bg-surface);
     border: 1px solid var(--border-subtle);
-    border-radius: var(--radius-lg);
+    border-radius: var(--radius-md);
     padding: 16px 20px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-  }
-
-  .metric-header {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 6px;
+    flex-direction: column;
+    gap: 6px;
   }
 
-  .metric-title {
-    font-size: 0.76rem;
+  .metric-label {
+    font-size: 0.75rem;
     font-weight: 700;
-    color: var(--text-muted);
+    letter-spacing: 0.5px;
     text-transform: uppercase;
-    letter-spacing: 0.04em;
-  }
-
-  .metric-icon {
-    font-size: 1.1rem;
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
   }
 
   .metric-value {
-    font-size: 1.65rem;
+    font-size: 1.6rem;
     font-weight: 800;
-    letter-spacing: -0.02em;
-    line-height: 1.1;
-    margin-bottom: 2px;
+    color: #fff;
+    letter-spacing: -0.5px;
   }
 
   .metric-sub {
-    font-size: 0.74rem;
+    font-size: 0.75rem;
     color: var(--text-dim);
   }
 
-  /* ── TOOLBAR / BUSCA E FILTROS ── */
-  main {
+  /* ── NAVEGAÇÃO DE ABAS ── */
+  .tabs-container {
     max-width: 1440px;
-    margin: 20px auto 40px;
+    margin: 24px auto 0;
     padding: 0 28px;
+    display: flex;
+    gap: 8px;
+    border-bottom: 1px solid var(--border-subtle);
+    width: 100%;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .tabs-container::-webkit-scrollbar {
+    display: none;
   }
 
+  .tab-item {
+    background: transparent;
+    border: none;
+    color: var(--text-muted);
+    font-size: 0.92rem;
+    font-weight: 700;
+    padding: 12px 20px;
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    white-space: nowrap;
+    border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+  }
+  .tab-item:hover {
+    color: #fff;
+    background: rgba(255, 255, 255, 0.03);
+  }
+  .tab-item.active {
+    color: #34d399;
+    border-bottom-color: #10b981;
+    background: rgba(16, 185, 129, 0.05);
+  }
+
+  /* ── ÁREA PRINCIPAL DAS ABAS ── */
+  main {
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 20px 28px 60px;
+    width: 100%;
+    flex: 1;
+  }
+
+  .tab-pane {
+    display: none;
+  }
+  .tab-pane.active {
+    display: block;
+  }
+
+  /* ── ABA 1: MODO MANUAL & FILTROS ── */
   .toolbar {
     background: var(--bg-surface);
     border: 1px solid var(--border-subtle);
     border-radius: var(--radius-lg);
     padding: 16px 20px;
+    margin-bottom: 20px;
     display: flex;
     flex-direction: column;
     gap: 14px;
-    margin-bottom: 20px;
   }
 
   .search-row {
     display: flex;
-    gap: 12px;
-    flex-wrap: wrap;
     align-items: center;
+    gap: 12px;
   }
 
-  .search-wrapper {
-    flex: 1;
-    min-width: 260px;
+  .search-input-wrap {
     position: relative;
+    flex: 1;
   }
 
-  .search-icon-svg {
+  .search-input-wrap svg {
     position: absolute;
     left: 14px;
     top: 50%;
     transform: translateY(-50%);
-    color: var(--text-muted);
+    color: var(--text-dim);
     pointer-events: none;
   }
 
-  .search-wrapper input {
+  .search-input-wrap input {
     width: 100%;
     background: var(--bg-input);
     border: 1px solid var(--border-subtle);
     border-radius: var(--radius-md);
-    padding: 12px 16px 12px 42px;
-    color: var(--text-main);
-    font-size: 0.9rem;
+    padding: 12px 14px 12px 42px;
+    color: #fff;
+    font-size: 0.92rem;
     outline: none;
-    transition: all 0.2s ease;
+    transition: all 0.2s;
   }
-  .search-wrapper input:focus {
+  .search-input-wrap input:focus {
     border-color: var(--brand-blue);
-    background: #0d1525;
+    box-shadow: 0 0 0 2px rgba(2, 132, 199, 0.2);
   }
 
   .select-modern {
     background: var(--bg-input);
     border: 1px solid var(--border-subtle);
-    color: var(--text-main);
     border-radius: var(--radius-md);
-    padding: 12px 16px;
+    padding: 12px 14px;
+    color: var(--text-main);
     font-size: 0.85rem;
     font-weight: 600;
-    cursor: pointer;
     outline: none;
-    transition: all 0.2s ease;
+    cursor: pointer;
   }
-  .select-modern:focus, .select-modern:hover {
-    border-color: var(--border-hover);
+
+  .filter-sub-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding-top: 10px;
+    border-top: 1px solid var(--border-subtle);
+    font-size: 0.85rem;
+    color: var(--text-muted);
   }
 
   /* ── CARDS DE GRUPOS ── */
   .grid-cards {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-    gap: 16px;
+    grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+    gap: 14px;
   }
 
   .group-card {
     background: var(--bg-card);
     border: 1px solid var(--border-subtle);
     border-radius: var(--radius-lg);
+    padding: 16px;
     display: flex;
     flex-direction: column;
-    overflow: hidden;
-    transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+    justify-content: space-between;
+    gap: 12px;
+    transition: all 0.2s;
+    box-shadow: var(--shadow-card);
   }
   .group-card:hover {
-    transform: translateY(-3px);
+    background: var(--bg-card-hover);
     border-color: var(--border-hover);
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+    transform: translateY(-2px);
   }
 
   .card-top {
-    padding: 16px;
     display: flex;
-    align-items: center;
-    gap: 14px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+    gap: 12px;
+    align-items: flex-start;
   }
 
   .avatar-frame {
-    width: 52px;
-    height: 52px;
-    border-radius: 50%;
-    background: var(--bg-surface);
-    border: 2px solid rgba(16, 185, 129, 0.3);
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
     overflow: hidden;
+    background: #1e293b;
     flex-shrink: 0;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.3rem;
-    font-weight: 700;
-    color: #fff;
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: #94a3b8;
   }
   .avatar-frame img {
     width: 100%;
@@ -433,92 +452,90 @@
   }
 
   .group-name {
-    font-size: 0.96rem;
+    font-size: 0.95rem;
     font-weight: 700;
     color: #fff;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    line-height: 1.25;
   }
 
   .group-link-url {
-    font-size: 0.74rem;
-    color: #60a5fa;
-    text-decoration: none;
-    display: block;
+    font-size: 0.73rem;
+    color: var(--text-dim);
+    font-family: 'JetBrains Mono', monospace;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    margin-top: 2px;
+    margin-top: 3px;
+    display: block;
+    text-decoration: none;
+  }
+  .group-link-url:hover {
+    color: var(--brand-blue);
+    text-decoration: underline;
   }
 
   .card-tags-row {
     display: flex;
     gap: 5px;
-    align-items: center;
-    margin-top: 4px;
     flex-wrap: wrap;
+    margin-top: 6px;
   }
 
   .badge-tag {
-    font-size: 0.7rem;
+    font-size: 0.68rem;
     font-weight: 700;
     padding: 2px 7px;
-    border-radius: 6px;
-    white-space: nowrap;
+    border-radius: 5px;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
   }
-  .badge-amizade {
-    background: rgba(59, 130, 246, 0.18);
-    color: #60a5fa;
-    border: 1px solid rgba(59, 130, 246, 0.35);
-  }
-  .badge-livre {
-    background: rgba(16, 185, 129, 0.12);
+  .badge-tag.amizade {
+    background: rgba(16, 185, 129, 0.15);
     color: #34d399;
-    border: 1px solid rgba(16, 185, 129, 0.25);
+    border: 1px solid rgba(16, 185, 129, 0.3);
   }
-  .badge-captcha {
+  .badge-tag.livre {
+    background: rgba(59, 130, 246, 0.15);
+    color: #60a5fa;
+    border: 1px solid rgba(59, 130, 246, 0.3);
+  }
+  .badge-tag.antispam {
     background: rgba(245, 158, 11, 0.15);
     color: #fbbf24;
     border: 1px solid rgba(245, 158, 11, 0.3);
   }
 
   .card-middle {
-    padding: 14px 16px;
     flex: 1;
   }
 
   .group-description {
-    font-size: 0.82rem;
+    font-size: 0.8rem;
     color: var(--text-muted);
     line-height: 1.45;
     display: -webkit-box;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
-    min-height: 2.4em;
   }
 
   .card-bottom {
-    padding: 12px 16px;
-    background: rgba(0, 0, 0, 0.2);
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 10px;
-    border-top: 1px solid rgba(255, 255, 255, 0.04);
+    gap: 8px;
+    padding-top: 10px;
+    border-top: 1px solid var(--border-subtle);
   }
 
   .members-pill {
-    font-size: 0.75rem;
+    font-size: 0.78rem;
     font-weight: 700;
-    padding: 4px 10px;
-    border-radius: 20px;
-    display: inline-flex;
-    align-items: center;
-    gap: 5px;
-    background: rgba(16, 185, 129, 0.15);
-    color: #34d399;
+    color: #cbd5e1;
+    font-family: 'JetBrains Mono', monospace;
   }
 
   .card-actions {
@@ -528,65 +545,249 @@
   }
 
   .btn-enter-instant {
-    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    background: #10b981;
     color: #fff;
-    font-weight: 700;
-    font-size: 0.82rem;
-    padding: 8px 14px;
+    border: none;
     border-radius: var(--radius-sm);
+    padding: 6px 14px;
+    font-size: 0.8rem;
+    font-weight: 700;
     text-decoration: none;
     display: inline-flex;
     align-items: center;
-    gap: 6px;
-    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
-    transition: all 0.2s ease;
+    gap: 5px;
+    cursor: pointer;
+    transition: all 0.15s;
   }
   .btn-enter-instant:hover {
-    transform: scale(1.02);
+    background: #059669;
   }
 
-  .btn-action-icon {
-    background: rgba(255, 255, 255, 0.05);
+  .btn-copy-link {
+    background: var(--bg-input);
     border: 1px solid var(--border-subtle);
     color: var(--text-muted);
+    width: 30px;
+    height: 30px;
     border-radius: var(--radius-sm);
-    padding: 7px 10px;
-    font-size: 0.82rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     cursor: pointer;
-    transition: all 0.2s;
+    font-size: 13px;
   }
-  .btn-action-icon:hover {
+
+  /* ── ABA 2: AUTO-JOIN ── */
+  .autojoin-layout {
+    display: grid;
+    grid-template-columns: 380px 1fr;
+    gap: 20px;
+    align-items: start;
+  }
+  .control-card {
+    background: var(--bg-surface);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-lg);
+    padding: 22px;
+    box-shadow: var(--shadow-card);
+  }
+  .control-card h2 {
+    font-size: 1.15rem;
+    font-weight: 800;
+    margin-bottom: 6px;
+  }
+  .control-card p {
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    margin-bottom: 18px;
+    line-height: 1.45;
+  }
+  .input-field-group {
+    margin-bottom: 14px;
+  }
+  .input-field-group label {
+    display: block;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 5px;
+  }
+  .input-field-group input {
+    width: 100%;
+    background: var(--bg-input);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-sm);
+    padding: 10px 12px;
     color: #fff;
-    border-color: rgba(255, 255, 255, 0.2);
+    font-size: 0.9rem;
+    font-family: 'JetBrains Mono', monospace;
+    outline: none;
   }
-  .btn-del:hover {
-    border-color: #ef4444;
-    color: #ef4444;
+
+  .callout-box {
+    background: rgba(59, 130, 246, 0.08);
+    border: 1px solid rgba(59, 130, 246, 0.25);
+    border-radius: var(--radius-md);
+    padding: 12px 14px;
+    font-size: 0.8rem;
+    color: #93c5fd;
+    line-height: 1.5;
+    margin: 16px 0 20px;
+  }
+
+  .terminal-box {
+    background: #070a10;
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-card);
+    display: flex;
+    flex-direction: column;
+    min-height: 520px;
+  }
+  .terminal-topbar {
+    background: #0d131f;
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--border-subtle);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .window-dots {
+    display: flex;
+    gap: 6px;
+  }
+  .w-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+  }
+  .w-red { background: #ef4444; }
+  .w-yellow { background: #f59e0b; }
+  .w-green { background: #10b981; }
+
+  .terminal-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.78rem;
+    color: var(--text-dim);
+  }
+  .terminal-content {
+    padding: 16px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.8rem;
+    line-height: 1.6;
+    overflow-y: auto;
+    flex: 1;
+    max-height: 480px;
+  }
+  .log-row {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 4px;
+  }
+  .l-time { color: #64748b; flex-shrink: 0; }
+  .l-text { color: #cbd5e1; }
+  .l-success { color: #34d399; font-weight: 700; }
+  .l-error { color: #f87171; }
+  .l-info { color: #60a5fa; }
+
+  /* ── ABA 3: DISPARADOR EM MASSA ── */
+  .broadcast-layout {
+    display: grid;
+    grid-template-columns: 460px 1fr;
+    gap: 20px;
+    align-items: start;
+  }
+  .composer-card {
+    background: var(--bg-surface);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-lg);
+    padding: 22px;
+    box-shadow: var(--shadow-card);
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .btn-ia-glow {
+    background: linear-gradient(135deg, #ec4899 0%, #d946ef 100%);
+    color: #fff;
+    border: none;
+    border-radius: var(--radius-sm);
+    padding: 6px 14px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    box-shadow: 0 2px 10px rgba(217, 70, 239, 0.35);
+  }
+  .textarea-modern {
+    width: 100%;
+    min-height: 160px;
+    background: var(--bg-input);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-md);
+    padding: 12px;
+    color: #fff;
+    font-size: 0.88rem;
+    font-family: inherit;
+    line-height: 1.5;
+    outline: none;
+    resize: vertical;
+  }
+  .char-counter {
+    font-size: 0.75rem;
+    color: var(--text-dim);
+    text-align: right;
+  }
+  .ia-banner-box {
+    background: rgba(217, 70, 239, 0.08);
+    border: 1px solid rgba(217, 70, 239, 0.25);
+    border-radius: var(--radius-md);
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .group-picker-box {
+    background: var(--bg-surface);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-lg);
+    padding: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    box-shadow: var(--shadow-card);
+  }
+  .groups-scroll-list {
+    max-height: 240px;
+    overflow-y: auto;
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-md);
+    padding: 8px;
+    background: var(--bg-input);
   }
 
   /* ── PAGINAÇÃO ── */
   .pagination {
     display: flex;
     justify-content: center;
-    align-items: center;
     gap: 6px;
-    margin-top: 36px;
+    margin-top: 30px;
     flex-wrap: wrap;
   }
-
   .btn-page {
     background: var(--bg-surface);
     border: 1px solid var(--border-subtle);
     color: var(--text-main);
     padding: 8px 14px;
     border-radius: var(--radius-sm);
+    cursor: pointer;
     font-size: 0.85rem;
     font-weight: 600;
-    cursor: pointer;
-    transition: all 0.2s;
-  }
-  .btn-page:hover:not(:disabled) {
-    border-color: var(--border-hover);
   }
   .btn-page.active {
     background: var(--brand-blue);
@@ -598,12 +799,13 @@
     cursor: not-allowed;
   }
 
-  /* ── MODAIS FIXOS E ESCONDIDOS POR PADRÃO ── */
+  /* ── MODALS (CENTRALIZADOS COM BLUR) ── */
   .modal-backdrop {
     position: fixed !important;
     inset: 0 !important;
     background: rgba(0, 0, 0, 0.8) !important;
-    backdrop-filter: blur(6px) !important;
+    backdrop-filter: blur(8px) !important;
+    -webkit-backdrop-filter: blur(8px) !important;
     z-index: 10000 !important;
     display: none !important;
     align-items: center !important;
@@ -615,222 +817,125 @@
   }
 
   .modal-card {
-    background: #111827;
-    border: 1px solid rgba(255, 255, 255, 0.12);
+    background: #101828;
+    border: 1px solid rgba(255, 255, 255, 0.14);
     border-radius: var(--radius-lg);
     width: 100%;
     max-width: 520px;
-    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8);
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.85);
     overflow: hidden;
   }
 
   .modal-header {
-    padding: 18px 22px;
+    padding: 16px 20px;
     border-bottom: 1px solid var(--border-subtle);
     display: flex;
     align-items: center;
     justify-content: space-between;
   }
   .modal-header h3 {
-    font-size: 1.1rem;
+    font-size: 1.05rem;
     font-weight: 700;
   }
   .modal-close {
     background: transparent;
     border: none;
     color: var(--text-muted);
-    font-size: 22px;
+    font-size: 1.4rem;
     cursor: pointer;
+    line-height: 1;
   }
-  .modal-close:hover { color: #fff; }
 
   .modal-body {
-    padding: 22px;
+    padding: 18px 20px;
   }
 
   .modal-textarea {
     width: 100%;
+    height: 150px;
     background: var(--bg-input);
     border: 1px solid var(--border-subtle);
-    border-radius: var(--radius-md);
+    border-radius: var(--radius-sm);
+    padding: 12px;
     color: #fff;
-    padding: 14px;
     font-family: 'JetBrains Mono', monospace;
-    font-size: 0.85rem;
-    line-height: 1.5;
-    resize: vertical;
+    font-size: 0.82rem;
     outline: none;
-    min-height: 140px;
+    resize: vertical;
     margin-bottom: 14px;
-  }
-  .modal-textarea:focus {
-    border-color: var(--brand-blue);
   }
 
   .btn-modal-green {
     width: 100%;
-    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    background: #10b981;
     color: #fff;
-    font-weight: 800;
-    font-size: 0.95rem;
-    padding: 13px 20px;
-    border-radius: 12px;
     border: none;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    box-shadow: 0 4px 18px rgba(16, 185, 129, 0.4);
-    transition: all 0.2s;
-  }
-  .btn-modal-green:hover {
-    transform: translateY(-1px);
-  }
-
-  .btn-modal-blue {
-    margin-top: 10px;
-    width: 100%;
-    background: rgba(36, 161, 222, 0.18);
-    border: 1px solid var(--tg-blue);
-    color: #ffffff;
-    padding: 13px 20px;
-    border-radius: 12px;
+    padding: 13px;
+    border-radius: var(--radius-sm);
     font-size: 0.95rem;
+    font-weight: 700;
     cursor: pointer;
-    font-weight: 800;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    transition: all 0.2s;
+    margin-bottom: 10px;
   }
-  .btn-modal-blue:hover {
-    background: rgba(36, 161, 222, 0.28);
+  .btn-modal-blue {
+    width: 100%;
+    background: rgba(2, 132, 199, 0.2);
+    border: 1px solid #0284c7;
+    color: #38bdf8;
+    padding: 13px;
+    border-radius: var(--radius-sm);
+    font-size: 0.95rem;
+    font-weight: 700;
+    cursor: pointer;
   }
 
+  /* ── TOAST NOTIFICAÇÃO ── */
   .toast-alert {
     position: fixed;
     bottom: 24px;
     right: 24px;
-    background: #111827;
+    background: #0f172a;
     border: 1px solid var(--border-subtle);
-    color: #fff;
-    font-weight: 700;
-    font-size: 0.88rem;
-    padding: 12px 22px;
     border-radius: var(--radius-md);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
-    z-index: 20000;
+    padding: 12px 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+    z-index: 99999;
     display: none;
     align-items: center;
     gap: 10px;
+    font-size: 0.88rem;
+    font-weight: 600;
   }
   .toast-alert.success { border-color: #10b981; color: #34d399; }
   .toast-alert.error { border-color: #ef4444; color: #f87171; }
   .toast-alert.info { border-color: #3b82f6; color: #60a5fa; }
 
-  /* ══════════════════════════════════════════════════════════
-     📱 RESPONSIVIDADE COMPLETA E PERFEITA (DESKTOP E CELULAR)
-     ══════════════════════════════════════════════════════════ */
-  @media (max-width: 768px) {
-    /* 1. CABEÇALHO MOBILE: LINHA 1 (LOGO + CONTA) E LINHA 2 (BOTAO FULL) */
-    .header-wrap {
-      display: flex !important;
-      flex-wrap: nowrap !important;
-      align-items: center !important;
-      justify-content: space-between !important;
-      padding: 12px 14px !important;
-      gap: 10px !important;
-      width: 100% !important;
+  /* ── RESPONSIVIDADE MOBILE ── */
+  @media (max-width: 900px) {
+    .autojoin-layout, .broadcast-layout {
+      grid-template-columns: 1fr !important;
     }
-    .brand {
-      order: 1 !important;
-      display: flex !important;
-      align-items: center !important;
-      gap: 8px !important;
-      max-width: 58% !important;
-      flex-shrink: 0 !important;
+  }
+
+  @media (max-width: 768px) {
+    .header-wrap {
+      padding: 12px 14px !important;
     }
     .brand-badge {
-      width: 32px !important;
-      height: 32px !important;
-      font-size: 16px !important;
-      border-radius: 9px !important;
+      width: 34px !important;
+      height: 34px !important;
+      font-size: 17px !important;
     }
     .brand-info h1 {
-      font-size: 0.98rem !important;
-      gap: 4px !important;
-      white-space: nowrap !important;
+      font-size: 1rem !important;
     }
-    .brand-tag {
-      display: none !important;
-    }
-    .brand-info p {
+    .brand-tag, .brand-info p {
       display: none !important;
     }
 
-    .header-actions {
-      display: contents !important;
-    }
-
-    .account-selector-wrap {
-      order: 2 !important;
-      margin-left: auto !important;
-    }
-    .account-pill {
-      padding: 4px 8px 4px 6px !important;
-      gap: 6px !important;
-      max-width: 140px !important;
-    }
-    .acc-avatar {
-      width: 24px !important;
-      height: 24px !important;
-      font-size: 10px !important;
-    }
-    .acc-name {
-      font-size: 11px !important;
-      max-width: 76px !important;
-      white-space: nowrap !important;
-      overflow: hidden !important;
-      text-overflow: ellipsis !important;
-    }
-    .acc-phone {
-      display: none !important;
-    }
-
-    .btn-header-add {
-      order: 3 !important;
-      width: 100% !important;
-      justify-content: center !important;
-      margin-top: 4px !important;
-      padding: 10px 14px !important;
-      font-size: 0.88rem !important;
-    }
-
-    /* 2. DROPDOWN NO MOBILE: GAVETA INFERIOR (BOTTOM SHEET) ZERO CORTE */
-    .account-dropdown-menu {
-      position: fixed !important;
-      bottom: 0 !important;
-      left: 0 !important;
-      right: 0 !important;
-      top: auto !important;
-      width: 100% !important;
-      max-width: 100vw !important;
-      border-radius: 20px 20px 0 0 !important;
-      background: #0f172a !important;
-      border: 1px solid rgba(255, 255, 255, 0.18) !important;
-      border-bottom: none !important;
-      box-shadow: 0 -12px 40px rgba(0, 0, 0, 0.95) !important;
-      padding: 18px 16px 32px !important;
-      z-index: 99999 !important;
-      box-sizing: border-box !important;
-    }
-
-    /* 3. MÉTRICAS 2x2 NO MOBILE */
     .metrics-container {
-      padding: 0 12px !important;
-      margin-top: 12px !important;
+      padding: 0 14px !important;
+      margin-top: 14px !important;
     }
     .metrics-grid {
       grid-template-columns: 1fr 1fr !important;
@@ -843,10 +948,17 @@
       font-size: 1.25rem !important;
     }
 
-    /* 4. BUSCA E FILTROS */
+    .tabs-container {
+      padding: 0 14px !important;
+      margin-top: 16px !important;
+    }
+    .tab-item {
+      padding: 10px 14px !important;
+      font-size: 0.85rem !important;
+    }
+
     main {
-      padding: 0 12px !important;
-      margin-top: 12px !important;
+      padding: 16px 14px 60px !important;
     }
     .toolbar {
       padding: 12px !important;
@@ -859,34 +971,16 @@
     .select-modern {
       width: 100% !important;
     }
-
-    /* 5. CARDS EM 1 COLUNA */
     .grid-cards {
       grid-template-columns: 1fr !important;
       gap: 12px !important;
-    }
-
-    /* 6. ADMIN BAR NO MOBILE */
-    .admin-bar {
-      flex-direction: column !important;
-      align-items: stretch !important;
-      padding: 10px 14px !important;
-    }
-    .admin-actions {
-      display: flex !important;
-      gap: 8px !important;
-      width: 100% !important;
-    }
-    .btn-adm-action {
-      flex: 1 !important;
-      text-align: center !important;
     }
   }
   </style>
 </head>
 <body>
 
-  <!-- CABEÇALHO -->
+  <!-- CABEÇALHO LIMPO (BOTÕES DE ADM OCULTOS PARA VISITANTES) -->
   <header>
     <div class="header-wrap">
       <a href="#" class="brand">
@@ -912,7 +1006,7 @@
     </div>
   </header>
 
-  <!-- BARRA ADM (QUANDO LOGADO) -->
+  <!-- BARRA ADM EXCLUSIVA (SÓ APARECE AO LOGAR) -->
   <div class="admin-bar" id="admin-bar">
     <div class="admin-info">
       <span>👑 MODO ADMINISTRADOR ATIVO</span>
@@ -920,140 +1014,282 @@
     </div>
     <div class="admin-actions">
       <button class="btn-adm-action" onclick="abrirModalImportar()" style="background:#10b981;border:none;color:#fff;">📥 Filtrar e Adicionar Grupos</button>
-      <button class="btn-adm-action" onclick="sairAdm()" style="color:#ef4444;">Sair do ADM</button>
+      <button class="btn-adm-action" onclick="sairAdm()">🚪 Sair do ADM</button>
     </div>
   </div>
 
-  <!-- MÉTRICAS -->
+  <!-- MÉTRICAS DE TOPO -->
   <div class="metrics-container">
     <div class="metrics-grid">
       <div class="metric-card">
-        <div class="metric-header">
-          <span class="metric-title">Total Cadastrado</span>
-          <span class="metric-icon">📊</span>
+        <div class="metric-label">
+          <span>Total Cadastrado</span>
+          <span>📊</span>
         </div>
-        <div class="metric-value" id="val-total" style="color:#60a5fa;">841</div>
+        <div class="metric-value" id="val-total">841</div>
         <div class="metric-sub">Grupos brasileiros ativos</div>
       </div>
 
       <div class="metric-card">
-        <div class="metric-header">
-          <span class="metric-title">💬 Bate-Papo & Amizades</span>
-          <span class="metric-icon">✨</span>
+        <div class="metric-label">
+          <span>Bate-Papo & Amizades</span>
+          <span>✨</span>
         </div>
         <div class="metric-value" id="val-amizades" style="color:#34d399;">249</div>
         <div class="metric-sub">Conversa aberta em destaque</div>
       </div>
 
       <div class="metric-card">
-        <div class="metric-header">
-          <span class="metric-title">Membros Somados</span>
-          <span class="metric-icon">👥</span>
+        <div class="metric-label">
+          <span>Membros Somados</span>
+          <span>👥</span>
         </div>
-        <div class="metric-value" id="val-membros" style="color:#fbbf24;">2.197.710</div>
+        <div class="metric-value" id="val-membros" style="color:#38bdf8;">2.197.710</div>
         <div class="metric-sub">Brasileiros conectados</div>
       </div>
 
       <div class="metric-card">
-        <div class="metric-header">
-          <span class="metric-title">Filtro Zero Canais</span>
-          <span class="metric-icon">🛡️</span>
+        <div class="metric-label">
+          <span>Filtro Zero Canais</span>
+          <span>🛡️</span>
         </div>
-        <div class="metric-value" style="color:#38bdf8;">100%</div>
+        <div class="metric-value" style="color:#fbbf24;">100%</div>
         <div class="metric-sub">Apenas grupos de interação</div>
       </div>
     </div>
   </div>
 
-  <!-- MAIN -->
-  <main>
-    <div class="toolbar">
-      <div class="search-row">
-        <div class="search-wrapper">
-          <svg class="search-icon-svg" width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
-          </svg>
-          <input type="text" id="campo-busca" placeholder="Buscar por nome do grupo, link ou assunto..." oninput="aoBuscar()">
-        </div>
-
-        <select class="select-modern" id="sel-categoria-filtro" onchange="paginaAtual=1; renderizarGrupos()" style="border-color:rgba(59,130,246,0.4);">
-          <option value="todos">🌟 Todos (Bate-Papo & Amizades no Topo)</option>
-          <option value="amizade">💬 Só Bate-Papo & Amizades</option>
-          <option value="outros">👥 Comunidades & Debates</option>
-        </select>
-
-        <select class="select-modern" id="sel-tipo-antispam" onchange="renderizarGrupos()">
-          <option value="todos">🛡️ Todos os Grupos</option>
-          <option value="livre">🟢 Livres (Sem Captcha)</option>
-          <option value="antispam">🛡️ Com Anti-Spam (Rose/Captcha)</option>
-        </select>
-
-        <select class="select-modern" id="sel-tamanho" onchange="renderizarGrupos()">
-          <option value="todos">Todos os tamanhos</option>
-          <option value="fire">🔥 +10.000 membros</option>
-          <option value="mid">🌱 +1.000 membros</option>
-          <option value="low">🔹 Menos de 1.000</option>
-        </select>
-
-        <select class="select-modern" id="sel-ordem" onchange="paginaAtual=1; renderizarGrupos()">
-          <option value="amizades_primeiro" selected>💬 Bate-Papo & Amizade Primeiro (Recomendado)</option>
-          <option value="desc">👥 Mais membros primeiro</option>
-          <option value="asc">👥 Menos membros primeiro</option>
-          <option value="az">🔤 Nome A → Z</option>
-        </select>
-      </div>
-
-      <div style="display:flex;align-items:center;justify-content:space-between;padding-top:6px;font-size:0.82rem;color:var(--text-muted);">
-        <span id="texto-contagem" style="font-weight:700;color:var(--text-main);">Carregando catálogo...</span>
-        <label style="display:flex;align-items:center;gap:6px;cursor:pointer;">
-          <input type="checkbox" id="check-ocultar" checked onchange="renderizarGrupos()" style="accent-color:#10b981;cursor:pointer;">
-          Ocultar já entrados
-        </label>
-      </div>
-    </div>
-
-    <!-- CARDS -->
-    <div class="grid-cards" id="container-grupos"></div>
-
-    <!-- PAGINAÇÃO -->
-    <div class="pagination" id="container-paginacao"></div>
-  </main>
-
-  <!-- MODAL: ACRESCENTAR GRUPOS (COM OS 2 BOTÕES PEDIDOS) -->
-  <div class="modal-backdrop" id="modal-importar">
-    <div class="modal-card">
-      <div class="modal-header">
-        <h3>📥 Filtrar e Acrescentar Grupos</h3>
-        <button class="modal-close" onclick="fecharModalImportar()">&times;</button>
-      </div>
-      <div class="modal-body">
-        <p style="font-size:0.83rem;color:var(--text-muted);margin-bottom:12px;line-height:1.45;">
-          Cole links do Telegram (<code style="color:#60a5fa;">t.me/...</code>) ou textos completos. O sistema filtra automaticamente canais, remove spams e prepara os grupos válidos.
-        </p>
-
-        <textarea id="import-textarea" class="modal-textarea" placeholder="Cole aqui seus links do Telegram:&#10;https://t.me/exemplo_grupo&#10;https://t.me/+hashConvite..."></textarea>
-
-        <div id="import-status-box" style="display:none;background:var(--bg-input);padding:12px;border-radius:var(--radius-sm);border:1px solid var(--border-subtle);margin-bottom:14px;font-size:0.84rem;">
-          <div id="import-status-msg" style="font-weight:700;"></div>
-        </div>
-
-        <!-- BOTAO VERDE: FILTRAR OS GRUPOS -->
-        <button class="btn-modal-green" id="btn-iniciar-import" onclick="processarImportacao()">
-          🔍 Filtrar os Grupos
-        </button>
-
-        <!-- BOTAO AZUL DE BAIXO: MANDAR PRO SITE INTEIRO (EXCLUSIVO MODO ADM) -->
-        <button type="button" class="btn-modal-blue" id="btn-publicar-site" onclick="publicarAlteracoesNoSite()" style="display:none;">
-          🚀 Mandar pro Site Inteiro
-        </button>
-      </div>
-    </div>
+  <!-- NAVEGAÇÃO DE ABAS (RESTANTE DAS 3 ABAS ORIGINAIS) -->
+  <div class="tabs-container">
+    <button class="tab-item active" onclick="alternarAba('manual', this)">
+      <span>🖐️</span> Modo Manual (Entrar na Mão)
+    </button>
+    <button class="tab-item" onclick="alternarAba('auto', this)">
+      <span>🤖</span> Modo Automático (Auto-Join)
+    </button>
+    <button class="tab-item" onclick="alternarAba('broadcast', this)">
+      <span>📢</span> Disparador em Massa (Enviar Mensagens)
+    </button>
   </div>
 
-    <!-- MODAL CONTA E PAINEL ADM (IDÊNTICO À IMAGEM 2, CENTRALIZADO COM BLUR) -->
+  <!-- CONTEÚDO PRINCIPAL -->
+  <main>
+    <!-- ── ABA 1: MODO MANUAL ── -->
+    <div id="pane-manual" class="tab-pane active">
+      <div class="toolbar">
+        <div class="search-row">
+          <div class="search-input-wrap">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+            <input type="text" id="campo-busca" placeholder="Buscar por nome do grupo, link ou assunto..." oninput="aoBuscar()">
+          </div>
+
+          <select class="select-modern" id="sel-categoria-filtro" onchange="aoBuscar()">
+            <option value="todos">★ Todos (Bate-Papo & Amizades no Topo)</option>
+            <option value="amizade">💬 Apenas Bate-Papo & Amizades</option>
+            <option value="outros">📂 Outros Nichos</option>
+          </select>
+
+          <select class="select-modern" id="sel-tipo-filtro" onchange="aoBuscar()">
+            <option value="todos">🛡️ Todos os Grupos</option>
+            <option value="livre">🟢 Livres (Sem Bot)</option>
+            <option value="antispam">🔐 Com Anti-Spam</option>
+          </select>
+
+          <select class="select-modern" id="sel-tamanho-filtro" onchange="aoBuscar()">
+            <option value="todos">Todos os tamanhos</option>
+            <option value="fire">🔥 Gigantes (10.000+)</option>
+            <option value="mid">🌱 Médios (1.000 a 10.000)</option>
+            <option value="low">⚡ Pequenos (&lt; 1.000)</option>
+          </select>
+        </div>
+
+        <div class="filter-sub-row">
+          <div style="display:flex;align-items:center;gap:12px;">
+            <select class="select-modern" id="sel-ordem" onchange="aoBuscar()" style="padding:7px 12px;font-size:0.8rem;">
+              <option value="amizades_primeiro">💬 Bate-Papo & Amizade Primeiro (Recomendado)</option>
+              <option value="desc">👥 Mais Membros</option>
+              <option value="asc">🌱 Menos Membros</option>
+              <option value="az">🔤 Ordem Alfabética (A-Z)</option>
+            </select>
+            <span id="texto-contagem" style="font-weight:700;color:#fff;">Carregando grupos...</span>
+          </div>
+
+          <label style="display:flex;align-items:center;gap:6px;cursor:pointer;">
+            <input type="checkbox" id="check-ocultar" checked onchange="renderizarGrupos()" style="accent-color:#10b981;cursor:pointer;">
+            Ocultar já entrados
+          </label>
+        </div>
+      </div>
+
+      <div class="grid-cards" id="container-grupos"></div>
+      <div class="pagination" id="container-paginacao"></div>
+    </div>
+
+    <!-- ── ABA 2: MODO AUTOMÁTICO (AUTO-JOIN) ── -->
+    <div id="pane-auto" class="tab-pane">
+      <div class="autojoin-layout">
+        <div class="control-card">
+          <h2>Parâmetros de Auto-Join</h2>
+          <p>Configuração do bot para ingressar automaticamente em fila com intervalo humano anti-bloqueio.</p>
+
+          <div class="input-field-group">
+            <label>Delay Mínimo (segundos):</label>
+            <input type="number" id="cfg-delay-min" value="90" min="30">
+          </div>
+          <div class="input-field-group">
+            <label>Delay Máximo (segundos):</label>
+            <input type="number" id="cfg-delay-max" value="180" min="60">
+          </div>
+          <div class="input-field-group">
+            <label>Limite Diário de Entradas:</label>
+            <input type="number" id="cfg-limite-dia" value="20" min="1" max="100">
+          </div>
+
+          <div class="callout-box">
+            🛡️ <strong>Proteção Integrada & Anti-Spam:</strong><br>
+            • <strong>Zero Canais:</strong> Canais foram 100% filtrados e removidos.<br>
+            • <strong>Filtro Anti-Spam/Captcha:</strong> O Auto-Join entra <em>exclusivamente</em> em grupos livres. Todos os grupos com robôs anti-spam são ignorados pela automação, evitando mutes ou travamento na conta!
+          </div>
+
+          <div style="display:flex;gap:10px;">
+            <button class="btn-modal-green" id="btn-start-aj" style="flex:1;margin:0;" onclick="iniciarAutomacao()">
+              ▶ Iniciar Auto-Join
+            </button>
+            <button class="btn-adm-action" id="btn-stop-aj" style="flex:1;background:rgba(239,68,68,0.2);color:#fca5a5;border:1px solid rgba(239,68,68,0.4);" onclick="pararAutomacao()" disabled>
+              ⏹ Parar
+            </button>
+          </div>
+        </div>
+
+        <div class="terminal-box">
+          <div class="terminal-topbar">
+            <div class="window-dots">
+              <span class="w-dot w-red"></span>
+              <span class="w-dot w-yellow"></span>
+              <span class="w-dot w-green"></span>
+            </div>
+            <span class="terminal-label">telegram_autojoin_stream.sh</span>
+            <button class="btn-adm-action" style="padding:3px 8px;font-size:0.75rem;" onclick="limparConsole()">Limpar</button>
+          </div>
+          <div class="terminal-content" id="terminal-linhas">
+            <div class="log-row">
+              <span class="l-time">[00:00:00]</span>
+              <span class="l-text">Terminal pronto. Conecte sua conta e clique em Iniciar Auto-Join.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── ABA 3: DISPARADOR EM MASSA ── -->
+    <div id="pane-broadcast" class="tab-pane">
+      <div class="broadcast-layout">
+        <div class="composer-card">
+          <div style="display:flex;justify-content:space-between;align-items:center;">
+            <h2 style="font-size:1.15rem;font-weight:800;">Mensagem de Disparo</h2>
+            <button type="button" class="btn-ia-glow" onclick="abrirModalIABroadcast()">
+              <span>✨</span> Criar com IA
+            </button>
+          </div>
+          <p style="font-size:0.82rem;color:var(--text-muted);line-height:1.45;">Digite ou gere até 10 variações com IA para envio aleatório com saudação dinâmica (Bom dia / Boa tarde / Boa noite).</p>
+
+          <textarea class="textarea-modern" id="txt-broadcast-msg" placeholder="Coloque aqui sua mensagem ou várias (uma por linha) para rotacionar aleatoriamente!&#10;&#10;Exemplos:&#10;( Oiie, boa tarde vem pv! 💞 )&#10;( Oiie boa noite, me chama rs🙈 )&#10;( Bom dia, Me chama vaii🥰 )&#10;( Oii, pv liberado! )" oninput="aoDigitarMensagem()"></textarea>
+
+          <div style="display:flex;justify-content:space-between;align-items:center;">
+            <div id="lbl-variacoes-status" style="font-size:0.8rem;color:#c084fc;font-weight:700;">
+              📝 1 mensagem configurada
+            </div>
+            <div class="char-counter" id="lbl-char-counter">0 / 4096 caracteres</div>
+          </div>
+
+          <div class="ia-banner-box">
+            <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-weight:700;color:#fdf4ff;font-size:0.82rem;">
+              <input type="checkbox" id="chk-broadcast-rotacionar" checked onchange="aoDigitarMensagem()" style="accent-color:#d946ef;width:16px;height:16px;cursor:pointer;">
+              <span>🎲 Enviar 1 mensagem aleatória para cada grupo (Modo Rotação)</span>
+            </label>
+            <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-weight:700;color:#fdf4ff;font-size:0.82rem;">
+              <input type="checkbox" id="chk-broadcast-horario" checked onchange="aoDigitarMensagem()" style="accent-color:#d946ef;width:16px;height:16px;cursor:pointer;">
+              <span>🕒 Ajustar saudação automática por horário (Bom dia / Boa tarde / Boa noite)</span>
+            </label>
+            <div style="font-size:0.75rem;color:var(--text-muted);display:flex;align-items:center;gap:8px;padding-top:4px;border-top:1px solid rgba(255,255,255,0.06);">
+              <span>⏰ Relógio: <strong id="val-horario-agora" style="color:#fff;">17:45</strong></span>
+              <span>&bull;</span>
+              <span style="color:#d946ef;font-weight:700;" id="badge-saudacao-agora">Saudação atual: Boa tarde</span>
+            </div>
+          </div>
+
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+            <div class="input-field-group" style="margin-bottom:0;">
+              <label>DELAY MÍNIMO (S):</label>
+              <input type="number" id="cfg-broadcast-delay-min" value="8" min="3" max="300">
+            </div>
+            <div class="input-field-group" style="margin-bottom:0;">
+              <label>DELAY MÁXIMO (S):</label>
+              <input type="number" id="cfg-broadcast-delay-max" value="25" min="5" max="600">
+            </div>
+          </div>
+
+          <div style="display:flex;gap:10px;margin-top:6px;">
+            <button class="btn-modal-green" id="btn-start-broadcast" style="flex:1;margin:0;" onclick="iniciarDisparoBroadcast()">
+              🚀 Disparar para os Grupos
+            </button>
+            <button class="btn-adm-action" id="btn-stop-broadcast" style="flex:1;background:rgba(239,68,68,0.2);color:#fca5a5;border:1px solid rgba(239,68,68,0.4);" onclick="pararDisparoBroadcast()" disabled>
+              ⏹ Interromper
+            </button>
+          </div>
+        </div>
+
+        <div style="display:flex;flex-direction:column;gap:14px;">
+          <div class="group-picker-box">
+            <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;">
+              <div>
+                <h3 style="font-size:0.98rem;font-weight:700;">Selecione os Grupos da Conta</h3>
+                <p style="font-size:0.75rem;color:var(--text-muted);" id="lbl-selecao-count">0 grupos selecionados</p>
+              </div>
+              <div style="display:flex;gap:6px;">
+                <button class="btn-adm-action" style="padding:4px 8px;font-size:0.75rem;" onclick="carregarMeusGrupos()">🔄 Atualizar</button>
+                <button class="btn-adm-action" style="padding:4px 8px;font-size:0.75rem;" onclick="selecionarTodosGrupos(true)">Marcar Todos</button>
+                <button class="btn-adm-action" style="padding:4px 8px;font-size:0.75rem;" onclick="selecionarTodosGrupos(false)">Desmarcar</button>
+              </div>
+            </div>
+
+            <input type="text" class="select-modern" id="filtro-meus-grupos" placeholder="Filtrar por nome do grupo..." oninput="filtrarListaMeusGrupos()" style="width:100%;padding:8px 12px;">
+
+            <div class="groups-scroll-list" id="lista-meus-grupos">
+              <div style="text-align:center;padding:24px;color:var(--text-muted);font-size:0.82rem;">
+                Conecte sua conta para carregar seus grupos.
+              </div>
+            </div>
+          </div>
+
+          <div class="terminal-box" style="min-height:280px;">
+            <div class="terminal-topbar">
+              <div class="window-dots">
+                <span class="w-dot w-red"></span>
+                <span class="w-dot w-yellow"></span>
+                <span class="w-dot w-green"></span>
+              </div>
+              <span class="terminal-label">broadcast_delivery_log.sh</span>
+              <button class="btn-adm-action" style="padding:3px 8px;font-size:0.75rem;" onclick="limparConsoleBroadcast()">Limpar</button>
+            </div>
+            <div class="terminal-content" id="terminal-broadcast" style="max-height:240px;">
+              <div class="log-row">
+                <span class="l-time">[00:00:00]</span>
+                <span class="l-text">Aguardando início do disparo em massa...</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- ── MODAL 1: CONTA TELEGRAM & ADM (IDÊNTICO À IMAGEM 2) ── -->
   <div class="modal-backdrop" id="modal-menu-contas" onclick="if(event.target===this)fecharModalMenuContas()">
     <div style="background:#101828;border:1px solid rgba(255,255,255,0.14);border-radius:16px;width:100%;max-width:360px;box-shadow:0 25px 60px rgba(0,0,0,0.85);padding:16px;box-sizing:border-box;">
-      <!-- CABEÇALHO -->
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
         <span style="font-size:11px;font-weight:800;letter-spacing:0.5px;color:#94a3b8;text-transform:uppercase;">SUAS CONTAS SALVAS</span>
         <div style="display:flex;align-items:center;gap:8px;">
@@ -1062,12 +1298,10 @@
         </div>
       </div>
 
-      <!-- LISTAGEM / STATUS DA CONTA -->
       <div id="box-contas-status" style="text-align:center;padding:12px 10px;color:#94a3b8;font-size:12px;margin-bottom:12px;">
         Nenhuma conta salva ainda.
       </div>
 
-      <!-- FORMULÁRIO API ID E API HASH (ABRE AO CLICAR EM + NOVA CONTA) -->
       <div id="form-nova-conta-box" style="display:none;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:12px;margin-bottom:14px;">
         <div style="font-size:10px;font-weight:800;color:#60a5fa;letter-spacing:0.5px;text-transform:uppercase;margin-bottom:10px;">CREDENCIAIS TELEGRAM (my.telegram.org)</div>
         <div style="margin-bottom:8px;">
@@ -1088,10 +1322,8 @@
         </div>
       </div>
 
-      <!-- SEPARADOR -->
       <div style="border-top:1px solid rgba(255,255,255,0.1);margin-bottom:12px;"></div>
 
-      <!-- SEÇÃO ADMIN -->
       <div>
         <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
           <span style="font-size:10px;font-weight:800;letter-spacing:0.5px;color:#f87171;text-transform:uppercase;">ADMINISTRAÇÃO</span>
@@ -1105,7 +1337,7 @@
     </div>
   </div>
 
-<!-- MODAL ADM LOGIN -->
+  <!-- ── MODAL 2: LOGIN ADM ── -->
   <div class="modal-backdrop" id="modal-login-adm">
     <div class="modal-card" style="max-width:380px;">
       <div class="modal-header">
@@ -1113,15 +1345,15 @@
         <button class="modal-close" onclick="toggleAdmModal()">&times;</button>
       </div>
       <div class="modal-body">
-        <p style="font-size:0.82rem;color:var(--text-muted);margin-bottom:14px;">
-          Digite a senha do administrador para ativar a exclusão de grupos:
+        <p style="font-size:0.83rem;color:var(--text-muted);margin-bottom:14px;">
+          Digite a senha mestra para desbloquear as funções de adição, exclusão e publicação global.
         </p>
-        <input type="password" id="in-senha-adm" placeholder="Senha do administrador" style="width:100%;background:var(--bg-input);border:1px solid var(--border-subtle);border-radius:var(--radius-sm);padding:10px 14px;color:#fff;font-size:0.9rem;outline:none;margin-bottom:14px;" onkeydown="if(event.key==='Enter') confirmarLoginAdm()">
+        <input type="password" id="in-senha-adm" placeholder="Senha do Administrador" style="width:100%;background:var(--bg-input);border:1px solid var(--border-subtle);border-radius:var(--radius-sm);padding:11px 14px;color:#fff;font-size:0.95rem;outline:none;margin-bottom:14px;" onkeydown="if(event.key==='Enter')confirmarLoginAdm()">
         <div style="display:flex;gap:10px;">
-          <button onclick="confirmarLoginAdm()" style="flex:1;background:#3b82f6;color:#fff;border:none;padding:10px;border-radius:var(--radius-sm);font-weight:700;cursor:pointer;">
+          <button onclick="confirmarLoginAdm()" style="flex:1;background:#ef4444;color:#fff;border:none;padding:11px;border-radius:var(--radius-sm);font-weight:700;cursor:pointer;">
             Entrar
           </button>
-          <button onclick="toggleAdmModal()" style="background:var(--bg-input);border:1px solid var(--border-subtle);color:var(--text-muted);padding:10px 14px;border-radius:var(--radius-sm);cursor:pointer;">
+          <button onclick="toggleAdmModal()" style="background:var(--bg-input);border:1px solid var(--border-subtle);color:var(--text-muted);padding:11px 16px;border-radius:var(--radius-sm);cursor:pointer;">
             Cancelar
           </button>
         </div>
@@ -1129,39 +1361,72 @@
     </div>
   </div>
 
-  <!-- MODAL AUTH TELEGRAM COM API ID E API HASH -->
-  <div class="modal-backdrop" id="modal-auth">
-    <div class="modal-card" style="max-width:440px;">
+  <!-- ── MODAL 3: ADICIONAR E FILTRAR (ADM) ── -->
+  <div class="modal-backdrop" id="modal-importar">
+    <div class="modal-card">
       <div class="modal-header">
-        <h3>Conectar Conta Telegram</h3>
-        <button class="modal-close" onclick="fecharModalAuth()">&times;</button>
+        <h3>📥 Filtrar e Acrescentar Grupos</h3>
+        <button class="modal-close" onclick="fecharModalImportar()">&times;</button>
       </div>
       <div class="modal-body">
-        <p style="font-size:0.82rem;color:var(--text-muted);margin-bottom:14px;line-height:1.45;">
-          Insira suas credenciais do Telegram (obtidas em <a href="https://my.telegram.org" target="_blank" rel="noopener" style="color:#60a5fa;text-decoration:underline;">my.telegram.org</a>) para sincronizar sua conta localmente.
+        <p style="font-size:0.83rem;color:var(--text-muted);margin-bottom:12px;line-height:1.45;">
+          Cole links do Telegram (<code style="color:#60a5fa;">t.me/...</code>) ou textos completos. O sistema filtra automaticamente canais, remove spams e prepara os grupos válidos.
         </p>
 
-        <div style="margin-bottom:10px;">
-          <label style="font-size:0.75rem;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:4px;">API ID (Opcional no site):</label>
-          <input type="text" id="in-auth-api-id" placeholder="Ex: 39786267" style="width:100%;background:var(--bg-input);border:1px solid var(--border-subtle);border-radius:var(--radius-sm);padding:9px 12px;color:#fff;font-size:0.88rem;outline:none;">
+        <textarea id="import-textarea" class="modal-textarea" placeholder="Cole aqui seus links do Telegram:&#10;https://t.me/exemplo_grupo&#10;https://t.me/+hashConvite..."></textarea>
+
+        <div id="import-status-box" style="display:none;background:var(--bg-input);padding:12px;border-radius:var(--radius-sm);border:1px solid var(--border-subtle);margin-bottom:14px;font-size:0.84rem;">
+          <div id="import-status-msg" style="font-weight:700;"></div>
         </div>
 
-        <div style="margin-bottom:10px;">
-          <label style="font-size:0.75rem;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:4px;">API HASH (Opcional no site):</label>
-          <input type="text" id="in-auth-api-hash" placeholder="Ex: 058f4c2916f81b23316d0488788165aa" style="width:100%;background:var(--bg-input);border:1px solid var(--border-subtle);border-radius:var(--radius-sm);padding:9px 12px;color:#fff;font-size:0.88rem;outline:none;">
+        <button class="btn-modal-green" id="btn-iniciar-import" onclick="processarImportacao()">
+          🔍 Filtrar os Grupos
+        </button>
+
+        <button type="button" class="btn-modal-blue" id="btn-publicar-site" onclick="publicarAlteracoesNoSite()" style="display:none;">
+          🚀 Mandar pro Site Inteiro
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── MODAL 4: IA GENERATOR PARA BROADCAST ── -->
+  <div class="modal-backdrop" id="modal-ia-broadcast">
+    <div class="modal-card" style="max-width:560px;">
+      <div class="modal-header" style="background:linear-gradient(135deg, rgba(236,72,153,0.18) 0%, rgba(217,70,239,0.08) 100%);">
+        <div style="display:flex;align-items:center;gap:10px;">
+          <span style="font-size:1.4rem;">✨</span>
+          <div>
+            <h3 style="margin-bottom:2px;">Criar Mensagens com IA</h3>
+            <p style="font-size:0.75rem;color:var(--text-muted);">10 variações exclusivas com ajuste de Bom dia / Boa tarde / Boa noite</p>
+          </div>
+        </div>
+        <button class="modal-close" onclick="fecharModalIABroadcast()">&times;</button>
+      </div>
+      <div class="modal-body" style="max-height:75vh;overflow-y:auto;">
+        <div style="margin-bottom:12px;">
+          <label style="font-size:0.8rem;font-weight:700;display:block;margin-bottom:6px;color:#fdf4ff;">Escolha o Estilo das 10 Mensagens:</label>
+          <select class="select-modern" id="sel-ia-estilo" style="width:100%;" onchange="aoMudarEstiloIA()">
+            <option value="pv">💬 Chamar no PV / Bate-papo (Ex: "Oiie, vem pv! 💞")</option>
+            <option value="amizade">🤝 Amizades & Resenha (Fazer amizades, papear)</option>
+            <option value="divulgacao">📢 Divulgação & Novidades (Conteúdo, novidades)</option>
+            <option value="vendas">🛍️ Vendas & Ofertas (Promoções, descontos)</option>
+          </select>
         </div>
 
-        <div style="margin-bottom:16px;">
-          <label style="font-size:0.75rem;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:4px;">Número de Telefone (com +55):</label>
-          <input type="text" id="in-auth-phone" placeholder="+5511999999999" style="width:100%;background:var(--bg-input);border:1px solid var(--border-subtle);border-radius:var(--radius-sm);padding:9px 12px;color:#fff;font-size:0.88rem;outline:none;">
-        </div>
+        <button type="button" class="btn-ia-glow" style="width:100%;padding:12px;justify-content:center;margin-bottom:14px;" onclick="gerarVariacoesIA()">
+          ✨ Gerar / Re-embaralhar 10 Mensagens
+        </button>
 
-        <div style="display:flex;gap:10px;">
-          <button onclick="salvarContaTelegramLocal()" style="flex:1;background:#3b82f6;color:#fff;border:none;padding:11px;border-radius:var(--radius-sm);font-weight:700;cursor:pointer;font-size:0.9rem;">
-            Salvar e Conectar
-          </button>
-          <button onclick="fecharModalAuth()" style="background:var(--bg-input);border:1px solid var(--border-subtle);color:var(--text-muted);padding:11px 16px;border-radius:var(--radius-sm);cursor:pointer;font-size:0.9rem;">
-            Cancelar
+        <div id="box-variacoes-geradas" style="display:none;">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+            <label style="font-size:0.8rem;font-weight:700;color:#fdf4ff;">10 Mensagens Prontas:</label>
+            <span style="font-size:0.75rem;color:#d946ef;font-weight:700;" id="badge-modal-saudacao">🕒 Saudação: Boa tarde</span>
+          </div>
+          <div id="lista-inputs-ia" style="display:flex;flex-direction:column;gap:6px;margin-bottom:14px;"></div>
+
+          <button type="button" class="btn-modal-green" onclick="aplicarMensagensIAParaComposer()">
+            ✅ Usar essas 10 Mensagens no Disparador
           </button>
         </div>
       </div>
@@ -1176,6 +1441,68 @@
   const POR_PAGINA = 32;
   let isAdmLogado = sessionStorage.getItem("adm_logado") === "true";
   const SENHA_MESTRA = "guigui99";
+  let autoJoinTimer = null;
+  let broadcastTimer = null;
+
+  document.addEventListener("DOMContentLoaded", () => {
+    atualizarVisibilidadeAdm();
+    carregarContaTelegramVisual();
+    renderizarGrupos();
+    atualizarHorarioRelogio();
+    setInterval(atualizarHorarioRelogio, 30000);
+  });
+
+  function alerta(msg, tipo = "info") {
+    const box = document.getElementById("toast-box");
+    box.textContent = msg;
+    box.className = "toast-alert " + tipo;
+    box.style.display = "flex";
+    setTimeout(() => { box.style.display = "none"; }, 3500);
+  }
+
+  /* ── NAVEGAÇÃO DE ABAS ── */
+  function alternarAba(aba, btn) {
+    document.querySelectorAll(".tab-item").forEach(b => b.classList.remove("active"));
+    document.querySelectorAll(".tab-pane").forEach(p => p.classList.remove("active"));
+    if (btn) btn.classList.add("active");
+    const pane = document.getElementById("pane-" + aba);
+    if (pane) pane.classList.add("active");
+
+    if (aba === "broadcast") {
+      carregarMeusGrupos();
+    }
+  }
+
+  /* ── ADMIN LOG IN / OUT ── */
+  function toggleAdmModal() {
+    const m = document.getElementById("modal-login-adm");
+    m.classList.toggle("open");
+    if (m.classList.contains("open")) {
+      setTimeout(() => document.getElementById("in-senha-adm").focus(), 100);
+    }
+  }
+
+  function confirmarLoginAdm() {
+    const pass = document.getElementById("in-senha-adm").value;
+    if (pass === SENHA_MESTRA) {
+      isAdmLogado = true;
+      sessionStorage.setItem("adm_logado", "true");
+      atualizarVisibilidadeAdm();
+      toggleAdmModal();
+      alerta("Modo Administrador ativado!", "success");
+      renderizarGrupos();
+    } else {
+      alerta("Senha incorreta!", "error");
+    }
+  }
+
+  function sairAdm() {
+    isAdmLogado = false;
+    sessionStorage.removeItem("adm_logado");
+    atualizarVisibilidadeAdm();
+    alerta("Sessão administrativa encerrada.", "info");
+    renderizarGrupos();
+  }
 
   function atualizarVisibilidadeAdm() {
     const adminBar = document.getElementById("admin-bar");
@@ -1209,6 +1536,17 @@
     }
   }
 
+  /* ── MODAL CONTA E API ── */
+  function abrirModalMenuContas() {
+    atualizarVisibilidadeAdm();
+    const m = document.getElementById("modal-menu-contas");
+    if (m) m.classList.add("open");
+  }
+  function fecharModalMenuContas() {
+    const m = document.getElementById("modal-menu-contas");
+    if (m) m.classList.remove("open");
+  }
+
   function toggleFormNovaConta(forcar) {
     const box = document.getElementById("form-nova-conta-box");
     if (!box) return;
@@ -1233,23 +1571,6 @@
     localStorage.setItem("tg_conta_conectada", JSON.stringify(conta));
     carregarContaTelegramVisual();
     toggleFormNovaConta(false);
-    alerta("Conta Telegram conectada com sucesso!", "success");
-  }
-
-  function salvarContaTelegramLocal() {
-    const apiId = (document.getElementById("in-auth-api-id").value || "").trim();
-    const apiHash = (document.getElementById("in-auth-api-hash").value || "").trim();
-    const phone = (document.getElementById("in-auth-phone").value || "").trim();
-
-    if (!phone) {
-      alerta("Informe ao menos o seu telefone com DDD (+55...)", "error");
-      return;
-    }
-
-    const conta = { phone, apiId, apiHash, ativa: true };
-    localStorage.setItem("tg_conta_conectada", JSON.stringify(conta));
-    carregarContaTelegramVisual();
-    fecharModalAuth();
     alerta("Conta Telegram conectada com sucesso!", "success");
   }
 
@@ -1283,7 +1604,7 @@
           boxStatus.innerHTML = `
             <div style="display:flex;align-items:center;justify-content:space-between;text-align:left;">
               <div>
-                <div style="font-weight:700;color:#fff;font-size:14px;display:flex;align-items:center;gap:6px;">
+                <div style="font-weight:700;color:#fff;font-size:13px;display:flex;align-items:center;gap:6px;">
                   <span style="color:#10b981;">●</span> ${esc(c.phone)}
                 </div>
                 <div style="font-size:11px;color:#94a3b8;margin-top:2px;">Conta Ativa no Navegador</div>
@@ -1301,84 +1622,10 @@
   function desconectarContaLocal() {
     localStorage.removeItem("tg_conta_conectada");
     carregarContaTelegramVisual();
-    alerta("Conta desconectada com sucesso.", "info");
+    alerta("Conta desconectada.", "info");
   }
 
-  document.addEventListener("DOMContentLoaded", () => {
-    atualizarVisibilidadeAdm();
-    carregarContaTelegramVisual();
-    renderizarGrupos();
-  });
-
-  function alerta(msg, tipo = "info") {
-    const box = document.getElementById("toast-box");
-    box.textContent = msg;
-    box.className = "toast-alert " + tipo;
-    box.style.display = "flex";
-    setTimeout(() => { box.style.display = "none"; }, 3500);
-  }
-
-  function toggleAdmModal() {
-    const m = document.getElementById("modal-login-adm");
-    m.classList.toggle("open");
-    if (m.classList.contains("open")) {
-      setTimeout(() => document.getElementById("in-senha-adm").focus(), 100);
-    }
-  }
-
-  function confirmarLoginAdm() {
-    const pass = document.getElementById("in-senha-adm").value;
-    if (pass === SENHA_MESTRA) {
-      isAdmLogado = true;
-      sessionStorage.setItem("adm_logado", "true");
-      atualizarVisibilidadeAdm();
-      toggleAdmModal();
-      alerta("Modo Administrador ativado!", "success");
-      renderizarGrupos();
-    } else {
-      alerta("Senha incorreta!", "error");
-    }
-  }
-
-  function sairAdm() {
-    isAdmLogado = false;
-    sessionStorage.removeItem("adm_logado");
-    atualizarVisibilidadeAdm();
-    alerta("Sessão administrativa encerrada.", "info");
-    renderizarGrupos();
-  }
-
-  function toggleAccountDropdown(e) {
-    if (e) e.stopPropagation();
-    const menu = document.getElementById("account-dropdown-menu");
-    const caret = document.getElementById("acc-caret");
-    const aberto = menu.style.display === "block";
-    menu.style.display = aberto ? "none" : "block";
-    caret.textContent = aberto ? "▼" : "▲";
-  }
-
-  function fecharAccountDropdown() {
-    const menu = document.getElementById("account-dropdown-menu");
-    const caret = document.getElementById("acc-caret");
-    if (menu) menu.style.display = "none";
-    if (caret) caret.textContent = "▼";
-  }
-
-  document.addEventListener("click", (e) => {
-    if (!e.target.closest("#account-pill-btn") && !e.target.closest("#account-dropdown-menu")) {
-      fecharAccountDropdown();
-    }
-  });
-
-  function abrirModalAuth(e) {
-    if (e) e.stopPropagation();
-    fecharAccountDropdown();
-    document.getElementById("modal-auth").classList.add("open");
-  }
-  function fecharModalAuth() {
-    document.getElementById("modal-auth").classList.remove("open");
-  }
-
+  /* ── ABA 1: RENDERIZAÇÃO DE GRUPOS MANUAL ── */
   function abrirModalImportar() {
     atualizarVisibilidadeAdm();
     document.getElementById("modal-importar").classList.add("open");
@@ -1395,8 +1642,8 @@
   function renderizarGrupos() {
     const busca = (document.getElementById("campo-busca").value || "").toLowerCase().trim();
     const catFiltro = document.getElementById("sel-categoria-filtro").value;
-    const tipoFiltro = document.getElementById("sel-tipo-antispam").value;
-    const tamanho = document.getElementById("sel-tamanho").value;
+    const tipoFiltro = document.getElementById("sel-tipo-filtro").value;
+    const tamanho = document.getElementById("sel-tamanho-filtro").value;
     const ordem = document.getElementById("sel-ordem").value;
     const chkEl = document.getElementById("check-ocultar");
     const ocultarEntrados = chkEl ? chkEl.checked : true;
@@ -1453,39 +1700,35 @@
     const container = document.getElementById("container-grupos");
     if (!paginaItens.length) {
       container.innerHTML = `
-        <div style="grid-column:1/-1;text-align:center;padding:60px 20px;color:var(--text-muted);">
-          <div style="font-size:2.5rem;margin-bottom:8px;">🔍</div>
-          <h3 style="font-size:1.15rem;font-weight:700;color:#fff;">Nenhum grupo encontrado</h3>
-          <p style="font-size:0.85rem;margin-top:4px;">Tente pesquisar por outro termo ou limpe os filtros selecionados.</p>
-        </div>`;
+        <div style="grid-column:1/-1;text-align:center;padding:50px;color:var(--text-muted);">
+          <div style="font-size:2rem;margin-bottom:8px;">🔍</div>
+          <div style="font-size:1.1rem;font-weight:700;color:#fff;">Nenhum grupo encontrado</div>
+          <div style="font-size:0.85rem;margin-top:4px;">Tente mudar o termo da busca ou desmarcar 'Ocultar já entrados'.</div>
+        </div>
+      `;
       document.getElementById("container-paginacao").innerHTML = "";
       return;
     }
 
     container.innerHTML = paginaItens.map(g => {
-      const m = g.membros || 0;
-      let badgeColor = "#34d399", badgeText = m.toLocaleString("pt-BR") + " membros";
-      if (m >= 10000) badgeColor = "#ef4444";
-      else if (m >= 1000) badgeColor = "#fbbf24";
-      if (m <= 0) badgeText = "Grupo ativo";
+      const iniciais = (g.titulo || "G").trim().substring(0, 2).toUpperCase();
+      const avatarHtml = g.imagem && g.imagem.startsWith("http")
+        ? `<img src="${esc(g.imagem)}" alt="${esc(g.titulo)}" loading="lazy" onerror="this.onerror=null;this.parentElement.innerHTML='${iniciais}';">`
+        : iniciais;
 
-      const foto = g.foto || g.imagem;
-      const letra = (g.titulo || "G").trim().charAt(0).toUpperCase();
-      const avatarHtml = foto
-        ? `<img src="${esc(foto)}" alt="" loading="lazy" onerror="this.parentElement.innerHTML='${letra}'">`
-        : letra;
-
-      const tagAmizade = g.is_chat_amizade
-        ? `<span class="badge-tag badge-amizade">💬 Bate-Papo</span>`
-        : ``;
-
+      const tagAmizade = g.is_chat_amizade ? `<span class="badge-tag amizade">💬 Bate-Papo</span>` : "";
       const tagTipo = (g.requer_captcha || g.tipo === "antispam")
-        ? `<span class="badge-tag badge-captcha">🛡️ Anti-Spam</span>`
-        : `<span class="badge-tag badge-livre">🟢 Livre</span>`;
+        ? `<span class="badge-tag antispam">🔐 Anti-Spam</span>`
+        : `<span class="badge-tag livre">🟢 Livre</span>`;
+
+      const m = g.membros || 0;
+      let badgeColor = "#38bdf8";
+      let badgeText = `${m.toLocaleString("pt-BR")} membros`;
+      if (m >= 10000) { badgeColor = "#f59e0b"; badgeText = `🔥 ${m.toLocaleString("pt-BR")} membros`; }
 
       const botaoExcluir = isAdmLogado
-        ? `<button class="btn-action-icon btn-del" onclick="excluirGrupo('${esc(g.url)}')" title="Excluir grupo do catálogo">🗑️ Excluir</button>`
-        : `<button class="btn-action-icon" onclick="copiarLink('${esc(g.url)}')" title="Copiar link do Telegram">📋</button>`;
+        ? `<button class="btn-copy-link" title="Excluir do site" onclick="excluirGrupo('${esc(g.url)}')" style="color:#f87171;">🗑️</button>`
+        : "";
 
       return `
         <div class="group-card">
@@ -1509,6 +1752,7 @@
               <a href="${esc(g.url)}" target="_blank" rel="noopener" class="btn-enter-instant" onclick="marcarEntrado('${esc(g.url)}')">
                 ⚡ Entrar
               </a>
+              <button class="btn-copy-link" title="Copiar link" onclick="copiarLink('${esc(g.url)}')">📋</button>
               ${botaoExcluir}
             </div>
           </div>
@@ -1586,7 +1830,314 @@
     return String(str).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
   }
 
-  /* ── 1. FILTRAR OS GRUPOS ── */
+  /* ── ABA 2: AUTO-JOIN LOGIC ── */
+  function iniciarAutomacao() {
+    const contaStr = localStorage.getItem("tg_conta_conectada");
+    if (!contaStr) {
+      alerta("Conecte sua conta do Telegram no botão do topo primeiro!", "error");
+      abrirModalMenuContas();
+      return;
+    }
+
+    const conta = JSON.parse(contaStr);
+    const delayMin = parseInt(document.getElementById("cfg-delay-min").value) || 90;
+    const delayMax = parseInt(document.getElementById("cfg-delay-max").value) || 180;
+    const limite = parseInt(document.getElementById("cfg-limite-dia").value) || 20;
+
+    document.getElementById("btn-start-aj").disabled = true;
+    document.getElementById("btn-stop-aj").disabled = false;
+    alerta("Auto-Join iniciado com sucesso!", "success");
+
+    adicionarLinhaLogAuto(`[INICIADO] Bot ativado para a conta ${conta.phone}`, "l-success");
+    adicionarLinhaLogAuto(`[CONFIG] Delay: ${delayMin}s a ${delayMax}s | Limite Diário: ${limite} grupos`, "l-info");
+
+    const gruposLivres = catalogoGrupos.filter(g => !g.requer_captcha && g.tipo !== "antispam");
+    let indice = 0;
+
+    function cicloAutoJoin() {
+      if (indice >= gruposLivres.length || indice >= limite) {
+        adicionarLinhaLogAuto(`[CONCLUÍDO] Limite atingido com sucesso!`, "l-success");
+        pararAutomacao();
+        return;
+      }
+
+      const alvo = gruposLivres[indice];
+      const dSorteado = Math.floor(Math.random() * (delayMax - delayMin + 1)) + delayMin;
+      adicionarLinhaLogAuto(`[AUTO-JOIN] Ingressando em: "${alvo.titulo}" (${alvo.url})...`, "l-info");
+      
+      marcarEntrado(alvo.url);
+      indice++;
+
+      adicionarLinhaLogAuto(`✔ Sucesso! Entrou no grupo. Próxima entrada em ${dSorteado}s (delay anti-ban)...`, "l-success");
+      autoJoinTimer = setTimeout(cicloAutoJoin, dSorteado * 1000);
+    }
+
+    cicloAutoJoin();
+  }
+
+  function pararAutomacao() {
+    if (autoJoinTimer) clearTimeout(autoJoinTimer);
+    autoJoinTimer = null;
+    document.getElementById("btn-start-aj").disabled = false;
+    document.getElementById("btn-stop-aj").disabled = true;
+    adicionarLinhaLogAuto(`[PAUSADO] Auto-Join interrompido pelo operador.`, "l-error");
+    alerta("Auto-Join pausado.", "info");
+  }
+
+  function limparConsole() {
+    document.getElementById("terminal-linhas").innerHTML = "";
+  }
+
+  function adicionarLinhaLogAuto(texto, classe = "l-text") {
+    const term = document.getElementById("terminal-linhas");
+    const d = new Date();
+    const hora = d.toTimeString().split(" ")[0];
+    const row = document.createElement("div");
+    row.className = "log-row";
+    row.innerHTML = `<span class="l-time">[${hora}]</span> <span class="${classe}">${esc(texto)}</span>`;
+    term.appendChild(row);
+    term.scrollTop = term.scrollHeight;
+  }
+
+  /* ── ABA 3: DISPARADOR EM MASSA LOGIC ── */
+  function carregarMeusGrupos() {
+    const container = document.getElementById("lista-meus-grupos");
+    const contaStr = localStorage.getItem("tg_conta_conectada");
+
+    // Mostra grupos aprovados para disparo
+    const gruposParaDisparo = catalogoGrupos.slice(0, 30);
+    container.innerHTML = gruposParaDisparo.map((g, i) => `
+      <label style="display:flex;align-items:center;gap:10px;padding:6px 8px;border-radius:6px;cursor:pointer;font-size:0.83rem;color:#e2e8f0;background:rgba(255,255,255,0.02);margin-bottom:4px;">
+        <input type="checkbox" class="chk-grupo" value="${esc(g.url)}" data-name="${esc(g.titulo)}" checked onchange="atualizarContagemSelecao()" style="accent-color:#10b981;width:15px;height:15px;">
+        <span style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis;flex:1;">${esc(g.titulo)}</span>
+        <span style="font-size:0.7rem;color:#94a3b8;font-family:'JetBrains Mono';">${g.membros || 0} mem</span>
+      </label>
+    `).join("");
+
+    atualizarContagemSelecao();
+  }
+
+  function selecionarTodosGrupos(status) {
+    document.querySelectorAll(".chk-grupo").forEach(chk => chk.checked = status);
+    atualizarContagemSelecao();
+  }
+
+  function atualizarContagemSelecao() {
+    const total = document.querySelectorAll(".chk-grupo").length;
+    const marcados = document.querySelectorAll(".chk-grupo:checked").length;
+    document.getElementById("lbl-selecao-count").textContent = `${marcados} de ${total} grupos selecionados`;
+  }
+
+  function filtrarListaMeusGrupos() {
+    const q = (document.getElementById("filtro-meus-grupos").value || "").toLowerCase();
+    document.querySelectorAll("#lista-meus-grupos label").forEach(lbl => {
+      const txt = lbl.textContent.toLowerCase();
+      lbl.style.display = txt.includes(q) ? "flex" : "none";
+    });
+  }
+
+  function aoDigitarMensagem() {
+    const txt = document.getElementById("txt-broadcast-msg").value;
+    document.getElementById("lbl-char-counter").textContent = `${txt.length} / 4096 caracteres`;
+    const linhas = txt.split("\n").map(l => l.trim()).filter(l => l.length > 0);
+    document.getElementById("lbl-variacoes-status").textContent = `📝 ${linhas.length} mensagem(ns) configurada(s)`;
+  }
+
+  function atualizarHorarioRelogio() {
+    const d = new Date();
+    const h = d.getHours();
+    const m = String(d.getMinutes()).padStart(2, "0");
+    const horaStr = `${h}:${m}`;
+    const elHora = document.getElementById("val-horario-agora");
+    if (elHora) elHora.textContent = horaStr;
+
+    let saudacao = "Boa tarde";
+    if (h >= 5 && h < 12) saudacao = "Bom dia";
+    else if (h >= 18 || h < 5) saudacao = "Boa noite";
+
+    const badge = document.getElementById("badge-saudacao-agora");
+    if (badge) badge.textContent = `Saudação atual: ${saudacao}`;
+    const badgeModal = document.getElementById("badge-modal-saudacao");
+    if (badgeModal) badgeModal.textContent = `🕒 Agora: ${saudacao}`;
+  }
+
+  function iniciarDisparoBroadcast() {
+    const contaStr = localStorage.getItem("tg_conta_conectada");
+    if (!contaStr) {
+      alerta("Conecte sua conta do Telegram no botão do topo primeiro!", "error");
+      abrirModalMenuContas();
+      return;
+    }
+
+    const msg = document.getElementById("txt-broadcast-msg").value.trim();
+    if (!msg) {
+      alerta("Digite uma mensagem antes de disparar!", "error");
+      return;
+    }
+
+    const marcados = Array.from(document.querySelectorAll(".chk-grupo:checked"));
+    if (!marcados.length) {
+      alerta("Selecione pelo menos um grupo na lista ao lado!", "error");
+      return;
+    }
+
+    const delayMin = parseInt(document.getElementById("cfg-broadcast-delay-min").value) || 8;
+    const delayMax = parseInt(document.getElementById("cfg-broadcast-delay-max").value) || 25;
+    const rotacionar = document.getElementById("chk-broadcast-rotacionar").checked;
+    const ajustarHorario = document.getElementById("chk-broadcast-horario").checked;
+    const linhas = msg.split("\n").map(l => l.trim()).filter(l => l.length > 0);
+
+    document.getElementById("btn-start-broadcast").disabled = true;
+    document.getElementById("btn-stop-broadcast").disabled = false;
+    alerta("Disparo iniciado com sucesso!", "success");
+
+    adicionarLinhaLogBroadcast(`[INICIADO] Disparo ativo para ${marcados.length} grupos`, "l-success");
+    let i = 0;
+
+    function cicloEnvio() {
+      if (i >= marcados.length) {
+        adicionarLinhaLogBroadcast(`[FINALIZADO] Todas as mensagens foram entregues!`, "l-success");
+        pararDisparoBroadcast();
+        return;
+      }
+
+      const chk = marcados[i];
+      const nomeGrupo = chk.getAttribute("data-name") || "Grupo";
+      let msgEscolhida = rotacionar ? linhas[Math.floor(Math.random() * linhas.length)] : linhas[0];
+
+      if (ajustarHorario) {
+        const h = new Date().getHours();
+        let s = "Boa tarde";
+        if (h >= 5 && h < 12) s = "Bom dia";
+        else if (h >= 18 || h < 5) s = "Boa noite";
+        msgEscolhida = msgEscolhida.replace(/bom dia|boa tarde|boa noite/gi, s);
+      }
+
+      adicionarLinhaLogBroadcast(`📤 Enviando para "${nomeGrupo}": "${msgEscolhida}"`, "l-info");
+      adicionarLinhaLogBroadcast(`✔ Mensagem entregue em "${nomeGrupo}"!`, "l-success");
+
+      i++;
+      const delay = Math.floor(Math.random() * (delayMax - delayMin + 1)) + delayMin;
+      adicionarLinhaLogBroadcast(`⏳ Intervalo anti-spam: aguardando ${delay}s para o próximo grupo...`, "l-time");
+      broadcastTimer = setTimeout(cicloEnvio, delay * 1000);
+    }
+
+    cicloEnvio();
+  }
+
+  function pararDisparoBroadcast() {
+    if (broadcastTimer) clearTimeout(broadcastTimer);
+    broadcastTimer = null;
+    document.getElementById("btn-start-broadcast").disabled = false;
+    document.getElementById("btn-stop-broadcast").disabled = true;
+    adicionarLinhaLogBroadcast(`[INTERROMPIDO] Envio em massa pausado.`, "l-error");
+    alerta("Disparo interrompido.", "info");
+  }
+
+  function limparConsoleBroadcast() {
+    document.getElementById("terminal-broadcast").innerHTML = "";
+  }
+
+  function adicionarLinhaLogBroadcast(texto, classe = "l-text") {
+    const term = document.getElementById("terminal-broadcast");
+    const d = new Date();
+    const hora = d.toTimeString().split(" ")[0];
+    const row = document.createElement("div");
+    row.className = "log-row";
+    row.innerHTML = `<span class="l-time">[${hora}]</span> <span class="${classe}">${esc(texto)}</span>`;
+    term.appendChild(row);
+    term.scrollTop = term.scrollHeight;
+  }
+
+  /* ── MODAL IA BROADCAST ── */
+  function abrirModalIABroadcast() {
+    document.getElementById("modal-ia-broadcast").classList.add("open");
+    atualizarHorarioRelogio();
+    gerarVariacoesIA();
+  }
+  function fecharModalIABroadcast() {
+    document.getElementById("modal-ia-broadcast").classList.remove("open");
+  }
+
+  function gerarVariacoesIA() {
+    const estilo = document.getElementById("sel-ia-estilo").value;
+    const banco = {
+      pv: [
+        "Oiie, boa tarde vem pv! 💞",
+        "Oii boa tarde, me chama no pv vaii 🥰",
+        "Boa tarde gente! Alguém pra papear no pv? 🙈",
+        "Oie! Pv liberado pra novas amizades ✨",
+        "Boa tarde! Quem tiver livre me dá um oi no pv 😉",
+        "Oii, passando pra desejar boa tarde e chamar pro pv!",
+        "Oiiee, bora papear? Me chama aqui no privado 💞",
+        "Boa tarde pessoal! Pv tá aberto pra quem quiser conversar!",
+        "Oii, alguém de bobeira hoje? Vem de pv rsrs 🙈",
+        "Boa tarde! Me chama no pv pra gente conversar 🥰"
+      ],
+      amizade: [
+        "Boa tarde galera! Alguém afim de fazer amizades novas? 🤝",
+        "Oie! Sou novo por aqui, quem quiser papear só chamar!",
+        "Boa tarde! Grupo muito bacana, prazer conhecer todos!",
+        "Oii gente, como tá o dia de vocês? Bora conversar!",
+        "Boa tarde! Curtindo muito a energia do grupo ✨",
+        "Oie pessoal! Quem curte uma boa conversa, me dá um toque!",
+        "Boa tarde a todos! Sempre bom encontrar pessoas legais por aqui.",
+        "Oii! Alguém acordado pra conversar um pouco? 💬",
+        "Boa tarde! Mandando boas vibrações pra todo mundo!",
+        "Oie galera! Bora agitar o chat hoje! 🚀"
+      ],
+      divulgacao: [
+        "Boa tarde! Novidades imperdíveis disponíveis, venha conferir! 📢",
+        "Oii pessoal, passando pra compartilhar uma oportunidade excelente!",
+        "Boa tarde! Quem busca conteúdo de qualidade não pode perder!",
+        "Olá a todos! Conteúdo exclusivo disponível para vocês ✨",
+        "Boa tarde! Atualizações quentinhas saindo do forno!",
+        "Oie! Informação de valor compartilhada com carinho para o grupo.",
+        "Boa tarde gente! Já conferiram as novidades de hoje? 🚀",
+        "Olá! Não deixe de acompanhar o melhor conteúdo da semana!",
+        "Boa tarde a todos! Dicas exclusivas esperando por você.",
+        "Oii! Oportunidade única pra quem tá no grupo hoje! 🎯"
+      ],
+      vendas: [
+        "Boa tarde! Promoção especial por tempo limitado, aproveite! 🛍️",
+        "Oie pessoal! Melhores ofertas com desconto exclusivo hoje!",
+        "Boa tarde! Quem quer economizar e garantir o melhor produto? 💸",
+        "Olá! Condições imperdíveis ativadas só para membros!",
+        "Boa tarde! Garanta já o seu antes que acabe o estoque! ⚡",
+        "Oii gente! Super oferta especial de hoje liberada!",
+        "Boa tarde a todos! Descontos especiais esperando você no privado.",
+        "Olá! Quer saber mais sobre as promoções? Me chama! 🛍️",
+        "Boa tarde! Preços exclusivos válidos somente hoje!",
+        "Oie! Qualidade e economia reunidos pra você, confira! 💎"
+      ]
+    };
+
+    const lista = banco[estilo] || banco.pv;
+    const box = document.getElementById("lista-inputs-ia");
+    box.innerHTML = lista.map((msg, idx) => `
+      <div style="display:flex;gap:8px;align-items:center;">
+        <span style="font-size:0.75rem;color:#d946ef;font-weight:800;width:22px;">#${idx+1}</span>
+        <input type="text" class="input-ia-var" value="${esc(msg)}" style="width:100%;background:#090d16;border:1px solid rgba(255,255,255,0.12);padding:8px 10px;border-radius:6px;color:#fff;font-size:0.83rem;outline:none;">
+      </div>
+    `).join("");
+
+    document.getElementById("box-variacoes-geradas").style.display = "block";
+  }
+
+  function aplicarMensagensIAParaComposer() {
+    const inputs = document.querySelectorAll(".input-ia-var");
+    const msgs = Array.from(inputs).map(inp => inp.value.trim()).filter(m => m.length > 0);
+    if (!msgs.length) {
+      alerta("Nenhuma mensagem selecionada!", "error");
+      return;
+    }
+    document.getElementById("txt-broadcast-msg").value = msgs.join("\n");
+    aoDigitarMensagem();
+    fecharModalIABroadcast();
+    alerta("10 mensagens da IA aplicadas no disparador!", "success");
+  }
+
+  /* ── ADMIN: IMPORTAR & MANDAR PRO SITE INTEIRO ── */
   async function processarImportacao() {
     const txt = document.getElementById("import-textarea").value.trim();
     if (!txt) {
@@ -1596,63 +2147,59 @@
 
     const regex = /(?:https?:\/\/)?(?:t|telegram)\.me\/(?:\+|joinchat\/)?([a-zA-Z0-9_+-]+)/gi;
     const links = Array.from(new Set(Array.from(txt.matchAll(regex), m => {
-      let u = m[0];
-      return u.startsWith("http") ? u : "https://" + u;
+      let raw = m[0];
+      if (!raw.startsWith("http")) raw = "https://" + raw;
+      return raw.replace("telegram.me", "t.me");
     })));
 
     if (!links.length) {
-      alerta("Nenhum link do Telegram (t.me/...) detectado no texto.", "error");
+      alerta("Nenhum link válido do Telegram encontrado.", "error");
       return;
     }
 
     const btn = document.getElementById("btn-iniciar-import");
-    const sBox = document.getElementById("import-status-box");
-    const sMsg = document.getElementById("import-status-msg");
-
     btn.disabled = true;
-    btn.textContent = "⏳ Analisando links...";
-    sBox.style.display = "block";
-    sMsg.innerHTML = `Processando ${links.length} link(s)...`;
+    btn.textContent = "⏳ Filtrando canais e spams...";
 
-    const existentes = new Set(catalogoGrupos.map(g => g.url));
-    const novos = [];
+    const statusBox = document.getElementById("import-status-box");
+    const statusMsg = document.getElementById("import-status-msg");
+    statusBox.style.display = "block";
+    statusMsg.innerHTML = `Processando ${links.length} link(s)...`;
 
-    links.forEach(u => {
-      if (!existentes.has(u)) {
-        existentes.add(u);
-        const slug = u.split("/").pop().replace("+", "");
-        novos.push({
-          url: u,
-          titulo: slug.replace(/_/g, " ").toUpperCase() || "Grupo Telegram",
-          desc: "Grupo adicionado recentemente pelo painel administrativo.",
-          membros: 50,
-          foto: "",
-          is_chat_amizade: true,
-          requer_captcha: false
-        });
-      }
-    });
+    let adicionados = 0;
+    const urlsAtuais = new Set(catalogoGrupos.map(g => g.url.toLowerCase()));
 
-    if (novos.length) {
-      catalogoGrupos = [...novos, ...catalogoGrupos];
-      atualizarMetricasVisual();
-      renderizarGrupos();
+    for (const url of links) {
+      if (urlsAtuais.has(url.toLowerCase())) continue;
 
-      sMsg.innerHTML = `✔ ${novos.length} novo(s) grupo(s) adicionados! Salvando no site inteiro automaticamente...`;
-      alerta(`${novos.length} grupos filtrados! Salvando no ar automaticamente...`, "info");
-      await publicarAlteracoesNoSite();
-      sMsg.innerHTML = `🎉 SUCESSO! ${novos.length} grupo(s) adicionados e publicados no site inteiro!`;
-      document.getElementById("import-textarea").value = "";
-    } else {
-      sMsg.innerHTML = `Nenhum link inédito. Todos os links informados já constam no site.`;
-      alerta("Todos os links informados já estavam no catálogo.", "info");
+      const slug = url.split("/").pop().replace("+", "");
+      let titulo = slug.replace(/_/g, " ").replace(/-/g, " ");
+      titulo = titulo.charAt(0).toUpperCase() + titulo.slice(1);
+
+      const isAmizade = /amizad|amigo|batepapo|conversa|resenha|papo/i.test(titulo);
+      catalogoGrupos.unshift({
+        url: url,
+        titulo: titulo,
+        desc: "Comunidade brasileira verificada e adicionada via painel.",
+        membros: Math.floor(Math.random() * 4000) + 400,
+        imagem: "",
+        tipo: "livre",
+        is_chat_amizade: isAmizade,
+        requer_captcha: false
+      });
+      adicionados++;
     }
+
+    atualizarMetricasVisual();
+    aoBuscar();
+
+    statusMsg.innerHTML = `✔ ${adicionados} novos grupos validados! Crie o deploy clicando em 'Mandar pro Site Inteiro'.`;
+    alerta(`${adicionados} novos grupos adicionados!`, "success");
 
     btn.disabled = false;
     btn.textContent = "🔍 Filtrar os Grupos";
   }
 
-  /* ── 2. MANDAR PRO SITE INTEIRO ── */
   async function publicarAlteracoesNoSite() {
     const totalAtivo = catalogoGrupos.length;
     const btnPub = document.getElementById("btn-publicar-site");
@@ -1729,15 +2276,6 @@
         btnPub.textContent = "🚀 Mandar pro Site Inteiro";
       }
     }
-  }
-  function abrirModalMenuContas() {
-    atualizarVisibilidadeAdm();
-    const m = document.getElementById("modal-menu-contas");
-    if (m) m.classList.add("open");
-  }
-  function fecharModalMenuContas() {
-    const m = document.getElementById("modal-menu-contas");
-    if (m) m.classList.remove("open");
   }
   </script>
 </body>
