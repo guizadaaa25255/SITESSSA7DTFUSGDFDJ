@@ -2210,14 +2210,14 @@
           <span style="font-size:1.4rem;">✨</span>
           <div>
             <h3 style="margin-bottom:2px;">Criar Mensagens com IA</h3>
-            <p style="font-size:0.75rem;color:var(--text-muted);">10 variações exclusivas com ajuste de Bom dia / Boa tarde / Boa noite</p>
+            <p style="font-size:0.75rem;color:var(--text-muted);">5 variações exclusivas com ajuste de Bom dia / Boa tarde / Boa noite</p>
           </div>
         </div>
         <button class="modal-close" onclick="fecharModalIABroadcast()">&times;</button>
       </div>
       <div class="modal-body" style="max-height:75vh;overflow-y:auto;">
         <div style="margin-bottom:12px;">
-          <label style="font-size:0.8rem;font-weight:700;display:block;margin-bottom:6px;color:#fdf4ff;">Escolha o Estilo das 10 Mensagens:</label>
+          <label style="font-size:0.8rem;font-weight:700;display:block;margin-bottom:6px;color:#fdf4ff;">Escolha o Estilo das 5 Mensagens:</label>
           <select class="select-modern" id="sel-ia-estilo" style="width:100%;" onchange="aoMudarEstiloIA()">
             <option value="pv">💬 Chamar no PV / Bate-papo (Ex: "Oiie, vem pv! 💞")</option>
             <option value="amizade">🤝 Amizades & Resenha (Fazer amizades, papear)</option>
@@ -2227,7 +2227,7 @@
         </div>
 
         <button type="button" id="btn-gerar-ia" class="btn-ia-glow" style="width:100%;padding:12px;justify-content:center;margin-bottom:14px;cursor:pointer;" onclick="gerarVariacoesIA()">
-          ✨ Gerar / Re-embaralhar 10 Mensagens
+          ✨ Gerar / Re-embaralhar 5 Mensagens
         </button>
 
         <div id="box-variacoes-geradas" style="display:none;">
@@ -2238,7 +2238,7 @@
           <div id="lista-inputs-ia" style="display:flex;flex-direction:column;gap:6px;margin-bottom:14px;"></div>
 
           <button type="button" class="btn-modal-green" onclick="aplicarMensagensIAParaComposer()">
-            ✅ Usar essas 10 Mensagens no Disparador
+            ✅ Usar essas 5 Mensagens no Disparador
           </button>
         </div>
       </div>
@@ -3604,9 +3604,9 @@
     }
 
     // Se é a primeira geração ou tamanho diferente de 10
-    if (iaSlots.length !== 10) {
+    if (iaSlots.length !== 5) {
       iaSlots = [];
-      for (let i = 0; i < 10; i++) {
+      for (let i = 0; i < 5; i++) {
         iaSlots.push({ texto: "", fixada: false });
       }
     }
@@ -3621,7 +3621,7 @@
 
     // Filtra pool para não repetir mensagens já vistas
     let disponiveis = pool.filter(m => !iaHistoricoVistas.has(m) && !iaSlots.some(s => s.texto === m));
-    if (disponiveis.length < 10) {
+    if (disponiveis.length < 5) {
       // Reseta histórico se pool esgotar
       iaHistoricoVistas.clear();
       disponiveis = pool.filter(m => !iaSlots.some(s => s.texto === m));
@@ -3631,7 +3631,7 @@
     let trocadas = 0;
     let fixadasCount = 0;
 
-    for (let i = 0; i < 10; i++) {
+    for (let i = 0; i < 5; i++) {
       if (iaSlots[i].fixada && iaSlots[i].texto) {
         fixadasCount++;
         // Mantém intacta a que o usuário gostou!
@@ -3652,14 +3652,14 @@
 
     if (elBtn) {
       elBtn.innerHTML = fixadasCount > 0 
-        ? `✨ Re-embaralhar as outras (${10 - fixadasCount} novas)`
-        : `✨ Gerar / Re-embaralhar 10 Mensagens`;
+        ? `✨ Re-embaralhar as outras (${5 - fixadasCount} novas)`
+        : `✨ Gerar / Re-embaralhar 5 Mensagens`;
     }
 
     if (fixadasCount > 0) {
       alerta(`🔒 ${fixadasCount} mensagem(ns) que você gostou foram mantidas! Geradas ${trocadas} novas sem repetição.`, "success");
     } else {
-      alerta(`✨ 10 novas variações exclusivas geradas! Clique em "Gostei" para fixar as melhores.`, "success");
+      alerta(`✨ 5 novas variações exclusivas geradas! Clique em "Gostei" para fixar as melhores.`, "success");
     }
   }
 
@@ -3733,21 +3733,21 @@
 
     const btnFixarTodas = document.getElementById("btn-ia-fixar-todas");
     if (btnFixarTodas) {
-      btnFixarTodas.textContent = fixadasCount === 10 ? "Desafixar Todas" : "Fixar Todas";
+      btnFixarTodas.textContent = fixadasCount === 5 ? "Desafixar Todas" : "Fixar Todas";
     }
 
     const btnAplicar = document.getElementById("btn-aplicar-ia");
     if (btnAplicar) {
       btnAplicar.innerHTML = fixadasCount > 0
         ? `✅ Usar as ${fixadasCount} Mensagens Fixadas no Disparador`
-        : `✅ Usar todas as 10 Mensagens no Disparador`;
+        : `✅ Usar todas as 5 Mensagens no Disparador`;
     }
 
     const elBtnGerar = document.getElementById("btn-gerar-ia");
     if (elBtnGerar) {
       elBtnGerar.innerHTML = fixadasCount > 0 
-        ? `✨ Re-embaralhar as outras (${10 - fixadasCount} novas)`
-        : `✨ Gerar / Re-embaralhar 10 Mensagens`;
+        ? `✨ Re-embaralhar as outras (${5 - fixadasCount} novas)`
+        : `✨ Gerar / Re-embaralhar 5 Mensagens`;
     }
   }
 
@@ -3762,7 +3762,7 @@
     } else {
       // Nenhuma fixada: exporta todas as 10 preenchidas
       msgsFinais = iaSlots.map(s => s.texto.trim()).filter(m => m.length > 0);
-      alerta(`✨ 10 mensagens da IA aplicadas no disparador!`, "success");
+      alerta(`✨ 5 mensagens da IA aplicadas no disparador!`, "success");
     }
 
     if (!msgsFinais.length) {
