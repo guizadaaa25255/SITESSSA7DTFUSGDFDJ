@@ -266,48 +266,7 @@
   }
 
   /* ── NAVEGAÇÃO DE ABAS ── */
-  .tabs-container {
-    max-width: 1440px;
-    margin: 24px auto 0;
-    padding: 0 28px;
-    display: flex;
-    gap: 8px;
-    border-bottom: 1px solid var(--border-subtle);
-    width: 100%;
-    overflow-x: auto;
-    scrollbar-width: none;
-  }
-  .tabs-container::-webkit-scrollbar {
-    display: none;
-  }
-
-  .tab-item {
-    background: transparent;
-    border: none;
-    color: var(--text-muted);
-    font-size: 0.92rem;
-    font-weight: 700;
-    padding: 12px 20px;
-    cursor: pointer;
-    border-bottom: 2px solid transparent;
-    transition: all 0.2s ease;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    white-space: nowrap;
-    border-radius: var(--radius-sm) var(--radius-sm) 0 0;
-  }
-  .tab-item:hover {
-    color: #fff;
-    background: rgba(255, 255, 255, 0.03);
-  }
-  .tab-item.active {
-    color: #34d399;
-    border-bottom-color: #10b981;
-    background: rgba(16, 185, 129, 0.05);
-  }
-
-  /* ── ÁREA PRINCIPAL DAS ABAS ── */
+    /* ── ÁREA PRINCIPAL DAS ABAS ── */
   main {
     max-width: 1440px;
     margin: 0 auto;
@@ -323,29 +282,65 @@
     display: block;
   }
 
-  /* ── ABA 1: MODO MANUAL & FILTROS ── */
-  .toolbar {
+  /* ── HUB CENTRAL DE CONTROLE (SUBSTITUI OS FILTROS POLUÍDOS) ── */
+  .control-hub {
     background: var(--bg-surface);
     border: 1px solid var(--border-subtle);
     border-radius: var(--radius-lg);
-    padding: 16px 20px;
+    padding: 14px 18px;
     margin-bottom: 20px;
     display: flex;
     flex-direction: column;
-    gap: 14px;
+    gap: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
   }
 
-  .search-row {
+  /* 1. SELETOR DE MODOS */
+  .modes-nav {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    background: var(--bg-base);
+    padding: 5px;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border-subtle);
+  }
+  .mode-btn {
+    background: transparent;
+    border: none;
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    font-weight: 700;
+    padding: 11px 14px;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
     display: flex;
     align-items: center;
-    gap: 12px;
+    justify-content: center;
+    gap: 7px;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+  }
+  .mode-btn:hover {
+    color: #fff;
+    background: rgba(255, 255, 255, 0.04);
+  }
+  .mode-btn.active {
+    background: #10b981;
+    color: #ffffff;
+    box-shadow: 0 2px 10px rgba(16, 185, 129, 0.35);
   }
 
+  /* 2. LINHA DE BUSCA & TOGGLE DE FILTROS */
+  .hub-search-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
   .search-input-wrap {
     position: relative;
     flex: 1;
   }
-
   .search-input-wrap svg {
     position: absolute;
     left: 14px;
@@ -354,15 +349,15 @@
     color: var(--text-dim);
     pointer-events: none;
   }
-
   .search-input-wrap input {
     width: 100%;
+    box-sizing: border-box;
     background: var(--bg-input);
     border: 1px solid var(--border-subtle);
     border-radius: var(--radius-md);
-    padding: 12px 14px 12px 42px;
+    padding: 11px 14px 11px 40px;
     color: #fff;
-    font-size: 0.92rem;
+    font-size: 0.9rem;
     outline: none;
     transition: all 0.2s;
   }
@@ -371,11 +366,60 @@
     box-shadow: 0 0 0 2px rgba(2, 132, 199, 0.2);
   }
 
+  .btn-toggle-filters {
+    background: var(--bg-input);
+    border: 1px solid var(--border-subtle);
+    color: var(--text-main);
+    padding: 11px 16px;
+    border-radius: var(--radius-md);
+    font-size: 0.85rem;
+    font-weight: 700;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .btn-toggle-filters:hover {
+    border-color: var(--brand-blue);
+    background: rgba(2, 132, 199, 0.08);
+  }
+
+  /* 3. PAINEL DE FILTROS COLAPSÁVEL */
+  .advanced-filters-panel {
+    background: var(--bg-base);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-md);
+    padding: 14px;
+    animation: fadeInFilters 0.2s ease;
+  }
+  @keyframes fadeInFilters {
+    from { opacity: 0; transform: translateY(-6px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .filters-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 12px;
+  }
+  .filter-col label {
+    display: block;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+    margin-bottom: 5px;
+  }
   .select-modern {
+    width: 100%;
+    box-sizing: border-box;
     background: var(--bg-input);
     border: 1px solid var(--border-subtle);
     border-radius: var(--radius-md);
-    padding: 12px 14px;
+    padding: 10px 12px;
     color: var(--text-main);
     font-size: 0.85rem;
     font-weight: 600;
@@ -383,16 +427,34 @@
     cursor: pointer;
   }
 
-  .filter-sub-row {
+  /* 4. LINHA INFERIOR DO HUB */
+  .hub-bottom-row {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    flex-wrap: wrap;
     gap: 10px;
     padding-top: 10px;
     border-top: 1px solid var(--border-subtle);
     font-size: 0.85rem;
+  }
+  .hub-count {
+    font-weight: 700;
+    color: #e2e8f0;
+  }
+  .check-ocultar-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    cursor: pointer;
     color: var(--text-muted);
+    font-weight: 600;
+    user-select: none;
+  }
+  .check-ocultar-label input {
+    accent-color: #10b981;
+    cursor: pointer;
+    width: 16px;
+    height: 16px;
   }
 
   /* ── CARDS DE GRUPOS ── */
@@ -960,28 +1022,43 @@
       font-size: 1.25rem !important;
     }
 
-    .tabs-container {
-      padding: 0 14px !important;
-      margin-top: 16px !important;
-    }
-    .tab-item {
-      padding: 10px 14px !important;
-      font-size: 0.85rem !important;
-    }
-
     main {
-      padding: 16px 14px 60px !important;
+      padding: 14px 12px 60px !important;
     }
-    .toolbar {
+    .control-hub {
       padding: 12px !important;
+      gap: 10px !important;
     }
-    .search-row {
-      flex-direction: column !important;
-      align-items: stretch !important;
+    .modes-nav {
+      grid-template-columns: repeat(3, 1fr) !important;
+      gap: 4px !important;
+      padding: 4px !important;
+    }
+    .mode-btn {
+      padding: 9px 4px !important;
+      font-size: 0.78rem !important;
+      gap: 4px !important;
+    }
+    .hub-search-row {
+      flex-direction: row !important;
+      align-items: center !important;
       gap: 8px !important;
     }
-    .select-modern {
-      width: 100% !important;
+    .search-input-wrap input {
+      font-size: 0.85rem !important;
+      padding: 10px 12px 10px 36px !important;
+    }
+    .btn-toggle-filters {
+      padding: 10px 12px !important;
+      font-size: 0.8rem !important;
+    }
+    .filters-grid {
+      grid-template-columns: 1fr !important;
+    }
+    .hub-bottom-row {
+      flex-direction: row !important;
+      justify-content: space-between !important;
+      align-items: center !important;
     }
     .grid-cards {
       grid-template-columns: 1fr !important;
@@ -1118,67 +1195,95 @@
     </div>
   </div>
 
-  <!-- NAVEGAÇÃO DE ABAS (RESTANTE DAS 3 ABAS ORIGINAIS) -->
-  <div class="tabs-container">
-    <button class="tab-item active" onclick="alternarAba('manual', this)">
-      <span>🖐️</span> Modo Manual (Entrar na Mão)
-    </button>
-    <button class="tab-item" onclick="alternarAba('auto', this)">
-      <span>🤖</span> Modo Automático (Auto-Join)
-    </button>
-    <button class="tab-item" onclick="alternarAba('broadcast', this)">
-      <span>📢</span> Disparador em Massa (Enviar Mensagens)
-    </button>
-  </div>
+
 
   <!-- CONTEÚDO PRINCIPAL -->
   <main>
     <!-- ── ABA 1: MODO MANUAL ── -->
     <div id="pane-manual" class="tab-pane active">
-      <div class="toolbar">
-        <div class="search-row">
+      <!-- ── HUB CENTRAL DE CONTROLE E NAVEGAÇÃO (SUBSTITUI OS FILTROS POLUÍDOS) ── -->
+      <div class="control-hub">
+        <!-- 1. OS 3 MODOS DE ENTRADA E DISPARO -->
+        <div class="modes-nav">
+          <button type="button" class="mode-btn active" data-tab="manual" onclick="alternarAba('manual', this)">
+            <span>🖐️</span> Modo Manual
+          </button>
+          <button type="button" class="mode-btn" data-tab="auto" onclick="alternarAba('auto', this)">
+            <span>🤖</span> Modo Automático
+          </button>
+          <button type="button" class="mode-btn" data-tab="broadcast" onclick="alternarAba('broadcast', this)">
+            <span>📢</span> Disparador de Mensagem
+          </button>
+        </div>
+
+        <!-- 2. BARRA DE BUSCA COMPACTA + BOTÃO ELEGANTE DE FILTROS (SITE 100% LIMPO) -->
+        <div class="hub-search-row">
           <div class="search-input-wrap">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
               <circle cx="11" cy="11" r="8"></circle>
               <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
             </svg>
-            <input type="text" id="campo-busca" placeholder="Buscar por nome do grupo, link ou assunto..." oninput="aoBuscar()">
+            <input type="text" id="campo-busca" placeholder="Buscar por nome do grupo, assunto ou @link..." oninput="aoBuscar()">
           </div>
 
-          <select class="select-modern" id="sel-categoria-filtro" onchange="aoBuscar()">
-            <option value="todos">★ Todos (Bate-Papo & Amizades no Topo)</option>
-            <option value="amizade">💬 Apenas Bate-Papo & Amizades</option>
-            <option value="outros">📂 Outros Nichos</option>
-          </select>
-
-          <select class="select-modern" id="sel-tipo-filtro" onchange="aoBuscar()">
-            <option value="todos">🛡️ Todos os Grupos</option>
-            <option value="livre">🟢 Livres (Sem Bot)</option>
-            <option value="antispam">🔐 Com Anti-Spam</option>
-          </select>
-
-          <select class="select-modern" id="sel-tamanho-filtro" onchange="aoBuscar()">
-            <option value="todos">Todos os tamanhos</option>
-            <option value="fire">🔥 Gigantes (10.000+)</option>
-            <option value="mid">🌱 Médios (1.000 a 10.000)</option>
-            <option value="low">⚡ Pequenos (&lt; 1.000)</option>
-          </select>
+          <button type="button" class="btn-toggle-filters" onclick="toggleFiltrosAvancados()" id="btn-filtros-toggle" title="Abrir filtros avançados">
+            <span>⚙️</span> Filtros <span id="filtros-badge" style="display:none;background:#10b981;color:#000;font-size:10px;padding:1px 6px;border-radius:10px;font-weight:800;">Ativo</span> <span id="seta-filtros">▾</span>
+          </button>
         </div>
 
-        <div class="filter-sub-row">
-          <div style="display:flex;align-items:center;gap:12px;">
-            <select class="select-modern" id="sel-ordem" onchange="aoBuscar()" style="padding:7px 12px;font-size:0.8rem;">
-              <option value="amizades_primeiro">💬 Bate-Papo & Amizade Primeiro (Recomendado)</option>
-              <option value="desc">👥 Mais Membros</option>
-              <option value="asc">🌱 Menos Membros</option>
-              <option value="az">🔤 Ordem Alfabética (A-Z)</option>
-            </select>
-            <span id="texto-contagem" style="font-weight:700;color:#fff;">Carregando grupos...</span>
-          </div>
+        <!-- 3. PAINEL DE FILTROS AVANÇADOS (ESCONDIDO POR PADRÃO PARA DEIXAR O SITE LIMPO E DIRETO) -->
+        <div id="painel-filtros-avancados" class="advanced-filters-panel" style="display:none;">
+          <div class="filters-grid">
+            <div class="filter-col">
+              <label>Categoria:</label>
+              <select class="select-modern" id="sel-categoria-filtro" onchange="aoBuscar()">
+                <option value="todos">★ Todos (Bate-Papo & Amizades no Topo)</option>
+                <option value="amizade">💬 Apenas Bate-Papo & Amizades</option>
+                <option value="outros">📂 Outros Nichos</option>
+              </select>
+            </div>
 
-          <label style="display:flex;align-items:center;gap:6px;cursor:pointer;">
-            <input type="checkbox" id="check-ocultar" checked onchange="renderizarGrupos()" style="accent-color:#10b981;cursor:pointer;">
-            Ocultar já entrados
+            <div class="filter-col">
+              <label>Segurança / Anti-Spam:</label>
+              <select class="select-modern" id="sel-tipo-filtro" onchange="aoBuscar()">
+                <option value="todos">🛡️ Todos os Grupos</option>
+                <option value="livre">🟢 Livres (Sem Bot)</option>
+                <option value="antispam">🔐 Com Anti-Spam / Captcha</option>
+              </select>
+            </div>
+
+            <div class="filter-col">
+              <label>Tamanho do Grupo:</label>
+              <select class="select-modern" id="sel-tamanho-filtro" onchange="aoBuscar()">
+                <option value="todos">Todos os tamanhos</option>
+                <option value="fire">🔥 Gigantes (10.000+)</option>
+                <option value="mid">🌱 Médios (1.000 a 10.000)</option>
+                <option value="low">⚡ Pequenos (&lt; 1.000)</option>
+              </select>
+            </div>
+
+            <div class="filter-col">
+              <label>Ordenar Por:</label>
+              <select class="select-modern" id="sel-ordem" onchange="aoBuscar()">
+                <option value="amizades_primeiro">💬 Bate-Papo Primeiro (Recomendado)</option>
+                <option value="desc">👥 Mais Membros</option>
+                <option value="asc">🌱 Menos Membros</option>
+                <option value="az">🔤 Ordem Alfabética (A-Z)</option>
+              </select>
+            </div>
+          </div>
+          <div style="display:flex;justify-content:flex-end;margin-top:10px;">
+            <button type="button" onclick="limparFiltrosAvancados()" style="background:transparent;border:none;color:#94a3b8;font-size:12px;font-weight:700;cursor:pointer;text-decoration:underline;">↺ Resetar Filtros</button>
+          </div>
+        </div>
+
+        <!-- 4. LINHA INFERIOR (CONTAGEM E OCULTAR JÁ ENTRADOS) -->
+        <div class="hub-bottom-row">
+          <span id="texto-contagem" class="hub-count">Carregando grupos...</span>
+
+          <label class="check-ocultar-label">
+            <input type="checkbox" id="check-ocultar" checked onchange="renderizarGrupos()">
+            <span>Ocultar já entrados</span>
           </label>
         </div>
       </div>
@@ -1189,6 +1294,17 @@
 
     <!-- ── ABA 2: MODO AUTOMÁTICO (AUTO-JOIN) ── -->
     <div id="pane-auto" class="tab-pane">
+      <div class="modes-nav" style="margin-bottom:18px;">
+        <button type="button" class="mode-btn" data-tab="manual" onclick="alternarAba('manual', this)">
+          <span>🖐️</span> Modo Manual
+        </button>
+        <button type="button" class="mode-btn active" data-tab="auto" onclick="alternarAba('auto', this)">
+          <span>🤖</span> Modo Automático
+        </button>
+        <button type="button" class="mode-btn" data-tab="broadcast" onclick="alternarAba('broadcast', this)">
+          <span>📢</span> Disparador de Mensagem
+        </button>
+      </div>
       <div class="autojoin-layout">
         <div class="control-card">
           <h2>Parâmetros de Auto-Join</h2>
@@ -1245,6 +1361,17 @@
 
     <!-- ── ABA 3: DISPARADOR EM MASSA ── -->
     <div id="pane-broadcast" class="tab-pane">
+      <div class="modes-nav" style="margin-bottom:18px;">
+        <button type="button" class="mode-btn" data-tab="manual" onclick="alternarAba('manual', this)">
+          <span>🖐️</span> Modo Manual
+        </button>
+        <button type="button" class="mode-btn" data-tab="auto" onclick="alternarAba('auto', this)">
+          <span>🤖</span> Modo Automático
+        </button>
+        <button type="button" class="mode-btn active" data-tab="broadcast" onclick="alternarAba('broadcast', this)">
+          <span>📢</span> Disparador de Mensagem
+        </button>
+      </div>
       <div class="broadcast-layout">
         <div class="composer-card">
           <div style="display:flex;justify-content:space-between;align-items:center;">
@@ -1521,15 +1648,49 @@
 
   /* ── NAVEGAÇÃO DE ABAS ── */
   function alternarAba(aba, btn) {
-    document.querySelectorAll(".tab-item").forEach(b => b.classList.remove("active"));
+    document.querySelectorAll(".mode-btn").forEach(b => {
+      b.classList.toggle("active", b.getAttribute("data-tab") === aba);
+    });
     document.querySelectorAll(".tab-pane").forEach(p => p.classList.remove("active"));
-    if (btn) btn.classList.add("active");
     const pane = document.getElementById("pane-" + aba);
     if (pane) pane.classList.add("active");
 
     if (aba === "broadcast") {
       carregarMeusGrupos();
     }
+  }
+
+  function toggleFiltrosAvancados() {
+    const painel = document.getElementById("painel-filtros-avancados");
+    const seta = document.getElementById("seta-filtros");
+    if (!painel) return;
+    const visivel = painel.style.display !== "none";
+    painel.style.display = visivel ? "none" : "block";
+    if (seta) seta.textContent = visivel ? "▾" : "▴";
+  }
+
+  function atualizarBadgeFiltros() {
+    const cat = document.getElementById("sel-categoria-filtro");
+    const tipo = document.getElementById("sel-tipo-filtro");
+    const tam = document.getElementById("sel-tamanho-filtro");
+    const ord = document.getElementById("sel-ordem");
+    const badge = document.getElementById("filtros-badge");
+
+    const ativo = (cat && cat.value !== "todos") ||
+                  (tipo && tipo.value !== "todos") ||
+                  (tam && tam.value !== "todos") ||
+                  (ord && ord.value !== "amizades_primeiro");
+
+    if (badge) badge.style.display = ativo ? "inline-block" : "none";
+  }
+
+  function limparFiltrosAvancados() {
+    if (document.getElementById("sel-categoria-filtro")) document.getElementById("sel-categoria-filtro").value = "todos";
+    if (document.getElementById("sel-tipo-filtro")) document.getElementById("sel-tipo-filtro").value = "todos";
+    if (document.getElementById("sel-tamanho-filtro")) document.getElementById("sel-tamanho-filtro").value = "todos";
+    if (document.getElementById("sel-ordem")) document.getElementById("sel-ordem").value = "amizades_primeiro";
+    aoBuscar();
+    toggleFiltrosAvancados();
   }
 
   /* ── ADMIN LOG IN / OUT ── */
@@ -1694,6 +1855,7 @@
   }
 
   function aoBuscar() {
+    atualizarBadgeFiltros();
     paginaAtual = 1;
     renderizarGrupos();
   }
