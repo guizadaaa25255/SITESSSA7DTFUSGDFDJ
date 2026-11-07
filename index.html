@@ -630,20 +630,57 @@
 
   <!-- HEADER -->
   <header>
-    <a href="#" class="brand">
-      <div class="brand-logo">🇧🇷</div>
-      <div class="brand-text">
-        <h1>Telegram PRO BR</h1>
-        <p>Diretório Oficial & Painel de Grupos</p>
+    <div class="header-wrap" style="max-width:1440px;margin:0 auto;padding:14px 28px;display:flex;align-items:center;justify-content:space-between;gap:16px;">
+      <div class="brand" style="display:flex;align-items:center;gap:14px;text-decoration:none;">
+        <div class="brand-badge" style="width:42px;height:42px;background:linear-gradient(135deg, #10b981 0%, #0284c7 100%);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px;box-shadow:0 4px 12px rgba(16, 185, 129, 0.3);">🇧🇷</div>
+        <div class="brand-info">
+          <h1 style="font-size:1.15rem;font-weight:800;letter-spacing:-0.4px;color:#fff;display:flex;align-items:center;gap:8px;">Telegram Pro <span class="brand-tag" style="font-size:0.65rem;font-weight:700;padding:2px 7px;border-radius:6px;background:rgba(59, 130, 246, 0.15);color:#60a5fa;border:1px solid rgba(59, 130, 246, 0.3);text-transform:uppercase;letter-spacing:0.5px;">Grupos BR</span></h1>
+          <p style="font-size:0.78rem;color:#94a3b8;font-weight:500;">Validados ao vivo · Ordenados por Membros · Modo Manual & Auto</p>
+        </div>
       </div>
-    </a>
-    <div class="header-actions">
-      <button class="btn-header add-btn" onclick="abrirModalImportar()" title="Filtrar e adicionar grupos ao site">
-        📥 Filtrar e Adicionar
-      </button>
-      <button class="btn-header" id="btn-login-adm" onclick="toggleAdmModal()" title="Entrar no Painel de Administrador">
-        🔒 Painel ADM
-      </button>
+      <div class="header-actions" style="display:flex;align-items:center;gap:12px;">
+        <button class="btn btn-emerald" id="btn-import-modal" onclick="abrirModalImportar()" style="font-weight:700;display:inline-flex;align-items:center;gap:6px;box-shadow:0 0 16px rgba(16,185,129,0.35);background:#10b981;color:#fff;border:none;border-radius:10px;padding:9px 18px;font-size:0.88rem;cursor:pointer;transition:all 0.2s;">
+          📥 Filtrar e Adicionar Grupos
+        </button>
+
+        <!-- PERFIL DA CONTA COM DROPDOWN & PAINEL ADM EMBUTIDO -->
+        <div class="account-selector-wrap" style="position:relative;">
+          <div id="account-pill-btn" onclick="toggleAccountDropdown(event)"
+               style="display:inline-flex;align-items:center;gap:10px;background:#0d1527;border:1px solid rgba(255,255,255,0.14);border-radius:9999px;padding:4px 14px 4px 6px;cursor:pointer;user-select:none;transition:all 0.2s;box-shadow:0 2px 10px rgba(0,0,0,0.3);">
+            <div id="acc-avatar" style="width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,#3b82f6,#6366f1);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:12px;color:#fff;box-shadow:0 2px 6px rgba(59,130,246,0.4);">✕</div>
+            <div style="display:flex;flex-direction:column;text-align:left;line-height:1.2;">
+              <div style="display:flex;align-items:center;gap:6px;">
+                <span id="acc-name" style="font-weight:700;font-size:13px;color:#fff;">Conectar Telegram</span>
+                <span id="acc-badge" style="display:none;background:linear-gradient(135deg,#ec4899,#d946ef);color:#fff;font-size:9px;font-weight:800;padding:2px 7px;border-radius:9999px;letter-spacing:0.5px;align-items:center;gap:3px;box-shadow:0 2px 6px rgba(236,72,153,0.35);">⭐ PREMIUM</span>
+              </div>
+              <span id="acc-phone" style="font-size:11px;color:#94a3b8;margin-top:1px;">Clique para entrar</span>
+            </div>
+            <span id="acc-caret" style="color:#94a3b8;font-size:9px;margin-left:6px;transition:transform 0.2s;">▼</span>
+          </div>
+
+          <!-- DROPDOWN COM CONTAS E O PAINEL ADM EMBAIXO -->
+          <div id="account-dropdown-menu" style="display:none;position:absolute;right:0;top:calc(100% + 8px);width:320px;background:#101828;border:1px solid rgba(255,255,255,0.12);border-radius:14px;box-shadow:0 16px 40px rgba(0,0,0,0.7);padding:14px;z-index:9999;">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;padding-bottom:10px;border-bottom:1px solid rgba(255,255,255,0.08);">
+              <span style="font-size:11px;font-weight:800;letter-spacing:0.5px;color:#94a3b8;text-transform:uppercase;">SUAS CONTAS SALVAS</span>
+              <button onclick="abrirModalNovaConta(event)" style="background:#0284c7;color:#fff;border:none;border-radius:8px;padding:5px 12px;font-size:11px;font-weight:700;cursor:pointer;box-shadow:0 0 12px rgba(2,132,199,0.4);transition:all 0.2s;">+ Nova Conta</button>
+            </div>
+            <div id="contas-lista-dropdown" style="display:flex;flex-direction:column;gap:8px;">
+              <div style="text-align:center;padding:10px;color:#94a3b8;font-size:12px;">Nenhuma conta salva ainda.</div>
+            </div>
+
+            <!-- OPÇÃO DO PAINEL ADM BEM EMBAIXO NO MENU -->
+            <div style="margin-top:14px;padding-top:12px;border-top:1px solid rgba(255,255,255,0.1);display:flex;flex-direction:column;gap:8px;">
+              <div style="display:flex;align-items:center;justify-content:space-between;">
+                <span style="font-size:10px;font-weight:800;letter-spacing:0.5px;color:#f87171;text-transform:uppercase;">ADMINISTRAÇÃO DO SITE</span>
+                <span style="font-size:10px;color:#94a3b8;">Acesso Restrito</span>
+              </div>
+              <button onclick="toggleAdmModal();fecharAccountDropdown();" style="width:100%;background:linear-gradient(135deg,rgba(239,68,68,0.2),rgba(59,130,246,0.2));border:1px solid rgba(239,68,68,0.4);color:#fff;border-radius:10px;padding:10px 14px;font-size:12px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;box-shadow:0 4px 14px rgba(239,68,68,0.2);transition:all 0.2s;">
+                🔒 Abrir Painel ADM (Excluir & Publicar)
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </header>
 
@@ -1069,6 +1106,47 @@
     }
   }
 
+  
+  /* ── DROPDOWN DE CONTAS TELEGRAM & ADM ── */
+  function toggleAccountDropdown(event) {
+    if (event) event.stopPropagation();
+    const menu = document.getElementById("account-dropdown-menu");
+    const caret = document.getElementById("acc-caret");
+    if (!menu) return;
+    const aberto = menu.style.display === "block";
+    if (aberto) {
+      fecharAccountDropdown();
+    } else {
+      menu.style.display = "block";
+      if (caret) caret.textContent = "▲";
+    }
+  }
+
+  function fecharAccountDropdown() {
+    const menu = document.getElementById("account-dropdown-menu");
+    const caret = document.getElementById("acc-caret");
+    if (menu) menu.style.display = "none";
+    if (caret) caret.textContent = "▼";
+  }
+
+  document.addEventListener("click", (e) => {
+    if (!e.target.closest(".account-selector-wrap")) {
+      fecharAccountDropdown();
+    }
+  });
+
+  function abrirModalNovaConta(event) {
+    if (event) event.stopPropagation();
+    fecharAccountDropdown();
+    const m = document.getElementById("modal-autenticacao");
+    if (m) m.classList.add("open");
+  }
+
+  function fecharModalAuth() {
+    const m = document.getElementById("modal-autenticacao");
+    if (m) m.classList.remove("open");
+  }
+
   /* ── RENDERIZAÇÃO ── */
   function aoBuscar() {
     paginaAtual = 1;
@@ -1229,5 +1307,33 @@
 
   renderizarGrupos();
   </script>
+
+  <!-- MODAL DE AUTENTICAÇÃO TELEGRAM -->
+  <div class="modal-backdrop" id="modal-autenticacao">
+    <div class="modal-card" style="max-width:440px;">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
+        <h3 style="font-size:1.1rem;font-weight:700;">Conectar Conta Telegram</h3>
+        <button style="background:none;border:none;color:#94a3b8;font-size:20px;cursor:pointer;" onclick="fecharModalAuth()">&times;</button>
+      </div>
+      <p style="font-size:0.83rem;color:#94a3b8;margin-bottom:16px;line-height:1.5;">
+        Conecte sua conta do Telegram para usar as funções de <strong>Auto-Join</strong> e <strong>Disparador em Massa</strong> diretamente pelo painel local.
+      </p>
+      <div style="display:flex;flex-direction:column;gap:12px;margin-bottom:18px;">
+        <div>
+          <label style="font-size:0.8rem;color:#94a3b8;display:block;margin-bottom:4px;">Número com DDD (+55...):</label>
+          <input type="text" id="in-auth-phone" placeholder="+5511999999999" style="width:100%;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.12);padding:10px 14px;border-radius:8px;color:#fff;font-size:0.9rem;">
+        </div>
+      </div>
+      <div style="display:flex;gap:10px;">
+        <button onclick="alerta('Função ativa quando o servidor Python local estiver rodando!', 'info'); fecharModalAuth();" style="flex:1;background:#0284c7;color:#fff;border:none;padding:11px;border-radius:8px;font-weight:700;cursor:pointer;">
+          Enviar Código SMS/App
+        </button>
+        <button onclick="fecharModalAuth()" style="background:rgba(255,255,255,0.08);color:#fff;border:none;padding:11px 16px;border-radius:8px;cursor:pointer;">
+          Cancelar
+        </button>
+      </div>
+    </div>
+  </div>
+
 </body>
 </html>
