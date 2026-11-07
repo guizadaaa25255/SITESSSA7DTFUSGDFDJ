@@ -1,7 +1,16 @@
 {
   "version": 2,
-  "name": "grupos-telegram-brasil",
   "cleanUrls": true,
+  "rewrites": [
+    {
+      "source": "/api/grupos",
+      "destination": "/grupos.json"
+    },
+    {
+      "source": "/api/status",
+      "destination": "/grupos.json"
+    }
+  ],
   "headers": [
     {
       "source": "/(.*)",
@@ -11,21 +20,8 @@
           "value": "*"
         },
         {
-          "key": "X-Content-Type-Options",
-          "value": "nosniff"
-        },
-        {
-          "key": "X-Frame-Options",
-          "value": "SAMEORIGIN"
-        }
-      ]
-    },
-    {
-      "source": "/grupos.json",
-      "headers": [
-        {
           "key": "Cache-Control",
-          "value": "public, max-age=300, s-maxage=600"
+          "value": "no-cache, no-store, must-revalidate"
         }
       ]
     }
