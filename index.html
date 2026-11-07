@@ -2232,7 +2232,7 @@
 
         <div id="box-variacoes-geradas" style="display:none;">
           <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
-            <label style="font-size:0.8rem;font-weight:700;color:#fdf4ff;">10 Mensagens Prontas:</label>
+            <label style="font-size:0.8rem;font-weight:700;color:#fdf4ff;">5 Mensagens Prontas:</label>
             <span style="font-size:0.75rem;color:#d946ef;font-weight:700;" id="badge-modal-saudacao">🕒 Saudação: Boa tarde</span>
           </div>
           <div id="lista-inputs-ia" style="display:flex;flex-direction:column;gap:6px;margin-bottom:14px;"></div>
@@ -3492,99 +3492,83 @@
   function obterBancoExtensoTemplates(estilo, saudacao) {
     const saudMin = saudacao.toLowerCase();
 
-    // Gerador combinatório dinâmico para garantir centenas de variações únicas
-    const combinacoesPV = [];
-    const aberturas = [
-      `${saudacao}!`,
-      `Oii, ${saudMin}!`,
-      `Oiie, ${saudMin}`,
-      `Opa, ${saudMin}!`,
-      `Oie gente, ${saudMin}!`,
-      `${saudacao} galera!`,
-      `E aí, ${saudMin}?`,
-      `Oii gente linda!`,
-      `${saudacao} a todos!`
-    ];
-    const chamadas = [
-      "quem tiver de bobeira me dá um oi no pv",
-      "me chama no pv pra gente papear",
-      "alguém livre pra conversar agora?",
-      "passando pra desejar um ótimo dia e chamar pro pv",
-      "meu pv tá liberado pra quem quiser conversar",
-      "quem quiser trocar uma ideia é só chamar",
-      "bora papear sem compromisso?",
-      "procurando pessoas legais pra bater um papo",
-      "se estiver online me manda um alô no pv",
-      "alguém afim de conversar hoje?",
-      "pv abertinho pra quem quiser fazer amizade",
-      "passando pra dar um alô e conhecer pessoas legais",
-      "quem quiser conversar sobre a vida vem de pv",
-      "chama aqui no privado pra gente resenhar",
-      "se tiver acordado e livre dá um pulo no meu pv",
-      "bora trocar uma resenha legal no privado?",
-      "alguém pra conversar e tirar o tédio?",
-      "passando pra mandar um oi, vem pv papear"
-    ];
-    const emojis = ["💞", "🥰", "🙈", "✨", "😉", "💬", "💖", "🌸", "🤗", "🤝", "✌️", "🔥", "rsrs 🙈"];
-
-    aberturas.forEach(ab => {
-      chamadas.forEach(ch => {
-        const em = emojis[Math.floor(Math.random() * emojis.length)];
-        combinacoesPV.push(`${ab} ${ch} ${em}`);
-      });
-    });
-
-    const combinacoesAmizade = [
-      `${saudacao} galera! Alguém afim de fazer amizades novas hoje? 🤝`,
-      `Oie! Sou novo por aqui, quem quiser papear só chamar! ✨`,
-      `${saudacao}! Grupo com uma energia muito bacana, prazer todos! 💬`,
-      `Oii gente, como tá o dia de vocês? Bora papear! 🥰`,
-      `${saudacao}! Curtindo demais a energia positiva do grupo ✨`,
-      `Oie pessoal! Quem curte uma boa conversa, me dá um toque! 🤝`,
-      `${saudacao} a todos! Sempre bom encontrar pessoas legais por aqui. 🍀`,
-      `Oii! Alguém online pra conversar e trocar uma ideia? 💬`,
-      `${saudacao}! Mandando boas vibrações pra todo mundo hoje! 🌸`,
-      `Oie galera! Bora agitar o chat, quem tá presente? 🚀`,
-      `${saudacao} grupo! O que estão fazendo de bom hoje? Bora resenhar! 😉`,
-      `Opa, ${saudMin} pra todo mundo! Amizades novas são sempre bem-vindas 🤝`,
-      `Oie gente! Passando pra desejar ${saudMin} e conhecer pessoas legais! ✨`,
-      `${saudacao}! Que o dia de vocês seja excelente e cheio de coisas boas! 💖`,
-      `Oii amigos! Alguém afim de conversar sobre assuntos variados? 💬`,
-      `${saudacao} comunidade! Sempre uma alegria estar por aqui com vocês ✌️`,
-      `Opa galera, quem tiver livre pra papear dá um alô! 🤗`
+    // Mensagens curtas, diretas e perfeitas para visualização completa no celular (sem cortar)
+    const curtasPV = [
+      `${saudacao}! Vem pv 💞`,
+      `Oiie! Chama no pv 🥰`,
+      `${saudacao}! Alguém livre? 💬`,
+      `Bora papear? Vem pv ✨`,
+      `Opa! Bora conversar? 😉`,
+      `Oie! Me dá um oi no pv 🌸`,
+      `${saudacao}! Pv liberado 💖`,
+      `Oii! Livre pra papear? 🙈`,
+      `Bora trocar uma ideia? ✌️`,
+      `${saudacao}! Chama aí 🤗`,
+      `Oiie! Quem tá on? Vem pv 💬`,
+      `Opa! Só chamar no pv 💖`,
+      `${saudacao}! Bora pv? 🥰`,
+      `Oie! Me chama no pv 😉`,
+      `Tô no pv, só chamar 💞`,
+      `${saudacao}! Alguém à toa? 🙈`,
+      `Bora bater papo no pv? 💬`,
+      `Oii! Vem papear comigo ✨`,
+      `${saudacao}! Quem anima pv? 🤝`,
+      `Opa! Chama no privado 💬`,
+      `Oiie! Passando pra dar oi 🌸`,
+      `${saudacao}! Bora resenhar? 😉`,
+      `Alguém livre agora? Vem pv 💬`,
+      `Oii! Me manda um alô no pv 🥰`,
+      `Tô online, chama aí! 💖`
     ];
 
-    const combinacoesDivulgacao = [
-      `${saudacao}! Novidades imperdíveis disponíveis, venha conferir! 📢`,
-      `Oii pessoal, passando pra compartilhar uma oportunidade excelente! 🚀`,
-      `${saudacao}! Quem busca conteúdo de qualidade não pode perder! ✨`,
-      `Olá a todos! Conteúdo exclusivo e atualizado esperando vocês! 💎`,
-      `${saudacao}! Atualizações quentinhas saindo do forno agora 🚀`,
-      `Oie! Informação de alto valor compartilhada com carinho para o grupo. 🎯`,
-      `${saudacao} gente! Já conferiram os lançamentos de hoje? 📢`,
-      `Olá! Não deixe de acompanhar o melhor material da semana! ⚡`,
-      `${saudacao} a todos! Dicas e novidades exclusivas preparadas pra vocês. 💎`,
-      `Oii! Oportunidade única pra quem tá no grupo hoje, confira! 🚀`,
-      `${saudacao}! Dê uma olhada nessa novidade que preparei com exclusividade 📢`
+    const curtasAmizade = [
+      `${saudacao}! Bora amigar? 🤝`,
+      `Oie! Quem tá online hoje? ✨`,
+      `${saudacao} galera! Tudo bem? 💬`,
+      `Oii gente! Bora papear? 🥰`,
+      `Passando pra dar um oi! ✌️`,
+      `${saudacao}! Prazer estar aqui 🤝`,
+      `Alguém livre pra papear? 💬`,
+      `Opa, ótimo dia a todos! 🍀`,
+      `Quem anima papear hoje? 😉`,
+      `Oie! Novas amizades por aí? ✨`,
+      `${saudacao}! Bom dia a todos 💖`,
+      `Bora agitar o grupo! 🚀`,
+      `Opa! Como vocês estão? 💬`,
+      `${saudacao}! Boas vibrações 🌸`,
+      `Oii pessoal! Quem tá ativo? 🤝`
     ];
 
-    const combinacoesVendas = [
-      `${saudacao}! Promoção especial por tempo limitado, aproveite hoje! 🛍️`,
-      `Oie pessoal! Melhores ofertas com desconto exclusivo ativado agora! 💸`,
-      `${saudacao}! Quem quer economizar e garantir o melhor produto? 🛍️`,
-      `Olá! Condições imperdíveis ativadas exclusivamente para membros! ⚡`,
-      `${saudacao}! Garanta já o seu antes que acabe o estoque! 💎`,
-      `Oii gente! Super oferta especial liberada hoje com preço reduzido! 🏷️`,
-      `${saudacao} a todos! Descontos especiais esperando você no privado. 🛍️`,
-      `Olá! Quer saber mais sobre as promoções? Me chama no pv! 💬`,
-      `${saudacao}! Preços exclusivos válidos somente hoje, aproveite! 💸`,
-      `Oie! Qualidade e economia garantidos pra você, confira! ⚡`
+    const curtasDivulgacao = [
+      `${saudacao}! Novidades hoje 📢`,
+      `Oie! Conteúdo novo liberado 🚀`,
+      `${saudacao}! Olha essa dica 💎`,
+      `Oii! Dá uma olhada aqui 📢`,
+      `${saudacao}! Lançamento novo 🎯`,
+      `Opa! Material exclusivo ⚡`,
+      `${saudacao}! Veja essa novidade 🚀`,
+      `Dica de ouro liberada hoje ✨`,
+      `${saudacao}! Não percam isso 📢`,
+      `Oie! Novidade saindo agora ⚡`
     ];
 
-    if (estilo === "amizade") return combinacoesAmizade;
-    if (estilo === "divulgacao") return combinacoesDivulgacao;
-    if (estilo === "vendas") return combinacoesVendas;
-    return combinacoesPV;
+    const curtasVendas = [
+      `${saudacao}! Promoção ativa 🛍️`,
+      `Oie! Ofertas com desconto 💸`,
+      `${saudacao}! Preço reduzido hoje ⚡`,
+      `Oii! Chama no pv pra ver 🛍️`,
+      `${saudacao}! Desconto relâmpago 💎`,
+      `Opa! Condições especiais 💸`,
+      `${saudacao}! Poucas vagas hoje ⚡`,
+      `Oie! Melhores ofertas no pv 🛍️`,
+      `${saudacao}! Super desconto ativo 🏷️`,
+      `Opa! Chama pra negociar 💬`
+    ];
+
+    if (estilo === "amizade") return curtasAmizade;
+    if (estilo === "divulgacao") return curtasDivulgacao;
+    if (estilo === "vendas") return curtasVendas;
+    return curtasPV;
   }
 
   function gerarVariacoesIA() {
@@ -3706,16 +3690,16 @@
       const btnGosteiBorder = isFix ? "#10b981" : "rgba(255,255,255,0.12)";
 
       return `
-        <div style="display:flex;gap:6px;align-items:center;background:${bgCard};border:1px solid ${borderColor};border-radius:8px;padding:6px 8px;transition:all 0.2s;${glow}">
-          <span style="font-size:0.75rem;color:${isFix ? "#34d399" : "#d946ef"};font-weight:800;width:24px;flex-shrink:0;">#${idx+1}</span>
+        <div style="display:flex;gap:5px;align-items:center;background:${bgCard};border:1px solid ${borderColor};border-radius:8px;padding:5px 7px;transition:all 0.2s;${glow}">
+          <span style="font-size:0.72rem;color:${isFix ? "#34d399" : "#d946ef"};font-weight:800;width:20px;flex-shrink:0;">#${idx+1}</span>
           
-          <input type="text" class="input-ia-var" data-idx="${idx}" value="${esc(slot.texto)}" oninput="iaSlots[${idx}].texto=this.value" style="width:100%;background:transparent;border:none;color:#fff;font-size:0.83rem;outline:none;font-weight:${isFix ? "600" : "400"};">
+          <input type="text" class="input-ia-var" data-idx="${idx}" value="${esc(slot.texto)}" oninput="iaSlots[${idx}].texto=this.value" style="width:100%;min-width:0;background:transparent;border:none;color:#fff;font-size:0.82rem;outline:none;font-weight:${isFix ? "600" : "400"};">
           
-          <div style="display:flex;align-items:center;gap:4px;flex-shrink:0;">
-            <button type="button" onclick="toggleFixarSlotIA(${idx})" title="${isFix ? "Clique para desafixar" : "Gostei! Manter fixa nas próximas gerações"}" style="background:${btnGosteiBg};border:1px solid ${btnGosteiBorder};color:#fff;font-size:0.72rem;font-weight:700;padding:4px 8px;border-radius:6px;cursor:pointer;display:inline-flex;align-items:center;gap:3px;white-space:nowrap;transition:all 0.15s;">
+          <div style="display:flex;align-items:center;gap:3px;flex-shrink:0;">
+            <button type="button" onclick="toggleFixarSlotIA(${idx})" title="${isFix ? "Clique para desafixar" : "Gostei! Manter fixa nas próximas gerações"}" style="background:${btnGosteiBg};border:1px solid ${btnGosteiBorder};color:#fff;font-size:0.69rem;font-weight:700;padding:3px 6px;border-radius:6px;cursor:pointer;display:inline-flex;align-items:center;gap:2px;white-space:nowrap;transition:all 0.15s;">
               ${btnGosteiTxt}
             </button>
-            <button type="button" onclick="trocarSlotIndividualIA(${idx})" title="Trocar apenas esta mensagem" style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);color:#94a3b8;font-size:0.75rem;padding:4px 6px;border-radius:6px;cursor:pointer;">
+            <button type="button" onclick="trocarSlotIndividualIA(${idx})" title="Trocar apenas esta mensagem" style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);color:#94a3b8;font-size:0.7rem;padding:3px 5px;border-radius:6px;cursor:pointer;">
               🎲
             </button>
           </div>
@@ -3727,7 +3711,7 @@
     const lblStatus = document.getElementById("lbl-ia-status-fixadas");
     if (lblStatus) {
       lblStatus.innerHTML = fixadasCount > 0
-        ? `🔒 <b style="color:#10b981;">${fixadasCount} de 10 mensagens fixadas</b> (ficarão salvas ao re-embaralhar!)`
+        ? `🔒 <b style="color:#10b981;">${fixadasCount} de 5 mensagens fixadas</b> (ficarão salvas ao re-embaralhar!)`
         : `💡 Clique em <b>🤍 Gostei</b> nas que curtir para fixar!`;
     }
 
