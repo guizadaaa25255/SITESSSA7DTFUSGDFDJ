@@ -2217,7 +2217,7 @@
           </select>
         </div>
 
-        <button type="button" class="btn-ia-glow" style="width:100%;padding:12px;justify-content:center;margin-bottom:14px;" onclick="gerarVariacoesIA()">
+        <button type="button" id="btn-gerar-ia" class="btn-ia-glow" style="width:100%;padding:12px;justify-content:center;margin-bottom:14px;cursor:pointer;" onclick="gerarVariacoesIA()">
           ✨ Gerar / Re-embaralhar 10 Mensagens
         </button>
 
@@ -3090,69 +3090,125 @@
     document.getElementById("modal-ia-broadcast").classList.remove("open");
   }
 
+    function aoMudarEstiloIA() {
+    gerarVariacoesIA();
+  }
+
+  function obterSaudacaoAtual() {
+    const h = new Date().getHours();
+    if (h >= 5 && h < 12) return "Bom dia";
+    if (h >= 18 || h < 5) return "Boa noite";
+    return "Boa tarde";
+  }
+
   function gerarVariacoesIA() {
-    const estilo = document.getElementById("sel-ia-estilo").value;
-    const banco = {
+    const elBtn = document.getElementById("btn-gerar-ia") || (event ? event.target.closest("button") : null);
+    if (elBtn) {
+      elBtn.innerHTML = "✨ Gerando 10 novas mensagens...";
+      elBtn.style.opacity = "0.8";
+    }
+
+    const estilo = (document.getElementById("sel-ia-estilo") || {}).value || "pv";
+    const saudacao = obterSaudacaoAtual();
+
+    const bancoTemplates = {
       pv: [
-        "Oiie, boa tarde vem pv! 💞",
-        "Oii boa tarde, me chama no pv vaii 🥰",
-        "Boa tarde gente! Alguém pra papear no pv? 🙈",
-        "Oie! Pv liberado pra novas amizades ✨",
-        "Boa tarde! Quem tiver livre me dá um oi no pv 😉",
-        "Oii, passando pra desejar boa tarde e chamar pro pv!",
-        "Oiiee, bora papear? Me chama aqui no privado 💞",
-        "Boa tarde pessoal! Pv tá aberto pra quem quiser conversar!",
-        "Oii, alguém de bobeira hoje? Vem de pv rsrs 🙈",
-        "Boa tarde! Me chama no pv pra gente conversar 🥰"
+        `Oiie, ${saudacao} vem pv! 💞`,
+        `Oii ${saudacao}, me chama no pv vaii 🥰`,
+        `${saudacao} gente! Alguém pra papear no pv? 🙈`,
+        `Oie! Pv liberado pra novas conversas ✨`,
+        `${saudacao}! Quem tiver de bobeira me dá um oi no pv 😉`,
+        `Oii, passando pra desejar ${saudacao.toLowerCase()} e chamar pro pv!`,
+        `Oiiee, bora papear? Me chama aqui no privado 💞`,
+        `${saudacao} pessoal! Meu pv tá aberto pra quem quiser conversar!`,
+        `Oii, alguém online hoje? Vem de pv rsrs 🙈`,
+        `${saudacao}! Me chama no pv pra gente papear 🥰`,
+        `Opa, ${saudacao}! Alguém livre pra conversar no pv agora? 💬`,
+        `Oii gente linda, ${saudacao}! Quem quiser papear chama pv ✨`,
+        `Bora trocar uma ideia? Me manda um oi no privado, ${saudacao.toLowerCase()}!`,
+        `${saudacao} a todos! Quem quiser conversar sem compromisso vem pv 🤝`,
+        `Oii, passando pra deixar um ${saudacao.toLowerCase()} e avisar que o pv tá liberado! 💖`,
+        `${saudacao} grupo! Quem tiver acordado e livre dá um pulo no meu pv 😉`,
+        `Oie! Procurando pessoas legais pra conversar, vem pv! 🌸`,
+        `${saudacao} galera! Se estiver livre me dá um alô no pv 🤗`,
+        `Oii! Bora fazer amizade? Só me chamar no privado ✨`,
+        `${saudacao}! Me chama no pv pra uma boa conversa agora 💬`
       ],
       amizade: [
-        "Boa tarde galera! Alguém afim de fazer amizades novas? 🤝",
-        "Oie! Sou novo por aqui, quem quiser papear só chamar!",
-        "Boa tarde! Grupo muito bacana, prazer conhecer todos!",
-        "Oii gente, como tá o dia de vocês? Bora conversar!",
-        "Boa tarde! Curtindo muito a energia do grupo ✨",
-        "Oie pessoal! Quem curte uma boa conversa, me dá um toque!",
-        "Boa tarde a todos! Sempre bom encontrar pessoas legais por aqui.",
-        "Oii! Alguém acordado pra conversar um pouco? 💬",
-        "Boa tarde! Mandando boas vibrações pra todo mundo!",
-        "Oie galera! Bora agitar o chat hoje! 🚀"
+        `${saudacao} galera! Alguém afim de fazer amizades novas hoje? 🤝`,
+        `Oie! Sou novo por aqui, quem quiser papear só chamar!`,
+        `${saudacao}! Grupo com uma energia muito bacana, prazer todos! ✨`,
+        `Oii gente, como tá o dia de vocês? Bora papear!`,
+        `${saudacao}! Curtindo demais a energia positiva do grupo ✨`,
+        `Oie pessoal! Quem curte uma boa conversa, me dá um toque!`,
+        `${saudacao} a todos! Sempre bom encontrar pessoas legais por aqui.`,
+        `Oii! Alguém online pra conversar e trocar uma ideia? 💬`,
+        `${saudacao}! Mandando boas vibrações pra todo mundo hoje! 🍀`,
+        `Oie galera! Bora agitar o chat, quem tá presente? 🚀`,
+        `${saudacao} grupo! O que estão fazendo de bom hoje? Bora resenhar!`,
+        `Opa, ${saudacao} pra todo mundo! Amizades novas são sempre bem-vindas 🤝`,
+        `Oie gente! Passando pra desejar ${saudacao.toLowerCase()} e conhecer pessoas legais!`,
+        `${saudacao}! Que o dia de vocês seja excelente e cheio de coisas boas! ✨`,
+        `Oii amigos! Alguém afim de conversar sobre assuntos variados? 💬`
       ],
       divulgacao: [
-        "Boa tarde! Novidades imperdíveis disponíveis, venha conferir! 📢",
-        "Oii pessoal, passando pra compartilhar uma oportunidade excelente!",
-        "Boa tarde! Quem busca conteúdo de qualidade não pode perder!",
-        "Olá a todos! Conteúdo exclusivo disponível para vocês ✨",
-        "Boa tarde! Atualizações quentinhas saindo do forno!",
-        "Oie! Informação de valor compartilhada com carinho para o grupo.",
-        "Boa tarde gente! Já conferiram as novidades de hoje? 🚀",
-        "Olá! Não deixe de acompanhar o melhor conteúdo da semana!",
-        "Boa tarde a todos! Dicas exclusivas esperando por você.",
-        "Oii! Oportunidade única pra quem tá no grupo hoje! 🎯"
+        `${saudacao}! Novidades imperdíveis disponíveis, venha conferir! 📢`,
+        `Oii pessoal, passando pra compartilhar uma oportunidade excelente!`,
+        `${saudacao}! Quem busca conteúdo de qualidade não pode perder! ✨`,
+        `Olá a todos! Conteúdo exclusivo e atualizado esperando vocês!`,
+        `${saudacao}! Atualizações quentinhas saindo do forno agora 🚀`,
+        `Oie! Informação de alto valor compartilhada com carinho para o grupo.`,
+        `${saudacao} gente! Já conferiram os lançamentos de hoje? 🎯`,
+        `Olá! Não deixe de acompanhar o melhor material da semana!`,
+        `${saudacao} a todos! Dicas e novidades exclusivas preparadas pra vocês.`,
+        `Oii! Oportunidade única pra quem tá no grupo hoje, confira! 💎`,
+        `${saudacao}! Dê uma olhada nessa dica que preparei com exclusividade 📢`,
+        `Oie pessoal! Para quem quer dar um salto de resultados, veja isso 🚀`
       ],
       vendas: [
-        "Boa tarde! Promoção especial por tempo limitado, aproveite! 🛍️",
-        "Oie pessoal! Melhores ofertas com desconto exclusivo hoje!",
-        "Boa tarde! Quem quer economizar e garantir o melhor produto? 💸",
-        "Olá! Condições imperdíveis ativadas só para membros!",
-        "Boa tarde! Garanta já o seu antes que acabe o estoque! ⚡",
-        "Oii gente! Super oferta especial de hoje liberada!",
-        "Boa tarde a todos! Descontos especiais esperando você no privado.",
-        "Olá! Quer saber mais sobre as promoções? Me chama! 🛍️",
-        "Boa tarde! Preços exclusivos válidos somente hoje!",
-        "Oie! Qualidade e economia reunidos pra você, confira! 💎"
+        `${saudacao}! Promoção especial por tempo limitado, aproveite hoje! 🛍️`,
+        `Oie pessoal! Melhores ofertas com desconto exclusivo ativado agora!`,
+        `${saudacao}! Quem quer economizar e garantir o melhor produto? 💸`,
+        `Olá! Condições imperdíveis ativadas exclusivamente para membros!`,
+        `${saudacao}! Garanta já o seu antes que acabe o estoque! ⚡`,
+        `Oii gente! Super oferta especial liberada hoje com preço reduzido!`,
+        `${saudacao} a todos! Descontos especiais esperando você no privado.`,
+        `Olá! Quer saber mais sobre os planos e promoções? Me chama no pv! 🛍️`,
+        `${saudacao}! Preços exclusivos válidos somente hoje, aproveite!`,
+        `Oie! Qualidade e economia garantidos pra você, confira! 💎`,
+        `${saudacao}! Desconto relâmpago ativado para quem mandar mensagem agora ⚡`,
+        `Opa! Procurando o melhor custo-benefício? Vem conferir no privado 💸`
       ]
     };
 
-    const lista = banco[estilo] || banco.pv;
-    const box = document.getElementById("lista-inputs-ia");
-    box.innerHTML = lista.map((msg, idx) => `
-      <div style="display:flex;gap:8px;align-items:center;">
-        <span style="font-size:0.75rem;color:#d946ef;font-weight:800;width:22px;">#${idx+1}</span>
-        <input type="text" class="input-ia-var" value="${esc(msg)}" style="width:100%;background:#090d16;border:1px solid rgba(255,255,255,0.12);padding:8px 10px;border-radius:6px;color:#fff;font-size:0.83rem;outline:none;">
-      </div>
-    `).join("");
+    // Embaralha aleatoriamente (Fisher-Yates) para garantir 10 mensagens sempre novas
+    const pool = (bancoTemplates[estilo] || bancoTemplates.pv).slice();
+    for (let i = pool.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [pool[i], pool[j]] = [pool[j], pool[i]];
+    }
 
-    document.getElementById("box-variacoes-geradas").style.display = "block";
+    const lista = pool.slice(0, 10);
+    const box = document.getElementById("lista-inputs-ia");
+    if (box) {
+      box.innerHTML = lista.map((msg, idx) => `
+        <div style="display:flex;gap:8px;align-items:center;">
+          <span style="font-size:0.75rem;color:#d946ef;font-weight:800;width:22px;">#${idx+1}</span>
+          <input type="text" class="input-ia-var" value="${esc(msg)}" style="width:100%;background:#090d16;border:1px solid rgba(255,255,255,0.12);padding:8px 10px;border-radius:6px;color:#fff;font-size:0.83rem;outline:none;">
+        </div>
+      `).join("");
+    }
+
+    const boxVar = document.getElementById("box-variacoes-geradas");
+    if (boxVar) boxVar.style.display = "block";
+
+    setTimeout(() => {
+      if (elBtn) {
+        elBtn.innerHTML = "✨ Gerar / Re-embaralhar 10 Mensagens";
+        elBtn.style.opacity = "1";
+      }
+      alerta("✨ 10 variações geradas com sucesso!", "success");
+    }, 200);
   }
 
   function aplicarMensagensIAParaComposer() {
