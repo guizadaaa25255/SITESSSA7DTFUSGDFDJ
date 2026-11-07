@@ -2098,23 +2098,27 @@
         </div>
       </div>
 
-      <div id="box-contas-status" style="text-align:center;padding:12px 10px;color:#94a3b8;font-size:12px;margin-bottom:12px;">
-        Nenhuma conta salva ainda.
+      <div id="box-contas-status" style="max-height:280px;overflow-y:auto;padding-right:2px;margin-bottom:12px;">
+        <div style="text-align:center;padding:12px 10px;color:#94a3b8;font-size:12px;">Carregando contas...</div>
       </div>
 
       <div id="form-nova-conta-box" style="display:none;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:12px;margin-bottom:14px;">
-        <div style="font-size:10px;font-weight:800;color:#60a5fa;letter-spacing:0.5px;text-transform:uppercase;margin-bottom:10px;">CREDENCIAIS TELEGRAM (my.telegram.org)</div>
+        <div style="font-size:10px;font-weight:800;color:#60a5fa;letter-spacing:0.5px;text-transform:uppercase;margin-bottom:10px;">ADICIONAR NOVA CONTA TELEGRAM</div>
         <div style="margin-bottom:8px;">
-          <label style="font-size:11px;color:#cbd5e1;display:block;margin-bottom:3px;font-weight:600;">API ID:</label>
-          <input type="text" id="in-card-api-id" placeholder="Ex: 39786267" style="width:100%;box-sizing:border-box;background:#090d16;border:1px solid rgba(255,255,255,0.12);padding:8px 10px;border-radius:6px;color:#fff;font-size:12px;outline:none;">
+          <label style="font-size:11px;color:#cbd5e1;display:block;margin-bottom:3px;font-weight:600;">Nome da Conta / Identificador:</label>
+          <input type="text" id="in-card-nome" placeholder="Ex: Nayara, Pessoal, Vendas..." style="width:100%;box-sizing:border-box;background:#090d16;border:1px solid rgba(255,255,255,0.12);padding:8px 10px;border-radius:6px;color:#fff;font-size:12px;outline:none;">
         </div>
         <div style="margin-bottom:8px;">
-          <label style="font-size:11px;color:#cbd5e1;display:block;margin-bottom:3px;font-weight:600;">API HASH:</label>
-          <input type="text" id="in-card-api-hash" placeholder="Ex: 058f4c2916f81b23316d0488788165aa" style="width:100%;box-sizing:border-box;background:#090d16;border:1px solid rgba(255,255,255,0.12);padding:8px 10px;border-radius:6px;color:#fff;font-size:12px;outline:none;">
-        </div>
-        <div style="margin-bottom:12px;">
           <label style="font-size:11px;color:#cbd5e1;display:block;margin-bottom:3px;font-weight:600;">Número de Telefone (com +55):</label>
           <input type="text" id="in-card-phone" placeholder="+5511999999999" style="width:100%;box-sizing:border-box;background:#090d16;border:1px solid rgba(255,255,255,0.12);padding:8px 10px;border-radius:6px;color:#fff;font-size:12px;outline:none;">
+        </div>
+        <div style="margin-bottom:8px;">
+          <label style="font-size:11px;color:#cbd5e1;display:block;margin-bottom:3px;font-weight:600;">API ID (opcional / my.telegram.org):</label>
+          <input type="text" id="in-card-api-id" placeholder="Ex: 39786267" style="width:100%;box-sizing:border-box;background:#090d16;border:1px solid rgba(255,255,255,0.12);padding:8px 10px;border-radius:6px;color:#fff;font-size:12px;outline:none;">
+        </div>
+        <div style="margin-bottom:12px;">
+          <label style="font-size:11px;color:#cbd5e1;display:block;margin-bottom:3px;font-weight:600;">API HASH (opcional):</label>
+          <input type="text" id="in-card-api-hash" placeholder="Ex: 058f4c2916f81b23316d0488788165aa" style="width:100%;box-sizing:border-box;background:#090d16;border:1px solid rgba(255,255,255,0.12);padding:8px 10px;border-radius:6px;color:#fff;font-size:12px;outline:none;">
         </div>
         <div style="display:flex;gap:8px;">
           <button type="button" onclick="salvarContaTelegramCard()" style="flex:1;background:#0284c7;color:#fff;border:none;padding:9px;border-radius:6px;font-weight:700;font-size:12px;cursor:pointer;">Salvar e Conectar</button>
@@ -2396,72 +2400,235 @@
     }
   }
 
+  /* ── GERENCIADOR MULTI-CONTAS TELEGRAM (PERSISTÊNCIA E TROCA RÁPIDA) ── */
+  function obterContasSalvas() {
+    let contas = [];
+    try {
+      const str = localStorage.getItem("tg_contas_salvas");
+      if (str) {
+        contas = JSON.parse(str);
+      }
+    } catch(e) { contas = []; }
+
+    // Migração de segurança: se tiver conta antiga salva em tg_conta_conectada mas não no array
+    try {
+      const ativaStr = localStorage.getItem("tg_conta_conectada");
+      if (ativaStr) {
+        const cAtiva = JSON.parse(ativaStr);
+        if (cAtiva && cAtiva.phone) {
+          const existe = contas.some(c => c.phone === cAtiva.phone);
+          if (!existe) {
+            contas.unshift({
+              id: cAtiva.id || ("acc_" + Date.now()),
+              nome: cAtiva.nome || cAtiva.phone,
+              phone: cAtiva.phone,
+              apiId: cAtiva.apiId || "",
+              apiHash: cAtiva.apiHash || ""
+            });
+            localStorage.setItem("tg_contas_salvas", JSON.stringify(contas));
+          }
+        }
+      }
+    } catch(e) {}
+
+    return Array.isArray(contas) ? contas : [];
+  }
+
+  function obterContaAtiva() {
+    try {
+      const str = localStorage.getItem("tg_conta_conectada");
+      if (str) return JSON.parse(str);
+    } catch(e) {}
+    return null;
+  }
+
   function salvarContaTelegramCard() {
+    const nome = (document.getElementById("in-card-nome").value || "").trim();
+    const phone = (document.getElementById("in-card-phone").value || "").trim();
     const apiId = (document.getElementById("in-card-api-id").value || "").trim();
     const apiHash = (document.getElementById("in-card-api-hash").value || "").trim();
-    const phone = (document.getElementById("in-card-phone").value || "").trim();
 
     if (!phone) {
       alerta("Informe ao menos o seu telefone com DDD (+55...)", "error");
       return;
     }
 
-    const conta = { phone, apiId, apiHash, ativa: true };
-    localStorage.setItem("tg_conta_conectada", JSON.stringify(conta));
-    carregarContaTelegramVisual();
+    let contas = obterContasSalvas();
+    const nomeFinal = nome || phone;
+
+    // Procura se já existe pelo telefone
+    const idx = contas.findIndex(c => c.phone === phone);
+    let contaSalva;
+    if (idx !== -1) {
+      contas[idx].nome = nomeFinal;
+      if (apiId) contas[idx].apiId = apiId;
+      if (apiHash) contas[idx].apiHash = apiHash;
+      contaSalva = contas[idx];
+    } else {
+      contaSalva = {
+        id: "acc_" + Date.now(),
+        nome: nomeFinal,
+        phone: phone,
+        apiId: apiId,
+        apiHash: apiHash
+      };
+      contas.unshift(contaSalva);
+    }
+
+    localStorage.setItem("tg_contas_salvas", JSON.stringify(contas));
+    localStorage.setItem("tg_conta_conectada", JSON.stringify(contaSalva));
+
+    // Limpa campos do formulário
+    document.getElementById("in-card-nome").value = "";
+    document.getElementById("in-card-phone").value = "";
+    document.getElementById("in-card-api-id").value = "";
+    document.getElementById("in-card-api-hash").value = "";
+
     toggleFormNovaConta(false);
-    alerta("Conta Telegram conectada com sucesso!", "success");
+    carregarContaTelegramVisual();
+    alerta("Conta Telegram '" + esc(nomeFinal) + "' salva e conectada com sucesso!", "success");
   }
 
-  function carregarContaTelegramVisual() {
-    try {
-      const data = localStorage.getItem("tg_conta_conectada");
-      const boxStatus = document.getElementById("box-contas-status");
-      const avatar = document.getElementById("acc-avatar");
-      const name = document.getElementById("acc-name");
-      const phone = document.getElementById("acc-phone");
+  function trocarParaConta(idOuPhone) {
+    const contas = obterContasSalvas();
+    const alvo = contas.find(c => c.id === idOuPhone || c.phone === idOuPhone);
+    if (!alvo) {
+      alerta("Conta não encontrada.", "error");
+      return;
+    }
 
-      if (!data) {
-        if (boxStatus) boxStatus.innerHTML = "Nenhuma conta salva ainda.";
-        if (avatar) { avatar.textContent = "✕"; avatar.style.background = "rgba(59,130,246,0.2)"; avatar.style.color = "#60a5fa"; }
-        if (name) name.textContent = "Conectar Telegram";
-        if (phone) phone.textContent = "Clique para entrar";
-        return;
-      }
+    localStorage.setItem("tg_conta_conectada", JSON.stringify(alvo));
+    carregarContaTelegramVisual();
+    alerta("Conectado na conta " + esc(alvo.nome || alvo.phone) + "!", "success");
+  }
 
-      const c = JSON.parse(data);
-      if (c && c.phone) {
-        if (avatar) {
-          avatar.textContent = "✓";
-          avatar.style.background = "#10b981";
-          avatar.style.color = "#fff";
-        }
-        if (name) name.textContent = c.phone;
-        if (phone) phone.textContent = "Conectado";
+  function excluirContaSalva(idOuPhone, ev) {
+    if (ev) ev.stopPropagation();
+    const contas = obterContasSalvas();
+    const alvo = contas.find(c => c.id === idOuPhone || c.phone === idOuPhone);
+    const nomeDisplay = alvo ? (alvo.nome || alvo.phone) : "esta conta";
 
-        if (boxStatus) {
-          boxStatus.innerHTML = `
-            <div style="display:flex;align-items:center;justify-content:space-between;text-align:left;">
-              <div>
-                <div style="font-weight:700;color:#fff;font-size:13px;display:flex;align-items:center;gap:6px;">
-                  <span style="color:#10b981;">●</span> ${esc(c.phone)}
-                </div>
-                <div style="font-size:11px;color:#94a3b8;margin-top:2px;">Conta Ativa no Navegador</div>
-              </div>
-              <button onclick="desconectarContaLocal()" style="background:rgba(239,68,68,0.2);color:#fca5a5;border:1px solid rgba(239,68,68,0.4);border-radius:6px;padding:4px 10px;font-size:11px;font-weight:700;cursor:pointer;">
-                Desconectar
-              </button>
-            </div>
-          `;
-        }
-      }
-    } catch(e) {}
+    if (!confirm("Deseja realmente remover '" + nomeDisplay + "' das suas contas salvas?")) {
+      return;
+    }
+
+    const novasContas = contas.filter(c => c.id !== idOuPhone && c.phone !== idOuPhone);
+    localStorage.setItem("tg_contas_salvas", JSON.stringify(novasContas));
+
+    // Se a conta removida for a conta ativa no momento, desconecta
+    const ativa = obterContaAtiva();
+    if (ativa && (ativa.id === idOuPhone || ativa.phone === idOuPhone)) {
+      localStorage.removeItem("tg_conta_conectada");
+    }
+
+    carregarContaTelegramVisual();
+    alerta("Conta removida das salvas.", "info");
   }
 
   function desconectarContaLocal() {
     localStorage.removeItem("tg_conta_conectada");
     carregarContaTelegramVisual();
-    alerta("Conta desconectada.", "info");
+    alerta("Conta desconectada. Suas contas continuam salvas para você alternar quando quiser!", "info");
+  }
+
+  function carregarContaTelegramVisual() {
+    try {
+      const ativa = obterContaAtiva();
+      const contas = obterContasSalvas();
+
+      const boxStatus = document.getElementById("box-contas-status");
+      const avatar = document.getElementById("acc-avatar");
+      const name = document.getElementById("acc-name");
+      const phone = document.getElementById("acc-phone");
+
+      // 1. Atualizar Pill no Cabeçalho
+      if (ativa && ativa.phone) {
+        if (avatar) {
+          avatar.textContent = "✓";
+          avatar.style.background = "#10b981";
+          avatar.style.color = "#fff";
+        }
+        if (name) name.textContent = ativa.nome || ativa.phone;
+        if (phone) phone.textContent = ativa.nome ? (ativa.phone + " • Conectado") : "Conectado";
+      } else {
+        if (avatar) {
+          avatar.textContent = "✕";
+          avatar.style.background = "rgba(59,130,246,0.2)";
+          avatar.style.color = "#60a5fa";
+        }
+        if (name) name.textContent = "Conectar Telegram";
+        if (phone) phone.textContent = "Clique para entrar";
+      }
+
+      // 2. Renderizar Lista no Modal "SUAS CONTAS SALVAS"
+      if (!boxStatus) return;
+
+      if (!contas || contas.length === 0) {
+        boxStatus.innerHTML = `
+          <div style="text-align:center;padding:18px 10px;color:#94a3b8;font-size:12px;">
+            Nenhuma conta salva ainda.<br>
+            <span style="font-size:11px;color:#64748b;">Clique no botão <b>+ Nova Conta</b> acima para adicionar.</span>
+          </div>
+        `;
+        return;
+      }
+
+      let htmlContas = "";
+      contas.forEach(c => {
+        const isAtiva = ativa && (ativa.id === c.id || ativa.phone === c.phone);
+        const displayName = esc(c.nome || c.phone);
+        const displayPhone = esc(c.phone);
+
+        if (isAtiva) {
+          // Card de conta ATIVA (com badge verde e botão Desconectar)
+          htmlContas += `
+            <div style="background:rgba(16,185,129,0.08);border:1px solid rgba(16,185,129,0.35);border-radius:10px;padding:10px 12px;margin-bottom:8px;display:flex;align-items:center;justify-content:space-between;gap:8px;">
+              <div style="min-width:0;flex:1;">
+                <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;">
+                  <span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#10b981;box-shadow:0 0 6px #10b981;"></span>
+                  <span style="font-weight:700;color:#fff;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${displayName}</span>
+                  <span style="background:rgba(16,185,129,0.2);color:#34d399;font-size:9px;font-weight:700;padding:2px 6px;border-radius:4px;text-transform:uppercase;">Conectada</span>
+                </div>
+                <div style="font-size:11px;color:#94a3b8;margin-top:2px;font-family:monospace;">${displayPhone}</div>
+              </div>
+              <div style="display:flex;align-items:center;gap:6px;">
+                <button type="button" onclick="desconectarContaLocal()" title="Desconectar temporariamente" style="background:rgba(239,68,68,0.2);color:#fca5a5;border:1px solid rgba(239,68,68,0.4);border-radius:6px;padding:5px 9px;font-size:11px;font-weight:700;cursor:pointer;">
+                  Desconectar
+                </button>
+                <button type="button" onclick="excluirContaSalva('${esc(c.id || c.phone)}', event)" title="Excluir conta permanentemente" style="background:rgba(255,255,255,0.05);color:#94a3b8;border:1px solid rgba(255,255,255,0.1);border-radius:6px;padding:5px 7px;font-size:11px;cursor:pointer;">
+                  🗑️
+                </button>
+              </div>
+            </div>
+          `;
+        } else {
+          // Card de conta SALVA (com botão de 1 clique "⚡ Entrar")
+          htmlContas += `
+            <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:10px 12px;margin-bottom:8px;display:flex;align-items:center;justify-content:space-between;gap:8px;transition:all 0.2s;">
+              <div style="min-width:0;flex:1;cursor:pointer;" onclick="trocarParaConta('${esc(c.id || c.phone)}')">
+                <div style="display:flex;align-items:center;gap:6px;">
+                  <span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#64748b;"></span>
+                  <span style="font-weight:700;color:#e2e8f0;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${displayName}</span>
+                </div>
+                <div style="font-size:11px;color:#94a3b8;margin-top:2px;font-family:monospace;">${displayPhone}</div>
+              </div>
+              <div style="display:flex;align-items:center;gap:6px;">
+                <button type="button" onclick="trocarParaConta('${esc(c.id || c.phone)}')" title="Entrar nesta conta com 1 clique" style="background:#0284c7;color:#fff;border:none;border-radius:6px;padding:6px 12px;font-size:11px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;gap:4px;box-shadow:0 2px 6px rgba(2,132,199,0.35);">
+                  ⚡ Entrar
+                </button>
+                <button type="button" onclick="excluirContaSalva('${esc(c.id || c.phone)}', event)" title="Excluir conta permanentemente" style="background:rgba(255,255,255,0.05);color:#94a3b8;border:1px solid rgba(255,255,255,0.1);border-radius:6px;padding:5px 7px;font-size:11px;cursor:pointer;">
+                  🗑️
+                </button>
+              </div>
+            </div>
+          `;
+        }
+      });
+
+      boxStatus.innerHTML = htmlContas;
+    } catch(e) {
+      console.error("Erro ao carregar contas:", e);
+    }
   }
 
   /* ── ABA 1: RENDERIZAÇÃO DE GRUPOS MANUAL ── */
