@@ -1609,6 +1609,9 @@
     .groups-scroll-list label span:last-of-type {
       flex-shrink: 0 !important;
     }
+    .monitor-subtitle, .control-card p {
+      display: none !important;
+    }
     .monitor-header {
       display: flex !important;
       flex-direction: column !important;
@@ -1970,9 +1973,8 @@
               <span>✨</span> Criar com IA
             </button>
           </div>
-          <p style="font-size:0.82rem;color:var(--text-muted);line-height:1.45;">Digite ou gere até 10 variações com IA para envio aleatório com saudação dinâmica (Bom dia / Boa tarde / Boa noite).</p>
 
-          <textarea class="textarea-modern" id="txt-broadcast-msg" placeholder="Coloque aqui sua mensagem ou várias (uma por linha) para rotacionar aleatoriamente!&#10;&#10;Exemplos:&#10;( Oiie, boa tarde vem pv! 💞 )&#10;( Oiie boa noite, me chama rs🙈 )&#10;( Bom dia, Me chama vaii🥰 )&#10;( Oii, pv liberado! )" oninput="aoDigitarMensagem()"></textarea>
+          <textarea class="textarea-modern" id="txt-broadcast-msg" placeholder="Digite a mensagem para envio (ou várias, uma por linha, para rotação automática)..." oninput="aoDigitarMensagem()"></textarea>
 
           <div class="composer-status-row">
             <div id="lbl-variacoes-status" style="font-size:0.8rem;color:#c084fc;font-weight:700;">
@@ -1984,16 +1986,16 @@
           <div class="ia-banner-box">
             <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-weight:700;color:#fdf4ff;font-size:0.82rem;">
               <input type="checkbox" id="chk-broadcast-rotacionar" checked onchange="aoDigitarMensagem()" style="accent-color:#d946ef;width:16px;height:16px;cursor:pointer;">
-              <span>🎲 Enviar 1 mensagem aleatória para cada grupo (Modo Rotação)</span>
+              <span>🎲 Rotação inteligente (1 mensagem diferente por grupo)</span>
             </label>
             <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-weight:700;color:#fdf4ff;font-size:0.82rem;">
               <input type="checkbox" id="chk-broadcast-horario" checked onchange="aoDigitarMensagem()" style="accent-color:#d946ef;width:16px;height:16px;cursor:pointer;">
-              <span>🕒 Ajustar saudação automática por horário (Bom dia / Boa tarde / Boa noite)</span>
+              <span>🕒 Saudação automática por horário (Bom dia / Boa tarde / Boa noite)</span>
             </label>
             <div style="font-size:0.75rem;color:var(--text-muted);display:flex;align-items:center;gap:8px;padding-top:4px;border-top:1px solid rgba(255,255,255,0.06);">
-              <span>⏰ Relógio: <strong id="val-horario-agora" style="color:#fff;">17:45</strong></span>
+              <span>⏰ Horário: <strong id="val-horario-agora" style="color:#fff;">17:45</strong></span>
               <span>&bull;</span>
-              <span style="color:#d946ef;font-weight:700;" id="badge-saudacao-agora">Saudação atual: Boa tarde</span>
+              <span style="color:#d946ef;font-weight:700;" id="badge-saudacao-agora">Saudação: Boa tarde</span>
             </div>
           </div>
 
