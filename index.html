@@ -908,7 +908,7 @@
   <div class="admin-bar" id="admin-bar">
     <div class="admin-info">
       <span>👑 MODO ADMINISTRADOR ATIVO</span>
-      <span style="font-size:0.75rem;background:rgba(239,68,68,0.2);padding:2px 8px;border-radius:4px;color:#fca5a5;">Acesso Total</span>
+      <span style="font-size:0.75rem;background:rgba(16,185,129,0.2);padding:2px 8px;border-radius:4px;color:#34d399;font-weight:700;">⚡ Auto-Save Ativo</span>
     </div>
     <div class="admin-actions">
       <button class="btn-adm-action" onclick="abrirModalImportar()">📥 Acrescentar Grupos</button>
@@ -1349,12 +1349,13 @@
     });
   }
 
-  function excluirGrupo(url) {
+  async function excluirGrupo(url) {
     if (!confirm("Tem certeza que deseja excluir este grupo do site?")) return;
     catalogoGrupos = catalogoGrupos.filter(g => g.url !== url);
     atualizarMetricasVisual();
     renderizarGrupos();
-    alerta("Grupo excluído! Para enviar a alteração para todos, abra 'Acrescentar Grupos' e clique em 'Mandar pro Site Inteiro'.", "info");
+    alerta("Grupo excluído! Salvando alteração no site automaticamente...", "info");
+    await publicarAlteracoesNoSite();
   }
 
   function atualizarMetricasVisual() {
@@ -1423,8 +1424,10 @@
       atualizarMetricasVisual();
       renderizarGrupos();
 
-      sMsg.innerHTML = `✔ ${novos.length} novo(s) grupo(s) filtrado(s) e adicionado(s)! Para salvar no ar, clique no botão azul abaixo 'Mandar pro Site Inteiro'.`;
-      alerta(`${novos.length} grupos filtrados com sucesso!`, "success");
+      sMsg.innerHTML = `✔ ${novos.length} novo(s) grupo(s) adicionados! Salvando no site inteiro automaticamente...`;
+      alerta(`${novos.length} grupos filtrados! Salvando no ar automaticamente...`, "info");
+      await publicarAlteracoesNoSite();
+      sMsg.innerHTML = `🎉 SUCESSO! ${novos.length} grupo(s) adicionados e publicados no site inteiro!`;
       document.getElementById("import-textarea").value = "";
     } else {
       sMsg.innerHTML = `Nenhum link inédito. Todos os links informados já constam no site.`;
@@ -1447,10 +1450,9 @@
 
     let GITHUB_TOKEN = localStorage.getItem("tg_gh_token") || "";
     if (!GITHUB_TOKEN) {
-      GITHUB_TOKEN = prompt("Insira seu Token do GitHub para salvar no site inteiro (salvo no navegador):");
+      GITHUB_TOKEN = prompt("Cole seu Token do GitHub apenas uma vez para ativar o salvamento automático (fica salvo no navegador):");
       if (!GITHUB_TOKEN) {
         alerta("Token não informado. Operação cancelada.", "error");
-        if (btnPub) { btnPub.disabled = false; btnPub.textContent = "🚀 Mandar pro Site Inteiro"; }
         return;
       }
       localStorage.setItem("tg_gh_token", GITHUB_TOKEN.trim());
