@@ -2867,14 +2867,18 @@
   }
 
   async function chamarApiTelegram(rota, dados = null) {
+    const isLocal = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1";
+    const tunnelUrl = "https://hence-till-imaging-combinations.trycloudflare.com";
+
     const endpoints = [
-      window.location.origin.includes("github.io") ? "https://lit-cant-folder-lookup.trycloudflare.com" : "",
+      // Se estamos na nuvem (Vercel ou GitHub Pages), o túnel HTTPS precisa vir primeiro para evitar bloqueio de Mixed Content
+      ...(!isLocal ? [tunnelUrl] : []),
       "",
-      "https://lit-cant-folder-lookup.trycloudflare.com",
+      tunnelUrl,
       "http://localhost:5000",
       "http://127.0.0.1:5000",
       "http://192.168.1.8:5000"
-    ].filter((v, i, a) => a.indexOf(v) === i);
+    ].filter(Boolean).filter((v, i, a) => a.indexOf(v) === i);
 
     let lastError = null;
     const metodo = dados ? "POST" : "GET";
@@ -2994,7 +2998,12 @@
         btn.style.opacity = "1";
         btn.style.cursor = "pointer";
       }
-      alerta("Não foi possível entrar no grupo automaticamente. Certifique-se de que sua conta está conectada no topo!", "error");
+      alerta("Não foi possível entrar via API automática. Abrindo grupo diretamente...", "warn");
+      try {
+        window.open(url, "_blank");
+      } catch(e) {
+        window.location.href = url;
+      }
     }
   }
 
@@ -3346,12 +3355,14 @@
       broadcastPollInterval = null;
     }
 
+    const isLocal = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1";
+    const tunnelUrl = "https://hence-till-imaging-combinations.trycloudflare.com";
     const endpoints = [
-      window.location.origin.includes("github.io") ? "https://lit-cant-folder-lookup.trycloudflare.com" : "",
+      ...(!isLocal ? [tunnelUrl] : []),
       "",
-      "https://lit-cant-folder-lookup.trycloudflare.com",
+      tunnelUrl,
       "http://localhost:5000"
-    ].filter((v, i, a) => a.indexOf(v) === i);
+    ].filter(Boolean).filter((v, i, a) => a.indexOf(v) === i);
 
     const base = endpoints[0] || "";
     const sseUrl = (base ? base : "") + "/api/broadcast/stream";
