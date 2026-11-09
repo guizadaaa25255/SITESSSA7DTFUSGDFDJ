@@ -2149,24 +2149,89 @@
     </div>
   </div>
 
-  <!-- ── MODAL 2: LOGIN ADM ── -->
+  <!-- ── MODAL 2: LOGIN ADM COM SENHA ── -->
   <div class="modal-backdrop" id="modal-login-adm">
-    <div class="modal-card" style="max-width:380px;">
+    <div class="modal-card" style="max-width:380px;background:#101828;border:1px solid rgba(239,68,68,0.3);box-shadow:0 25px 60px rgba(0,0,0,0.9);">
       <div class="modal-header">
-        <h3>Painel do Administrador</h3>
+        <div style="display:flex;align-items:center;gap:8px;">
+          <span style="font-size:1.1rem;">🔒</span>
+          <h3 style="margin:0;font-size:1rem;color:#fff;">Acesso do Administrador</h3>
+        </div>
         <button class="modal-close" onclick="toggleAdmModal()">&times;</button>
       </div>
       <div class="modal-body">
-        <p style="font-size:0.83rem;color:var(--text-muted);margin-bottom:14px;">
-          Digite a senha mestra para desbloquear as funções de adição, exclusão e publicação global.
+        <p style="font-size:0.82rem;color:#94a3b8;margin-bottom:14px;line-height:1.45;">
+          Digite a senha mestra para abrir o Painel Administrativo com todas as contas salvas:
         </p>
-        <input type="password" id="in-senha-adm" placeholder="Senha do Administrador" style="width:100%;background:var(--bg-input);border:1px solid var(--border-subtle);border-radius:var(--radius-sm);padding:11px 14px;color:#fff;font-size:0.95rem;outline:none;margin-bottom:14px;" onkeydown="if(event.key==='Enter')confirmarLoginAdm()">
+        <input type="password" id="in-senha-adm" placeholder="Digite a senha (guigui99)" style="width:100%;box-sizing:border-box;background:#090d16;border:1px solid rgba(255,255,255,0.15);border-radius:8px;padding:11px 14px;color:#fff;font-size:0.95rem;outline:none;margin-bottom:14px;" onkeydown="if(event.key==='Enter')confirmarLoginAdm()">
         <div style="display:flex;gap:10px;">
-          <button onclick="confirmarLoginAdm()" style="flex:1;background:#ef4444;color:#fff;border:none;padding:11px;border-radius:var(--radius-sm);font-weight:700;cursor:pointer;">
-            Entrar
+          <button onclick="confirmarLoginAdm()" style="flex:1;background:#ef4444;color:#fff;border:none;padding:11px;border-radius:8px;font-weight:700;font-size:0.88rem;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;box-shadow:0 4px 14px rgba(239,68,68,0.4);">
+            🔓 Entrar no Painel ADM
           </button>
-          <button onclick="toggleAdmModal()" style="background:var(--bg-input);border:1px solid var(--border-subtle);color:var(--text-muted);padding:11px 16px;border-radius:var(--radius-sm);cursor:pointer;">
+          <button onclick="toggleAdmModal()" style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);color:#94a3b8;padding:11px 16px;border-radius:8px;font-size:0.85rem;cursor:pointer;">
             Cancelar
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── MODAL 2.1: PAINEL ADMINISTRADOR COMPLETO (COM TODAS AS CONTAS) ── -->
+  <div class="modal-backdrop" id="modal-painel-adm" onclick="if(event.target===this)fecharPainelAdm()">
+    <div class="modal-card" style="max-width:480px;background:#0d1322;border:1px solid rgba(255,255,255,0.15);border-radius:18px;box-shadow:0 25px 60px rgba(0,0,0,0.9);padding:0;overflow:hidden;">
+      <div style="background:linear-gradient(135deg,rgba(239,68,68,0.18),rgba(59,130,246,0.18));padding:16px 20px;border-bottom:1px solid rgba(255,255,255,0.1);display:flex;align-items:center;justify-content:space-between;">
+        <div style="display:flex;align-items:center;gap:10px;">
+          <div style="width:36px;height:36px;border-radius:10px;background:#ef4444;display:flex;align-items:center;justify-content:center;font-size:1.1rem;box-shadow:0 0 12px rgba(239,68,68,0.5);">
+            🛡️
+          </div>
+          <div>
+            <h3 style="margin:0;font-size:1rem;color:#fff;font-weight:800;">Painel do Administrador</h3>
+            <span style="font-size:0.75rem;color:#10b981;font-weight:700;">● Acesso Autorizado · Senha Mestra Ativa</span>
+          </div>
+        </div>
+        <button class="modal-close" onclick="fecharPainelAdm()" style="background:rgba(255,255,255,0.08);border:none;color:#cbd5e1;border-radius:8px;width:30px;height:30px;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;">&times;</button>
+      </div>
+
+      <div class="modal-body" style="padding:18px 20px;max-height:80vh;overflow-y:auto;">
+        <div style="margin-bottom:20px;">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
+            <div style="display:flex;align-items:center;gap:6px;">
+              <span style="font-size:0.8rem;font-weight:800;color:#f87171;text-transform:uppercase;letter-spacing:0.5px;">📱 Contas Salvas para Logar</span>
+              <span style="background:rgba(239,68,68,0.15);color:#fca5a5;font-size:0.7rem;font-weight:700;padding:2px 7px;border-radius:10px;" id="badge-adm-total-contas">5 contas</span>
+            </div>
+            <button type="button" onclick="fecharPainelAdm();abrirModalMenuContas();toggleFormNovaConta(true);" style="background:#0284c7;color:#fff;border:none;padding:5px 10px;border-radius:6px;font-size:0.72rem;font-weight:700;cursor:pointer;">
+              + Nova Conta
+            </button>
+          </div>
+          <p style="font-size:0.78rem;color:#94a3b8;margin-bottom:12px;line-height:1.4;">
+            Clique no botão <b>⚡ Logar / Conectar</b> na conta desejada para alternar na hora:
+          </p>
+
+          <div id="lista-contas-painel-adm" style="display:flex;flex-direction:column;gap:8px;">
+            <!-- Preenchido dinamicamente por renderizarContasPainelAdm() -->
+          </div>
+        </div>
+
+        <div style="border-top:1px solid rgba(255,255,255,0.08);margin-bottom:16px;"></div>
+
+        <div style="margin-bottom:16px;">
+          <span style="font-size:0.75rem;font-weight:800;color:#94a3b8;text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:8px;">⚙️ Ações Administrativas</span>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+            <button type="button" onclick="fecharPainelAdm();abrirModalImportar();" style="background:rgba(59,130,246,0.12);border:1px solid rgba(59,130,246,0.3);color:#93c5fd;padding:10px;border-radius:8px;font-size:0.78rem;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;">
+              📥 Acrescentar Grupos
+            </button>
+            <button type="button" onclick="publicarAlteracoesNoSite()" style="background:rgba(16,185,129,0.12);border:1px solid rgba(16,185,129,0.3);color:#6ee7b7;padding:10px;border-radius:8px;font-size:0.78rem;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;">
+              🚀 Publicar Site
+            </button>
+          </div>
+        </div>
+
+        <div style="display:flex;justify-content:space-between;align-items:center;padding-top:10px;border-top:1px solid rgba(255,255,255,0.08);">
+          <button type="button" onclick="sairAdm()" style="background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.25);color:#fca5a5;padding:8px 14px;border-radius:6px;font-size:0.78rem;font-weight:700;cursor:pointer;">
+            🚪 Sair do Modo ADM
+          </button>
+          <button type="button" onclick="fecharPainelAdm()" style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);color:#cbd5e1;padding:8px 16px;border-radius:6px;font-size:0.78rem;font-weight:600;cursor:pointer;">
+            Fechar
           </button>
         </div>
       </div>
@@ -2321,32 +2386,57 @@
     toggleFiltrosAvancados();
   }
 
-  /* ── ADMIN LOG IN / OUT ── */
+  /* ── ADMIN LOG IN / OUT & PAINEL DE CONTAS ── */
   function toggleAdmModal() {
     const m = document.getElementById("modal-login-adm");
+    if (!m) return;
     m.classList.toggle("open");
     if (m.classList.contains("open")) {
-      setTimeout(() => document.getElementById("in-senha-adm").focus(), 100);
+      const inp = document.getElementById("in-senha-adm");
+      if (inp) {
+        inp.value = "";
+        setTimeout(() => inp.focus(), 100);
+      }
     }
   }
 
+  function abrirPainelAdm() {
+    fecharModalMenuContas();
+    if (!isAdmLogado) {
+      toggleAdmModal();
+      return;
+    }
+    const m = document.getElementById("modal-painel-adm");
+    if (m) {
+      m.classList.add("open");
+      renderizarContasPainelAdm();
+    }
+  }
+
+  function fecharPainelAdm() {
+    const m = document.getElementById("modal-painel-adm");
+    if (m) m.classList.remove("open");
+  }
+
   function confirmarLoginAdm() {
-    const pass = document.getElementById("in-senha-adm").value;
+    const pass = (document.getElementById("in-senha-adm").value || "").trim();
     if (pass === SENHA_MESTRA) {
       isAdmLogado = true;
       sessionStorage.setItem("adm_logado", "true");
       atualizarVisibilidadeAdm();
       toggleAdmModal();
-      alerta("Modo Administrador ativado!", "success");
+      alerta("Senha correta! Painel do Administrador liberado.", "success");
+      abrirPainelAdm();
       renderizarGrupos();
     } else {
-      alerta("Senha incorreta!", "error");
+      alerta("Senha incorreta! Digite a senha mestra (guigui99).", "error");
     }
   }
 
   function sairAdm() {
     isAdmLogado = false;
     sessionStorage.removeItem("adm_logado");
+    fecharPainelAdm();
     atualizarVisibilidadeAdm();
     alerta("Sessão administrativa encerrada.", "info");
     renderizarGrupos();
@@ -2367,21 +2457,85 @@
     }
     if (txtAdm && btnAdmTrig) {
       if (isAdmLogado) {
-        txtAdm.textContent = "Logado como Administrador";
+        txtAdm.textContent = "Modo Administrador Ativo";
         txtAdm.style.color = "#10b981";
-        btnAdmTrig.innerHTML = "🚪 Sair do Modo Administrador";
-        btnAdmTrig.style.background = "rgba(239, 68, 68, 0.2)";
-        btnAdmTrig.style.border = "1px solid rgba(239, 68, 68, 0.5)";
-        btnAdmTrig.onclick = () => { sairAdm(); fecharModalMenuContas(); };
+        btnAdmTrig.innerHTML = "🛡️ Abrir Painel ADM (Contas & Gestão)";
+        btnAdmTrig.style.background = "linear-gradient(135deg,rgba(16,185,129,0.25),rgba(59,130,246,0.25))";
+        btnAdmTrig.style.border = "1px solid rgba(16,185,129,0.5)";
+        btnAdmTrig.onclick = () => { fecharModalMenuContas(); abrirPainelAdm(); };
       } else {
         txtAdm.textContent = "Acesso Restrito";
         txtAdm.style.color = "#94a3b8";
         btnAdmTrig.innerHTML = "🔒 Abrir Painel ADM";
         btnAdmTrig.style.background = "linear-gradient(135deg,rgba(239,68,68,0.2),rgba(59,130,246,0.2))";
         btnAdmTrig.style.border = "1px solid rgba(239,68,68,0.4)";
-        btnAdmTrig.onclick = () => { fecharModalMenuContas(); toggleAdmModal(); };
+        btnAdmTrig.onclick = () => { fecharModalMenuContas(); abrirPainelAdm(); };
       }
     }
+  }
+
+  function renderizarContasPainelAdm() {
+    const box = document.getElementById("lista-contas-painel-adm");
+    if (!box) return;
+
+    const contas = obterContasSalvas();
+    const ativa = obterContaAtiva();
+
+    const badgeTotal = document.getElementById("badge-adm-total-contas");
+    if (badgeTotal) badgeTotal.textContent = `${contas.length} contas`;
+
+    if (!contas || contas.length === 0) {
+      box.innerHTML = `
+        <div style="text-align:center;padding:20px;color:#94a3b8;font-size:0.82rem;">
+          Nenhuma conta encontrada. Clique em <b>+ Nova Conta</b> para adicionar.
+        </div>
+      `;
+      return;
+    }
+
+    box.innerHTML = contas.map(c => {
+      const isAtiva = ativa && (ativa.id === c.id || ativa.phone === c.phone);
+      const displayName = esc(c.nome || c.phone);
+      const displayPhone = esc(c.phone);
+      const iniciais = esc(c.iniciais || displayName.substring(0, 2).toUpperCase());
+
+      const bgCard = isAtiva ? "rgba(16,185,129,0.1)" : "#131b2e";
+      const borderCard = isAtiva ? "1px solid rgba(16,185,129,0.45)" : "1px solid rgba(255,255,255,0.08)";
+      const glow = isAtiva ? "box-shadow:0 0 14px rgba(16,185,129,0.2);" : "";
+
+      const btnAcao = isAtiva
+        ? `<div style="display:flex;align-items:center;gap:6px;">
+             <span style="background:#059669;color:#fff;font-size:0.72rem;font-weight:700;padding:5px 10px;border-radius:6px;display:inline-flex;align-items:center;gap:4px;">
+               ✔ Conectada
+             </span>
+             <button type="button" onclick="desconectarContaLocal();renderizarContasPainelAdm();" title="Desconectar temporariamente" style="background:rgba(239,68,68,0.18);border:1px solid rgba(239,68,68,0.35);color:#fca5a5;padding:5px 8px;border-radius:6px;font-size:0.7rem;font-weight:700;cursor:pointer;">
+               Desconectar
+             </button>
+           </div>`
+        : `<button type="button" onclick="trocarParaConta('${esc(c.id || c.phone)}');renderizarContasPainelAdm();" style="background:#0284c7;color:#fff;border:none;border-radius:6px;padding:6px 14px;font-size:0.75rem;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;gap:4px;box-shadow:0 2px 8px rgba(2,132,199,0.4);transition:all 0.15s;">
+             ⚡ Logar / Conectar
+           </button>`;
+
+      return `
+        <div style="background:${bgCard};border:${borderCard};border-radius:10px;padding:10px 14px;display:flex;align-items:center;justify-content:space-between;gap:10px;transition:all 0.2s;${glow}">
+          <div style="display:flex;align-items:center;gap:10px;min-width:0;flex:1;">
+            <div style="width:36px;height:36px;border-radius:8px;background:${isAtiva ? "linear-gradient(135deg,#10b981,#059669)" : "linear-gradient(135deg,#3b82f6,#6366f1)"};color:#fff;font-weight:800;font-size:0.85rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+              ${iniciais}
+            </div>
+            <div style="min-width:0;flex:1;">
+              <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;">
+                <span style="font-weight:700;color:#fff;font-size:0.88rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${displayName}</span>
+                ${isAtiva ? '<span style="background:rgba(16,185,129,0.2);color:#34d399;font-size:0.65rem;font-weight:800;padding:1px 5px;border-radius:4px;text-transform:uppercase;">Ativa</span>' : ''}
+              </div>
+              <div style="font-size:0.75rem;color:#94a3b8;font-family:'JetBrains Mono';margin-top:2px;">${displayPhone}</div>
+            </div>
+          </div>
+          <div style="flex-shrink:0;">
+            ${btnAcao}
+          </div>
+        </div>
+      `;
+    }).join("");
   }
 
   /* ── MODAL CONTA E API ── */
@@ -2408,6 +2562,8 @@
   }
 
   /* ── GERENCIADOR MULTI-CONTAS TELEGRAM (PERSISTÊNCIA E TROCA RÁPIDA) ── */
+  const CONTAS_PADRAO_SISTEMA = [{"id": "srv_5588997314756", "nome": "Mari", "phone": "+5588997314756", "apiId": "", "apiHash": "", "iniciais": "M"}, {"id": "srv_5511926358730", "nome": "Nayara Alves", "phone": "+5511926358730", "apiId": "", "apiHash": "", "iniciais": "NA"}, {"id": "srv_5511932596396", "nome": "SophiaFreitaz", "phone": "+5511932596396", "apiId": "", "apiHash": "", "iniciais": "S"}, {"id": "srv_5531991119327", "nome": "RosalinaAlmeida", "phone": "+5531991119327", "apiId": "", "apiHash": "", "iniciais": "R"}, {"id": "srv_5531997019436", "nome": "+5531997019436", "phone": "+5531997019436", "apiId": "", "apiHash": "", "iniciais": "+5"}];
+
   function obterContasSalvas() {
     let contas = [];
     try {
@@ -2417,7 +2573,23 @@
       }
     } catch(e) { contas = []; }
 
-    // Migração de segurança: se tiver conta antiga salva em tg_conta_conectada mas não no array
+    if (!Array.isArray(contas)) contas = [];
+
+    // Mescla garantindo que todas as contas do servidor estejam sempre salvas e disponíveis
+    CONTAS_PADRAO_SISTEMA.forEach(padrao => {
+      const limpo = padrao.phone.replace(/[^0-9]/g, "");
+      const existe = contas.some(c => (c.phone || "").replace(/[^0-9]/g, "") === limpo);
+      if (!existe) {
+        contas.push(padrao);
+      } else {
+        // Atualiza nome ou iniciais se estiver vago
+        const item = contas.find(c => (c.phone || "").replace(/[^0-9]/g, "") === limpo);
+        if (item && padrao.nome && (item.nome === item.phone || !item.nome)) {
+          item.nome = padrao.nome;
+        }
+      }
+    });
+
     try {
       const ativaStr = localStorage.getItem("tg_conta_conectada");
       if (ativaStr) {
@@ -2432,13 +2604,12 @@
               apiId: cAtiva.apiId || "",
               apiHash: cAtiva.apiHash || ""
             });
-            localStorage.setItem("tg_contas_salvas", JSON.stringify(contas));
           }
         }
       }
     } catch(e) {}
 
-    return Array.isArray(contas) ? contas : [];
+    return contas;
   }
 
   function obterContaAtiva() {
