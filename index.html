@@ -2611,12 +2611,43 @@
     return contas;
   }
 
+  function definirContaAtiva(contaObj) {
+    if (!contaObj) return;
+    const str = JSON.stringify(contaObj);
+    try { sessionStorage.setItem("tg_conta_conectada_aba", str); } catch(e) {}
+    try { localStorage.setItem("tg_conta_conectada", str); } catch(e) {}
+  }
+
   function obterContaAtiva() {
     try {
+      const strAba = sessionStorage.getItem("tg_conta_conectada_aba");
+      if (strAba) return JSON.parse(strAba);
       const str = localStorage.getItem("tg_conta_conectada");
-      if (str) return JSON.parse(str);
+      if (str) {
+        sessionStorage.setItem("tg_conta_conectada_aba", str);
+        return JSON.parse(str);
+      }
     } catch(e) {}
     return null;
+  }
+
+  function obterChaveEntrados() {
+    const ativa = obterContaAtiva();
+    const clean = ativa && ativa.phone ? String(ativa.phone).replace(/[^0-9]/g, "") : "";
+    return clean ? ("tg_grupos_entrados_" + clean) : "tg_grupos_entrados";
+  }
+
+  function obterEntradosSalvos() {
+    try {
+      const chave = obterChaveEntrados();
+      const raw = localStorage.getItem(chave);
+      if (raw) return JSON.parse(raw);
+      if (chave !== "tg_grupos_entrados") {
+        return [];
+      }
+      return JSON.parse(localStorage.getItem("tg_grupos_entrados") || "[]");
+    } catch(e) {}
+    return [];
   }
 
   function salvarContaTelegramCard() {
@@ -2653,7 +2684,7 @@
     }
 
     localStorage.setItem("tg_contas_salvas", JSON.stringify(contas));
-    localStorage.setItem("tg_conta_conectada", JSON.stringify(contaSalva));
+    definirContaAtiva(contaSalva);
 
     // Limpa campos do formulário
     document.getElementById("in-card-nome").value = "";
@@ -2674,7 +2705,7 @@
       return;
     }
 
-    localStorage.setItem("tg_conta_conectada", JSON.stringify(alvo));
+    definirContaAtiva(alvo);
     carregarContaTelegramVisual();
     
     // Renderiza instantaneamente os grupos da nova conta selecionada
@@ -2714,7 +2745,7 @@
           const limpoAtual = String(resp.atual).replace(/[^0-9]/g, "");
           const ativaEncontrada = locais.find(l => (l.phone || "").replace(/[^0-9]/g, "") === limpoAtual);
           if (ativaEncontrada) {
-            localStorage.setItem("tg_conta_conectada", JSON.stringify(ativaEncontrada));
+            definirContaAtiva(ativaEncontrada);
           }
         }
         carregarContaTelegramVisual();
@@ -2743,7 +2774,9 @@
     // Se a conta removida for a conta ativa no momento, desconecta
     const ativa = obterContaAtiva();
     if (ativa && (ativa.id === idOuPhone || ativa.phone === idOuPhone)) {
-      localStorage.removeItem("tg_conta_conectada");
+      sessionStorage.removeItem("tg_conta_conectada_aba");
+      sessionStorage.removeItem("tg_conta_conectada_aba");
+    localStorage.removeItem("tg_conta_conectada");
     }
 
     carregarContaTelegramVisual();
@@ -2751,6 +2784,7 @@
   }
 
   function desconectarContaLocal() {
+    sessionStorage.removeItem("tg_conta_conectada_aba");
     localStorage.removeItem("tg_conta_conectada");
     carregarContaTelegramVisual();
     carregarMeusGrupos();
@@ -2881,11 +2915,10 @@
     const chkEl = document.getElementById("check-ocultar");
     const ocultarEntrados = chkEl ? chkEl.checked : true;
 
-    let entradosSalvos = [];
-    try { entradosSalvos = JSON.parse(localStorage.getItem("tg_grupos_entrados") || "[]"); } catch(e) {}
+    const entradosSalvos = obterEntradosSalvos();
 
     let filtrados = catalogoGrupos.filter(g => {
-      const jaEntrou = g.ja_entrou || entradosSalvos.includes(g.url);
+      const jaEntrou = entradosSalvos.includes(g.url);
       if (ocultarEntrados && jaEntrou) return false;
 
       if (catFiltro === "amizade" && !g.is_chat_amizade) return false;
@@ -3049,7 +3082,7 @@
 
   async function chamarApiTelegram(rota, dados = null) {
     const isLocal = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1";
-    const tunnelUrl = "https://hence-till-imaging-combinations.trycloudflare.com";
+    const tunnelUrl = "https://best-today-parade-hiring.trycloudflare.com";
 
     const endpoints = [
       // Se estamos na nuvem (Vercel ou GitHub Pages), o túnel HTTPS precisa vir primeiro para evitar bloqueio de Mixed Content
@@ -3194,12 +3227,11 @@
 
 
   function marcarEntrado(url) {
-    const item = catalogoGrupos.find(g => g.url === url);
-    if (item) item.ja_entrou = true;
     try {
-      let entrados = JSON.parse(localStorage.getItem("tg_grupos_entrados") || "[]");
+      const chave = obterChaveEntrados();
+      let entrados = JSON.parse(localStorage.getItem(chave) || "[]");
       if (!entrados.includes(url)) entrados.push(url);
-      localStorage.setItem("tg_grupos_entrados", JSON.stringify(entrados));
+      localStorage.setItem(chave, JSON.stringify(entrados));
     } catch(e) {}
     setTimeout(() => renderizarGrupos(), 300);
   }
@@ -3264,12 +3296,16 @@
     const term = document.getElementById("terminal-linhas");
     if (term) term.innerHTML = "";
 
-    adicionarLinhaLogAuto(`Auto-Join iniciado para a conta <b>${esc(ativa.nome || ativa.phone)}</b>`, "l-info");
+    adicionarLinhaLogAuto(`🎲 Auto-Join em <b>ordem aleatória</b> iniciado para a conta <b>${esc(ativa.nome || ativa.phone)}</b>`, "l-info");
 
-    let entradosSalvos = [];
-    try { entradosSalvos = JSON.parse(localStorage.getItem("tg_grupos_entrados") || "[]"); } catch(e) {}
+    const entradosSalvos = obterEntradosSalvos();
 
     const gruposLivres = catalogoGrupos.filter(g => !g.requer_captcha && g.tipo !== "antispam" && !entradosSalvos.includes(g.url));
+    // Embaralhar em ordem aleatória para cada aba/conta seguir um caminho diferente
+    for (let i = gruposLivres.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [gruposLivres[i], gruposLivres[j]] = [gruposLivres[j], gruposLivres[i]];
+    }
 
     const elFila = document.getElementById("kpi-aj-fila");
     const elIngressados = document.getElementById("kpi-aj-ingressados");
@@ -3651,7 +3687,7 @@
     }
 
     const isLocal = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1";
-    const tunnelUrl = "https://hence-till-imaging-combinations.trycloudflare.com";
+    const tunnelUrl = "https://best-today-parade-hiring.trycloudflare.com";
     const endpoints = [
       ...(!isLocal ? [tunnelUrl] : []),
       "",
