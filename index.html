@@ -3299,22 +3299,22 @@
         const payload = { url: alvo.url, telefone: ativa.phone, modo: "auto" };
         const resp = await chamarApiTelegram("/api/entrar", payload);
 
-        if (resp && resp.ok) {{
+        if (resp && resp.ok) {
           concluidos++;
           marcarEntrado(alvo.url);
           if (elIngressados) elIngressados.textContent = concluidos;
           if (elFila) elFila.textContent = Math.max(0, gruposLivres.length - indice);
-          adicionarLinhaLogAuto(`✓ Entrou com sucesso no grupo: <b>${{esc(nomeCompleto)}}</b>`, "l-success");
-        }} else if (resp && resp.status === "contra_spam") {{
-          adicionarLinhaLogAuto(`🛡️ Grupo com Contra Spam detectado: <b>${{esc(nomeCompleto)}}</b>. Ignorado no Modo Automático (mantido no Modo Manual).`, "l-warn");
-        }} else if (resp && resp.status === "ja_membro") {{
+          adicionarLinhaLogAuto(`✓ Entrou com sucesso no grupo: <b>${esc(nomeCompleto)}</b>`, "l-success");
+        } else if (resp && resp.status === "contra_spam") {
+          adicionarLinhaLogAuto(`🛡️ Grupo com Contra Spam detectado: <b>${esc(nomeCompleto)}</b>. Ignorado no Modo Automático (mantido no Modo Manual).`, "l-warn");
+        } else if (resp && resp.status === "ja_membro") {
           marcarEntrado(alvo.url);
-          adicionarLinhaLogAuto(`Você já participa do grupo: <b>${{esc(nomeCompleto)}}</b>`, "l-info");
-        }} else if (resp && resp.status === "flood") {{
+          adicionarLinhaLogAuto(`Você já participa do grupo: <b>${esc(nomeCompleto)}</b>`, "l-info");
+        } else if (resp && resp.status === "flood") {
           adicionarLinhaLogAuto(`⏳ Conta em pausa anti-flood temporária do Telegram.`, "l-error");
-        }} else {{
-          adicionarLinhaLogAuto(`Não foi possível entrar no grupo: <b>${{esc(nomeCompleto)}}</b>`, "l-error");
-        }}
+        } else {
+          adicionarLinhaLogAuto(`Não foi possível entrar no grupo: <b>${esc(nomeCompleto)}</b>`, "l-error");
+        }
       } catch (err) {
         adicionarLinhaLogAuto(`Falha ao conectar no grupo: <b>${esc(nomeCompleto)}</b>`, "l-error");
       }
