@@ -2596,8 +2596,11 @@
       const ativaStr = localStorage.getItem("tg_conta_conectada");
       if (ativaStr) {
         const cAtiva = JSON.parse(ativaStr);
-        if (cAtiva && cAtiva.phone) {
-          const existe = contas.some(c => c.phone === cAtiva.phone);
+        const limpoAtiva = cAtiva && cAtiva.phone ? String(cAtiva.phone).replace(/[^0-9]/g, "") : "";
+        if (limpoAtiva === "5588997576579") {
+          localStorage.removeItem("tg_conta_conectada");
+        } else if (cAtiva && cAtiva.phone) {
+          const existe = contas.some(c => (c.phone || "").replace(/[^0-9]/g, "") === limpoAtiva);
           if (!existe) {
             contas.unshift({
               id: cAtiva.id || ("acc_" + Date.now()),
@@ -2609,6 +2612,7 @@
           }
         }
       }
+      localStorage.setItem("tg_contas_salvas", JSON.stringify(contas));
     } catch(e) {}
 
     return contas;
@@ -3163,7 +3167,17 @@
         payload.telefone = ativa.phone;
       }
 
-      const resp = await chamarApiTelegram("/api/entrar", payload);
+      let resp = await chamarApiTelegram("/api/entrar", payload);
+      if (resp && resp.conta_ativa_real && resp.conta_ativa_real.phone) {
+        definirContaAtiva(resp.conta_ativa_real);
+        carregarContaTelegramVisual();
+      }
+      if (resp && resp.status === "sessao_invalida" && CONTAS_PADRAO_SISTEMA && CONTAS_PADRAO_SISTEMA.length > 0) {
+        definirContaAtiva(CONTAS_PADRAO_SISTEMA[0]);
+        carregarContaTelegramVisual();
+        payload.telefone = CONTAS_PADRAO_SISTEMA[0].phone;
+        resp = await chamarApiTelegram("/api/entrar", payload);
+      }
       
       if (resp && resp.ok) {
         marcarEntrado(url);
@@ -3355,8 +3369,19 @@
       let proximoDelaySegundos = null;
 
       try {
-        const payload = { url: alvo.url, telefone: ativa.phone, modo: "auto" };
-        const resp = await chamarApiTelegram("/api/entrar", payload);
+        const contaAtualLoop = obterContaAtiva() || ativa;
+        const payload = { url: alvo.url, telefone: contaAtualLoop.phone, modo: "auto" };
+        let resp = await chamarApiTelegram("/api/entrar", payload);
+        if (resp && resp.conta_ativa_real && resp.conta_ativa_real.phone) {
+          definirContaAtiva(resp.conta_ativa_real);
+          carregarContaTelegramVisual();
+        }
+        if (resp && resp.status === "sessao_invalida" && CONTAS_PADRAO_SISTEMA && CONTAS_PADRAO_SISTEMA.length > 0) {
+          definirContaAtiva(CONTAS_PADRAO_SISTEMA[0]);
+          carregarContaTelegramVisual();
+          payload.telefone = CONTAS_PADRAO_SISTEMA[0].phone;
+          resp = await chamarApiTelegram("/api/entrar", payload);
+        }
 
         if (resp && (resp.status === "entrou" || (resp.ok && resp.status !== "ja_membro"))) {
           concluidos++;
