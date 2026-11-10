@@ -2030,7 +2030,7 @@
                 <p style="font-size:0.75rem;color:var(--text-muted);" id="lbl-selecao-count">0 grupos (Nenhuma conta conectada)</p>
               </div>
               <div class="picker-actions-row" style="display:flex;gap:6px;">
-                <button class="btn-adm-action" style="padding:4px 8px;font-size:0.75rem;" onclick="carregarMeusGrupos(true)">🔄 Atualizar</button>
+                <button class="btn-adm-action" style="padding:4px 8px;font-size:0.75rem;" onclick="carregarMeusGrupos(true, true)">🔄 Atualizar</button>
                 <button class="btn-adm-action" style="padding:4px 8px;font-size:0.75rem;" onclick="selecionarTodosGrupos(true)">Marcar Todos</button>
                 <button class="btn-adm-action" style="padding:4px 8px;font-size:0.75rem;" onclick="selecionarTodosGrupos(false)">Desmarcar</button>
               </div>
@@ -2677,6 +2677,9 @@
     localStorage.setItem("tg_conta_conectada", JSON.stringify(alvo));
     carregarContaTelegramVisual();
     
+    // Renderiza instantaneamente os grupos da nova conta selecionada
+    carregarMeusGrupos(false);
+
     // Notifica backend em background para alternar sessão imediatamente
     if (alvo.phone) {
       chamarApiTelegram("/api/trocar_conta", { telefone: alvo.phone }).catch(() => {});
@@ -3395,21 +3398,50 @@
   }
 
   /* ── ABA 3: DISPARADOR EM MASSA LOGIC ── */
-  async function carregarMeusGrupos(forcarAlerta = false) {
+  const CONTAS_GRUPOS_INICIAIS = {"5588997314756": [{"id": -1001468375523, "name": "𝐀𝐌𝐈𝐙𝐀𝐃𝐄𝐒", "username": "Amizades77", "unread": 1153, "membros": 26610}, {"id": -1001430533075, "name": "PC DO FAFA PROMOÇÕES e AVISOS", "username": "pcdofafa", "unread": 3, "membros": 7010}, {"id": -1001032404884, "name": "Grupo Amizade", "username": "amizadeoficial", "unread": 30, "membros": 10965}, {"id": -1004395371376, "name": "🚀 𝐍𝐎𝐕𝐀𝐒 𝐀𝐌𝐈𝐙𝐀𝐃𝐄𝐒 𝐁𝐑𝐀𝐒𝐈𝐋 💬", "username": "amizadesbrasilportugal", "unread": 7, "membros": 11451}, {"id": -1001412245402, "name": "Grupo Amizade Brasil", "username": "grupo_amizade_namoro_paquera", "unread": 22, "membros": 8019}, {"id": -1001880961191, "name": "🇧🇷 QG Animes e Mangás - BALTIGO ⚔️", "username": "AnimesMangasBrasil", "unread": 0, "membros": 5774}, {"id": -1001330296880, "name": "REVISTA VIRTUAL BR®", "username": "REVISTAVIRTUALBR", "unread": 0, "membros": 118524}, {"id": -1001338210459, "name": "QUADRINHO VIRTUAL BR®", "username": "QUADRINHOVIRTUALBR", "unread": 0, "membros": 62361}], "5511926358730": [{"id": -1002249445506, "name": "𝘼𝙑𝙄𝘼𝙏𝙊𝙍 𝙑𝙄𝙋 𝟭 🚀", "username": "aviatorvipdonaldbett", "unread": 1466, "membros": 36673}, {"id": -4864767926, "name": "só resenha🇧🇷🇧🇷", "username": "", "unread": 564, "membros": 79}, {"id": -4660753398, "name": "Amizades 24horas", "username": "", "unread": 220, "membros": 65}, {"id": -4983542218, "name": "Ajuda para recuperar valor perdido", "username": "", "unread": 123, "membros": 22}, {"id": -1001838157887, "name": "AMIZADES DO TELEGRAM", "username": "AMIZADES_DO_TELEGRAM", "unread": 0, "membros": 5433}, {"id": -1001330296880, "name": "REVISTA VIRTUAL BR®", "username": "REVISTAVIRTUALBR", "unread": 90, "membros": 118524}, {"id": -4697942528, "name": "https://t.me/+kF6PqTorTxU3ZDRh", "username": "", "unread": 3, "membros": 35}, {"id": -4921878737, "name": "Putaria MG", "username": "", "unread": 102, "membros": 74}, {"id": -1001498585823, "name": "Grupo AniCat Animes", "username": "GrupoAniCat", "unread": 0, "membros": 4050}, {"id": -4729475646, "name": "M", "username": "", "unread": 7, "membros": 36}, {"id": -4937391908, "name": "Namoro ou amizade ❤️🔥", "username": "", "unread": 66, "membros": 71}, {"id": -4912852748, "name": "Pau no cu do ADM", "username": "", "unread": 8, "membros": 30}, {"id": -4928197004, "name": "namoro é amizade", "username": "", "unread": 0, "membros": 50}, {"id": -4986605956, "name": "https://t.me/batman_dono", "username": "", "unread": 1, "membros": 34}, {"id": -4875642303, "name": "Grupo Trans🥰🏳️‍🌈", "username": "", "unread": 3, "membros": 18}, {"id": -4941124716, "name": "Amizades sem limites", "username": "", "unread": 2, "membros": 38}, {"id": -4888406186, "name": "Malucos Anônimos", "username": "", "unread": 5, "membros": 34}, {"id": -4620729022, "name": "Amor ou solidão", "username": "", "unread": 5, "membros": 24}, {"id": -5315714745, "name": "MIDIA", "username": "", "unread": 0, "membros": 3}], "5531991119327": [{"id": -1001468375523, "name": "𝐀𝐌𝐈𝐙𝐀𝐃𝐄𝐒", "username": "Amizades77", "unread": 19052, "membros": 26610}, {"id": -1001330296880, "name": "REVISTA VIRTUAL BR®", "username": "REVISTAVIRTUALBR", "unread": 92, "membros": 118524}, {"id": -1001338210459, "name": "QUADRINHO VIRTUAL BR®", "username": "QUADRINHOVIRTUALBR", "unread": 20, "membros": 62361}], "5511932596396": []};
+
+  function renderizarListaMeusGrupos(grupos) {
+    const container = document.getElementById("lista-meus-grupos");
+    const countLbl = document.getElementById("lbl-selecao-count");
+    if (!container) return;
+
+    if (!Array.isArray(grupos) || grupos.length === 0) {
+      container.innerHTML = `
+        <div style="text-align:center;padding:28px 16px;color:var(--text-muted);font-size:0.82rem;background:rgba(255,255,255,0.02);border-radius:8px;">
+          <div style="font-size:1.6rem;margin-bottom:6px;">💬</div>
+          <div style="font-weight:700;color:#fff;margin-bottom:4px;">Nenhum grupo encontrado nesta conta</div>
+          <div style="font-size:0.75rem;color:#94a3b8;">A conta ainda não participa de grupos com chat liberado.<br>Entre em grupos na aba "Modo Manual" e depois clique em Atualizar.</div>
+        </div>
+      `;
+      if (countLbl) countLbl.textContent = "0 de 0 grupos da conta";
+      return;
+    }
+
+    container.innerHTML = grupos.map((g, i) => `
+      <label style="display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:6px;cursor:pointer;font-size:0.83rem;color:#e2e8f0;background:rgba(255,255,255,0.02);margin-bottom:4px;width:100%;box-sizing:border-box;min-width:0;overflow:hidden;border:1px solid rgba(255,255,255,0.06);">
+        <input type="checkbox" class="chk-grupo" value="${esc(g.id)}" data-name="${esc(g.name)}" data-username="${esc(g.username || '')}" checked onchange="atualizarContagemSelecao()" style="accent-color:#10b981;width:16px;height:16px;flex-shrink:0;">
+        <span style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis;flex:1;min-width:0;font-weight:600;">${esc(g.name)}</span>
+        <span style="font-size:0.7rem;color:#94a3b8;font-family:'JetBrains Mono';flex-shrink:0;">${g.membros ? (g.membros + ' mem') : ''}</span>
+      </label>
+    `).join("");
+
+    if (countLbl) countLbl.textContent = `${grupos.length} de ${grupos.length} grupos da conta selecionados`;
+  }
+
+  async function carregarMeusGrupos(forcarAlerta = false, forceRefresh = false) {
     const container = document.getElementById("lista-meus-grupos");
     const countLbl = document.getElementById("lbl-selecao-count");
     if (!container) return;
 
     const ativa = obterContaAtiva();
-    // SE NÃO HOUVER CONTA CONECTADA, NÃO EXIBE NENHUM GRUPO!
     if (!ativa || !ativa.phone) {
       container.innerHTML = `
         <div style="text-align:center;padding:32px 16px;background:rgba(255,255,255,0.02);border:1px dashed rgba(255,255,255,0.12);border-radius:10px;">
-          <div style="font-size:1.8rem;margin-bottom:8px;">⚠️</div>
+          <div style="font-size:1.8rem;margin-bottom:8px;">🔒</div>
           <div style="font-weight:700;color:#fff;font-size:0.9rem;margin-bottom:4px;">Nenhuma conta do Telegram conectada</div>
           <div style="font-size:0.75rem;color:var(--text-muted);margin-bottom:12px;">Para carregar e disparar nos grupos da sua conta, conecte-se no botão abaixo.</div>
           <button type="button" onclick="abrirModalMenuContas()" style="background:#0284c7;color:#fff;border:none;padding:8px 16px;border-radius:8px;font-weight:700;font-size:0.8rem;cursor:pointer;">
-            🔗 Conectar Conta Telegram
+            🔑 Conectar Conta Telegram
           </button>
         </div>
       `;
@@ -3417,54 +3449,65 @@
       return;
     }
 
-    container.innerHTML = `
-      <div style="text-align:center;padding:28px 16px;color:var(--text-muted);font-size:0.82rem;">
-        <span style="display:inline-block;animation:spin 1s linear infinite;font-size:1.2rem;margin-bottom:6px;">⏳</span><br>
-        Consultando o Telegram para carregar grupos reais de <b>${esc(ativa.nome || ativa.phone)}</b>...
-      </div>
-    `;
+    const clean = (ativa.phone || "").replace(/[^0-9]/g, "");
+    const cacheKey = "tg_cache_grupos_" + clean;
+    let jaTemCache = false;
+
+    // 1. Instantâneo (0ms): renderiza do localStorage ou do cache embutido
+    try {
+      const salvo = localStorage.getItem(cacheKey);
+      if (salvo) {
+        const cGrupos = JSON.parse(salvo);
+        if (Array.isArray(cGrupos) && cGrupos.length > 0) {
+          renderizarListaMeusGrupos(cGrupos);
+          jaTemCache = true;
+        }
+      }
+    } catch(e) {}
+
+    if (!jaTemCache && CONTAS_GRUPOS_INICIAIS[clean] && CONTAS_GRUPOS_INICIAIS[clean].length > 0) {
+      renderizarListaMeusGrupos(CONTAS_GRUPOS_INICIAIS[clean]);
+      jaTemCache = true;
+      try {
+        localStorage.setItem(cacheKey, JSON.stringify(CONTAS_GRUPOS_INICIAIS[clean]));
+      } catch(e) {}
+    }
+
+    // Se NÃO tem cache, exibe o spinner indicativo
+    if (!jaTemCache) {
+      container.innerHTML = `
+        <div style="text-align:center;padding:28px 16px;color:var(--text-muted);font-size:0.82rem;">
+          <span style="display:inline-block;animation:spin 1s linear infinite;font-size:1.2rem;margin-bottom:6px;">⏳</span><br>
+          Consultando o Telegram para carregar grupos reais de <b>${esc(ativa.nome || ativa.phone)}</b>...
+        </div>
+      `;
+    }
 
     try {
-      const rota = "/api/meus_grupos?telefone=" + encodeURIComponent(ativa.phone);
+      const rota = "/api/meus_grupos?telefone=" + encodeURIComponent(ativa.phone) + (forceRefresh ? "&force=1" : "");
       const resp = await chamarApiTelegram(rota);
 
       if (resp && resp.ok && Array.isArray(resp.grupos)) {
-        if (resp.grupos.length === 0) {
-          container.innerHTML = `
-            <div style="text-align:center;padding:28px 16px;color:var(--text-muted);font-size:0.82rem;background:rgba(255,255,255,0.02);border-radius:8px;">
-              <div style="font-size:1.6rem;margin-bottom:6px;">📂</div>
-              <div style="font-weight:700;color:#fff;margin-bottom:4px;">Nenhum grupo encontrado nesta conta</div>
-              <div style="font-size:0.75rem;color:#94a3b8;">A conta <b>${esc(ativa.nome || ativa.phone)}</b> ainda não participa de grupos com chat liberado.<br>Entre em grupos na aba "Modo Manual" e depois clique em Atualizar.</div>
-            </div>
-          `;
-          if (countLbl) countLbl.textContent = "0 de 0 grupos da conta";
-          if (forcarAlerta) alerta("Nenhum grupo encontrado na conta " + (ativa.nome || ativa.phone), "info");
-          return;
-        }
-
-        container.innerHTML = resp.grupos.map((g, i) => `
-          <label style="display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:6px;cursor:pointer;font-size:0.83rem;color:#e2e8f0;background:rgba(255,255,255,0.02);margin-bottom:4px;width:100%;box-sizing:border-box;min-width:0;overflow:hidden;border:1px solid rgba(255,255,255,0.06);">
-            <input type="checkbox" class="chk-grupo" value="${esc(g.id)}" data-name="${esc(g.name)}" data-username="${esc(g.username || '')}" checked onchange="atualizarContagemSelecao()" style="accent-color:#10b981;width:16px;height:16px;flex-shrink:0;">
-            <span style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis;flex:1;min-width:0;font-weight:600;">${esc(g.name)}</span>
-            <span style="font-size:0.7rem;color:#94a3b8;font-family:'JetBrains Mono';flex-shrink:0;">${g.membros ? (g.membros + ' mem') : ''}</span>
-          </label>
-        `).join("");
-
-        if (countLbl) countLbl.textContent = `${resp.grupos.length} de ${resp.grupos.length} grupos da conta selecionados`;
-        if (forcarAlerta) alerta(`✔ ${resp.grupos.length} grupos reais da conta carregados!`, "success");
+        try {
+          localStorage.setItem(cacheKey, JSON.stringify(resp.grupos));
+        } catch(e) {}
+        renderizarListaMeusGrupos(resp.grupos);
+        if (forcarAlerta) alerta(`✓ ${resp.grupos.length} grupos reais da conta carregados!`, "success");
       } else {
         throw new Error(resp && resp.erro ? resp.erro : "Falha na resposta");
       }
     } catch(err) {
       console.warn("Erro ao buscar grupos da conta:", err);
-      container.innerHTML = `
-        <div style="text-align:center;padding:24px;color:var(--text-muted);font-size:0.82rem;">
-          Não foi possível carregar os grupos da conta no momento.<br>
-          <button type="button" onclick="carregarMeusGrupos(true)" style="margin-top:8px;background:#0284c7;color:#fff;border:none;padding:6px 14px;border-radius:6px;font-size:11px;font-weight:700;cursor:pointer;">🔄 Tentar Novamente</button>
-        </div>
-      `;
-      if (countLbl) countLbl.textContent = "0 grupos selecionados";
-      if (forcarAlerta) alerta("Não foi possível carregar os grupos da conta no momento.", "error");
+      if (!jaTemCache) {
+        container.innerHTML = `
+          <div style="text-align:center;padding:24px;color:var(--text-muted);font-size:0.82rem;">
+            Não foi possível carregar os grupos da conta no momento.<br>
+            <button type="button" onclick="carregarMeusGrupos(true, true)" style="margin-top:8px;background:#0284c7;color:#fff;border:none;padding:6px 14px;border-radius:6px;font-size:11px;font-weight:700;cursor:pointer;">🔄 Tentar Novamente</button>
+          </div>
+        `;
+        if (countLbl) countLbl.textContent = "0 grupos selecionados";
+        if (forcarAlerta) alerta("Não foi possível carregar os grupos da conta no momento.", "error");
+      }
     }
   }
 
