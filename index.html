@@ -2829,7 +2829,7 @@
       const name = document.getElementById("acc-name");
       const phone = document.getElementById("acc-phone");
 
-      // 1. Atualizar Pill no Cabeçalho
+      // 1. Atualizar Pill no Cabeçalho + Título da Aba do Navegador (para identificar cada aba!)
       if (ativa && ativa.phone) {
         if (avatar) {
           avatar.textContent = "✓";
@@ -2838,6 +2838,7 @@
         }
         if (name) name.textContent = ativa.nome || ativa.phone;
         if (phone) phone.textContent = ativa.nome ? (ativa.phone + " • Conectado") : "Conectado";
+        try { document.title = `🟢 ${ativa.nome || ativa.phone} | Telegram Pro`; } catch(e) {}
       } else {
         if (avatar) {
           avatar.textContent = "✕";
@@ -3127,7 +3128,7 @@
         const opts = {
           method: metodo,
           headers: { "Content-Type": "application/json" },
-          signal: AbortSignal.timeout(25000)
+          signal: AbortSignal.timeout(45000)
         };
         if (dados) {
           opts.body = JSON.stringify(dados);
