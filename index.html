@@ -1891,11 +1891,11 @@
 
           <div class="input-field-group">
             <label>Delay Mínimo (segundos):</label>
-            <input type="number" id="cfg-delay-min" value="90" min="30">
+            <input type="number" id="cfg-delay-min" value="10" min="3">
           </div>
           <div class="input-field-group">
             <label>Delay Máximo (segundos):</label>
-            <input type="number" id="cfg-delay-max" value="180" min="60">
+            <input type="number" id="cfg-delay-max" value="25" min="5">
           </div>
           <div class="input-field-group">
             <label>Limite Diário de Entradas:</label>
@@ -3233,57 +3233,113 @@
     return String(str).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
   }
 
-  /* ── ABA 2: AUTO-JOIN LOGIC ── */
-  function iniciarAutomacao() {
-    const contaStr = localStorage.getItem("tg_conta_conectada");
-    if (!contaStr) {
+  /* ── ABA 2: AUTO-JOIN LOGIC REAL COM ENTRADA VIA API TELEGRAM ── */
+  let autoJoinAtivo = false;
+
+  async function iniciarAutomacao() {
+    const ativa = obterContaAtiva();
+    if (!ativa || !ativa.phone) {
       alerta("Conecte sua conta do Telegram no botão do topo primeiro!", "error");
       abrirModalMenuContas();
       return;
     }
 
-    const conta = JSON.parse(contaStr);
-    const delayMin = parseInt(document.getElementById("cfg-delay-min").value) || 90;
-    const delayMax = parseInt(document.getElementById("cfg-delay-max").value) || 180;
+    const delayMin = Math.max(3, parseInt(document.getElementById("cfg-delay-min").value) || 10);
+    const delayMax = Math.max(delayMin, parseInt(document.getElementById("cfg-delay-max").value) || 25);
     const limite = parseInt(document.getElementById("cfg-limite-dia").value) || 20;
 
+    autoJoinAtivo = true;
     document.getElementById("btn-start-aj").disabled = true;
     document.getElementById("btn-stop-aj").disabled = false;
+    const badgeStatus = document.getElementById("status-autojoin-badge");
+    if (badgeStatus) {
+      badgeStatus.className = "badge-status-online pulsing";
+      badgeStatus.textContent = "⚡ Auto-Join em Execução";
+    }
+
     alerta("Auto-Join iniciado com sucesso!", "success");
 
-    adicionarLinhaLogAuto(`[INICIADO] Bot ativado para a conta ${conta.phone}`, "l-success");
-    adicionarLinhaLogAuto(`[CONFIG] Delay: ${delayMin}s a ${delayMax}s | Limite Diário: ${limite} grupos`, "l-info");
+    adicionarLinhaLogAuto(`[INICIADO] Bot ativado para a conta ${ativa.nome || ativa.phone}`, "l-success");
+    adicionarLinhaLogAuto(`[CONFIG] Delay: ${delayMin}s a ${delayMax}s | Limite de Entradas: ${limite} grupos`, "l-info");
 
-    const gruposLivres = catalogoGrupos.filter(g => !g.requer_captcha && g.tipo !== "antispam");
+    let entradosSalvos = [];
+    try { entradosSalvos = JSON.parse(localStorage.getItem("tg_grupos_entrados") || "[]"); } catch(e) {}
+
+    const gruposLivres = catalogoGrupos.filter(g => !g.requer_captcha && g.tipo !== "antispam" && !entradosSalvos.includes(g.url));
+
+    const elFila = document.getElementById("kpi-aj-fila");
+    const elIngressados = document.getElementById("kpi-aj-ingressados");
+    if (elFila) elFila.textContent = gruposLivres.length;
+
+    let concluidos = 0;
     let indice = 0;
 
-    function cicloAutoJoin() {
-      if (indice >= gruposLivres.length || indice >= limite) {
-        adicionarLinhaLogAuto(`[CONCLUÍDO] Limite atingido com sucesso!`, "l-success");
+    async function processarProximoAutoJoin() {
+      if (!autoJoinAtivo) return;
+
+      if (indice >= gruposLivres.length || concluidos >= limite) {
+        adicionarLinhaLogAuto(`🎉 [CONCLUÍDO] Meta de ${concluidos} grupos atingida com sucesso!`, "l-success");
         pararAutomacao();
         return;
       }
 
       const alvo = gruposLivres[indice];
-      const dSorteado = Math.floor(Math.random() * (delayMax - delayMin + 1)) + delayMin;
-      adicionarLinhaLogAuto(`[AUTO-JOIN] Ingressando em: "${alvo.titulo}" (${alvo.url})...`, "l-info");
-      
-      marcarEntrado(alvo.url);
       indice++;
 
-      adicionarLinhaLogAuto(`✔ Sucesso! Entrou no grupo. Próxima entrada em ${dSorteado}s (delay anti-ban)...`, "l-success");
-      autoJoinTimer = setTimeout(cicloAutoJoin, dSorteado * 1000);
+      adicionarLinhaLogAuto(`[AUTO-JOIN] Ingressando em: "${alvo.titulo}" (${alvo.url})...`, "l-info");
+
+      try {
+        const payload = { url: alvo.url, telefone: ativa.phone };
+        const resp = await chamarApiTelegram("/api/entrar", payload);
+
+        if (resp && resp.ok) {
+          concluidos++;
+          marcarEntrado(alvo.url);
+          if (elIngressados) elIngressados.textContent = concluidos;
+          if (elFila) elFila.textContent = Math.max(0, gruposLivres.length - indice);
+          adicionarLinhaLogAuto(`✅ [SUCESSO] Entrou em "${alvo.titulo}"! (${concluidos}/${limite})`, "l-success");
+        } else if (resp && resp.status === "ja_membro") {
+          marcarEntrado(alvo.url);
+          adicionarLinhaLogAuto(`↩ [JÁ ERA MEMBRO] Já participa de "${alvo.titulo}". Avançando...`, "l-info");
+        } else if (resp && resp.status === "flood") {
+          adicionarLinhaLogAuto(`⚠️ [FLOOD-WAIT] Limite temporário atingido nesta conta. Aguardando...`, "l-error");
+        } else {
+          adicionarLinhaLogAuto(`⚠️ Erro ao ingressar em "${alvo.titulo}": ${resp ? (resp.erro || resp.msg) : "Erro na API"}`, "l-error");
+        }
+      } catch (err) {
+        adicionarLinhaLogAuto(`❌ Falha de conexão para "${alvo.titulo}": ${err.message}`, "l-error");
+      }
+
+      if (!autoJoinAtivo) return;
+
+      if (concluidos >= limite || indice >= gruposLivres.length) {
+        adicionarLinhaLogAuto(`🏁 Auto-Join finalizado! Total de grupos ingressados: ${concluidos}`, "l-success");
+        pararAutomacao();
+        return;
+      }
+
+      const dSorteado = Math.floor(Math.random() * (delayMax - delayMin + 1)) + delayMin;
+      adicionarLinhaLogAuto(`⏳ Aguardando ${dSorteado}s antes do próximo grupo (proteção anti-ban)...`, "l-info");
+      autoJoinTimer = setTimeout(processarProximoAutoJoin, dSorteado * 1000);
     }
 
-    cicloAutoJoin();
+    processarProximoAutoJoin();
   }
 
   function pararAutomacao() {
+    autoJoinAtivo = false;
     if (autoJoinTimer) clearTimeout(autoJoinTimer);
     autoJoinTimer = null;
-    document.getElementById("btn-start-aj").disabled = false;
-    document.getElementById("btn-stop-aj").disabled = true;
-    adicionarLinhaLogAuto(`[PAUSADO] Auto-Join interrompido pelo operador.`, "l-error");
+    const btnStart = document.getElementById("btn-start-aj");
+    const btnStop = document.getElementById("btn-stop-aj");
+    if (btnStart) btnStart.disabled = false;
+    if (btnStop) btnStop.disabled = true;
+    const badgeStatus = document.getElementById("status-autojoin-badge");
+    if (badgeStatus) {
+      badgeStatus.className = "badge-status-online";
+      badgeStatus.textContent = "🟢 Sistema Pronto";
+    }
+    adicionarLinhaLogAuto(`[PAUSADO] Auto-Join pausado pelo operador.`, "l-error");
     alerta("Auto-Join pausado.", "info");
   }
 
