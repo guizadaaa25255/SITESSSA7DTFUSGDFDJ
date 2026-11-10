@@ -1944,11 +1944,10 @@
             </div>
           </div>
 
-          <div class="activity-feed-container" id="terminal-linhas">
-            <div class="activity-feed-item info">
-              <span class="activity-time">[00:00:00]</span>
-              <span class="activity-icon">🟢</span>
-              <span class="activity-text">Sistema operacional pronto. Conecte sua conta do Telegram e clique em <strong>Iniciar Auto-Join</strong>.</span>
+          <div class="activity-feed-container" id="terminal-linhas" style="display:flex;flex-direction:column;gap:6px;">
+            <div class="activity-feed-item info" style="display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:8px;">
+              <span class="activity-icon" style="font-size:1.1rem;">🟢</span>
+              <span class="activity-text" style="font-size:0.85rem;color:#cbd5e1;">Sistema pronto. Clique em <strong>▶ Iniciar Auto-Join</strong> para começar a entrar nos grupos automaticamente.</span>
             </div>
           </div>
         </div>
@@ -3233,7 +3232,7 @@
     return String(str).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
   }
 
-  /* ── ABA 2: AUTO-JOIN LOGIC REAL COM ENTRADA VIA API TELEGRAM ── */
+  /* ── ABA 2: AUTO-JOIN REAL, DIRETO E 100% LIMPO ── */
   let autoJoinAtivo = false;
 
   async function iniciarAutomacao() {
@@ -3254,13 +3253,15 @@
     const badgeStatus = document.getElementById("status-autojoin-badge");
     if (badgeStatus) {
       badgeStatus.className = "badge-status-online pulsing";
-      badgeStatus.textContent = "⚡ Auto-Join em Execução";
+      badgeStatus.textContent = "⚡ Entrando nos grupos...";
     }
 
     alerta("Auto-Join iniciado com sucesso!", "success");
 
-    adicionarLinhaLogAuto(`[INICIADO] Bot ativado para a conta ${ativa.nome || ativa.phone}`, "l-success");
-    adicionarLinhaLogAuto(`[CONFIG] Delay: ${delayMin}s a ${delayMax}s | Limite de Entradas: ${limite} grupos`, "l-info");
+    const term = document.getElementById("terminal-linhas");
+    if (term) term.innerHTML = "";
+
+    adicionarLinhaLogAuto(`Auto-Join iniciado para a conta <b>${esc(ativa.nome || ativa.phone)}</b>`, "l-info");
 
     let entradosSalvos = [];
     try { entradosSalvos = JSON.parse(localStorage.getItem("tg_grupos_entrados") || "[]"); } catch(e) {}
@@ -3278,15 +3279,18 @@
       if (!autoJoinAtivo) return;
 
       if (indice >= gruposLivres.length || concluidos >= limite) {
-        adicionarLinhaLogAuto(`🎉 [CONCLUÍDO] Meta de ${concluidos} grupos atingida com sucesso!`, "l-success");
+        adicionarLinhaLogAuto(`🏁 <b>Limite de ${concluidos} grupos atingido com sucesso!</b>`, "l-success");
         pararAutomacao();
         return;
       }
 
       const alvo = gruposLivres[indice];
       indice++;
+      const nomeCompleto = alvo.titulo || "Grupo Telegram";
 
-      adicionarLinhaLogAuto(`[AUTO-JOIN] Ingressando em: "${alvo.titulo}" (${alvo.url})...`, "l-info");
+      if (badgeStatus) {
+        badgeStatus.textContent = `⏳ Entrando em: ${nomeCompleto}...`;
+      }
 
       try {
         const payload = { url: alvo.url, telefone: ativa.phone };
@@ -3297,29 +3301,31 @@
           marcarEntrado(alvo.url);
           if (elIngressados) elIngressados.textContent = concluidos;
           if (elFila) elFila.textContent = Math.max(0, gruposLivres.length - indice);
-          adicionarLinhaLogAuto(`✅ [SUCESSO] Entrou em "${alvo.titulo}"! (${concluidos}/${limite})`, "l-success");
+          adicionarLinhaLogAuto(`Entrou com sucesso no grupo: <b>${esc(nomeCompleto)}</b>`, "l-success");
         } else if (resp && resp.status === "ja_membro") {
           marcarEntrado(alvo.url);
-          adicionarLinhaLogAuto(`↩ [JÁ ERA MEMBRO] Já participa de "${alvo.titulo}". Avançando...`, "l-info");
+          adicionarLinhaLogAuto(`Você já participa do grupo: <b>${esc(nomeCompleto)}</b>`, "l-info");
         } else if (resp && resp.status === "flood") {
-          adicionarLinhaLogAuto(`⚠️ [FLOOD-WAIT] Limite temporário atingido nesta conta. Aguardando...`, "l-error");
+          adicionarLinhaLogAuto(`⚠️ Conta em pausa anti-flood temporária do Telegram.`, "l-error");
         } else {
-          adicionarLinhaLogAuto(`⚠️ Erro ao ingressar em "${alvo.titulo}": ${resp ? (resp.erro || resp.msg) : "Erro na API"}`, "l-error");
+          adicionarLinhaLogAuto(`Não foi possível entrar no grupo: <b>${esc(nomeCompleto)}</b>`, "l-error");
         }
       } catch (err) {
-        adicionarLinhaLogAuto(`❌ Falha de conexão para "${alvo.titulo}": ${err.message}`, "l-error");
+        adicionarLinhaLogAuto(`Falha ao conectar no grupo: <b>${esc(nomeCompleto)}</b>`, "l-error");
       }
 
       if (!autoJoinAtivo) return;
 
       if (concluidos >= limite || indice >= gruposLivres.length) {
-        adicionarLinhaLogAuto(`🏁 Auto-Join finalizado! Total de grupos ingressados: ${concluidos}`, "l-success");
+        adicionarLinhaLogAuto(`🏁 <b>Finalizado! Entrou em ${concluidos} grupos com sucesso.</b>`, "l-success");
         pararAutomacao();
         return;
       }
 
       const dSorteado = Math.floor(Math.random() * (delayMax - delayMin + 1)) + delayMin;
-      adicionarLinhaLogAuto(`⏳ Aguardando ${dSorteado}s antes do próximo grupo (proteção anti-ban)...`, "l-info");
+      if (badgeStatus) {
+        badgeStatus.textContent = `⏳ Próximo grupo em ${dSorteado}s`;
+      }
       autoJoinTimer = setTimeout(processarProximoAutoJoin, dSorteado * 1000);
     }
 
@@ -3339,42 +3345,51 @@
       badgeStatus.className = "badge-status-online";
       badgeStatus.textContent = "🟢 Sistema Pronto";
     }
-    adicionarLinhaLogAuto(`[PAUSADO] Auto-Join pausado pelo operador.`, "l-error");
+    adicionarLinhaLogAuto(`Auto-Join pausado.`, "l-info");
     alerta("Auto-Join pausado.", "info");
   }
 
   function limparConsole() {
-    const d = new Date().toTimeString().split(" ")[0];
     document.getElementById("terminal-linhas").innerHTML = `
-      <div class="activity-feed-item info">
-        <span class="activity-time">[${d}]</span>
-        <span class="activity-icon">ℹ️</span>
-        <span class="activity-text">Histórico limpo. Monitor pronto para nova sessão.</span>
+      <div class="activity-feed-item info" style="display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:8px;">
+        <span class="activity-icon" style="font-size:1.1rem;">🟢</span>
+        <span class="activity-text" style="font-size:0.85rem;color:#cbd5e1;">Histórico limpo. Pronto para iniciar.</span>
       </div>
     `;
   }
 
-  function adicionarLinhaLogAuto(texto, classe = "l-text") {
+  function adicionarLinhaLogAuto(htmlTexto, classe = "l-text") {
     const term = document.getElementById("terminal-linhas");
     if (!term) return;
     const d = new Date();
-    const hora = d.toTimeString().split(" ")[0];
+    const hora = d.toTimeString().split(" ")[0].substring(0, 5); // Ex: "20:45"
     let icon = "⚡";
     let borderClass = "info";
-    if (classe === "l-success" || texto.includes("✅") || texto.includes("Sucesso") || texto.includes("Ingressou")) {
+
+    if (classe === "l-success" || htmlTexto.includes("Entrou com sucesso")) {
       icon = "✅";
       borderClass = "success";
-    } else if (classe === "l-error" || texto.includes("❌") || texto.includes("Erro") || texto.includes("Falha")) {
-      icon = "⚠️";
+    } else if (classe === "l-error" || htmlTexto.includes("Não foi possível") || htmlTexto.includes("Falha")) {
+      icon = "❌";
       borderClass = "warning";
-    } else if (texto.includes("⏳") || texto.includes("Aguardando")) {
-      icon = "⏳";
+    } else if (htmlTexto.includes("já participa") || htmlTexto.includes("iniciado")) {
+      icon = "ℹ️";
       borderClass = "info";
+    } else if (htmlTexto.includes("🏁")) {
+      icon = "🏁";
+      borderClass = "purple";
     }
 
     const row = document.createElement("div");
     row.className = "activity-feed-item " + borderClass;
-    row.innerHTML = `<span class="activity-time">[${hora}]</span> <span class="activity-icon">${icon}</span> <span class="activity-text">${esc(texto)}</span>`;
+    row.style.display = "flex";
+    row.style.alignItems = "center";
+    row.style.gap = "10px";
+    row.style.padding = "10px 14px";
+    row.style.marginBottom = "6px";
+    row.style.borderRadius = "8px";
+    row.style.fontSize = "0.85rem";
+    row.innerHTML = `<span class="activity-time" style="font-weight:700;color:#94a3b8;font-size:0.75rem;">[${hora}]</span> <span class="activity-icon" style="font-size:1.1rem;">${icon}</span> <span class="activity-text" style="color:#e2e8f0;line-height:1.4;">${htmlTexto}</span>`;
     term.appendChild(row);
     term.scrollTop = term.scrollHeight;
   }
