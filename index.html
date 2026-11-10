@@ -2561,7 +2561,7 @@
   }
 
   /* ── GERENCIADOR MULTI-CONTAS TELEGRAM (PERSISTÊNCIA E TROCA RÁPIDA) ── */
-  const CONTAS_PADRAO_SISTEMA = [{"id": "srv_5588997314756", "nome": "Mari", "phone": "+5588997314756", "apiId": "", "apiHash": "", "iniciais": "M"}, {"id": "srv_5511926358730", "nome": "Nayara Alves", "phone": "+5511926358730", "apiId": "", "apiHash": "", "iniciais": "NA"}, {"id": "srv_5511932596396", "nome": "SophiaFreitaz", "phone": "+5511932596396", "apiId": "", "apiHash": "", "iniciais": "S"}, {"id": "srv_5531991119327", "nome": "RosalinaAlmeida", "phone": "+5531991119327", "apiId": "", "apiHash": "", "iniciais": "R"}, {"id": "srv_5531997019436", "nome": "+5531997019436", "phone": "+5531997019436", "apiId": "", "apiHash": "", "iniciais": "+5"}];
+  const CONTAS_PADRAO_SISTEMA = [{"id": "srv_5588997314756", "nome": "Mari", "phone": "+5588997314756", "apiId": "", "apiHash": "", "iniciais": "M"}, {"id": "srv_5511926358730", "nome": "Nayara Alves", "phone": "+5511926358730", "apiId": "", "apiHash": "", "iniciais": "NA"}, {"id": "srv_5511932596396", "nome": "SophiaFreitaz", "phone": "+5511932596396", "apiId": "", "apiHash": "", "iniciais": "S"}, {"id": "srv_5531991119327", "nome": "RosalinaAlmeida", "phone": "+5531991119327", "apiId": "", "apiHash": "", "iniciais": "R"}, {"id": "srv_5531997019436", "nome": "Mirela", "phone": "+5531997019436", "apiId": "", "apiHash": "", "iniciais": "MI"}];
 
   function obterContasSalvas() {
     let contas = [];
@@ -2574,6 +2574,9 @@
 
     if (!Array.isArray(contas)) contas = [];
 
+    // Remove sessões expiradas/inválidas conhecidas (ex: 5588997576579 - Conta 6579)
+    contas = contas.filter(c => !(c && c.phone && String(c.phone).replace(/[^0-9]/g, "") === "5588997576579"));
+
     // Mescla garantindo que todas as contas do servidor estejam sempre salvas e disponíveis
     CONTAS_PADRAO_SISTEMA.forEach(padrao => {
       const limpo = padrao.phone.replace(/[^0-9]/g, "");
@@ -2581,10 +2584,10 @@
       if (!existe) {
         contas.push(padrao);
       } else {
-        // Atualiza nome ou iniciais se estiver vago
         const item = contas.find(c => (c.phone || "").replace(/[^0-9]/g, "") === limpo);
-        if (item && padrao.nome && (item.nome === item.phone || !item.nome)) {
+        if (item && padrao.nome && (item.nome === item.phone || !item.nome || item.nome.startsWith("Conta "))) {
           item.nome = padrao.nome;
+          item.iniciais = padrao.iniciais || item.iniciais;
         }
       }
     });
@@ -2620,12 +2623,33 @@
 
   function obterContaAtiva() {
     try {
+      const validarConta = (obj) => {
+        if (!obj || !obj.phone) return null;
+        const limpo = String(obj.phone).replace(/[^0-9]/g, "");
+        if (limpo === "5588997576579") return null;
+        if (limpo === "5531997019436" && (!obj.nome || obj.nome.startsWith("Conta ") || obj.nome.startsWith("+"))) {
+          obj.nome = "Mirela";
+        }
+        return obj;
+      };
       const strAba = sessionStorage.getItem("tg_conta_conectada_aba");
-      if (strAba) return JSON.parse(strAba);
+      if (strAba) {
+        const cAba = validarConta(JSON.parse(strAba));
+        if (cAba) return cAba;
+        sessionStorage.removeItem("tg_conta_conectada_aba");
+      }
       const str = localStorage.getItem("tg_conta_conectada");
       if (str) {
-        sessionStorage.setItem("tg_conta_conectada_aba", str);
-        return JSON.parse(str);
+        const cLocal = validarConta(JSON.parse(str));
+        if (cLocal) {
+          sessionStorage.setItem("tg_conta_conectada_aba", JSON.stringify(cLocal));
+          return cLocal;
+        }
+        localStorage.removeItem("tg_conta_conectada");
+      }
+      if (CONTAS_PADRAO_SISTEMA && CONTAS_PADRAO_SISTEMA.length > 0) {
+        definirContaAtiva(CONTAS_PADRAO_SISTEMA[0]);
+        return CONTAS_PADRAO_SISTEMA[0];
       }
     } catch(e) {}
     return null;
@@ -3085,13 +3109,10 @@
     const tunnelUrl = "https://best-today-parade-hiring.trycloudflare.com";
 
     const endpoints = [
-      // Se estamos na nuvem (Vercel ou GitHub Pages), o túnel HTTPS precisa vir primeiro para evitar bloqueio de Mixed Content
-      ...(!isLocal ? [tunnelUrl] : []),
-      "",
-      tunnelUrl,
-      "http://localhost:5000",
+      ...(isLocal ? [""] : []),
       "http://127.0.0.1:5000",
-      "http://192.168.1.8:5000"
+      "http://localhost:5000",
+      tunnelUrl
     ].filter(Boolean).filter((v, i, a) => a.indexOf(v) === i);
 
     let lastError = null;
@@ -3108,7 +3129,7 @@
           opts.body = JSON.stringify(dados);
         }
         const res = await fetch(url, opts);
-        if (res.ok || res.status === 400 || res.status === 401 || res.status === 429) {
+        if (res.ok || res.status === 400 || res.status === 401 || res.status === 429 || res.status === 500) {
           const json = await res.json();
           return json;
         }
@@ -3331,28 +3352,56 @@
         badgeStatus.textContent = `⏳ Entrando em: ${nomeCompleto}...`;
       }
 
+      let proximoDelaySegundos = null;
+
       try {
         const payload = { url: alvo.url, telefone: ativa.phone, modo: "auto" };
         const resp = await chamarApiTelegram("/api/entrar", payload);
 
-        if (resp && resp.ok) {
+        if (resp && (resp.status === "entrou" || (resp.ok && resp.status !== "ja_membro"))) {
           concluidos++;
           marcarEntrado(alvo.url);
           if (elIngressados) elIngressados.textContent = concluidos;
           if (elFila) elFila.textContent = Math.max(0, gruposLivres.length - indice);
           adicionarLinhaLogAuto(`✓ Entrou com sucesso no grupo: <b>${esc(nomeCompleto)}</b>`, "l-success");
-        } else if (resp && resp.status === "contra_spam") {
-          adicionarLinhaLogAuto(`🛡️ Grupo com Contra Spam detectado: <b>${esc(nomeCompleto)}</b>. Ignorado no Modo Automático (mantido no Modo Manual).`, "l-warn");
         } else if (resp && resp.status === "ja_membro") {
           marcarEntrado(alvo.url);
-          adicionarLinhaLogAuto(`Você já participa do grupo: <b>${esc(nomeCompleto)}</b>`, "l-info");
+          if (elFila) elFila.textContent = Math.max(0, gruposLivres.length - indice);
+          adicionarLinhaLogAuto(`ℹ️ Já participa do grupo: <b>${esc(nomeCompleto)}</b> (pulando para o próximo...)`, "l-info");
+          proximoDelaySegundos = 2;
+        } else if (resp && resp.status === "contra_spam") {
+          if (elFila) elFila.textContent = Math.max(0, gruposLivres.length - indice);
+          adicionarLinhaLogAuto(`🛡️ Grupo com Contra Spam detectado: <b>${esc(nomeCompleto)}</b>. Ignorado no Modo Automático (mantido no Modo Manual).`, "l-warn");
+          proximoDelaySegundos = 3;
+        } else if (resp && (resp.status === "expirado" || resp.status === "sem_chat")) {
+          if (elFila) elFila.textContent = Math.max(0, gruposLivres.length - indice);
+          adicionarLinhaLogAuto(`⚠️ Grupo indisponível/fechado: <b>${esc(nomeCompleto)}</b> (pulando...)`, "l-warn");
+          proximoDelaySegundos = 3;
         } else if (resp && resp.status === "flood") {
-          adicionarLinhaLogAuto(`⏳ Conta em pausa anti-flood temporária do Telegram.`, "l-error");
+          // REUTILIZAR GRUPO: recoloca no final da fila sem descartar!
+          gruposLivres.push(alvo);
+          if (elFila) elFila.textContent = Math.max(0, gruposLivres.length - indice);
+          const espera = Math.min(Math.max(parseInt(resp.espera_segundos) || 90, 30), 900);
+          const minFmt = espera >= 60 ? `${Math.ceil(espera / 60)} min` : `${espera}s`;
+          adicionarLinhaLogAuto(`⏳ Pausa anti-flood do próprio Telegram (${minFmt}). O grupo <b>${esc(nomeCompleto)}</b> foi <b>guardado novamente na fila</b> para entrar depois!`, "l-warn");
+          proximoDelaySegundos = espera;
+        } else if (resp && resp.status === "sessao_invalida") {
+          gruposLivres.push(alvo);
+          if (elFila) elFila.textContent = Math.max(0, gruposLivres.length - indice);
+          adicionarLinhaLogAuto(`⚠️ Conta selecionada não está autorizada. Selecione outra conta ativa no topo!`, "l-error");
+          pararAutomacao();
+          return;
         } else {
-          adicionarLinhaLogAuto(`Não foi possível entrar no grupo: <b>${esc(nomeCompleto)}</b>`, "l-error");
+          // Qualquer erro temporário: NÃO descarta o grupo, recoloca no final da fila para reutilizar depois!
+          gruposLivres.push(alvo);
+          if (elFila) elFila.textContent = Math.max(0, gruposLivres.length - indice);
+          adicionarLinhaLogAuto(`🔄 Oscilação temporária em <b>${esc(nomeCompleto)}</b> — grupo <b>recolocado na fila</b> para tentar novamente depois!`, "l-warn");
         }
       } catch (err) {
-        adicionarLinhaLogAuto(`Falha ao conectar no grupo: <b>${esc(nomeCompleto)}</b>`, "l-error");
+        // Erro de conexão/rede: NÃO descarta o grupo, recoloca no final da fila!
+        gruposLivres.push(alvo);
+        if (elFila) elFila.textContent = Math.max(0, gruposLivres.length - indice);
+        adicionarLinhaLogAuto(`🔄 Tentando reconectar — o grupo <b>${esc(nomeCompleto)}</b> foi <b>mantido na fila</b> para reutilizar depois!`, "l-warn");
       }
 
       if (!autoJoinAtivo) return;
@@ -3363,9 +3412,13 @@
         return;
       }
 
-      const dSorteado = Math.floor(Math.random() * (delayMax - delayMin + 1)) + delayMin;
+      const dSorteado = proximoDelaySegundos !== null
+        ? proximoDelaySegundos
+        : (Math.floor(Math.random() * (delayMax - delayMin + 1)) + delayMin);
       if (badgeStatus) {
-        badgeStatus.textContent = `⏳ Próximo grupo em ${dSorteado}s`;
+        badgeStatus.textContent = dSorteado >= 60
+          ? `⏳ Pausa Telegram (${Math.ceil(dSorteado / 60)}m) • Fila intacta`
+          : `⏳ Próximo grupo em ${dSorteado}s`;
       }
       autoJoinTimer = setTimeout(processarProximoAutoJoin, dSorteado * 1000);
     }
@@ -3436,7 +3489,7 @@
   }
 
   /* ── ABA 3: DISPARADOR EM MASSA LOGIC ── */
-  const CONTAS_GRUPOS_INICIAIS = {"5588997314756": [{"id": -1001468375523, "name": "𝐀𝐌𝐈𝐙𝐀𝐃𝐄𝐒", "username": "Amizades77", "unread": 1153, "membros": 26610}, {"id": -1001430533075, "name": "PC DO FAFA PROMOÇÕES e AVISOS", "username": "pcdofafa", "unread": 3, "membros": 7010}, {"id": -1001032404884, "name": "Grupo Amizade", "username": "amizadeoficial", "unread": 30, "membros": 10965}, {"id": -1004395371376, "name": "🚀 𝐍𝐎𝐕𝐀𝐒 𝐀𝐌𝐈𝐙𝐀𝐃𝐄𝐒 𝐁𝐑𝐀𝐒𝐈𝐋 💬", "username": "amizadesbrasilportugal", "unread": 7, "membros": 11451}, {"id": -1001412245402, "name": "Grupo Amizade Brasil", "username": "grupo_amizade_namoro_paquera", "unread": 22, "membros": 8019}, {"id": -1001880961191, "name": "🇧🇷 QG Animes e Mangás - BALTIGO ⚔️", "username": "AnimesMangasBrasil", "unread": 0, "membros": 5774}, {"id": -1001330296880, "name": "REVISTA VIRTUAL BR®", "username": "REVISTAVIRTUALBR", "unread": 0, "membros": 118524}, {"id": -1001338210459, "name": "QUADRINHO VIRTUAL BR®", "username": "QUADRINHOVIRTUALBR", "unread": 0, "membros": 62361}], "5511926358730": [{"id": -1002249445506, "name": "𝘼𝙑𝙄𝘼𝙏𝙊𝙍 𝙑𝙄𝙋 𝟭 🚀", "username": "aviatorvipdonaldbett", "unread": 1466, "membros": 36673}, {"id": -4864767926, "name": "só resenha🇧🇷🇧🇷", "username": "", "unread": 564, "membros": 79}, {"id": -4660753398, "name": "Amizades 24horas", "username": "", "unread": 220, "membros": 65}, {"id": -4983542218, "name": "Ajuda para recuperar valor perdido", "username": "", "unread": 123, "membros": 22}, {"id": -1001838157887, "name": "AMIZADES DO TELEGRAM", "username": "AMIZADES_DO_TELEGRAM", "unread": 0, "membros": 5433}, {"id": -1001330296880, "name": "REVISTA VIRTUAL BR®", "username": "REVISTAVIRTUALBR", "unread": 90, "membros": 118524}, {"id": -4697942528, "name": "https://t.me/+kF6PqTorTxU3ZDRh", "username": "", "unread": 3, "membros": 35}, {"id": -4921878737, "name": "Putaria MG", "username": "", "unread": 102, "membros": 74}, {"id": -1001498585823, "name": "Grupo AniCat Animes", "username": "GrupoAniCat", "unread": 0, "membros": 4050}, {"id": -4729475646, "name": "M", "username": "", "unread": 7, "membros": 36}, {"id": -4937391908, "name": "Namoro ou amizade ❤️🔥", "username": "", "unread": 66, "membros": 71}, {"id": -4912852748, "name": "Pau no cu do ADM", "username": "", "unread": 8, "membros": 30}, {"id": -4928197004, "name": "namoro é amizade", "username": "", "unread": 0, "membros": 50}, {"id": -4986605956, "name": "https://t.me/batman_dono", "username": "", "unread": 1, "membros": 34}, {"id": -4875642303, "name": "Grupo Trans🥰🏳️‍🌈", "username": "", "unread": 3, "membros": 18}, {"id": -4941124716, "name": "Amizades sem limites", "username": "", "unread": 2, "membros": 38}, {"id": -4888406186, "name": "Malucos Anônimos", "username": "", "unread": 5, "membros": 34}, {"id": -4620729022, "name": "Amor ou solidão", "username": "", "unread": 5, "membros": 24}, {"id": -5315714745, "name": "MIDIA", "username": "", "unread": 0, "membros": 3}], "5531991119327": [{"id": -1001468375523, "name": "𝐀𝐌𝐈𝐙𝐀𝐃𝐄𝐒", "username": "Amizades77", "unread": 19052, "membros": 26610}, {"id": -1001330296880, "name": "REVISTA VIRTUAL BR®", "username": "REVISTAVIRTUALBR", "unread": 92, "membros": 118524}, {"id": -1001338210459, "name": "QUADRINHO VIRTUAL BR®", "username": "QUADRINHOVIRTUALBR", "unread": 20, "membros": 62361}], "5511932596396": []};
+  const CONTAS_GRUPOS_INICIAIS = {"5588997314756": [{"id": -1001468375523, "name": "𝐀𝐌𝐈𝐙𝐀𝐃𝐄𝐒", "username": "Amizades77", "unread": 17, "membros": 26608}, {"id": -1004395371376, "name": "🚀 𝐍𝐎𝐕𝐀𝐒 𝐀𝐌𝐈𝐙𝐀𝐃𝐄𝐒 𝐁𝐑𝐀𝐒𝐈𝐋 💬", "username": "amizadesbrasilportugal", "unread": 8, "membros": 11447}, {"id": -1001412245402, "name": "Grupo Amizade Brasil", "username": "grupo_amizade_namoro_paquera", "unread": 2, "membros": 8020}, {"id": -1001032404884, "name": "Grupo Amizade", "username": "amizadeoficial", "unread": 0, "membros": 10963}, {"id": -1001330296880, "name": "REVISTA VIRTUAL BR®", "username": "REVISTAVIRTUALBR", "unread": 0, "membros": 118526}, {"id": -1001338210459, "name": "QUADRINHO VIRTUAL BR®", "username": "QUADRINHOVIRTUALBR", "unread": 0, "membros": 62365}], "5511926358730": [{"id": -1002249445506, "name": "𝘼𝙑𝙄𝘼𝙏𝙊𝙍 𝙑𝙄𝙋 𝟭 🚀", "username": "aviatorvipdonaldbett", "unread": 1466, "membros": 36673}, {"id": -4864767926, "name": "só resenha🇧🇷🇧🇷", "username": "", "unread": 564, "membros": 79}, {"id": -4660753398, "name": "Amizades 24horas", "username": "", "unread": 220, "membros": 65}, {"id": -4983542218, "name": "Ajuda para recuperar valor perdido", "username": "", "unread": 123, "membros": 22}, {"id": -1001838157887, "name": "AMIZADES DO TELEGRAM", "username": "AMIZADES_DO_TELEGRAM", "unread": 0, "membros": 5433}, {"id": -1001330296880, "name": "REVISTA VIRTUAL BR®", "username": "REVISTAVIRTUALBR", "unread": 90, "membros": 118524}, {"id": -4697942528, "name": "https://t.me/+kF6PqTorTxU3ZDRh", "username": "", "unread": 3, "membros": 35}, {"id": -4921878737, "name": "Putaria MG", "username": "", "unread": 102, "membros": 74}, {"id": -1001498585823, "name": "Grupo AniCat Animes", "username": "GrupoAniCat", "unread": 0, "membros": 4050}, {"id": -4729475646, "name": "M", "username": "", "unread": 7, "membros": 36}, {"id": -4937391908, "name": "Namoro ou amizade ❤️🔥", "username": "", "unread": 66, "membros": 71}, {"id": -4912852748, "name": "Pau no cu do ADM", "username": "", "unread": 8, "membros": 30}, {"id": -4928197004, "name": "namoro é amizade", "username": "", "unread": 0, "membros": 50}, {"id": -4986605956, "name": "https://t.me/batman_dono", "username": "", "unread": 1, "membros": 34}, {"id": -4875642303, "name": "Grupo Trans🥰🏳️‍🌈", "username": "", "unread": 3, "membros": 18}, {"id": -4941124716, "name": "Amizades sem limites", "username": "", "unread": 2, "membros": 38}, {"id": -4888406186, "name": "Malucos Anônimos", "username": "", "unread": 5, "membros": 34}, {"id": -4620729022, "name": "Amor ou solidão", "username": "", "unread": 5, "membros": 24}, {"id": -5315714745, "name": "MIDIA", "username": "", "unread": 0, "membros": 3}], "5531991119327": [{"id": -1001468375523, "name": "𝐀𝐌𝐈𝐙𝐀𝐃𝐄𝐒", "username": "Amizades77", "unread": 19052, "membros": 26610}, {"id": -1001330296880, "name": "REVISTA VIRTUAL BR®", "username": "REVISTAVIRTUALBR", "unread": 92, "membros": 118524}, {"id": -1001338210459, "name": "QUADRINHO VIRTUAL BR®", "username": "QUADRINHOVIRTUALBR", "unread": 20, "membros": 62361}], "5511932596396": [], "5531997019436": [{"id": -1001816147958, "name": "RENDA EXTRA $ AGORA DIVULGUE", "username": "Centraldivulgacao", "unread": 6, "membros": 245}, {"id": -1003944801366, "name": "Luana friends", "username": "luanafriends", "unread": 7, "membros": 543}, {"id": -1004384788109, "name": "🇧🇷 Amigos / Friends Love 🏳️‍⚧️", "username": "", "unread": 1, "membros": 240}, {"id": -1001806283072, "name": "🛍COMPRA E VENDA BELO HORIZONTE", "username": "melhoreslistasdegrupos", "unread": 1, "membros": 707}, {"id": -1002297431927, "name": "TaDa Fãs - Português", "username": "TaDaGaming_PT", "unread": 1, "membros": 1981}, {"id": -4660753398, "name": "Amizades 24horas", "username": "", "unread": 752, "membros": 66}, {"id": -1001508380390, "name": "GANHANDO COM VIDEO", "username": "", "unread": 0, "membros": 12}, {"id": -1003916843666, "name": "Psicologia Oculta — Reflexões Sobre a Mente Humana", "username": "", "unread": 0, "membros": 53}, {"id": -4921878737, "name": "Putaria MG", "username": "", "unread": 48, "membros": 75}, {"id": -1002490067928, "name": "Mantralaya Vaibhava Travels", "username": "H3faTcO6pnplNDI1", "unread": 213, "membros": 633}, {"id": -4729475646, "name": "M", "username": "", "unread": 12, "membros": 35}, {"id": -1001082044320, "name": "Devs Brasil | Casa do Dev 🇧🇷", "username": "DesenvolvedoresBrasil", "unread": 0, "membros": 4064}, {"id": -1001683638849, "name": "BKEx Português", "username": "BKEXPortuguese", "unread": 0, "membros": 1279}]};
 
   function renderizarListaMeusGrupos(grupos) {
     const container = document.getElementById("lista-meus-grupos");
