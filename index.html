@@ -1805,11 +1805,11 @@
 
       <div class="metric-card">
         <div class="metric-label">
-          <span>Filtro Zero Canais</span>
-          <span>🛡️</span>
+          <span>Entradas no Auto</span>
+          <span>🤖</span>
         </div>
-        <div class="metric-value" style="color:#fbbf24;">100%</div>
-        <div class="metric-sub">Apenas grupos de interação</div>
+        <div class="metric-value" id="val-auto-progresso" style="color:#fbbf24;">0 / 20</div>
+        <div class="metric-sub" id="val-auto-sub">Grupos entrados hoje no Auto-Join</div>
       </div>
     </div>
   </div>
@@ -1939,7 +1939,7 @@
           </div>
           <div class="input-field-group">
             <label>Limite Diário de Entradas:</label>
-            <input type="number" id="cfg-limite-dia" value="20" min="1" max="100">
+            <input type="number" id="cfg-limite-dia" value="20" min="1" max="100" oninput="atualizarProgressoAutoCard()">
           </div>
 
 
@@ -2875,6 +2875,67 @@
     alerta("Conta desconectada. Suas contas continuam salvas para você alternar quando quiser!", "info");
   }
 
+  function _chaveAutoHoje() {
+    const ativa = obterContaAtiva();
+    const clean = ativa && ativa.phone ? String(ativa.phone).replace(/[^0-9]/g, "") : "default";
+    return "tg_auto_hoje_" + clean;
+  }
+
+  function obterAutoEntradasHojeLocal() {
+    try {
+      const hoje = new Date().toISOString().slice(0, 10);
+      const raw = localStorage.getItem(_chaveAutoHoje());
+      if (raw) {
+        const obj = JSON.parse(raw);
+        if (obj && obj.data === hoje) return parseInt(obj.qtd) || 0;
+      }
+    } catch(e) {}
+    return 0;
+  }
+
+  function salvarAutoEntradasHojeLocal(qtd) {
+    try {
+      const hoje = new Date().toISOString().slice(0, 10);
+      localStorage.setItem(_chaveAutoHoje(), JSON.stringify({ data: hoje, qtd: parseInt(qtd) || 0 }));
+    } catch(e) {}
+  }
+
+  function renderizarAutoCard(qtd, limite) {
+    const elVal = document.getElementById("val-auto-progresso");
+    const elSub = document.getElementById("val-auto-sub");
+    if (!elVal) return;
+    const lim = limite || (parseInt(document.getElementById("cfg-limite-dia")?.value) || 20);
+    const n = parseInt(qtd) || 0;
+    elVal.textContent = `${n} / ${lim}`;
+    if (n >= lim) {
+      elVal.style.color = "#34d399";
+      if (elSub) elSub.textContent = "Meta diária concluída no Auto!";
+    } else {
+      elVal.style.color = "#fbbf24";
+      const faltam = Math.max(0, lim - n);
+      if (elSub) elSub.textContent = n === 0 ? "Aguardando iniciar o Auto-Join" : `Faltam ${faltam} para completar ${lim}`;
+    }
+  }
+
+  let _ultimoSyncAutoPhone = "";
+  async function atualizarProgressoAutoCard(buscarBackend = true) {
+    const lim = parseInt(document.getElementById("cfg-limite-dia")?.value) || 20;
+    const localQtd = obterAutoEntradasHojeLocal();
+    renderizarAutoCard(localQtd, lim);
+
+    if (!buscarBackend) return;
+    const ativa = obterContaAtiva();
+    if (!ativa || !ativa.phone) return;
+    try {
+      const resp = await chamarApiTelegram("/api/autojoin/status?telefone=" + encodeURIComponent(ativa.phone));
+      if (resp && resp.entradas_hoje !== undefined) {
+        const qtdSrv = Math.max(localQtd, parseInt(resp.entradas_hoje) || 0);
+        salvarAutoEntradasHojeLocal(qtdSrv);
+        renderizarAutoCard(qtdSrv, lim);
+      }
+    } catch(e) {}
+  }
+
   function carregarContaTelegramVisual() {
     try {
       const ativa = obterContaAtiva();
@@ -2927,6 +2988,15 @@
       // 2. Renderizar Lista no Modal "SUAS CONTAS SALVAS"
       if (!boxStatus) return;
 
+      try {
+        const curPh = ativa && ativa.phone ? ativa.phone : "";
+        if (curPh !== _ultimoSyncAutoPhone) {
+          _ultimoSyncAutoPhone = curPh;
+          atualizarProgressoAutoCard(true);
+        } else {
+          renderizarAutoCard(obterAutoEntradasHojeLocal());
+        }
+      } catch(e) {}
       if (!contas || contas.length === 0) {
         boxStatus.innerHTML = `
           <div style="text-align:center;padding:18px 10px;color:#94a3b8;font-size:12px;">
@@ -3471,9 +3541,12 @@
         if (resp && (resp.status === "entrou" || (resp.ok && resp.status !== "ja_membro"))) {
           concluidos++;
           marcarEntrado(alvo.url);
+          const novoTotalAuto = (resp.entradas_hoje !== undefined) ? Math.max(obterAutoEntradasHojeLocal() + 1, parseInt(resp.entradas_hoje) || 0) : (obterAutoEntradasHojeLocal() + 1);
+          salvarAutoEntradasHojeLocal(novoTotalAuto);
+          renderizarAutoCard(novoTotalAuto, limite);
           if (elIngressados) elIngressados.textContent = concluidos;
           if (elFila) elFila.textContent = Math.max(0, gruposLivres.length - indice);
-          adicionarLinhaLogAuto(`✓ Entrou com sucesso no grupo: <b>${esc(nomeCompleto)}</b>`, "l-success");
+          adicionarLinhaLogAuto(`✓ Entrou com sucesso no grupo: <b>${esc(nomeCompleto)}</b> (${novoTotalAuto}/${limite})`, "l-success");
         } else if (resp && resp.status === "ja_membro") {
           marcarEntrado(alvo.url);
           if (elFila) elFila.textContent = Math.max(0, gruposLivres.length - indice);
