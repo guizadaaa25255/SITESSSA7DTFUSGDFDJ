@@ -133,8 +133,8 @@
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    background: rgba(16, 185, 129, 0.08);
-    border: 1px solid rgba(16, 185, 129, 0.25);
+    background: rgba(100, 116, 139, 0.08);
+    border: 1px solid rgba(100, 116, 139, 0.25);
     border-radius: 9999px;
     padding: 6px 14px;
     cursor: default;
@@ -142,30 +142,30 @@
     transition: all 0.25s ease;
   }
   .cloud-status-pill.running {
-    background: rgba(16, 185, 129, 0.18);
+    background: rgba(16, 185, 129, 0.16);
     border-color: rgba(16, 185, 129, 0.6);
     box-shadow: 0 0 16px rgba(16, 185, 129, 0.35);
   }
   .cloud-status-pill.offline {
-    background: rgba(245, 158, 11, 0.08);
-    border-color: rgba(245, 158, 11, 0.3);
+    background: rgba(100, 116, 139, 0.08);
+    border-color: rgba(100, 116, 139, 0.25);
   }
   .cloud-pulse-dot {
     width: 9px;
     height: 9px;
     border-radius: 50%;
-    background: #10b981;
-    box-shadow: 0 0 8px #10b981;
+    background: #64748b;
+    box-shadow: 0 0 4px rgba(100, 116, 139, 0.4);
     transition: all 0.25s;
   }
   .cloud-status-pill.running .cloud-pulse-dot {
-    background: #34d399;
-    box-shadow: 0 0 12px #34d399;
+    background: #10b981;
+    box-shadow: 0 0 12px #10b981;
     animation: cloudPulseAnim 1.6s infinite;
   }
   .cloud-status-pill.offline .cloud-pulse-dot {
-    background: #f59e0b;
-    box-shadow: 0 0 8px #f59e0b;
+    background: #64748b;
+    box-shadow: none;
   }
   @keyframes cloudPulseAnim {
     0% { transform: scale(0.95); opacity: 0.8; }
@@ -1819,8 +1819,8 @@
         <div class="cloud-status-pill" id="cloud-status-pill" title="Servidor 24 Horas Ativo no Railway">
           <span class="cloud-pulse-dot" id="cloud-pulse-dot"></span>
           <div class="cloud-status-info">
-            <span class="cloud-status-title" id="cloud-status-title">🟢 Nuvem 24h: Online</span>
-            <span class="cloud-status-desc" id="cloud-status-desc">Railway Operacional</span>
+            <span class="cloud-status-title" id="cloud-status-title">⚪ Auto-Join: OFF</span>
+            <span class="cloud-status-desc" id="cloud-status-desc">Parado</span>
           </div>
         </div>
 
@@ -3792,7 +3792,7 @@
         if (st.rodando === true) {
           autoJoinAtivo = true;
           if (pill) pill.className = "cloud-status-pill running";
-          if (pTitle) pTitle.innerHTML = "⚡ Auto-Join Nuvem: Ativo";
+          if (pTitle) pTitle.innerHTML = "🟢 Auto-Join: Online";
           const qtdContas = (st.contas && st.contas.length) ? st.contas.length : 1;
           if (pDesc) pDesc.textContent = `${st.concluidos || 0} grupos · ${qtdContas} contas (24h)`;
           
@@ -3813,8 +3813,8 @@
             autoJoinAtivo = false;
           }
           if (pill) pill.className = "cloud-status-pill";
-          if (pTitle) pTitle.innerHTML = "🟢 Nuvem 24h: Online";
-          if (pDesc) pDesc.textContent = "Railway Operacional";
+          if (pTitle) pTitle.innerHTML = "⚪ Auto-Join: OFF";
+          if (pDesc) pDesc.textContent = "Parado";
 
           if (kpiProgresso) kpiProgresso.textContent = `${st.entradas_hoje || 0} / ${st.limite_diario || 20}`;
           if (kpiProgressoSub) kpiProgressoSub.textContent = "Aguardando início no servidor 24h";
@@ -3834,8 +3834,8 @@
       }
     } catch(e) {
       if (pill) pill.className = "cloud-status-pill offline";
-      if (pTitle) pTitle.innerHTML = "🟡 Conectando Nuvem...";
-      if (pDesc) pDesc.textContent = "Reconectando ao Railway";
+      if (pTitle) pTitle.innerHTML = "⚪ Auto-Join: OFF";
+      if (pDesc) pDesc.textContent = "Parado";
     }
   }
 
