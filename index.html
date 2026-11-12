@@ -128,6 +128,68 @@
     gap: 12px;
   }
 
+  /* ── BADGE NUVEM 24H NO HEADER ── */
+  .cloud-status-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(16, 185, 129, 0.08);
+    border: 1px solid rgba(16, 185, 129, 0.25);
+    border-radius: 9999px;
+    padding: 6px 14px;
+    cursor: default;
+    user-select: none;
+    transition: all 0.25s ease;
+  }
+  .cloud-status-pill.running {
+    background: rgba(16, 185, 129, 0.18);
+    border-color: rgba(16, 185, 129, 0.6);
+    box-shadow: 0 0 16px rgba(16, 185, 129, 0.35);
+  }
+  .cloud-status-pill.offline {
+    background: rgba(245, 158, 11, 0.08);
+    border-color: rgba(245, 158, 11, 0.3);
+  }
+  .cloud-pulse-dot {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: #10b981;
+    box-shadow: 0 0 8px #10b981;
+    transition: all 0.25s;
+  }
+  .cloud-status-pill.running .cloud-pulse-dot {
+    background: #34d399;
+    box-shadow: 0 0 12px #34d399;
+    animation: cloudPulseAnim 1.6s infinite;
+  }
+  .cloud-status-pill.offline .cloud-pulse-dot {
+    background: #f59e0b;
+    box-shadow: 0 0 8px #f59e0b;
+  }
+  @keyframes cloudPulseAnim {
+    0% { transform: scale(0.95); opacity: 0.8; }
+    50% { transform: scale(1.3); opacity: 1; }
+    100% { transform: scale(0.95); opacity: 0.8; }
+  }
+  .cloud-status-info {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.15;
+  }
+  .cloud-status-title {
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: #34d399;
+  }
+  .cloud-status-pill.offline .cloud-status-title {
+    color: #fbbf24;
+  }
+  .cloud-status-desc {
+    font-size: 0.68rem;
+    color: var(--text-muted);
+  }
+
   .account-pill {
     display: inline-flex;
     align-items: center;
@@ -1194,6 +1256,16 @@
     .header-wrap {
       padding: 10px 12px !important;
     }
+    .cloud-status-pill {
+      padding: 4px 8px !important;
+      gap: 5px !important;
+    }
+    .cloud-status-desc {
+      display: none !important;
+    }
+    .cloud-status-title {
+      font-size: 0.68rem !important;
+    }
     .brand-badge {
       width: 32px !important;
       height: 32px !important;
@@ -1744,6 +1816,14 @@
       </a>
 
       <div class="header-actions">
+        <div class="cloud-status-pill" id="cloud-status-pill" title="Servidor 24 Horas Ativo no Railway">
+          <span class="cloud-pulse-dot" id="cloud-pulse-dot"></span>
+          <div class="cloud-status-info">
+            <span class="cloud-status-title" id="cloud-status-title">🟢 Nuvem 24h: Online</span>
+            <span class="cloud-status-desc" id="cloud-status-desc">Railway Operacional</span>
+          </div>
+        </div>
+
         <div class="account-selector-wrap">
           <div class="account-pill" id="account-pill-btn" onclick="abrirModalMenuContas()">
             <div class="acc-avatar" id="acc-avatar">TG</div>
@@ -3693,7 +3773,75 @@
     }
   }
 
+  let logNuvemInicialExibido = false;
+
+  async function atualizarMonitorNuvem24h() {
+    const pill = document.getElementById("cloud-status-pill");
+    const pTitle = document.getElementById("cloud-status-title");
+    const pDesc = document.getElementById("cloud-status-desc");
+    const kpiProgresso = document.getElementById("val-auto-progresso");
+    const kpiProgressoSub = document.getElementById("val-auto-sub");
+    const badgeStatus = document.getElementById("status-autojoin-badge");
+    const btnStart = document.getElementById("btn-start-aj");
+    const btnStop = document.getElementById("btn-stop-aj");
+    const kpiIngressados = document.getElementById("kpi-aj-ingressados");
+
+    try {
+      const st = await chamarApiTelegram("/api/autojoin/status");
+      if (st) {
+        if (st.rodando === true) {
+          autoJoinAtivo = true;
+          if (pill) pill.className = "cloud-status-pill running";
+          if (pTitle) pTitle.innerHTML = "⚡ Auto-Join Nuvem: Ativo";
+          const qtdContas = (st.contas && st.contas.length) ? st.contas.length : 1;
+          if (pDesc) pDesc.textContent = `${st.concluidos || 0} grupos · ${qtdContas} contas (24h)`;
+          
+          if (kpiProgresso) kpiProgresso.textContent = `${st.entradas_hoje || 0} / ${st.limite_diario || 20}`;
+          if (kpiProgressoSub) kpiProgressoSub.innerHTML = '<span style="color:#34d399;font-weight:700;">⚡ Rodando 24h no Railway</span>';
+
+          if (badgeStatus) {
+            badgeStatus.className = "badge-status-online pulsing";
+            badgeStatus.textContent = `⚡ Rodando na Nuvem (${qtdContas} contas)`;
+          }
+          if (btnStart) btnStart.disabled = true;
+          if (btnStop) btnStop.disabled = false;
+          if (kpiIngressados && st.concluidos !== undefined) kpiIngressados.textContent = st.concluidos;
+
+          conectarStreamAutoJoin();
+        } else {
+          if (autoJoinAtivo) {
+            autoJoinAtivo = false;
+          }
+          if (pill) pill.className = "cloud-status-pill";
+          if (pTitle) pTitle.innerHTML = "🟢 Nuvem 24h: Online";
+          if (pDesc) pDesc.textContent = "Railway Operacional";
+
+          if (kpiProgresso) kpiProgresso.textContent = `${st.entradas_hoje || 0} / ${st.limite_diario || 20}`;
+          if (kpiProgressoSub) kpiProgressoSub.textContent = "Aguardando início no servidor 24h";
+
+          if (badgeStatus && !autoJoinAtivo) {
+            badgeStatus.className = "badge-status-online";
+            badgeStatus.textContent = "🟢 Sistema Pronto";
+          }
+          if (btnStart) btnStart.disabled = false;
+          if (btnStop) btnStop.disabled = true;
+        }
+
+        if (!logNuvemInicialExibido) {
+          logNuvemInicialExibido = true;
+          adicionarLinhaLogAuto('<span style="color:#34d399;font-weight:700;">[Nuvem 24h]</span> ☁️ Conectado ao servidor Railway! Seu sistema continuará executando mesmo com o computador desligado.');
+        }
+      }
+    } catch(e) {
+      if (pill) pill.className = "cloud-status-pill offline";
+      if (pTitle) pTitle.innerHTML = "🟡 Conectando Nuvem...";
+      if (pDesc) pDesc.textContent = "Reconectando ao Railway";
+    }
+  }
+
   async function checarAutoJoinRodandoServidor() {
+    await atualizarMonitorNuvem24h();
+    setInterval(atualizarMonitorNuvem24h, 4000);
     try {
       const st = await chamarApiTelegram("/api/autojoin/status");
       if (st && st.rodando === true) {
