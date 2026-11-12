@@ -3769,7 +3769,15 @@
     const badgeStatus = document.getElementById("status-autojoin-badge");
     if (badgeStatus) {
       badgeStatus.className = "badge-status-online";
-      badgeStatus.textContent = "🟢 Sistema Pronto";
+      badgeStatus.textContent = "⚪ Auto-Join: OFF";
+    }
+    const pill = document.getElementById("cloud-status-pill");
+    const pTitle = document.getElementById("cloud-status-title");
+    const pDesc = document.getElementById("cloud-status-desc");
+    if (pill) pill.className = "cloud-status-pill offline";
+    if (pTitle) pTitle.innerHTML = "⚪ Auto-Join: OFF";
+    if (pDesc && pDesc.textContent) {
+      pDesc.textContent = pDesc.textContent.replace("(24h)", "(Pausado)");
     }
   }
 
@@ -3809,22 +3817,25 @@
 
           conectarStreamAutoJoin();
         } else {
-          if (autoJoinAtivo) {
-            autoJoinAtivo = false;
-          }
-          if (pill) pill.className = "cloud-status-pill";
+          autoJoinAtivo = false;
+          if (pill) pill.className = "cloud-status-pill offline";
           if (pTitle) pTitle.innerHTML = "⚪ Auto-Join: OFF";
-          if (pDesc) pDesc.textContent = "Parado";
+          const qtdContas = (st.contas && st.contas.length) ? st.contas.length : (document.querySelectorAll("#lista-contas-autojoin input[type='checkbox']:checked").length || 1);
+          const concluidos = st.concluidos || 0;
+          if (pDesc) {
+            pDesc.textContent = `${concluidos} grupos · ${qtdContas} contas (Pausado)`;
+          }
 
           if (kpiProgresso) kpiProgresso.textContent = `${st.entradas_hoje || 0} / ${st.limite_diario || 20}`;
-          if (kpiProgressoSub) kpiProgressoSub.textContent = "Aguardando início no servidor 24h";
+          if (kpiProgressoSub) kpiProgressoSub.textContent = "Auto-Join pausado no servidor";
 
-          if (badgeStatus && !autoJoinAtivo) {
+          if (badgeStatus) {
             badgeStatus.className = "badge-status-online";
-            badgeStatus.textContent = "🟢 Sistema Pronto";
+            badgeStatus.textContent = "⚪ Auto-Join: OFF";
           }
           if (btnStart) btnStart.disabled = false;
           if (btnStop) btnStop.disabled = true;
+          if (kpiIngressados && st.concluidos !== undefined) kpiIngressados.textContent = st.concluidos;
         }
 
         if (!logNuvemInicialExibido) {
@@ -3835,7 +3846,9 @@
     } catch(e) {
       if (pill) pill.className = "cloud-status-pill offline";
       if (pTitle) pTitle.innerHTML = "⚪ Auto-Join: OFF";
-      if (pDesc) pDesc.textContent = "Parado";
+      const qtdContas = document.querySelectorAll("#lista-contas-autojoin input[type='checkbox']:checked").length || 1;
+      const ingressados = document.getElementById("kpi-aj-ingressados") ? document.getElementById("kpi-aj-ingressados").textContent : "0";
+      if (pDesc) pDesc.textContent = `${ingressados} grupos · ${qtdContas} contas (Pausado)`;
     }
   }
 
