@@ -1,0 +1,6 @@
+Flask>=3.0.0
+telethon>=1.36.0
+requests>=2.31.0
+cryptography
+pyaes
+beautifulsoup4
