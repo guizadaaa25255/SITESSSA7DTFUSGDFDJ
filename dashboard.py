@@ -1854,16 +1854,22 @@ def api_autojoin_start():
 
 @app.route("/api/autojoin/stop", methods=["POST"])
 def api_autojoin_stop():
+    global _autojoin_running
     _autojoin_stop.set()
+    _autojoin_running = False
     return jsonify({"ok": True})
 
 
 @app.route("/api/autojoin/status")
 def api_autojoin_status():
+    global _autojoin_running
+    if _autojoin_stop.is_set():
+        _autojoin_running = False
+    rodando = bool(_autojoin_running and not _autojoin_stop.is_set())
     tel = str(request.args.get("telefone", "")).strip()
     clean = re.sub(r"[^0-9]", "", tel) if tel else None
     return jsonify({
-        "rodando": _autojoin_running,
+        "rodando": rodando,
         "concluidos": _autojoin_stats.get("concluidos", 0),
         "contas": _autojoin_stats.get("contas", []),
         "sem_limite": bool(_autojoin_stats.get("sem_limite", False)),
