@@ -3788,19 +3788,26 @@
     }, 4000);
   }
 
+  let _usuarioClicouParar = false;
+
   async function pararAutomacao(silencioso = false) {
-    try {
-      await chamarApiTelegram("/api/autojoin/stop");
-    } catch(e) {}
+    // 1. Atualização visual instantânea (0ms no clique)
     finalizarAutoJoinVisual();
     if (!silencioso) {
       adicionarLinhaLogAuto(`⏹ Auto-Join pausado a pedido do usuário.`, "l-warn");
       alerta("Auto-Join pausado.", "info");
     }
+    // 2. Dispara a parada no servidor imediatamente
+    try {
+      await chamarApiTelegram("/api/autojoin/stop");
+    } catch(e) {}
   }
 
   function finalizarAutoJoinVisual() {
     autoJoinAtivo = false;
+    _usuarioClicouParar = true;
+    setTimeout(() => { _usuarioClicouParar = false; }, 8000);
+
     if (autoJoinEventSource) {
       try { autoJoinEventSource.close(); } catch(e) {}
       autoJoinEventSource = null;
@@ -3831,6 +3838,9 @@
   let logNuvemInicialExibido = false;
 
   async function atualizarMonitorNuvem24h() {
+    if (_usuarioClicouParar) {
+      return;
+    }
     const pill = document.getElementById("cloud-status-pill");
     const pTitle = document.getElementById("cloud-status-title");
     const pDesc = document.getElementById("cloud-status-desc");
