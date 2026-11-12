@@ -2371,6 +2371,7 @@
   let broadcastTimer = null;
 
   document.addEventListener("DOMContentLoaded", () => {
+    try { checarAutoJoinRodandoServidor(); } catch(e) {}
     atualizarVisibilidadeAdm();
     carregarContaTelegramVisual();
     sincronizarContasComServidor();
@@ -3472,9 +3473,11 @@
     return String(str).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
   }
 
-  /* ── ABA 2: AUTO-JOIN REAL, MULTI-CONTA E ORDEM ALEATÓRIA ── */
+  /* ── ABA 2: AUTO-JOIN 24H NO SERVIDOR (RODA MESMO COM NAVEGADOR FECHADO!) ── */
   let autoJoinAtivo = false;
-  let autoJoinTimers = [];
+  let autoJoinEventSource = null;
+  let autoJoinPollInterval = null;
+  let autoJoinConcluidosCount = 0;
 
   function selecionarTodasContasAuto(marcar) {
     document.querySelectorAll(".chk-conta-auto").forEach(chk => {
@@ -3488,7 +3491,6 @@
     const contas = obterContasSalvas();
     const ativa = obterContaAtiva();
 
-    // Preservar seleção manual atual caso já exista
     const selecionadasAntes = new Set();
     const jaRenderizado = box.querySelectorAll(".chk-conta-auto").length > 0;
     if (jaRenderizado) {
@@ -3524,48 +3526,6 @@
     }).join("");
   }
 
-  function _obterEntradosDaConta(cleanPhone) {
-    try {
-      const chave = cleanPhone ? ("tg_grupos_entrados_" + cleanPhone) : "tg_grupos_entrados";
-      return JSON.parse(localStorage.getItem(chave) || "[]");
-    } catch(e) { return []; }
-  }
-
-  function _marcarEntradoDaConta(url, cleanPhone) {
-    try {
-      const chave = cleanPhone ? ("tg_grupos_entrados_" + cleanPhone) : "tg_grupos_entrados";
-      let entrados = JSON.parse(localStorage.getItem(chave) || "[]");
-      if (!entrados.includes(url)) entrados.push(url);
-      localStorage.setItem(chave, JSON.stringify(entrados));
-    } catch(e) {}
-    const ativa = obterContaAtiva();
-    const cleanAtiva = ativa && ativa.phone ? String(ativa.phone).replace(/[^0-9]/g, "") : "";
-    if (!cleanPhone || cleanPhone === cleanAtiva) {
-      setTimeout(() => renderizarGrupos(), 300);
-    }
-  }
-
-  function _salvarAutoHojeDaConta(cleanPhone, qtd) {
-    try {
-      const hoje = new Date().toISOString().slice(0, 10);
-      const chave = "tg_auto_hoje_" + (cleanPhone || "default");
-      localStorage.setItem(chave, JSON.stringify({ data: hoje, qtd: parseInt(qtd) || 0 }));
-    } catch(e) {}
-  }
-
-  function _obterAutoHojeDaConta(cleanPhone) {
-    try {
-      const hoje = new Date().toISOString().slice(0, 10);
-      const chave = "tg_auto_hoje_" + (cleanPhone || "default");
-      const raw = localStorage.getItem(chave);
-      if (raw) {
-        const obj = JSON.parse(raw);
-        if (obj && obj.data === hoje) return parseInt(obj.qtd) || 0;
-      }
-    } catch(e) {}
-    return 0;
-  }
-
   async function iniciarAutomacao() {
     const selecionadas = Array.from(document.querySelectorAll(".chk-conta-auto:checked")).map(chk => ({
       phone: chk.value,
@@ -3581,152 +3541,146 @@
       selecionadas.push({ phone: ativa.phone, nome: ativa.nome || ativa.phone });
     }
 
-    // Embaralhar também a ordem das contas selecionadas
-    for (let i = selecionadas.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [selecionadas[i], selecionadas[j]] = [selecionadas[j], selecionadas[i]];
-    }
-
     const delayMin = Math.max(3, parseInt(document.getElementById("cfg-delay-min").value) || 10);
     const delayMax = Math.max(delayMin, parseInt(document.getElementById("cfg-delay-max").value) || 25);
     const limite = parseInt(document.getElementById("cfg-limite-dia").value) || 20;
 
     autoJoinAtivo = true;
-    autoJoinTimers = [];
-    document.getElementById("btn-start-aj").disabled = true;
-    document.getElementById("btn-stop-aj").disabled = false;
+    const btnStart = document.getElementById("btn-start-aj");
+    const btnStop = document.getElementById("btn-stop-aj");
+    if (btnStart) btnStart.disabled = true;
+    if (btnStop) btnStop.disabled = false;
     const badgeStatus = document.getElementById("status-autojoin-badge");
     if (badgeStatus) {
       badgeStatus.className = "badge-status-online pulsing";
-      badgeStatus.textContent = `⚡ Rodando (${selecionadas.length} conta${selecionadas.length > 1 ? 's' : ''})`;
+      badgeStatus.textContent = `⚡ Servidor 24h Ativo (${selecionadas.length} conta${selecionadas.length > 1 ? 's' : ''})`;
     }
 
-    alerta(`Auto-Join iniciado em ordem aleatória para ${selecionadas.length} conta(s)!`, "success");
+    alerta(`Auto-Join iniciado no servidor para ${selecionadas.length} conta(s)! Pode fechar o navegador que continua rodando.`, "success");
 
     const term = document.getElementById("terminal-linhas");
     if (term) term.innerHTML = "";
 
     const nomesFmt = selecionadas.map(c => `<b>${esc(c.nome)}</b>`).join(", ");
-    adicionarLinhaLogAuto(`🎲 Auto-Join em <b>ordem aleatória</b> iniciado para: ${nomesFmt}`, "l-info");
+    adicionarLinhaLogAuto(`🚀 Auto-Join iniciado no <b>Servidor 24h</b> para: ${nomesFmt}`, "l-success");
+    adicionarLinhaLogAuto(`💡 <i>Você pode fechar a aba do navegador que o servidor continua entrando nos grupos!</i>`, "l-info");
 
-    const elFila = document.getElementById("kpi-aj-fila");
-    const elIngressados = document.getElementById("kpi-aj-ingressados");
-    let concluidosTotal = 0;
-    if (elIngressados) elIngressados.textContent = "0";
-
-    let workersAtivos = selecionadas.length;
-
-    function finalizarWorker() {
-      workersAtivos--;
-      if (workersAtivos <= 0 && autoJoinAtivo) {
-        adicionarLinhaLogAuto(`🏁 <b>Auto-Join concluído! Total de ${concluidosTotal} entrada(s) realizadas.</b>`, "l-success");
-        pararAutomacao(true);
+    try {
+      const payload = {
+        telefones: selecionadas.map(s => s.phone),
+        delay_min: delayMin,
+        delay_max: delayMax,
+        limite: limite
+      };
+      const resp = await chamarApiTelegram("/api/autojoin/start", payload);
+      if (resp && resp.ok) {
+        conectarStreamAutoJoin();
+      } else {
+        throw new Error(resp && resp.erro ? resp.erro : "Falha ao iniciar no servidor");
       }
+    } catch(err) {
+      console.error("Erro no autojoin:", err);
+      if (btnStart) btnStart.disabled = false;
+      if (btnStop) btnStop.disabled = true;
+      if (badgeStatus) badgeStatus.textContent = "Erro ao Iniciar";
+      alerta("Erro ao iniciar Auto-Join: " + (err.message || "Verifique conexão"), "error");
+      adicionarLinhaLogAuto(`❌ Falha ao iniciar no servidor: ${err.message}`, "l-error");
     }
-
-    selecionadas.forEach((conta, idxConta) => {
-      const cleanPh = String(conta.phone || "").replace(/[^0-9]/g, "");
-      const entradosConta = _obterEntradosDaConta(cleanPh);
-      const gruposLivres = catalogoGrupos.filter(g => !g.requer_captcha && g.tipo !== "antispam" && !entradosConta.includes(g.url));
-
-      // Embaralhar em ordem aleatória independente para cada conta
-      for (let i = gruposLivres.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [gruposLivres[i], gruposLivres[j]] = [gruposLivres[j], gruposLivres[i]];
-      }
-
-      if (idxConta === 0 && elFila) elFila.textContent = gruposLivres.length;
-
-      let concluidosConta = 0;
-      let indice = 0;
-
-      async function processarProximoConta() {
-        if (!autoJoinAtivo) return;
-
-        if (indice >= gruposLivres.length || concluidosConta >= limite) {
-          adicionarLinhaLogAuto(`🏁 [${esc(conta.nome)}] <b>Meta de ${concluidosConta}/${limite} grupos concluída!</b>`, "l-success");
-          finalizarWorker();
-          return;
-        }
-
-        const alvo = gruposLivres[indice];
-        indice++;
-        const nomeCompleto = alvo.titulo || "Grupo Telegram";
-        let proximoDelaySegundos = null;
-
-        try {
-          const payload = { url: alvo.url, telefone: conta.phone, modo: "auto" };
-          const resp = await chamarApiTelegram("/api/entrar", payload);
-
-          if (resp && (resp.status === "entrou" || (resp.ok && resp.status !== "ja_membro"))) {
-            concluidosConta++;
-            concluidosTotal++;
-            _marcarEntradoDaConta(alvo.url, cleanPh);
-            const novoTotalAuto = (resp.entradas_hoje !== undefined)
-              ? Math.max(_obterAutoHojeDaConta(cleanPh) + 1, parseInt(resp.entradas_hoje) || 0)
-              : (_obterAutoHojeDaConta(cleanPh) + 1);
-            _salvarAutoHojeDaConta(cleanPh, novoTotalAuto);
-
-            const ativa = obterContaAtiva();
-            if (ativa && String(ativa.phone || "").replace(/[^0-9]/g, "") === cleanPh) {
-              renderizarAutoCard(novoTotalAuto, limite);
-            }
-            if (elIngressados) elIngressados.textContent = concluidosTotal;
-            if (elFila) elFila.textContent = Math.max(0, gruposLivres.length - indice);
-            adicionarLinhaLogAuto(`[<b>${esc(conta.nome)}</b>] ✓ Entrou em: <b>${esc(nomeCompleto)}</b> (${concluidosConta}/${limite})`, "l-success");
-          } else if (resp && resp.status === "ja_membro") {
-            _marcarEntradoDaConta(alvo.url, cleanPh);
-            adicionarLinhaLogAuto(`[<b>${esc(conta.nome)}</b>] ℹ️ Já participa de <b>${esc(nomeCompleto)}</b> (pulando...)`, "l-info");
-            proximoDelaySegundos = 2;
-          } else if (resp && resp.status === "contra_spam") {
-            adicionarLinhaLogAuto(`[<b>${esc(conta.nome)}</b>] 🛡️ Contra Spam em <b>${esc(nomeCompleto)}</b> (mantido no Manual).`, "l-warn");
-            proximoDelaySegundos = 3;
-          } else if (resp && (resp.status === "expirado" || resp.status === "sem_chat")) {
-            adicionarLinhaLogAuto(`[<b>${esc(conta.nome)}</b>] ⚠️ Indisponível: <b>${esc(nomeCompleto)}</b> (pulando...)`, "l-warn");
-            proximoDelaySegundos = 3;
-          } else if (resp && resp.status === "flood") {
-            gruposLivres.push(alvo);
-            const espera = Math.min(Math.max(parseInt(resp.espera_segundos) || 90, 30), 900);
-            const minFmt = espera >= 60 ? `${Math.ceil(espera / 60)} min` : `${espera}s`;
-            adicionarLinhaLogAuto(`[<b>${esc(conta.nome)}</b>] ⏳ Pausa anti-flood (${minFmt}). <b>${esc(nomeCompleto)}</b> guardado na fila!`, "l-warn");
-            proximoDelaySegundos = espera;
-          } else {
-            gruposLivres.push(alvo);
-            adicionarLinhaLogAuto(`[<b>${esc(conta.nome)}</b>] 🔄 Oscilação em <b>${esc(nomeCompleto)}</b> — mantido na fila!`, "l-warn");
-          }
-        } catch (err) {
-          gruposLivres.push(alvo);
-          adicionarLinhaLogAuto(`[<b>${esc(conta.nome)}</b>] 🔄 Reconectando — <b>${esc(nomeCompleto)}</b> mantido na fila!`, "l-warn");
-        }
-
-        if (!autoJoinAtivo) return;
-
-        if (concluidosConta >= limite || indice >= gruposLivres.length) {
-          adicionarLinhaLogAuto(`🏁 [${esc(conta.nome)}] <b>Finalizado (${concluidosConta} grupos)!</b>`, "l-success");
-          finalizarWorker();
-          return;
-        }
-
-        const dSorteado = proximoDelaySegundos !== null
-          ? proximoDelaySegundos
-          : (Math.floor(Math.random() * (delayMax - delayMin + 1)) + delayMin);
-        const tid = setTimeout(processarProximoConta, dSorteado * 1000);
-        autoJoinTimers.push(tid);
-      }
-
-      const startDelay = idxConta * (1200 + Math.floor(Math.random() * 1500));
-      const tidStart = setTimeout(processarProximoConta, startDelay);
-      autoJoinTimers.push(tidStart);
-    });
   }
 
-  function pararAutomacao(silencioso = false) {
+  function conectarStreamAutoJoin() {
+    if (autoJoinEventSource) {
+      try { autoJoinEventSource.close(); } catch(e) {}
+      autoJoinEventSource = null;
+    }
+    if (autoJoinPollInterval) {
+      clearInterval(autoJoinPollInterval);
+      autoJoinPollInterval = null;
+    }
+
+    const isLocal = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1";
+    const tunnelUrl = "https://virginia-show-pas-pci.trycloudflare.com";
+    const endpoints = [
+      ...(!isLocal ? [tunnelUrl] : []),
+      "",
+      tunnelUrl,
+      "http://localhost:5000"
+    ].filter(Boolean).filter((v, i, a) => a.indexOf(v) === i);
+
+    const base = endpoints[0] || "";
+    const sseUrl = (base ? base : "") + "/api/autojoin/stream";
+
+    try {
+      autoJoinEventSource = new EventSource(sseUrl);
+
+      autoJoinEventSource.onmessage = function(ev) {
+        try {
+          const d = JSON.parse(ev.data);
+          if (d.tipo === "ping" || d.tipo === "connected") return;
+
+          adicionarLinhaLogAuto(d.msg, d.tipo);
+
+          if (d.tipo === "success" || d.msg.includes("✅")) {
+            autoJoinConcluidosCount++;
+            const el = document.getElementById("kpi-aj-ingressados");
+            if (el) el.textContent = autoJoinConcluidosCount;
+            atualizarProgressoAutoCard(true);
+          }
+
+          if (d.tipo === "done" || d.msg.includes("🏁") || d.msg.includes("finalizado")) {
+            finalizarAutoJoinVisual();
+          }
+        } catch(e) {}
+      };
+
+      autoJoinEventSource.onerror = function() {
+        if (!autoJoinPollInterval) {
+          iniciarPollingStatusAutoJoin();
+        }
+      };
+    } catch(e) {
+      iniciarPollingStatusAutoJoin();
+    }
+  }
+
+  function iniciarPollingStatusAutoJoin() {
+    if (autoJoinPollInterval) return;
+    autoJoinPollInterval = setInterval(async () => {
+      try {
+        const st = await chamarApiTelegram("/api/autojoin/status");
+        if (st) {
+          if (st.concluidos !== undefined) {
+            const el = document.getElementById("kpi-aj-ingressados");
+            if (el) el.textContent = st.concluidos;
+          }
+          if (st.rodando === false) {
+            finalizarAutoJoinVisual();
+          }
+        }
+      } catch(e) {}
+    }, 4000);
+  }
+
+  async function pararAutomacao(silencioso = false) {
+    try {
+      await chamarApiTelegram("/api/autojoin/stop");
+    } catch(e) {}
+    finalizarAutoJoinVisual();
+    if (!silencioso) {
+      adicionarLinhaLogAuto(`⏹ Auto-Join pausado a pedido do usuário.`, "l-warn");
+      alerta("Auto-Join pausado.", "info");
+    }
+  }
+
+  function finalizarAutoJoinVisual() {
     autoJoinAtivo = false;
-    if (typeof autoJoinTimer !== "undefined" && autoJoinTimer) clearTimeout(autoJoinTimer);
-    autoJoinTimer = null;
-    if (Array.isArray(autoJoinTimers)) {
-      autoJoinTimers.forEach(t => clearTimeout(t));
-      autoJoinTimers = [];
+    if (autoJoinEventSource) {
+      try { autoJoinEventSource.close(); } catch(e) {}
+      autoJoinEventSource = null;
+    }
+    if (autoJoinPollInterval) {
+      clearInterval(autoJoinPollInterval);
+      autoJoinPollInterval = null;
     }
     const btnStart = document.getElementById("btn-start-aj");
     const btnStop = document.getElementById("btn-stop-aj");
@@ -3737,10 +3691,29 @@
       badgeStatus.className = "badge-status-online";
       badgeStatus.textContent = "🟢 Sistema Pronto";
     }
-    if (!silencioso) {
-      adicionarLinhaLogAuto(`Auto-Join pausado.`, "l-info");
-      alerta("Auto-Join pausado.", "info");
-    }
+  }
+
+  async function checarAutoJoinRodandoServidor() {
+    try {
+      const st = await chamarApiTelegram("/api/autojoin/status");
+      if (st && st.rodando === true) {
+        autoJoinAtivo = true;
+        const btnStart = document.getElementById("btn-start-aj");
+        const btnStop = document.getElementById("btn-stop-aj");
+        if (btnStart) btnStart.disabled = true;
+        if (btnStop) btnStop.disabled = false;
+        const badgeStatus = document.getElementById("status-autojoin-badge");
+        if (badgeStatus) {
+          badgeStatus.className = "badge-status-online pulsing";
+          badgeStatus.textContent = "⚡ Servidor 24h Ativo";
+        }
+        if (st.concluidos !== undefined) {
+          const el = document.getElementById("kpi-aj-ingressados");
+          if (el) el.textContent = st.concluidos;
+        }
+        conectarStreamAutoJoin();
+      }
+    } catch(e) {}
   }
 
   function limparConsole() {
