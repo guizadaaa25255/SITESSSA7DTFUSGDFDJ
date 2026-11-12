@@ -1636,13 +1636,13 @@ def _log(msg, tipo="info"):
 
 _autojoin_stats = {"concluidos": 0, "contas": []}
 
-def _autojoin_multi_worker(telefones_lista, delay_min, delay_max, limite):
+def _autojoin_multi_worker(telefones_lista, delay_min, delay_max, limite, sem_limite=False):
     """Roda no servidor 24h independente do navegador.
        Processa uma ou várias contas em ordem aleatória, com segurança anti-spam e anti-flood."""
     global _autojoin_running, _autojoin_stats
     _autojoin_running = True
     _autojoin_stop.clear()
-    _autojoin_stats = {"concluidos": 0, "contas": telefones_lista}
+    _autojoin_stats = {"concluidos": 0, "contas": telefones_lista, "sem_limite": sem_limite}
 
     with open(GRUPOS_ARQ, encoding="utf-8") as f:
         catalogo_base = json.load(f)
@@ -1680,7 +1680,10 @@ def _autojoin_multi_worker(telefones_lista, delay_min, delay_max, limite):
             return
 
     nomes_fmt = ", ".join([f"<b>{c['nome']}</b>" for c in contas_resolvidas])
-    _log(f"🚀 Auto-Join no Servidor 24h iniciado para: {nomes_fmt} (Ordem Aleatória | Limite: {limite}/conta)", "start")
+    if sem_limite:
+        _log(f"🚀 Auto-Join no Servidor 24h iniciado para: {nomes_fmt} (Ordem Aleatória | MODO SEM LIMITES ♾️)", "start")
+    else:
+        _log(f"🚀 Auto-Join no Servidor 24h iniciado para: {nomes_fmt} (Ordem Aleatória | Limite: {limite}/conta)", "start")
 
     # Mapear grupos restantes por conta
     grupos_por_conta = {}
@@ -1703,7 +1706,7 @@ def _autojoin_multi_worker(telefones_lista, delay_min, delay_max, limite):
 
             clean = c["clean"]
             entradas_hoje = carregar_estado(phone=clean)
-            if entradas_hoje >= limite:
+            if not sem_limite and entradas_hoje >= limite:
                 continue
 
             fila_c = grupos_por_conta.get(clean, [])
@@ -1766,7 +1769,8 @@ def _autojoin_multi_worker(telefones_lista, delay_min, delay_max, limite):
                     est_novo = int(res_st.split(":", 1)[1])
                     total_concluido += 1
                     _autojoin_stats["concluidos"] = total_concluido
-                    _log(f"[{c['nome']}] ✅ Entrou em: <b>{titulo}</b> ({est_novo}/{limite} hoje)", "success")
+                    lim_str = "♾️" if sem_limite else str(limite)
+                    _log(f"[{c['nome']}] ✅ Entrou em: <b>{titulo}</b> ({est_novo}/{lim_str} hoje)", "success")
                 else:
                     _log(f"[{c['nome']}] ✓ Processado: <b>{titulo}</b>", "info")
 
@@ -1797,7 +1801,10 @@ def _autojoin_multi_worker(telefones_lista, delay_min, delay_max, limite):
                 time.sleep(1)
 
         if contas_ativas_nesta_rodada == 0:
-            _log("🏁 Todas as contas atingiram o limite diário ou a fila acabou!", "done")
+            if sem_limite:
+                _log("🏁 Todos os grupos disponíveis da fila foram concluídos!", "done")
+            else:
+                _log("🏁 Todas as contas atingiram o limite diário ou a fila acabou!", "done")
             break
 
     _log("⏹ Auto-Join finalizado no servidor.", "done")
@@ -1826,7 +1833,9 @@ def api_autojoin_start():
 
     delay_min = int(d.get("delay_min", 10))
     delay_max = int(d.get("delay_max", 25))
-    limite    = int(d.get("limite", 20))
+    sem_limite = bool(d.get("sem_limite", False))
+    limite    = 999999 if sem_limite else int(d.get("limite", 20))
+    _autojoin_stats["sem_limite"] = sem_limite
 
     while not _autojoin_queue.empty():
         try:
@@ -1836,7 +1845,7 @@ def api_autojoin_start():
 
     _autojoin_thread = threading.Thread(
         target=_autojoin_multi_worker,
-        args=(telefones_lista, delay_min, delay_max, limite),
+        args=(telefones_lista, delay_min, delay_max, limite, sem_limite),
         daemon=True
     )
     _autojoin_thread.start()
@@ -1857,6 +1866,7 @@ def api_autojoin_status():
         "rodando": _autojoin_running,
         "concluidos": _autojoin_stats.get("concluidos", 0),
         "contas": _autojoin_stats.get("contas", []),
+        "sem_limite": bool(_autojoin_stats.get("sem_limite", False)),
         "entradas_hoje": carregar_estado(phone=clean),
         "limite_diario": int(carregar_conf().get("limite_diario", 20))
     })
