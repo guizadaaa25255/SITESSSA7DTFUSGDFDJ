@@ -1942,6 +1942,16 @@
             <input type="number" id="cfg-limite-dia" value="20" min="1" max="100" oninput="atualizarProgressoAutoCard()">
           </div>
 
+          <div class="input-field-group" style="margin-top:4px;">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;gap:6px;">
+              <label style="margin:0;">Contas no Auto-Join (Aleatório):</label>
+              <div style="display:flex;gap:5px;">
+                <button type="button" onclick="selecionarTodasContasAuto(true)" style="background:rgba(16,185,129,0.15);border:1px solid rgba(16,185,129,0.35);color:#34d399;font-size:0.68rem;font-weight:700;padding:2px 7px;border-radius:6px;cursor:pointer;">Todas</button>
+                <button type="button" onclick="selecionarTodasContasAuto(false)" style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);color:#94a3b8;font-size:0.68rem;font-weight:700;padding:2px 7px;border-radius:6px;cursor:pointer;">Limpar</button>
+              </div>
+            </div>
+            <div id="lista-contas-autojoin" style="display:flex;flex-direction:column;gap:6px;max-height:180px;overflow-y:auto;padding-right:2px;"></div>
+          </div>
 
           <div class="autojoin-actions-row">
             <button class="btn-modal-green" id="btn-start-aj" style="flex:1;margin:0;" onclick="iniciarAutomacao()">
@@ -2990,6 +3000,7 @@
       }
 
       // 2. Renderizar Lista no Modal "SUAS CONTAS SALVAS"
+      try { renderizarContasAutoJoin(); } catch(e) {}
       if (!boxStatus) return;
 
       try {
@@ -3461,15 +3472,119 @@
     return String(str).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
   }
 
-  /* ── ABA 2: AUTO-JOIN REAL, DIRETO E 100% LIMPO ── */
+  /* ── ABA 2: AUTO-JOIN REAL, MULTI-CONTA E ORDEM ALEATÓRIA ── */
   let autoJoinAtivo = false;
+  let autoJoinTimers = [];
+
+  function selecionarTodasContasAuto(marcar) {
+    document.querySelectorAll(".chk-conta-auto").forEach(chk => {
+      chk.checked = !!marcar;
+    });
+  }
+
+  function renderizarContasAutoJoin() {
+    const box = document.getElementById("lista-contas-autojoin");
+    if (!box) return;
+    const contas = obterContasSalvas();
+    const ativa = obterContaAtiva();
+
+    // Preservar seleção manual atual caso já exista
+    const selecionadasAntes = new Set();
+    const jaRenderizado = box.querySelectorAll(".chk-conta-auto").length > 0;
+    if (jaRenderizado) {
+      box.querySelectorAll(".chk-conta-auto:checked").forEach(chk => {
+        selecionadasAntes.add(chk.value);
+      });
+    }
+
+    if (!contas || contas.length === 0) {
+      box.innerHTML = `<div style="font-size:0.75rem;color:#94a3b8;padding:8px;background:rgba(255,255,255,0.03);border-radius:8px;text-align:center;">Nenhuma conta salva. Conecte no topo.</div>`;
+      return;
+    }
+
+    box.innerHTML = contas.map(c => {
+      const clean = String(c.phone || "").replace(/[^0-9]/g, "");
+      const isChecked = jaRenderizado
+        ? selecionadasAntes.has(c.phone)
+        : (ativa && String(ativa.phone || "").replace(/[^0-9]/g, "") === clean);
+      const nome = esc(c.nome || c.phone);
+      const grad = c.gradient || "linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%)";
+      const ini = esc(c.iniciais || nome.substring(0, 2).toUpperCase());
+      const avatar = c.foto
+        ? `<img src="${c.foto}" style="width:24px;height:24px;border-radius:50%;object-fit:cover;flex-shrink:0;">`
+        : `<span style="width:24px;height:24px;border-radius:50%;background:${grad};color:#fff;font-size:0.65rem;font-weight:800;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;">${ini}</span>`;
+      return `
+        <label style="display:flex;align-items:center;gap:8px;padding:7px 10px;border-radius:8px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);cursor:pointer;font-size:0.8rem;color:#e2e8f0;margin:0;text-transform:none;letter-spacing:0;">
+          <input type="checkbox" class="chk-conta-auto" value="${esc(c.phone)}" data-nome="${nome}" ${isChecked ? "checked" : ""} style="width:15px;height:15px;accent-color:#10b981;flex-shrink:0;margin:0;">
+          ${avatar}
+          <span style="font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;flex:1;">${nome}</span>
+          <span style="font-size:0.68rem;color:#64748b;font-family:'JetBrains Mono';flex-shrink:0;">${esc(c.phone.slice(-4))}</span>
+        </label>
+      `;
+    }).join("");
+  }
+
+  function _obterEntradosDaConta(cleanPhone) {
+    try {
+      const chave = cleanPhone ? ("tg_grupos_entrados_" + cleanPhone) : "tg_grupos_entrados";
+      return JSON.parse(localStorage.getItem(chave) || "[]");
+    } catch(e) { return []; }
+  }
+
+  function _marcarEntradoDaConta(url, cleanPhone) {
+    try {
+      const chave = cleanPhone ? ("tg_grupos_entrados_" + cleanPhone) : "tg_grupos_entrados";
+      let entrados = JSON.parse(localStorage.getItem(chave) || "[]");
+      if (!entrados.includes(url)) entrados.push(url);
+      localStorage.setItem(chave, JSON.stringify(entrados));
+    } catch(e) {}
+    const ativa = obterContaAtiva();
+    const cleanAtiva = ativa && ativa.phone ? String(ativa.phone).replace(/[^0-9]/g, "") : "";
+    if (!cleanPhone || cleanPhone === cleanAtiva) {
+      setTimeout(() => renderizarGrupos(), 300);
+    }
+  }
+
+  function _salvarAutoHojeDaConta(cleanPhone, qtd) {
+    try {
+      const hoje = new Date().toISOString().slice(0, 10);
+      const chave = "tg_auto_hoje_" + (cleanPhone || "default");
+      localStorage.setItem(chave, JSON.stringify({ data: hoje, qtd: parseInt(qtd) || 0 }));
+    } catch(e) {}
+  }
+
+  function _obterAutoHojeDaConta(cleanPhone) {
+    try {
+      const hoje = new Date().toISOString().slice(0, 10);
+      const chave = "tg_auto_hoje_" + (cleanPhone || "default");
+      const raw = localStorage.getItem(chave);
+      if (raw) {
+        const obj = JSON.parse(raw);
+        if (obj && obj.data === hoje) return parseInt(obj.qtd) || 0;
+      }
+    } catch(e) {}
+    return 0;
+  }
 
   async function iniciarAutomacao() {
-    const ativa = obterContaAtiva();
-    if (!ativa || !ativa.phone) {
-      alerta("Conecte sua conta do Telegram no botão do topo primeiro!", "error");
-      abrirModalMenuContas();
-      return;
+    const selecionadas = Array.from(document.querySelectorAll(".chk-conta-auto:checked")).map(chk => ({
+      phone: chk.value,
+      nome: chk.getAttribute("data-nome") || chk.value
+    }));
+
+    if (selecionadas.length === 0) {
+      const ativa = obterContaAtiva();
+      if (!ativa || !ativa.phone) {
+        alerta("Selecione pelo menos uma conta para iniciar o Auto-Join!", "error");
+        return;
+      }
+      selecionadas.push({ phone: ativa.phone, nome: ativa.nome || ativa.phone });
+    }
+
+    // Embaralhar também a ordem das contas selecionadas
+    for (let i = selecionadas.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [selecionadas[i], selecionadas[j]] = [selecionadas[j], selecionadas[i]];
     }
 
     const delayMin = Math.max(3, parseInt(document.getElementById("cfg-delay-min").value) || 10);
@@ -3477,146 +3592,142 @@
     const limite = parseInt(document.getElementById("cfg-limite-dia").value) || 20;
 
     autoJoinAtivo = true;
+    autoJoinTimers = [];
     document.getElementById("btn-start-aj").disabled = true;
     document.getElementById("btn-stop-aj").disabled = false;
     const badgeStatus = document.getElementById("status-autojoin-badge");
     if (badgeStatus) {
       badgeStatus.className = "badge-status-online pulsing";
-      badgeStatus.textContent = "⚡ Entrando nos grupos...";
+      badgeStatus.textContent = `⚡ Rodando (${selecionadas.length} conta${selecionadas.length > 1 ? 's' : ''})`;
     }
 
-    alerta("Auto-Join iniciado com sucesso!", "success");
+    alerta(`Auto-Join iniciado em ordem aleatória para ${selecionadas.length} conta(s)!`, "success");
 
     const term = document.getElementById("terminal-linhas");
     if (term) term.innerHTML = "";
 
-    adicionarLinhaLogAuto(`🎲 Auto-Join em <b>ordem aleatória</b> iniciado para a conta <b>${esc(ativa.nome || ativa.phone)}</b>`, "l-info");
-
-    const entradosSalvos = obterEntradosSalvos();
-
-    const gruposLivres = catalogoGrupos.filter(g => !g.requer_captcha && g.tipo !== "antispam" && !entradosSalvos.includes(g.url));
-    // Embaralhar em ordem aleatória para cada aba/conta seguir um caminho diferente
-    for (let i = gruposLivres.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [gruposLivres[i], gruposLivres[j]] = [gruposLivres[j], gruposLivres[i]];
-    }
+    const nomesFmt = selecionadas.map(c => `<b>${esc(c.nome)}</b>`).join(", ");
+    adicionarLinhaLogAuto(`🎲 Auto-Join em <b>ordem aleatória</b> iniciado para: ${nomesFmt}`, "l-info");
 
     const elFila = document.getElementById("kpi-aj-fila");
     const elIngressados = document.getElementById("kpi-aj-ingressados");
-    if (elFila) elFila.textContent = gruposLivres.length;
+    let concluidosTotal = 0;
+    if (elIngressados) elIngressados.textContent = "0";
 
-    let concluidos = 0;
-    let indice = 0;
+    let workersAtivos = selecionadas.length;
 
-    async function processarProximoAutoJoin() {
-      if (!autoJoinAtivo) return;
-
-      if (indice >= gruposLivres.length || concluidos >= limite) {
-        adicionarLinhaLogAuto(`🏁 <b>Limite de ${concluidos} grupos atingido com sucesso!</b>`, "l-success");
-        pararAutomacao();
-        return;
+    function finalizarWorker() {
+      workersAtivos--;
+      if (workersAtivos <= 0 && autoJoinAtivo) {
+        adicionarLinhaLogAuto(`🏁 <b>Auto-Join concluído! Total de ${concluidosTotal} entrada(s) realizadas.</b>`, "l-success");
+        pararAutomacao(true);
       }
-
-      const alvo = gruposLivres[indice];
-      indice++;
-      const nomeCompleto = alvo.titulo || "Grupo Telegram";
-
-      if (badgeStatus) {
-        badgeStatus.textContent = `⏳ Entrando em: ${nomeCompleto}...`;
-      }
-
-      let proximoDelaySegundos = null;
-
-      try {
-        const contaAtualLoop = obterContaAtiva() || ativa;
-        const payload = { url: alvo.url, telefone: contaAtualLoop.phone, modo: "auto" };
-        let resp = await chamarApiTelegram("/api/entrar", payload);
-        if (resp && resp.conta_ativa_real && resp.conta_ativa_real.phone) {
-          definirContaAtiva(resp.conta_ativa_real);
-          carregarContaTelegramVisual();
-        }
-        if (resp && resp.status === "sessao_invalida" && CONTAS_PADRAO_SISTEMA && CONTAS_PADRAO_SISTEMA.length > 0) {
-          definirContaAtiva(CONTAS_PADRAO_SISTEMA[0]);
-          carregarContaTelegramVisual();
-          payload.telefone = CONTAS_PADRAO_SISTEMA[0].phone;
-          resp = await chamarApiTelegram("/api/entrar", payload);
-        }
-
-        if (resp && (resp.status === "entrou" || (resp.ok && resp.status !== "ja_membro"))) {
-          concluidos++;
-          marcarEntrado(alvo.url);
-          const novoTotalAuto = (resp.entradas_hoje !== undefined) ? Math.max(obterAutoEntradasHojeLocal() + 1, parseInt(resp.entradas_hoje) || 0) : (obterAutoEntradasHojeLocal() + 1);
-          salvarAutoEntradasHojeLocal(novoTotalAuto);
-          renderizarAutoCard(novoTotalAuto, limite);
-          if (elIngressados) elIngressados.textContent = concluidos;
-          if (elFila) elFila.textContent = Math.max(0, gruposLivres.length - indice);
-          adicionarLinhaLogAuto(`✓ Entrou com sucesso no grupo: <b>${esc(nomeCompleto)}</b> (${novoTotalAuto}/${limite})`, "l-success");
-        } else if (resp && resp.status === "ja_membro") {
-          marcarEntrado(alvo.url);
-          if (elFila) elFila.textContent = Math.max(0, gruposLivres.length - indice);
-          adicionarLinhaLogAuto(`ℹ️ Já participa do grupo: <b>${esc(nomeCompleto)}</b> (pulando para o próximo...)`, "l-info");
-          proximoDelaySegundos = 2;
-        } else if (resp && resp.status === "contra_spam") {
-          if (elFila) elFila.textContent = Math.max(0, gruposLivres.length - indice);
-          adicionarLinhaLogAuto(`🛡️ Grupo com Contra Spam detectado: <b>${esc(nomeCompleto)}</b>. Ignorado no Modo Automático (mantido no Modo Manual).`, "l-warn");
-          proximoDelaySegundos = 3;
-        } else if (resp && (resp.status === "expirado" || resp.status === "sem_chat")) {
-          if (elFila) elFila.textContent = Math.max(0, gruposLivres.length - indice);
-          adicionarLinhaLogAuto(`⚠️ Grupo indisponível/fechado: <b>${esc(nomeCompleto)}</b> (pulando...)`, "l-warn");
-          proximoDelaySegundos = 3;
-        } else if (resp && resp.status === "flood") {
-          // REUTILIZAR GRUPO: recoloca no final da fila sem descartar!
-          gruposLivres.push(alvo);
-          if (elFila) elFila.textContent = Math.max(0, gruposLivres.length - indice);
-          const espera = Math.min(Math.max(parseInt(resp.espera_segundos) || 90, 30), 900);
-          const minFmt = espera >= 60 ? `${Math.ceil(espera / 60)} min` : `${espera}s`;
-          adicionarLinhaLogAuto(`⏳ Pausa anti-flood do próprio Telegram (${minFmt}). O grupo <b>${esc(nomeCompleto)}</b> foi <b>guardado novamente na fila</b> para entrar depois!`, "l-warn");
-          proximoDelaySegundos = espera;
-        } else if (resp && resp.status === "sessao_invalida") {
-          gruposLivres.push(alvo);
-          if (elFila) elFila.textContent = Math.max(0, gruposLivres.length - indice);
-          adicionarLinhaLogAuto(`⚠️ Conta selecionada não está autorizada. Selecione outra conta ativa no topo!`, "l-error");
-          pararAutomacao();
-          return;
-        } else {
-          // Qualquer erro temporário: NÃO descarta o grupo, recoloca no final da fila para reutilizar depois!
-          gruposLivres.push(alvo);
-          if (elFila) elFila.textContent = Math.max(0, gruposLivres.length - indice);
-          adicionarLinhaLogAuto(`🔄 Oscilação temporária em <b>${esc(nomeCompleto)}</b> — grupo <b>recolocado na fila</b> para tentar novamente depois!`, "l-warn");
-        }
-      } catch (err) {
-        // Erro de conexão/rede: NÃO descarta o grupo, recoloca no final da fila!
-        gruposLivres.push(alvo);
-        if (elFila) elFila.textContent = Math.max(0, gruposLivres.length - indice);
-        adicionarLinhaLogAuto(`🔄 Tentando reconectar — o grupo <b>${esc(nomeCompleto)}</b> foi <b>mantido na fila</b> para reutilizar depois!`, "l-warn");
-      }
-
-      if (!autoJoinAtivo) return;
-
-      if (concluidos >= limite || indice >= gruposLivres.length) {
-        adicionarLinhaLogAuto(`🏁 <b>Finalizado! Entrou em ${concluidos} grupos com sucesso.</b>`, "l-success");
-        pararAutomacao();
-        return;
-      }
-
-      const dSorteado = proximoDelaySegundos !== null
-        ? proximoDelaySegundos
-        : (Math.floor(Math.random() * (delayMax - delayMin + 1)) + delayMin);
-      if (badgeStatus) {
-        badgeStatus.textContent = dSorteado >= 60
-          ? `⏳ Pausa Telegram (${Math.ceil(dSorteado / 60)}m) • Fila intacta`
-          : `⏳ Próximo grupo em ${dSorteado}s`;
-      }
-      autoJoinTimer = setTimeout(processarProximoAutoJoin, dSorteado * 1000);
     }
 
-    processarProximoAutoJoin();
+    selecionadas.forEach((conta, idxConta) => {
+      const cleanPh = String(conta.phone || "").replace(/[^0-9]/g, "");
+      const entradosConta = _obterEntradosDaConta(cleanPh);
+      const gruposLivres = catalogoGrupos.filter(g => !g.requer_captcha && g.tipo !== "antispam" && !entradosConta.includes(g.url));
+
+      // Embaralhar em ordem aleatória independente para cada conta
+      for (let i = gruposLivres.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [gruposLivres[i], gruposLivres[j]] = [gruposLivres[j], gruposLivres[i]];
+      }
+
+      if (idxConta === 0 && elFila) elFila.textContent = gruposLivres.length;
+
+      let concluidosConta = 0;
+      let indice = 0;
+
+      async function processarProximoConta() {
+        if (!autoJoinAtivo) return;
+
+        if (indice >= gruposLivres.length || concluidosConta >= limite) {
+          adicionarLinhaLogAuto(`🏁 [${esc(conta.nome)}] <b>Meta de ${concluidosConta}/${limite} grupos concluída!</b>`, "l-success");
+          finalizarWorker();
+          return;
+        }
+
+        const alvo = gruposLivres[indice];
+        indice++;
+        const nomeCompleto = alvo.titulo || "Grupo Telegram";
+        let proximoDelaySegundos = null;
+
+        try {
+          const payload = { url: alvo.url, telefone: conta.phone, modo: "auto" };
+          const resp = await chamarApiTelegram("/api/entrar", payload);
+
+          if (resp && (resp.status === "entrou" || (resp.ok && resp.status !== "ja_membro"))) {
+            concluidosConta++;
+            concluidosTotal++;
+            _marcarEntradoDaConta(alvo.url, cleanPh);
+            const novoTotalAuto = (resp.entradas_hoje !== undefined)
+              ? Math.max(_obterAutoHojeDaConta(cleanPh) + 1, parseInt(resp.entradas_hoje) || 0)
+              : (_obterAutoHojeDaConta(cleanPh) + 1);
+            _salvarAutoHojeDaConta(cleanPh, novoTotalAuto);
+
+            const ativa = obterContaAtiva();
+            if (ativa && String(ativa.phone || "").replace(/[^0-9]/g, "") === cleanPh) {
+              renderizarAutoCard(novoTotalAuto, limite);
+            }
+            if (elIngressados) elIngressados.textContent = concluidosTotal;
+            if (elFila) elFila.textContent = Math.max(0, gruposLivres.length - indice);
+            adicionarLinhaLogAuto(`[<b>${esc(conta.nome)}</b>] ✓ Entrou em: <b>${esc(nomeCompleto)}</b> (${concluidosConta}/${limite})`, "l-success");
+          } else if (resp && resp.status === "ja_membro") {
+            _marcarEntradoDaConta(alvo.url, cleanPh);
+            adicionarLinhaLogAuto(`[<b>${esc(conta.nome)}</b>] ℹ️ Já participa de <b>${esc(nomeCompleto)}</b> (pulando...)`, "l-info");
+            proximoDelaySegundos = 2;
+          } else if (resp && resp.status === "contra_spam") {
+            adicionarLinhaLogAuto(`[<b>${esc(conta.nome)}</b>] 🛡️ Contra Spam em <b>${esc(nomeCompleto)}</b> (mantido no Manual).`, "l-warn");
+            proximoDelaySegundos = 3;
+          } else if (resp && (resp.status === "expirado" || resp.status === "sem_chat")) {
+            adicionarLinhaLogAuto(`[<b>${esc(conta.nome)}</b>] ⚠️ Indisponível: <b>${esc(nomeCompleto)}</b> (pulando...)`, "l-warn");
+            proximoDelaySegundos = 3;
+          } else if (resp && resp.status === "flood") {
+            gruposLivres.push(alvo);
+            const espera = Math.min(Math.max(parseInt(resp.espera_segundos) || 90, 30), 900);
+            const minFmt = espera >= 60 ? `${Math.ceil(espera / 60)} min` : `${espera}s`;
+            adicionarLinhaLogAuto(`[<b>${esc(conta.nome)}</b>] ⏳ Pausa anti-flood (${minFmt}). <b>${esc(nomeCompleto)}</b> guardado na fila!`, "l-warn");
+            proximoDelaySegundos = espera;
+          } else {
+            gruposLivres.push(alvo);
+            adicionarLinhaLogAuto(`[<b>${esc(conta.nome)}</b>] 🔄 Oscilação em <b>${esc(nomeCompleto)}</b> — mantido na fila!`, "l-warn");
+          }
+        } catch (err) {
+          gruposLivres.push(alvo);
+          adicionarLinhaLogAuto(`[<b>${esc(conta.nome)}</b>] 🔄 Reconectando — <b>${esc(nomeCompleto)}</b> mantido na fila!`, "l-warn");
+        }
+
+        if (!autoJoinAtivo) return;
+
+        if (concluidosConta >= limite || indice >= gruposLivres.length) {
+          adicionarLinhaLogAuto(`🏁 [${esc(conta.nome)}] <b>Finalizado (${concluidosConta} grupos)!</b>`, "l-success");
+          finalizarWorker();
+          return;
+        }
+
+        const dSorteado = proximoDelaySegundos !== null
+          ? proximoDelaySegundos
+          : (Math.floor(Math.random() * (delayMax - delayMin + 1)) + delayMin);
+        const tid = setTimeout(processarProximoConta, dSorteado * 1000);
+        autoJoinTimers.push(tid);
+      }
+
+      const startDelay = idxConta * (1200 + Math.floor(Math.random() * 1500));
+      const tidStart = setTimeout(processarProximoConta, startDelay);
+      autoJoinTimers.push(tidStart);
+    });
   }
 
-  function pararAutomacao() {
+  function pararAutomacao(silencioso = false) {
     autoJoinAtivo = false;
-    if (autoJoinTimer) clearTimeout(autoJoinTimer);
+    if (typeof autoJoinTimer !== "undefined" && autoJoinTimer) clearTimeout(autoJoinTimer);
     autoJoinTimer = null;
+    if (Array.isArray(autoJoinTimers)) {
+      autoJoinTimers.forEach(t => clearTimeout(t));
+      autoJoinTimers = [];
+    }
     const btnStart = document.getElementById("btn-start-aj");
     const btnStop = document.getElementById("btn-stop-aj");
     if (btnStart) btnStart.disabled = false;
@@ -3626,8 +3737,10 @@
       badgeStatus.className = "badge-status-online";
       badgeStatus.textContent = "🟢 Sistema Pronto";
     }
-    adicionarLinhaLogAuto(`Auto-Join pausado.`, "l-info");
-    alerta("Auto-Join pausado.", "info");
+    if (!silencioso) {
+      adicionarLinhaLogAuto(`Auto-Join pausado.`, "l-info");
+      alerta("Auto-Join pausado.", "info");
+    }
   }
 
   function limparConsole() {
