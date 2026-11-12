@@ -3407,24 +3407,21 @@
     const isLocal = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1";
     const tunnelUrl = "https://sitesssa7dtfusgdfdj-production.up.railway.app";
 
-    const endpoints = [
-      ...(isLocal ? [""] : []),
-      "http://127.0.0.1:5000",
-      "http://localhost:5000",
-      tunnelUrl
-    ].filter(Boolean).filter((v, i, a) => a.indexOf(v) === i);
+    const endpoints = isLocal
+      ? ["", "http://127.0.0.1:5000", "http://localhost:5000", tunnelUrl]
+      : [tunnelUrl];
 
     let lastError = null;
-    const metodo = dados ? "POST" : "GET";
+    const metodo = dados !== null ? "POST" : "GET";
     for (const base of endpoints) {
       const url = base ? `${base}${rota}` : rota;
       try {
         const opts = {
           method: metodo,
           headers: { "Content-Type": "application/json" },
-          signal: AbortSignal.timeout(45000)
+          signal: AbortSignal.timeout(12000)
         };
-        if (dados) {
+        if (dados !== null) {
           opts.body = JSON.stringify(dados);
         }
         const res = await fetch(url, opts);
@@ -3799,7 +3796,7 @@
     }
     // 2. Dispara a parada no servidor imediatamente
     try {
-      await chamarApiTelegram("/api/autojoin/stop");
+      await chamarApiTelegram("/api/autojoin/stop", {});
     } catch(e) {}
   }
 
@@ -4293,12 +4290,12 @@
   }
 
   async function pararDisparoBroadcast() {
-    try {
-      await chamarApiTelegram("/api/broadcast/stop");
-    } catch(e) {}
     finalizarDisparoVisual();
     alerta("Disparo interrompido.", "info");
     adicionarLinhaLogBroadcast("[INTERROMPIDO] Disparo pausado a pedido do usuário.", "l-error");
+    try {
+      await chamarApiTelegram("/api/broadcast/stop", {});
+    } catch(e) {}
   }
 
   function finalizarDisparoVisual() {
