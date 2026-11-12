@@ -1852,12 +1852,12 @@ def api_autojoin_start():
     return jsonify({"ok": True, "msg": "Auto-Join 24h iniciado no servidor!"})
 
 
-@app.route("/api/autojoin/stop", methods=["POST"])
+@app.route("/api/autojoin/stop", methods=["POST", "GET"])
 def api_autojoin_stop():
     global _autojoin_running
     _autojoin_stop.set()
     _autojoin_running = False
-    return jsonify({"ok": True})
+    return jsonify({"ok": True, "rodando": False})
 
 
 @app.route("/api/autojoin/status")
@@ -2412,10 +2412,12 @@ def api_broadcast_gerar_ia():
     })
 
 
-@app.route("/api/broadcast/stop", methods=["POST"])
+@app.route("/api/broadcast/stop", methods=["POST", "GET"])
 def api_broadcast_stop():
+    global _broadcast_running
     _broadcast_stop.set()
-    return jsonify({"ok": True})
+    _broadcast_running = False
+    return jsonify({"ok": True, "rodando": False})
 
 
 @app.route("/api/broadcast/status")
