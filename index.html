@@ -2041,6 +2041,20 @@
               ⏹ Parar
             </button>
           </div>
+
+          <!-- MODO ENTRAR SEM LIMITES (INFINITO 24H) -->
+          <div class="unlimited-mode-box" id="box-sem-limite" style="margin-top:12px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:10px 12px;transition:all 0.25s ease;">
+            <label style="display:flex;align-items:center;gap:10px;cursor:pointer;margin:0;user-select:none;">
+              <input type="checkbox" id="check-sem-limite" onchange="alternarModoSemLimite()" style="width:18px;height:18px;accent-color:#10b981;cursor:pointer;flex-shrink:0;">
+              <div style="flex:1;">
+                <div style="display:flex;align-items:center;gap:6px;">
+                  <span style="font-size:0.86rem;font-weight:700;color:#f8fafc;">Entrar Sem Limite Diário</span>
+                  <span style="font-size:0.68rem;background:rgba(16,185,129,0.18);border:1px solid rgba(16,185,129,0.4);color:#34d399;padding:1px 6px;border-radius:4px;font-weight:800;">♾️ INFINITO</span>
+                </div>
+                <div style="font-size:0.72rem;color:#94a3b8;margin-top:2px;">Ignora o limite diário e entra em todos os grupos da fila sem parar</div>
+              </div>
+            </label>
+          </div>
         </div>
 
         <!-- MONITOR DE EXECUÇÃO EM TEMPO REAL (PROFISSIONAL) -->
@@ -2995,12 +3009,42 @@
     } catch(e) {}
   }
 
+  function alternarModoSemLimite() {
+    const chk = document.getElementById("check-sem-limite");
+    const box = document.getElementById("box-sem-limite");
+    const inp = document.getElementById("cfg-limite-dia");
+    const ativo = chk && chk.checked;
+    if (box) {
+      if (ativo) {
+        box.style.background = "rgba(16, 185, 129, 0.08)";
+        box.style.borderColor = "rgba(16, 185, 129, 0.4)";
+        box.style.boxShadow = "0 0 16px rgba(16, 185, 129, 0.15)";
+      } else {
+        box.style.background = "rgba(255, 255, 255, 0.03)";
+        box.style.borderColor = "rgba(255, 255, 255, 0.08)";
+        box.style.boxShadow = "none";
+      }
+    }
+    if (inp) {
+      inp.disabled = ativo;
+      inp.style.opacity = ativo ? "0.4" : "1";
+    }
+    atualizarProgressoAutoCard(false);
+  }
+
   function renderizarAutoCard(qtd, limite) {
     const elVal = document.getElementById("val-auto-progresso");
     const elSub = document.getElementById("val-auto-sub");
     if (!elVal) return;
-    const lim = limite || (parseInt(document.getElementById("cfg-limite-dia")?.value) || 20);
+    const isSemLimite = document.getElementById("check-sem-limite")?.checked;
     const n = parseInt(qtd) || 0;
+    if (isSemLimite) {
+      elVal.textContent = `${n} / ♾️`;
+      elVal.style.color = "#34d399";
+      if (elSub) elSub.innerHTML = '<span style="color:#34d399;font-weight:700;">♾️ Modo Sem Limite Ativo (Infinito 24h)</span>';
+      return;
+    }
+    const lim = limite || (parseInt(document.getElementById("cfg-limite-dia")?.value) || 20);
     elVal.textContent = `${n} / ${lim}`;
     if (n >= lim) {
       elVal.style.color = "#34d399";
@@ -3646,11 +3690,14 @@
     adicionarLinhaLogAuto(`💡 <i>Você pode fechar a aba do navegador que o servidor continua entrando nos grupos!</i>`, "l-info");
 
     try {
+      const semLimite = document.getElementById("check-sem-limite") ? document.getElementById("check-sem-limite").checked : false;
+      const limiteFinal = semLimite ? 999999 : limite;
       const payload = {
         telefones: selecionadas.map(s => s.phone),
         delay_min: delayMin,
         delay_max: delayMax,
-        limite: limite
+        limite: limiteFinal,
+        sem_limite: semLimite
       };
       const resp = await chamarApiTelegram("/api/autojoin/start", payload);
       if (resp && resp.ok) {
@@ -3804,7 +3851,13 @@
           const qtdContas = (st.contas && st.contas.length) ? st.contas.length : 1;
           if (pDesc) pDesc.textContent = `${st.concluidos || 0} grupos · ${qtdContas} contas (24h)`;
           
-          if (kpiProgresso) kpiProgresso.textContent = `${st.entradas_hoje || 0} / ${st.limite_diario || 20}`;
+          const checkSemLim = document.getElementById("check-sem-limite");
+          if (st.sem_limite && checkSemLim && !checkSemLim.checked) {
+            checkSemLim.checked = true;
+            alternarModoSemLimite();
+          }
+          const limLabel = (checkSemLim && checkSemLim.checked) ? "♾️" : (st.limite_diario || 20);
+          if (kpiProgresso) kpiProgresso.textContent = `${st.entradas_hoje || 0} / ${limLabel}`;
           if (kpiProgressoSub) kpiProgressoSub.innerHTML = '<span style="color:#34d399;font-weight:700;">⚡ Rodando 24h no Railway</span>';
 
           if (badgeStatus) {
