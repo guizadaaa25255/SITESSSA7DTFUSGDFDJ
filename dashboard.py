@@ -1963,12 +1963,19 @@ def ajustar_saudacao_horario(texto, dt=None):
     return res
 
 
-def _broadcast_worker(grupos_alvo, mensagem_ou_lista, delay_min=8, delay_max=25, rotacionar=True, ajustar_horario=True, client_bc=None):
+def _broadcast_multi_worker(contas_dados, delay_min=8, delay_max=25, rotacionar=True, ajustar_horario=True):
     global _broadcast_running
     _broadcast_running = True
     _broadcast_stop.clear()
 
-    total = len(grupos_alvo)
+    meta_path = os.path.join(DADOS, "contas_meta.json")
+    meta_dict = {}
+    if os.path.exists(meta_path):
+        try:
+            with open(meta_path, "r", encoding="utf-8") as f_m:
+                meta_dict = json.load(f_m)
+        except Exception:
+            pass
 
     def _limpar_parenteses(txt):
         s = (txt or "").strip()
@@ -1976,107 +1983,173 @@ def _broadcast_worker(grupos_alvo, mensagem_ou_lista, delay_min=8, delay_max=25,
             s = s[1:-1].strip()
         return s
 
-    # Processar variações de mensagens
-    if isinstance(mensagem_ou_lista, list) and mensagem_ou_lista:
-        variacoes = [_limpar_parenteses(m) for m in mensagem_ou_lista if str(m).strip()]
-    else:
-        raw = (mensagem_ou_lista or "").strip()
-        if "\n---\n" in raw:
-            variacoes = [_limpar_parenteses(m) for m in raw.split("\n---\n") if m.strip()]
-        elif "\n" in raw:
-            variacoes = [_limpar_parenteses(l) for l in raw.splitlines() if l.strip()]
-        else:
-            variacoes = [_limpar_parenteses(raw)] if raw else []
+    contas_preparadas = []
+    total_grupos_geral = 0
 
-    if not variacoes:
-        _broadcast_log("❌ Nenhuma mensagem fornecida para envio.", "error")
+    for c_info in contas_dados:
+        tel = str(c_info.get("telefone", "")).strip()
+        clean = re.sub(r"[^0-9]", "", tel)
+        if not clean:
+            clean = _obter_telefone_ativo()
+            tel = f"+{clean}"
+
+        trocar_para_telefone_sincrono(clean)
+        cli = _clients_pool.get(clean) or _client
+
+        nome_c = c_info.get("nome") or meta_dict.get(f"+{clean}", {}).get("nome") or meta_dict.get(clean, {}).get("nome") or f"Conta {clean[-4:]}"
+
+        msgs_c = c_info.get("mensagens") or []
+        msg_unica = (c_info.get("mensagem") or "").strip()
+        if msgs_c and isinstance(msgs_c, list):
+            variacoes = [_limpar_parenteses(m) for m in msgs_c if str(m).strip()]
+        elif msg_unica:
+            if "\n---\n" in msg_unica:
+                variacoes = [_limpar_parenteses(m) for m in msg_unica.split("\n---\n") if m.strip()]
+            elif "\n" in msg_unica:
+                variacoes = [_limpar_parenteses(l) for l in msg_unica.splitlines() if l.strip()]
+            else:
+                variacoes = [_limpar_parenteses(msg_unica)]
+        else:
+            variacoes = []
+
+        grupos_c = list(c_info.get("grupos") or [])
+        if not variacoes or not grupos_c:
+            continue
+
+        total_grupos_geral += len(grupos_c)
+        contas_preparadas.append({
+            "phone": tel,
+            "clean": clean,
+            "nome": nome_c,
+            "client": cli,
+            "variacoes": variacoes,
+            "fila_grupos": grupos_c,
+            "enviadas": 0,
+            "falhas": 0,
+            "total": len(grupos_c)
+        })
+
+    if not contas_preparadas:
+        _broadcast_log("❌ Nenhuma conta válida com mensagens e grupos configurados para envio.", "error")
         _broadcast_running = False
         return
 
-    _broadcast_log(f"🚀 Iniciando envio em massa para {total} grupo(s) com {len(variacoes)} variação(ões)...", "start")
-    
-    sucesso = 0
-    falhas = 0
+    nomes_resumo = ", ".join([f"<b>{c['nome']}</b> ({c['total']} grupos)" for c in contas_preparadas])
+    _broadcast_log(f"🚀 Iniciando Disparo ({len(contas_preparadas)} conta(s) | {total_grupos_geral} grupos): {nomes_resumo}", "start")
 
-    for i, g in enumerate(grupos_alvo, 1):
-        if _broadcast_stop.is_set():
-            _broadcast_log("⏹ Envio em massa interrompido pelo usuário.", "warn")
+    sucesso_geral = 0
+    falhas_geral = 0
+
+    while not _broadcast_stop.is_set():
+        ativas = [c for c in contas_preparadas if c["fila_grupos"]]
+        if not ativas:
             break
 
-        chat_id = g.get("id") if isinstance(g, dict) else g
-        try:
-            chat_id = int(chat_id)
-        except (ValueError, TypeError):
-            pass
-        nome = (g.get("name") if isinstance(g, dict) else None) or str(chat_id)
-
-        # Escolher mensagem para este grupo (aleatório se rotação ligada)
-        if rotacionar and len(variacoes) > 1:
-            msg_base = random.choice(variacoes)
-        else:
-            msg_base = variacoes[(i - 1) % len(variacoes)]
-
-        # Ajuste inteligente de saudação conforme horário do envio
-        if ajustar_horario:
-            msg_final = ajustar_saudacao_horario(msg_base)
-        else:
-            msg_final = msg_base
-
-        preview_msg = (msg_final[:60] + "...") if len(msg_final) > 60 else msg_final
-        _broadcast_log(f"[{i}/{total}] Enviando em '{nome}': \"{preview_msg}\"", "info")
-
-        try:
-            async def _enviar(cid=chat_id, msg=msg_final):
-                return await (client_bc or _client).send_message(cid, msg)
-
-            run_async(_enviar())
-            sucesso += 1
-            _broadcast_log(f"✅ Mensagem enviada com sucesso em: {nome} ({sucesso}/{total})", "success")
-
+        for c in ativas:
             if _broadcast_stop.is_set():
                 break
+            if not c["fila_grupos"]:
+                continue
 
-            if i < total:
-                # Gera delay dinâmico quebrado entre min e max (ex: 20.3s, 8.4s, nunca número fixo/robótico!)
-                d_min = max(3.0, float(delay_min))
-                d_max = max(d_min, float(delay_max))
-                espera_quebrada = round(random.uniform(d_min, d_max), 1)
-                _broadcast_log(f"⏳ Intervalo humano anti-spam: aguardando {espera_quebrada}s antes do próximo grupo...", "wait")
+            g = c["fila_grupos"].pop(0)
+            chat_id = g.get("id") if isinstance(g, dict) else g
+            try:
+                chat_id = int(chat_id)
+            except (ValueError, TypeError):
+                pass
+            nome_g = (g.get("name") if isinstance(g, dict) else None) or str(chat_id)
 
-                tempo_restante = espera_quebrada
-                while tempo_restante > 0:
-                    if _broadcast_stop.is_set():
-                        break
-                    time.sleep(min(0.5, tempo_restante))
-                    tempo_restante -= 0.5
+            variacoes = c["variacoes"]
+            idx_envio = c["enviadas"]
+            if rotacionar and len(variacoes) > 1:
+                msg_base = random.choice(variacoes)
+            else:
+                msg_base = variacoes[idx_envio % len(variacoes)]
 
-        except FloodWaitError as e:
-            _broadcast_log(f"🚦 FloodWait! Aguardando {e.seconds}s exigidos pelo Telegram...", "warn")
-            if e.seconds > 600:
-                _broadcast_log("❌ Tempo de FloodWait muito alto (>10min). Parando por segurança.", "error")
-                break
-            for _ in range(e.seconds + 5):
+            if ajustar_horario:
+                msg_final = ajustar_saudacao_horario(msg_base)
+            else:
+                msg_final = msg_base
+
+            preview_msg = (msg_final[:55] + "...") if len(msg_final) > 55 else msg_final
+            _broadcast_log(f"[{c['nome']}] Enviando em '{nome_g}': \"{preview_msg}\"", "info")
+
+            cli = c["client"] or _clients_pool.get(c["clean"]) or _client
+            lock_c = obter_lock_conta(c["clean"])
+
+            try:
+                with lock_c:
+                    async def _enviar(cli=cli, cid=chat_id, msg=msg_final):
+                        return await cli.send_message(cid, msg)
+                    run_async(_enviar(cli=cli, cid=chat_id, msg=msg_final))
+
+                c["enviadas"] += 1
+                sucesso_geral += 1
+                _broadcast_log(f"[{c['nome']}] ✅ Mensagem enviada em: {nome_g} ({c['enviadas']}/{c['total']})", "success")
+
                 if _broadcast_stop.is_set():
                     break
-                time.sleep(1)
 
-        except Exception as e:
-            nome_err = type(e).__name__
-            falhas += 1
-            if "ChatWriteForbidden" in nome_err or "Banned" in nome_err:
-                _broadcast_log(f"⚠️ Sem permissão para enviar em '{nome}' (grupo travado/apenas admins). Saindo...", "warn")
-                try:
-                    run_async((client_bc or _client)(LeaveChannelRequest(chat_id)))
-                    _broadcast_log(f"🚪 Conta saiu automaticamente do grupo fechado: '{nome}'.", "info")
-                except Exception:
-                    pass
-            elif "SlowModeWait" in nome_err:
-                _broadcast_log(f"⏳ Grupo com SlowMode ativado: {nome}. Pulando.", "warn")
-            else:
-                _broadcast_log(f"❌ Erro ao enviar em '{nome}': {nome_err} ({e})", "error")
+                restantes = sum(len(x["fila_grupos"]) for x in contas_preparadas)
+                if restantes > 0:
+                    d_min = max(3.0, float(delay_min))
+                    d_max = max(d_min, float(delay_max))
+                    espera = round(random.uniform(d_min, d_max), 1)
+                    _broadcast_log(f"⏳ Intervalo anti-spam: aguardando {espera}s...", "wait")
+                    tempo_rest = espera
+                    while tempo_rest > 0:
+                        if _broadcast_stop.is_set():
+                            break
+                        time.sleep(min(0.5, tempo_rest))
+                        tempo_rest -= 0.5
 
-    _broadcast_log(f"🏁 Disparo concluído! Enviadas: {sucesso} | Falhas/Bloqueadas: {falhas}", "done")
+            except FloodWaitError as e:
+                _broadcast_log(f"[{c['nome']}] 🚦 FloodWait de {e.seconds}s pelo Telegram. Guardando grupo na fila...", "warn")
+                c["fila_grupos"].insert(0, g)
+                if e.seconds > 600:
+                    _broadcast_log(f"[{c['nome']}] ⚠️ FloodWait alto (>10min). Pausando envios desta conta.", "error")
+                    c["fila_grupos"].clear()
+                else:
+                    for _ in range(min(e.seconds + 2, 60)):
+                        if _broadcast_stop.is_set():
+                            break
+                        time.sleep(1)
+
+            except Exception as e:
+                c["falhas"] += 1
+                falhas_geral += 1
+                nome_err = type(e).__name__
+                if "ChatWriteForbidden" in nome_err or "Banned" in nome_err:
+                    _broadcast_log(f"[{c['nome']}] ⚠️ Sem permissão para enviar em '{nome_g}'. Saindo do grupo...", "warn")
+                    try:
+                        with lock_c:
+                            async def _sair(cli=cli, cid=chat_id):
+                                return await cli(LeaveChannelRequest(cid))
+                            run_async(_sair(cli=cli, cid=chat_id))
+                    except Exception:
+                        pass
+                elif "SlowModeWait" in nome_err:
+                    _broadcast_log(f"[{c['nome']}] ⏳ SlowMode ativo em '{nome_g}'. Pulando.", "warn")
+                else:
+                    _broadcast_log(f"[{c['nome']}] ❌ Erro ao enviar em '{nome_g}': {nome_err} ({e})", "error")
+
+    if _broadcast_stop.is_set():
+        _broadcast_log("⏹ Disparo interrompido pelo usuário.", "warn")
+    else:
+        _broadcast_log(f"🏁 Disparo concluído com sucesso! Enviadas: {sucesso_geral} | Bloqueadas: {falhas_geral}", "done")
+
     _broadcast_running = False
+
+
+def _broadcast_worker(grupos_alvo, mensagem_ou_lista, delay_min=8, delay_max=25, rotacionar=True, ajustar_horario=True, client_bc=None):
+    cur_p = _obter_telefone_ativo()
+    dados = [{
+        "telefone": cur_p,
+        "mensagem": mensagem_ou_lista if isinstance(mensagem_ou_lista, str) else "",
+        "mensagens": mensagem_ou_lista if isinstance(mensagem_ou_lista, list) else [],
+        "grupos": grupos_alvo
+    }]
+    return _broadcast_multi_worker(dados, delay_min, delay_max, rotacionar, ajustar_horario)
 
 
 @app.route("/api/meus_grupos", methods=["GET", "POST"])
@@ -2258,37 +2331,51 @@ def api_broadcast_start():
     global _broadcast_thread
 
     d = request.json or {}
-    tel_solicitado = str(d.get("telefone", "")).strip()
-    if tel_solicitado:
-        clean_solic = re.sub(r"[^0-9]", "", tel_solicitado)
-        conf_atual = carregar_conf()
-        clean_atual = re.sub(r"[^0-9]", "", conf_atual.get("phone", ""))
-        if clean_solic != clean_atual or not cliente_conectado():
-            trocar_para_telefone_sincrono(tel_solicitado)
+    contas_req = d.get("contas") or []
 
-    if not cliente_conectado():
-        tentar_auto_conectar()
-    if not cliente_conectado():
-        return jsonify({"ok": False, "erro": "Conta do Telegram não conectada"}), 401
+    # Compatibilidade com envio legado de 1 conta
+    if not contas_req:
+        tel_solicitado = str(d.get("telefone", "")).strip()
+        if tel_solicitado:
+            clean_solic = re.sub(r"[^0-9]", "", tel_solicitado)
+            conf_atual = carregar_conf()
+            clean_atual = re.sub(r"[^0-9]", "", conf_atual.get("phone", ""))
+            if clean_solic != clean_atual or not cliente_conectado():
+                trocar_para_telefone_sincrono(tel_solicitado)
+
+        if not cliente_conectado():
+            tentar_auto_conectar()
+        if not cliente_conectado():
+            return jsonify({"ok": False, "erro": "Conta do Telegram não conectada"}), 401
+
+        mensagem = (d.get("mensagem") or "").strip()
+        mensagens = d.get("mensagens") or []
+        grupos_alvo = d.get("grupos") or []
+        lista_final = mensagens if (isinstance(mensagens, list) and len(mensagens) > 0) else mensagem
+        if not lista_final:
+            return jsonify({"ok": False, "erro": "Digite o texto da mensagem a ser enviada"}), 400
+        if not grupos_alvo:
+            return jsonify({"ok": False, "erro": "Selecione ao menos um grupo da lista"}), 400
+
+        contas_req = [{
+            "telefone": tel_solicitado or _obter_telefone_ativo(),
+            "mensagem": mensagem,
+            "mensagens": mensagens,
+            "grupos": grupos_alvo
+        }]
+
+    if not contas_req:
+        return jsonify({"ok": False, "erro": "Nenhuma conta informada para o disparo"}), 400
+
     if _broadcast_running:
         return jsonify({"ok": False, "erro": "Já existe um disparo em andamento"}), 400
 
-    d = request.json or {}
-    mensagem = (d.get("mensagem") or "").strip()
-    mensagens = d.get("mensagens") or []
-    grupos_alvo = d.get("grupos") or []
     delay_min = int(d.get("delay_min") or d.get("delay") or 8)
     delay_max = int(d.get("delay_max") or delay_min or 25)
     if delay_max < delay_min:
         delay_max = delay_min
     rotacionar = bool(d.get("rotacionar", True))
     ajustar_horario = bool(d.get("ajustar_horario", True))
-
-    lista_final = mensagens if (isinstance(mensagens, list) and len(mensagens) > 0) else mensagem
-    if not lista_final:
-        return jsonify({"ok": False, "erro": "Digite o texto da mensagem a ser enviada"}), 400
-    if not grupos_alvo:
-        return jsonify({"ok": False, "erro": "Selecione ao menos um grupo da lista"}), 400
 
     # Limpar fila de log antiga
     while not _broadcast_queue.empty():
@@ -2297,12 +2384,9 @@ def api_broadcast_start():
         except queue.Empty:
             break
 
-    c_disparo = _clients_pool.get(re.sub(r"[^0-9]", "", tel_solicitado)) if tel_solicitado else _client
-    if not c_disparo:
-        c_disparo = _client
     _broadcast_thread = threading.Thread(
-        target=_broadcast_worker,
-        args=(grupos_alvo, lista_final, delay_min, delay_max, rotacionar, ajustar_horario, c_disparo),
+        target=_broadcast_multi_worker,
+        args=(contas_req, delay_min, delay_max, rotacionar, ajustar_horario),
         daemon=True
     )
     _broadcast_thread.start()
