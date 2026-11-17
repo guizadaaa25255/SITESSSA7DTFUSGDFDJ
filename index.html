@@ -2170,6 +2170,61 @@
               ⏹ Interromper
             </button>
           </div>
+
+          <!-- ── CARD DISPARO AUTOMÁTICO 24H (HORÁRIOS ROTATIVOS DIÁRIOS ANTI-BAN) ── -->
+          <div class="schedule-24h-box" style="margin-top:14px;background:rgba(168,85,247,0.06);border:1px solid rgba(168,85,247,0.25);border-radius:12px;padding:14px;display:flex;flex-direction:column;gap:10px;">
+            <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;">
+              <div style="display:flex;align-items:center;gap:10px;">
+                <span style="font-size:1.4rem;">⏰</span>
+                <div>
+                  <div style="display:flex;align-items:center;gap:6px;">
+                    <span style="font-size:0.88rem;font-weight:800;color:#f8fafc;">Disparo Automático 24h</span>
+                    <span id="badge-schedule-status" style="font-size:0.68rem;padding:2px 7px;border-radius:4px;background:rgba(255,255,255,0.06);color:#94a3b8;font-weight:700;">Desativado</span>
+                  </div>
+                  <div style="font-size:0.72rem;color:#c084fc;">Envia todos os dias em horários alternados automáticos (Anti-Ban 24h)</div>
+                </div>
+              </div>
+              <div style="display:flex;gap:6px;">
+                <button type="button" class="btn-modal-green" id="btn-start-schedule" onclick="iniciarAgendamento24h()" style="padding:6px 12px;font-size:0.75rem;margin:0;background:linear-gradient(135deg, #9333ea, #c026d3);">
+                  ▶ Ativar Rotina 24h
+                </button>
+                <button type="button" class="btn-adm-action" id="btn-stop-schedule" onclick="pararAgendamento24h()" disabled style="padding:6px 12px;font-size:0.75rem;background:rgba(239,68,68,0.2);color:#fca5a5;border:1px solid rgba(239,68,68,0.4);">
+                  ⏹ Parar
+                </button>
+              </div>
+            </div>
+
+            <!-- OPÇÕES DO AGENDAMENTO ROTATIVO -->
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;padding-top:8px;border-top:1px solid rgba(255,255,255,0.06);">
+              <div class="input-field-group" style="margin:0;">
+                <label style="font-size:0.7rem;font-weight:700;color:#cbd5e1;">DURAÇÃO DA ROTINA:</label>
+                <select id="cfg-schedule-dias" class="select-modern" style="padding:6px 10px;font-size:0.78rem;">
+                  <option value="7">1 Semana (7 Dias)</option>
+                  <option value="15">15 Dias</option>
+                  <option value="30">30 Dias (1 Mês)</option>
+                  <option value="0">♾️ Contínuo 24/7 (Sem Limite)</option>
+                </select>
+              </div>
+              <div class="input-field-group" style="margin:0;">
+                <label style="font-size:0.7rem;font-weight:700;color:#cbd5e1;">JANELA DE HORÁRIO DIÁRIO:</label>
+                <select id="cfg-schedule-janela" class="select-modern" style="padding:6px 10px;font-size:0.78rem;">
+                  <option value="comercial">Comercial (09:00 às 20:00)</option>
+                  <option value="tarde_noite">Tarde & Noite (13:00 às 23:00)</option>
+                  <option value="manha">Manhã (08:00 às 13:00)</option>
+                  <option value="24h">24 Horas Qualquer Horário</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- MONITOR DE STATUS DO AGENDAMENTO 24H -->
+            <div id="box-schedule-info" style="background:rgba(0,0,0,0.25);border:1px solid rgba(255,255,255,0.06);border-radius:8px;padding:9px 12px;display:flex;align-items:center;justify-content:space-between;font-size:0.75rem;">
+              <div style="display:flex;align-items:center;gap:8px;color:#cbd5e1;">
+                <span id="dot-schedule-indicator" style="width:8px;height:8px;border-radius:50%;background:#64748b;display:inline-block;transition:all 0.3s ease;"></span>
+                <span id="lbl-schedule-proximo">Nenhuma rotina ativa no momento.</span>
+              </div>
+              <span id="lbl-schedule-progresso" style="color:#c084fc;font-weight:700;">0 dias</span>
+            </div>
+          </div>
         </div>
 
         <div class="broadcast-sidebar">
@@ -2504,6 +2559,8 @@
     if (aba === "broadcast") {
       renderizarContasBroadcast();
       carregarMeusGrupos();
+      checarStatusAgendamento24h();
+      if (!_schedulePollInterval) _schedulePollInterval = setInterval(checarStatusAgendamento24h, 8000);
     }
   }
 
@@ -4647,6 +4704,174 @@
     row.innerHTML = `<span class="activity-time">[${hora}]</span> <span class="activity-icon">${icon}</span> <span class="activity-text">${esc(texto)}</span>`;
     term.appendChild(row);
     term.scrollTop = term.scrollHeight;
+  }
+
+  /* ── DISPARO AUTOMÁTICO 24H (AGENDAMENTO ROTATIVO INTELIGENTE) ── */
+  let _schedulePollInterval = null;
+  let _scheduleAtivo = false;
+
+  async function checarStatusAgendamento24h() {
+    const badge = document.getElementById("badge-schedule-status");
+    const btnStart = document.getElementById("btn-start-schedule");
+    const btnStop = document.getElementById("btn-stop-schedule");
+    const dot = document.getElementById("dot-schedule-indicator");
+    const lblProximo = document.getElementById("lbl-schedule-proximo");
+    const lblProgresso = document.getElementById("lbl-schedule-progresso");
+
+    try {
+      const st = await chamarApiTelegram("/api/broadcast/schedule/status");
+      if (st) {
+        if (st.ativo) {
+          _scheduleAtivo = true;
+          if (btnStart) btnStart.disabled = true;
+          if (btnStop) btnStop.disabled = false;
+          if (badge) {
+            badge.style.background = "rgba(168,85,247,0.25)";
+            badge.style.color = "#d8b4fe";
+            badge.style.border = "1px solid rgba(168,85,247,0.5)";
+            badge.textContent = "🟢 Ativo no Railway (24h)";
+          }
+          if (dot) {
+            dot.style.background = "#10b981";
+            dot.style.boxShadow = "0 0 10px #10b981";
+          }
+          if (lblProximo) {
+            lblProximo.innerHTML = `<strong>Próximo envio:</strong> ${st.proximo_envio_str || "Em andamento..."} <span style="font-size:0.68rem;color:#a855f7;">(Horário alternado)</span>`;
+          }
+          if (lblProgresso) {
+            const totStr = (st.total_dias > 0) ? `${st.total_dias} dias` : "♾️ Contínuo";
+            lblProgresso.textContent = `Dia ${st.dias_executados || 0} de ${totStr}`;
+          }
+        } else {
+          _scheduleAtivo = false;
+          if (btnStart) btnStart.disabled = false;
+          if (btnStop) btnStop.disabled = true;
+          if (badge) {
+            badge.style.background = "rgba(255,255,255,0.06)";
+            badge.style.color = "#94a3b8";
+            badge.style.border = "none";
+            badge.textContent = "Desativado";
+          }
+          if (dot) {
+            dot.style.background = "#64748b";
+            dot.style.boxShadow = "none";
+          }
+          if (lblProximo) {
+            lblProximo.textContent = st.ultimo_envio_str ? `Última rotina: ${st.ultimo_envio_str}` : "Nenhuma rotina 24h ativa no momento.";
+          }
+          if (lblProgresso) {
+            lblProgresso.textContent = "Pausado";
+          }
+        }
+      }
+    } catch(e) {}
+  }
+
+  async function iniciarAgendamento24h() {
+    const contasSel = obterContasBroadcastSelecionadas();
+    if (!contasSel.length) {
+      alerta("Selecione ao menos uma conta no topo antes de ativar a rotina 24h!", "error");
+      return;
+    }
+
+    const tarefasContas = [];
+    for (const c of contasSel) {
+      const clean = (c.phone || "").replace(/[^0-9]/g, "");
+      const ta = document.getElementById("txt-broadcast-msg-" + clean) || document.querySelector(`.txt-msg-bc-conta[data-phone*="${clean}"]`);
+      const msg = ta ? ta.value.trim() : (_mensagensBroadcastPorConta[clean] || "").trim();
+      if (!msg) {
+        alerta(`Configure a mensagem para a conta ${c.nome || c.phone} antes de ativar o agendamento!`, "error");
+        if (ta) ta.focus();
+        return;
+      }
+
+      let marcadosConta = [];
+      if (contasSel.length === 1) {
+        marcadosConta = Array.from(document.querySelectorAll(".chk-grupo:checked")).map(chk => ({
+          id: (!isNaN(chk.value) && chk.value !== "") ? parseInt(chk.value) : chk.value,
+          name: chk.getAttribute("data-name") || "Grupo",
+          username: chk.getAttribute("data-username") || ""
+        }));
+      } else {
+        marcadosConta = Array.from(document.querySelectorAll(".chk-grupo:checked"))
+          .filter(chk => chk.getAttribute("data-phone") === c.phone || !chk.getAttribute("data-phone"))
+          .map(chk => ({
+            id: (!isNaN(chk.value) && chk.value !== "") ? parseInt(chk.value) : chk.value,
+            name: chk.getAttribute("data-name") || "Grupo",
+            username: chk.getAttribute("data-username") || ""
+          }));
+      }
+
+      if (!marcadosConta.length) {
+        alerta(`Selecione ao menos um grupo para a conta: ${c.nome || c.phone}!`, "error");
+        return;
+      }
+
+      const linhas = msg.split("\n").map(l => l.trim()).filter(l => l.length > 0);
+      tarefasContas.push({
+        telefone: c.phone,
+        nome: c.nome || c.phone,
+        mensagem: msg,
+        mensagens: linhas,
+        grupos: marcadosConta
+      });
+    }
+
+    const dias = parseInt(document.getElementById("cfg-schedule-dias").value) || 7;
+    const janela = document.getElementById("cfg-schedule-janela").value || "comercial";
+    const delayMin = parseInt(document.getElementById("cfg-broadcast-delay-min").value) || 8;
+    const delayMax = parseInt(document.getElementById("cfg-broadcast-delay-max").value) || 25;
+    const rotacionar = document.getElementById("chk-broadcast-rotacionar").checked;
+    const ajustarHorario = document.getElementById("chk-broadcast-horario").checked;
+
+    const btnStart = document.getElementById("btn-start-schedule");
+    const btnStop = document.getElementById("btn-stop-schedule");
+    if (btnStart) btnStart.disabled = true;
+    if (btnStop) btnStop.disabled = false;
+
+    adicionarLinhaLogBroadcast(`[ROTINA 24H] Ativando Disparo Automático no Servidor (${dias > 0 ? dias + ' dias' : 'Infinito 24/7'})...`, "l-success");
+
+    try {
+      const payload = {
+        contas: tarefasContas,
+        dias: dias,
+        janela: janela,
+        delay_min: delayMin,
+        delay_max: delayMax,
+        rotacionar: rotacionar,
+        ajustar_horario: ajustarHorario,
+        executar_agora: true
+      };
+
+      const resp = await chamarApiTelegram("/api/broadcast/schedule/start", payload);
+      if (resp && resp.ok) {
+        alerta(`🚀 Rotina 24h ativada! Envio diário em horários alternados automáticos.`, "success");
+        conectarStreamBroadcast();
+        checarStatusAgendamento24h();
+      } else {
+        throw new Error(resp && resp.erro ? resp.erro : "Falha ao ativar rotina no servidor");
+      }
+    } catch(err) {
+      if (btnStart) btnStart.disabled = false;
+      if (btnStop) btnStop.disabled = true;
+      alerta("Erro ao ativar rotina 24h: " + err.message, "error");
+      adicionarLinhaLogBroadcast(`[FALHA] ${err.message}`, "l-error");
+    }
+  }
+
+  async function pararAgendamento24h() {
+    const btnStart = document.getElementById("btn-start-schedule");
+    const btnStop = document.getElementById("btn-stop-schedule");
+    if (btnStart) btnStart.disabled = false;
+    if (btnStop) btnStop.disabled = true;
+
+    adicionarLinhaLogBroadcast(`[ROTINA 24H] Pausando agendamento automático 24h a pedido do usuário...`, "l-warn");
+    alerta("Rotina 24h de disparo pausada.", "info");
+
+    try {
+      await chamarApiTelegram("/api/broadcast/schedule/stop", {});
+      checarStatusAgendamento24h();
+    } catch(e) {}
   }
 
   /* ── MODAL IA BROADCAST ── */
