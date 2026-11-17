@@ -19,7 +19,7 @@ import re
 import sys
 import threading
 import time
-from datetime import date
+from datetime import date, datetime, timedelta
 from functools import wraps
 
 from flask import Flask, Response, jsonify, render_template, request, session
@@ -96,6 +96,11 @@ _broadcast_running = False
 _broadcast_stop    = threading.Event()
 _broadcast_queue: queue.Queue = queue.Queue()
 _broadcast_thread: threading.Thread = None
+
+# ── Broadcast 24h Schedule state (Agendamento Rotativo Anti-Ban) ──────────────
+_broadcast_schedule_running = False
+_broadcast_schedule_stop    = threading.Event()
+_broadcast_schedule_thread: threading.Thread = None
 
 
 # ══════════════════════════════════════════════════════════════════════════════
@@ -2534,6 +2539,237 @@ def api_broadcast_stream():
     )
 
 
+# ── AGENDAMENTO ROTATIVO INTELIGENTE 24 HORAS (DISPARO ANTI-BAN) ──────────────
+ARQ_SCHEDULE_CONF = os.path.join(DADOS, "broadcast_schedule_conf.json")
+ARQ_SCHEDULE_STATE = os.path.join(DADOS, "broadcast_schedule_state.json")
+
+def carregar_schedule_conf():
+    if os.path.exists(ARQ_SCHEDULE_CONF):
+        try:
+            with open(ARQ_SCHEDULE_CONF, "r", encoding="utf-8") as f:
+                return json.load(f)
+        except Exception:
+            pass
+    return {}
+
+def salvar_schedule_conf(d):
+    try:
+        with open(ARQ_SCHEDULE_CONF, "w", encoding="utf-8") as f:
+            json.dump(d, f, ensure_ascii=False, indent=2)
+    except Exception:
+        pass
+
+def carregar_schedule_state():
+    if os.path.exists(ARQ_SCHEDULE_STATE):
+        try:
+            with open(ARQ_SCHEDULE_STATE, "r", encoding="utf-8") as f:
+                return json.load(f)
+        except Exception:
+            pass
+    return {}
+
+def salvar_schedule_state(d):
+    try:
+        with open(ARQ_SCHEDULE_STATE, "w", encoding="utf-8") as f:
+            json.dump(d, f, ensure_ascii=False, indent=2)
+    except Exception:
+        pass
+
+def sortear_horario_dia(dia_offset=1, janela="comercial"):
+    """Gera um horário sorteado dinâmico (jitter anti-ban) para o próximo dia."""
+    agora = datetime.now()
+    alvo = agora + timedelta(days=dia_offset)
+
+    if janela == "manha":
+        h = random.randint(8, 12)
+    elif janela == "tarde_noite":
+        h = random.randint(13, 22)
+    elif janela == "24h":
+        h = random.randint(0, 23)
+    else:  # comercial
+        h = random.randint(9, 19)
+
+    m = random.randint(0, 59)
+    s = random.randint(0, 59)
+    try:
+        return alvo.replace(hour=h, minute=m, second=s, microsecond=0)
+    except Exception:
+        return alvo + timedelta(hours=h, minutes=m)
+
+def _broadcast_schedule_worker():
+    global _broadcast_schedule_running
+    _broadcast_schedule_running = True
+    _broadcast_schedule_stop.clear()
+
+    _broadcast_log("🌐 Rotina 24h de Disparo Automático Diário iniciada no servidor!", "start")
+
+    while not _broadcast_schedule_stop.is_set():
+        conf = carregar_schedule_conf()
+        state = carregar_schedule_state()
+
+        if not conf.get("ativo", False):
+            break
+
+        total_dias = int(conf.get("dias", 7))
+        dias_feitos = int(state.get("dias_executados", 0))
+
+        if total_dias > 0 and dias_feitos >= total_dias:
+            _broadcast_log(f"🏁 Rotina de {total_dias} dias concluída com 100% de sucesso!", "done")
+            conf["ativo"] = False
+            salvar_schedule_conf(conf)
+            break
+
+        proximo_ts = state.get("proximo_envio_ts")
+        agora_ts = time.time()
+
+        # Se já passou do horário agendado ou é primeira execução pendente
+        if not proximo_ts or agora_ts >= proximo_ts:
+            dia_atual = dias_feitos + 1
+            total_str = str(total_dias) if total_dias > 0 else "♾️"
+            _broadcast_log(f"⏰ [Rotina 24h] Iniciando disparo automático do Dia {dia_atual}/{total_str}...", "info")
+
+            contas_tarefas = conf.get("contas", [])
+            delay_min = int(conf.get("delay_min", 8))
+            delay_max = int(conf.get("delay_max", 25))
+            rotacionar = bool(conf.get("rotacionar", True))
+            ajustar_horario = bool(conf.get("ajustar_horario", True))
+
+            try:
+                # Executa o disparo multi-contas
+                _broadcast_multi_worker(contas_tarefas, delay_min, delay_max, rotacionar, ajustar_horario)
+            except Exception as e:
+                _broadcast_log(f"⚠️ Erro no envio automático do dia {dia_atual}: {e}", "warn")
+
+            if _broadcast_schedule_stop.is_set():
+                break
+
+            # Sorteia próximo dia e horário alternado
+            janela = conf.get("janela", "comercial")
+            proximo_dt = sortear_horario_dia(dia_offset=1, janela=janela)
+            proximo_ts = proximo_dt.timestamp()
+            proximo_str = proximo_dt.strftime("%d/%m/%Y às %H:%M")
+
+            dias_feitos += 1
+            state["dias_executados"] = dias_feitos
+            state["ultimo_envio_ts"] = time.time()
+            state["ultimo_envio_str"] = datetime.now().strftime("%d/%m/%Y às %H:%M")
+            state["proximo_envio_ts"] = proximo_ts
+            state["proximo_envio_str"] = proximo_str
+            salvar_schedule_state(state)
+
+            _broadcast_log(f"📅 [Rotina 24h] Dia {dias_feitos}/{total_str} enviado! Próximo envio sorteado: {proximo_str} (Horário alternado anti-ban)", "success")
+
+        # Espera respondendo rápido ao Stop
+        proximo_ts = state.get("proximo_envio_ts") or (time.time() + 60)
+        espera_ate_proximo = max(0, proximo_ts - time.time())
+        tempo_dormir = min(5, espera_ate_proximo) if espera_ate_proximo > 0 else 5
+
+        for _ in range(int(tempo_dormir * 2)):
+            if _broadcast_schedule_stop.is_set():
+                break
+            time.sleep(0.5)
+
+    _broadcast_schedule_running = False
+    _broadcast_log("⏹ Rotina 24h de Disparo Automático pausada no servidor.", "done")
+
+def _verificar_e_restaurar_schedule_24h():
+    global _broadcast_schedule_thread
+    conf = carregar_schedule_conf()
+    if conf.get("ativo", False) and not _broadcast_schedule_running:
+        _broadcast_schedule_stop.clear()
+        _broadcast_schedule_thread = threading.Thread(target=_broadcast_schedule_worker, daemon=True)
+        _broadcast_schedule_thread.start()
+
+
+@app.route("/api/broadcast/schedule/start", methods=["POST"])
+def api_broadcast_schedule_start():
+    global _broadcast_schedule_thread, _broadcast_schedule_running
+
+    d = request.json or {}
+    contas_req = d.get("contas") or []
+    if not contas_req:
+        return jsonify({"ok": False, "erro": "Selecione as contas e configure a mensagem antes de ativar a rotina 24h"}), 400
+
+    dias = int(d.get("dias", 7))
+    janela = str(d.get("janela", "comercial"))
+    delay_min = int(d.get("delay_min", 8))
+    delay_max = int(d.get("delay_max", 25))
+    rotacionar = bool(d.get("rotacionar", True))
+    ajustar_horario = bool(d.get("ajustar_horario", True))
+    exec_agora = bool(d.get("executar_agora", True))
+
+    conf = {
+        "ativo": True,
+        "dias": dias,
+        "janela": janela,
+        "delay_min": delay_min,
+        "delay_max": delay_max,
+        "rotacionar": rotacionar,
+        "ajustar_horario": ajustar_horario,
+        "contas": contas_req,
+        "iniciado_em": datetime.now().strftime("%d/%m/%Y às %H:%M")
+    }
+    salvar_schedule_conf(conf)
+
+    state = carregar_schedule_state()
+    state["dias_executados"] = 0
+    if exec_agora:
+        state["proximo_envio_ts"] = time.time() - 1
+        state["proximo_envio_str"] = "Em andamento agora (Dia 1)"
+    else:
+        proximo_dt = sortear_horario_dia(dia_offset=0, janela=janela)
+        if proximo_dt.timestamp() <= time.time():
+            proximo_dt = sortear_horario_dia(dia_offset=1, janela=janela)
+        state["proximo_envio_ts"] = proximo_dt.timestamp()
+        state["proximo_envio_str"] = proximo_dt.strftime("%d/%m/%Y às %H:%M")
+
+    salvar_schedule_state(state)
+
+    _broadcast_schedule_stop.clear()
+    _broadcast_schedule_running = True
+    _broadcast_schedule_thread = threading.Thread(target=_broadcast_schedule_worker, daemon=True)
+    _broadcast_schedule_thread.start()
+
+    return jsonify({
+        "ok": True,
+        "msg": f"Rotina 24h iniciada para {dias if dias > 0 else 'dias infinitos'} dias com horários rotativos!",
+        "proximo_envio_str": state["proximo_envio_str"],
+        "dias_executados": 0,
+        "total_dias": dias
+    })
+
+
+@app.route("/api/broadcast/schedule/stop", methods=["POST", "GET"])
+def api_broadcast_schedule_stop():
+    global _broadcast_schedule_running
+    _broadcast_schedule_stop.set()
+    _broadcast_schedule_running = False
+
+    conf = carregar_schedule_conf()
+    conf["ativo"] = False
+    salvar_schedule_conf(conf)
+
+    return jsonify({"ok": True, "ativo": False, "msg": "Rotina 24h cancelada"})
+
+
+@app.route("/api/broadcast/schedule/status")
+def api_broadcast_schedule_status():
+    global _broadcast_schedule_running
+    conf = carregar_schedule_conf()
+    state = carregar_schedule_state()
+    ativo = bool(_broadcast_schedule_running and conf.get("ativo", False) and not _broadcast_schedule_stop.is_set())
+
+    return jsonify({
+        "ativo": ativo,
+        "dias_executados": state.get("dias_executados", 0),
+        "total_dias": conf.get("dias", 7),
+        "janela": conf.get("janela", "comercial"),
+        "proximo_envio_str": state.get("proximo_envio_str", ""),
+        "proximo_envio_ts": state.get("proximo_envio_ts", 0),
+        "ultimo_envio_str": state.get("ultimo_envio_str", "")
+    })
+
+
 @app.route("/api/sair_chat", methods=["POST"])
 def api_sair_chat():
     if not cliente_conectado():
@@ -2690,6 +2926,10 @@ def api_desconectar():
 
 if __name__ == "__main__":
     garantir_loop()
+    try:
+        _verificar_e_restaurar_schedule_24h()
+    except Exception as e:
+        print(f"Erro ao verificar rotina 24h: {e}")
     print("\n" + "═"*55)
     print("  🇧🇷 Dashboard Telegram BR")
     print("  http://localhost:5000")
